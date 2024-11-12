@@ -1,0 +1,1 @@
+C:\Users\Netwin\Desktop\CardGameCorner\CardGameCorner\CardGameCorner\CardGameCorner.csproj;x64
