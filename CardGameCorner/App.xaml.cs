@@ -2,11 +2,28 @@
 {
     public partial class App : Application
     {
-        public App()
+        private readonly IServiceProvider _serviceProvider;
+
+        public App(IServiceProvider serviceProvider)
         {
             InitializeComponent();
+            _serviceProvider = serviceProvider;
+            MainPage = new AppShell(_serviceProvider);
+        }
 
-            MainPage = new AppShell();
+        protected override Window CreateWindow(IActivationState activationState)
+        {
+            Window window = base.CreateWindow(activationState);
+
+            // Customize the window size for desktop platforms
+            if (DeviceInfo.Current.Platform == DevicePlatform.WinUI ||
+                DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst)
+            {
+                window.Width = 400;
+                window.Height = 600;
+            }
+
+            return window;
         }
     }
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CardGameCorner.Views.LoginPage"
+             Title="Login">
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
+            <Image Source="app_logo.png"
+                   HeightRequest="100"
+                   HorizontalOptions="Center" />
+
+            <VerticalStackLayout Spacing="5">
+                <Entry Text="{Binding Username}"
+                       Placeholder="Username"
+                       PlaceholderColor="Gray"
+                       Keyboard="Email" />
+
+                <Entry Text="{Binding Password}"
+                       Placeholder="Password"
+                       PlaceholderColor="Gray"
+                       IsPassword="True" />
+            </VerticalStackLayout>
+
+            <Button Text="Login"
+                    Command="{Binding LoginCommand}"
+                    IsEnabled="{Binding !IsBusy}"
+                    HorizontalOptions="Center" />
+
+            <Button Text="Forgot Password?"
+                    Command="{Binding ShowForgotPasswordCommand}"
+                    HorizontalOptions="Center"
+                    TextColor="Gray"
+                    BackgroundColor="Transparent" />
+
+            <!-- Forgot Password Popup -->
+            <Frame IsVisible="{Binding ShowForgotPassword}"
+                   BackgroundColor="White"
+                   Padding="20"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Enter your email address" />
+                    <Entry Text="{Binding ForgotPasswordEmail}"
+                           Placeholder="Email"
+                           Keyboard="Email" />
+                    <Button Text="Send Reset Link"
+                            Command="{Binding ForgotPasswordCommand}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                             IsVisible="{Binding IsBusy}"
+                             HorizontalOptions="Center" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
