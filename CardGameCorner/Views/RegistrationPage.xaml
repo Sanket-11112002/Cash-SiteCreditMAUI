@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CardGameCorner.Views.RegistrationPage"
+             xmlns:viewmodel="clr-namespace:CardGameCorner.ViewModels">
+ 
+
+    <ContentPage.BindingContext>
+        <viewmodel:RegistrationViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <StackLayout Padding="30" Spacing="15">
+
+            <Label Text="Registration"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                HorizontalOptions="Center" />
+
+            <!-- Email Field -->
+            <Entry Placeholder="Email" 
+                   Text="{Binding Email}" 
+                   PlaceholderColor="LightGray"
+                   TextColor="White"
+                   BackgroundColor="#2A4B5D" />
+
+            <!-- Password Field -->
+            <Entry Placeholder="Password" 
+                   Text="{Binding Password}" 
+                   IsPassword="True"
+                   PlaceholderColor="LightGray"
+                   TextColor="White"
+                   BackgroundColor="#2A4B5D" />
+
+            <!-- Name Field -->
+            <Entry Placeholder="Name" 
+                   Text="{Binding Name}" 
+                   PlaceholderColor="LightGray"
+                   TextColor="White"
+                   BackgroundColor="#2A4B5D" />
+
+            <!-- Last Name Field -->
+            <Entry Placeholder="Last Name" 
+                   Text="{Binding LastName}" 
+                   PlaceholderColor="LightGray"
+                   TextColor="White"
+                   BackgroundColor="#2A4B5D" />
+
+            <!-- Company Field -->
+            <Entry Placeholder="Company" 
+                   Text="{Binding Company}" 
+                   PlaceholderColor="LightGray"
+                   TextColor="White"
+                   BackgroundColor="#2A4B5D" />
+
+            <!-- VAT Number Field -->
+            <Entry Placeholder="VAT Number" 
+                   Text="{Binding VatNumber}" 
+                   PlaceholderColor="LightGray"
+                   TextColor="White"
+                   BackgroundColor="#2A4B5D" />
+
+            <!-- Fiscal Code Field -->
+            <Entry Placeholder="Fiscal Code" 
+                   Text="{Binding FiscalCode}" 
+                   PlaceholderColor="LightGray"
+                   TextColor="White"
+                   BackgroundColor="#2A4B5D" />
+
+            <!-- Address Field -->
+            <Entry Placeholder="Address" 
+                   Text="{Binding Address}" 
+                   PlaceholderColor="LightGray"
+                   TextColor="White"
+                   BackgroundColor="#2A4B5D" />
+
+            <!-- ZIP Field -->
+            <Entry Placeholder="ZIP" 
+                   Text="{Binding Zip}" 
+                   PlaceholderColor="LightGray"
+                   TextColor="White"
+                   BackgroundColor="#2A4B5D" />
+
+            <!-- Province Field -->
+            <Entry Placeholder="Province" 
+                   Text="{Binding Province}" 
+                   PlaceholderColor="LightGray"
+                   TextColor="White"
+                   BackgroundColor="#2A4B5D" />
+
+            <!-- City Field -->
+            <Entry Placeholder="City" 
+                   Text="{Binding City}" 
+                   PlaceholderColor="LightGray"
+                   TextColor="White"
+                   BackgroundColor="#2A4B5D" />
+
+            <!-- Country Field -->
+            <Entry Placeholder="Country" 
+                   Text="{Binding Country}" 
+                   PlaceholderColor="LightGray"
+                   TextColor="White"
+                   BackgroundColor="#2A4B5D" />
+
+            <!-- Phone Field -->
+            <Entry Placeholder="Phone" 
+                   Text="{Binding Phone}" 
+                   PlaceholderColor="LightGray"
+                   TextColor="White"
+                   BackgroundColor="#2A4B5D" />
+
+            <!-- Language Picker -->
+            <Picker Title="Language" 
+                    SelectedItem="{Binding Language}"
+                    TextColor="White"
+                    BackgroundColor="#2A4B5D">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>en</x:String>
+                        <x:String>it</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <!-- Submit Button -->
+            <Button Text="Submit" 
+                    Command="{Binding SubmitCommand}" 
+                    TextColor="White" 
+                    BackgroundColor="#3B92A0" />
+
+            <!-- Cancel Button -->
+            <Button Text="Cancel" 
+                    Command="{Binding CancelCommand}" 
+                    TextColor="White" 
+                    BackgroundColor="#556B73" />
+
+            <!-- Error Message Label -->
+            <Label Text="{Binding ErrorMessage}" 
+                   TextColor="Red" 
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

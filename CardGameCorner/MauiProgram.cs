@@ -24,10 +24,17 @@ namespace CardGameCorner
             builder.Services.AddSingleton<ISecureStorage, SecureStorageService>();
 
             // Register pages and viewmodels
+            builder.Services.AddSingleton<IGameService, GameService>();
+            builder.Services.AddSingleton<HomeViewModel>();
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<HomePage>();
             builder.Services.AddSingleton<AppShell>();
+            builder.Services.AddTransient<RegistrationPage>();
+            builder.Services.AddTransient<MyListPage>();
+            builder.Services.AddTransient<MyAccountPage>();
+            builder.Services.AddTransient<SearchPage>();
+            builder.Services.AddTransient<ScanPage>();
 
             // Register HttpClient
             builder.Services.AddHttpClient();

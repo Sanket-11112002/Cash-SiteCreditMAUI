@@ -33,9 +33,11 @@ namespace CardGameCorner.ViewModels
             _secureStorage = secureStorage;
             _serviceProvider = serviceProvider;
 
-            LoginCommand = new AsyncRelayCommand(LoginAsync, CanLogin);
+            LoginCommand = new AsyncRelayCommand(LoginAsync);
             ForgotPasswordCommand = new AsyncRelayCommand(RequestPasswordResetAsync);
+            ToggleForgotPasswordCommand = new Command(ToggleForgotPassword);
             ShowForgotPasswordCommand = new RelayCommand(() => ShowForgotPassword = true);
+            NavigateToRegistrationCommand = new AsyncRelayCommand(NavigateToRegistrationPage);
         }
 
         public string Username
@@ -73,11 +75,17 @@ namespace CardGameCorner.ViewModels
         public IAsyncRelayCommand LoginCommand { get; }
         public IAsyncRelayCommand ForgotPasswordCommand { get; }
         public ICommand ShowForgotPasswordCommand { get; }
+        public IAsyncRelayCommand NavigateToRegistrationCommand { get; }
+        public Command ToggleForgotPasswordCommand { get; }
+        private void ToggleForgotPassword()
+        {
+            ShowForgotPassword = !ShowForgotPassword; // Toggles the visibility
+        }
 
-        private bool CanLogin() =>
-            !string.IsNullOrWhiteSpace(Username) &&
-            !string.IsNullOrWhiteSpace(Password) &&
-            !IsBusy;
+        //private bool CanLogin() =>
+        //    !string.IsNullOrWhiteSpace(Username) &&
+        //    !string.IsNullOrWhiteSpace(Password) &&
+        //    !IsBusy;
 
         private async Task LoginAsync()
         {
@@ -93,11 +101,26 @@ namespace CardGameCorner.ViewModels
                     Password = Password
                 };
 
+                if (string.IsNullOrWhiteSpace(Username))
+                {
+
+                    await Application.Current.MainPage.DisplayAlert("Error", "Username cannot be empty", "OK");
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(Password))
+                {
+
+                    await Application.Current.MainPage.DisplayAlert("Error", "Password cannot be empty.", "OK");
+                    return;
+                }
+
+
                 var response = await _authService.LoginAsync(request);
                 await _secureStorage.SetAsync("jwt_token", response.Token);
 
                 // Update navigation to use Shell.GoToAsync with the route
-                await Shell.Current.GoToAsync($"//{nameof(HomePage)}");
+                await (App.Current.MainPage as AppShell).ShowHomePageWithTabBarAsync();
             }
             catch (Exception ex)
             {
@@ -108,8 +131,8 @@ namespace CardGameCorner.ViewModels
                 IsBusy = false;
             }
         }
-    
-    private async Task RequestPasswordResetAsync()
+
+        private async Task RequestPasswordResetAsync()
         {
             if (string.IsNullOrWhiteSpace(ForgotPasswordEmail))
             {
@@ -134,6 +157,10 @@ namespace CardGameCorner.ViewModels
                 IsBusy = false;
             }
         }
-    }
 
+        private async Task NavigateToRegistrationPage()
+        {
+            await Shell.Current.GoToAsync(nameof(RegistrationPage));
+        }
+    }
 }

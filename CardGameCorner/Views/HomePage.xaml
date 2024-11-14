@@ -1,11 +1,98 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CardGameCorner.ViewModels"
+             xmlns:models="clr-namespace:CardGameCorner.Models"
              x:Class="CardGameCorner.Views.HomePage"
-             Title="Home">
-    <VerticalStackLayout>
-        <Label Text="Welcome to Home Page!"
-               VerticalOptions="Center" 
-               HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             x:DataType="vm:HomeViewModel">
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Header with logo at the top -->
+        <Grid Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+            <Image Source="Resources/Images/splashscreenlogo.png"
+                   HeightRequest="70" 
+                   HorizontalOptions="Center"
+                   VerticalOptions="Start"
+                   Margin="30" />
+
+            <Button Text="Logout"
+                    Command="{Binding LogoutCommand}"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    Margin="10"/>
+
+        </Grid>
+
+        <!-- Title label -->
+        <Label Text="Card Game Corner"
+               FontSize="20"
+               FontAttributes="Bold"
+               TextColor="White"  
+            HorizontalOptions="Center"
+               VerticalOptions="Start"
+               Margin="10" />
+
+            <!-- Content -->
+            <Grid Grid.Row="1" Padding="10">
+                <CollectionView ItemsSource="{Binding Games}"
+                            SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical"
+                                     Span="2"
+                                     VerticalItemSpacing="10"
+                                     HorizontalItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Game">
+                            <Frame Padding="0"
+                               CornerRadius="10"
+                               IsClippedToBounds="True"
+                               Margin="5"
+                               BackgroundColor="White">
+                                <!-- Card background color -->
+
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=GameSelectedCommand}"
+                                                      CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+
+                                <Grid RowDefinitions="*, Auto">
+                                    <Image Grid.Row="0"
+                                       Source="{Binding GameCode, StringFormat='Resources/Images/dotnet_bot.png', 
+                                               Converter={StaticResource GameImagePathConverter}}"
+                                       Aspect="AspectFill"
+                                       HeightRequest="160"
+                                       BackgroundColor="LightGray" />
+                                    <!-- Image background color for contrast -->
+
+                                    <Label Grid.Row="1"
+                                       Text="{Binding DisplayName}"
+                                       HorizontalTextAlignment="Center"
+                                       Padding="10"
+                                       FontAttributes="Bold"
+                                       TextColor="Black" />
+                                    <!-- Display name text color for contrast -->
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Loading Indicator -->
+                <ActivityIndicator IsRunning="{Binding IsLoading}"
+                             IsVisible="{Binding IsLoading}"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center" />
+
+                <!-- Error Message -->
+                <Label Text="{Binding ErrorMessage}"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}"
+                   TextColor="Red"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+            </Grid>
+    </Grid>
 </ContentPage>

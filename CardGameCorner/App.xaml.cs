@@ -11,6 +11,15 @@
             MainPage = new AppShell(_serviceProvider);
         }
 
+        public void RestartAppForNewSession()
+        {
+            // Reset MainPage to a new AppShell instance with a clean navigation stack
+            MainPage = new AppShell(_serviceProvider);
+
+            // Navigate to LoginPage directly to start a new session
+            Shell.Current.GoToAsync("login");
+        }
+
         protected override Window CreateWindow(IActivationState activationState)
         {
             Window window = base.CreateWindow(activationState);
