@@ -27,5 +27,10 @@ public partial class ScanPage : ContentPage
             await Navigation.PopAsync(); // Navigate back if permission is not granted
         }
     }
+    private async void Capture_image(object sender ,EventArgs e)
+    {
+        await cameraView.CaptureImage(CancellationToken.None);
+
+    }
 
 }

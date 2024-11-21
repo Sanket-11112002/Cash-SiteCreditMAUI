@@ -1,7 +1,9 @@
 ﻿using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 using CardGameCorner.Views;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls.Compatibility.Hosting;
 using ISecureStorage = CardGameCorner.Services.ISecureStorage;
 
 namespace CardGameCorner
@@ -13,6 +15,7 @@ namespace CardGameCorner
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkitCamera()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
