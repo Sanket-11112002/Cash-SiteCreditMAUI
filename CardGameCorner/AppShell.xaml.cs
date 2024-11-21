@@ -17,7 +17,7 @@ namespace CardGameCorner
             // Set initial page
             //GoToAsync($"//{nameof(LoginPage)}");
 
-            GoToAsync("login");
+            GoToAsync("//HomePage");
         }
 
         private void RegisterRoutes()

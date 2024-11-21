@@ -120,7 +120,7 @@ namespace CardGameCorner.ViewModels
                 await _secureStorage.SetAsync("jwt_token", response.Token);
 
                 // Update navigation to use Shell.GoToAsync with the route
-                await (App.Current.MainPage as AppShell).ShowHomePageWithTabBarAsync();
+               // await (App.Current.MainPage as AppShell).ShowHomePageWithTabBarAsync();
             }
             catch (Exception ex)
             {

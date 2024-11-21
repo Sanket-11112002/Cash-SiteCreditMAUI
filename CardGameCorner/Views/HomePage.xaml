@@ -15,13 +15,13 @@
                    VerticalOptions="Start"
                    Margin="30" />
 
-            <Button Text="Logout"
+            <!--<Button Text="Logout"
                     Command="{Binding LogoutCommand}"
                     HorizontalOptions="End"
                     VerticalOptions="Center"
                     BackgroundColor="Transparent"
                     TextColor="White"
-                    Margin="10"/>
+                    Margin="10"/>-->
 
         </Grid>
 
