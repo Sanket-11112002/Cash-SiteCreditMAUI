@@ -1,11 +1,73 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CardGameCorner.Views.SearchPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             x:Class="CardGameCorner.Views.SearchPage"
+             BackgroundColor="#002A3E">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" 
+                            Padding="20"
+                            VerticalOptions="Start">
+            <!-- Logo -->
+            <Image Source="splashscreenlogo.png"
+                   HeightRequest="100"
+                   HorizontalOptions="Center"
+                   WidthRequest="100"
+                   Aspect="AspectFit"/>
+
+            <!-- Banner -->
+            <Image Source="banner.jpg" 
+                   Aspect="AspectFit"
+                   Margin="0,0,0,10"/>
+
+            <!-- Grid for Buttons -->
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="20"
+                  Margin="0,0,0,20">
+
+                <!-- Search Button -->
+                <Frame Grid.Column="0"
+                       BackgroundColor="#2A3947"
+                       BorderColor="White"
+                       CornerRadius="10"
+                       HeightRequest="120"
+                       Margin="0">
+                    <Grid RowDefinitions="*,Auto" 
+                          RowSpacing="10">
+                        <Image Source="search.png"
+                               HeightRequest="40"
+                               VerticalOptions="End"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Search"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Start"
+                               Grid.Row="1"/>
+                    </Grid>
+                </Frame>
+
+                <!-- Scan Button -->
+                <Frame Grid.Column="1"
+                       BackgroundColor="#2A3947"
+                       BorderColor="White"
+                       CornerRadius="10"
+                       HeightRequest="120"
+                       Margin="0">
+                    <Grid RowDefinitions="*,Auto"
+                          RowSpacing="10">
+                        <ImageButton Source="scan.png"
+                     HeightRequest="40"
+                     BackgroundColor="Transparent"
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                     Clicked="OnScanButtonClicked" />
+                        <Label Text="Scan with camera"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Start"
+                               Grid.Row="1"/>
+                    </Grid>
+                </Frame>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
