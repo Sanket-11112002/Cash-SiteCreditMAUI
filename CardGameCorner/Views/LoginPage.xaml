@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CardGameCorner.Views.LoginPage">
+             x:Class="CardGameCorner.Views.LoginPage"
+             Title="Login">
 
     <ScrollView>
         <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
 
-            <Label Text="Login"
+            <!--<Label Text="Login"
                    FontSize="24"
                    FontAttributes="Bold"
                    TextColor="White"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center" />-->
 
                 <!-- Logo Image -->
                 <Image Source="Resources/Images/splashscreenlogo.png"

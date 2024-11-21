@@ -1,4 +1,6 @@
-﻿using CardGameCorner.Views;
+﻿using CardGameCorner.Services;
+using CardGameCorner.Views;
+using System.Diagnostics;
 
 namespace CardGameCorner
 {
@@ -22,7 +24,10 @@ namespace CardGameCorner
         {
             Routing.RegisterRoute($"login", typeof(LoginPage));
             Routing.RegisterRoute($"//{nameof(HomePage)}", typeof(HomePage));
-            Routing.RegisterRoute("gameDetails", typeof(GameDetailsPage));
+            //Routing.RegisterRoute("GameDetailsPage", typeof(GameDetailsPage));
+            //Routing.RegisterRoute(nameof(GameDetailsPage), typeof(GameDetailsPage));
+            Routing.RegisterRoute("GameDetailsPage", typeof(CardGameCorner.Views.GameDetailsPage));
+
             Routing.RegisterRoute(nameof(RegistrationPage), typeof(RegistrationPage));
             Routing.RegisterRoute(nameof(MyListPage), typeof(MyListPage));
             Routing.RegisterRoute(nameof(SearchPage), typeof(SearchPage));
@@ -37,62 +42,43 @@ namespace CardGameCorner
             {
                 Items =
             {
-                new ShellContent
-                {
-                    Title="Home",
-                     Icon="bxhomealt",
-                    ContentTemplate = new DataTemplate(typeof(HomePage)),
-                    Route = "home"
-                },
-                new ShellContent
-                {
-                     Title="Search",
-                     Icon="bxsearchalt.svg",
-                    ContentTemplate = new DataTemplate(typeof(SearchPage)),
-                    Route = "SearchPage"
-                },
-                new ShellContent
-                {
-                     Title="Scan",
-                     Icon="bxqrscan.svg",
-                    ContentTemplate = new DataTemplate(typeof(ScanPage)),
-                    Route = "ScanPage"
-                },
-                new ShellContent
-                {
-                     Title="My Account",
-                     Icon="bxuser.svg",
-                    ContentTemplate = new DataTemplate(typeof(MyAccountPage)),
-                    Route = "MyAccountPage"
-                },
-                new ShellContent
-                {
-                     Title="My List",
-                     Icon="bxlistul.svg",
-                    ContentTemplate = new DataTemplate(typeof(MyListPage)),
-                    Route = "MyListPage"
-                },
+                    new ShellContent
+                    {
+                        Title="Home",
+                         Icon="bxhomealt",
+                        ContentTemplate = new DataTemplate(typeof(HomePage)),
+                        Route = "home"
+                    },
+                    new ShellContent
+                    {
+                         Title="Search",
+                         Icon="bxsearchalt.svg",
+                        ContentTemplate = new DataTemplate(typeof(SearchPage)),
+                        Route = "SearchPage"
+                    },
+                    new ShellContent
+                    {
+                         Title="Scan",
+                         Icon="bxqrscan.svg",
+                        ContentTemplate = new DataTemplate(typeof(ScanPage)),
+                        Route = "ScanPage"
+                    },
+                    new ShellContent
+                    {
+                         Title="My Account",
+                         Icon="bxuser.svg",
+                        ContentTemplate = new DataTemplate(typeof(MyAccountPage)),
+                        Route = "MyAccountPage"
+                    },
+                    new ShellContent
+                    {
+                         Title="My List",
+                         Icon="bxlistul.svg",
+                        ContentTemplate = new DataTemplate(typeof(MyListPage)),
+                        Route = "MyListPage"
+                    },
 
-                //  new ShellContent
-                //{
-                //     Title="Search",
-                //     Icon="bxsearchalt.svg",
-                //    ContentTemplate = new DataTemplate(typeof(HomePage)),
-                //    Route = "home"
-                //},
-                //   new ShellContent
-                //{
-
-                //    ContentTemplate = new DataTemplate(typeof(HomePage)),
-                //    Route = "home"
-                //},
-                //    new ShellContent
-                //{
-                //    ContentTemplate = new DataTemplate(typeof(HomePage)),
-                //    Route = "home"
-                //},
-              
-            }
+                }
             };
 
             // Clear any existing TabBars and add the new one
@@ -103,11 +89,26 @@ namespace CardGameCorner
             await GoToAsync("///home");
         }
 
-        // Navigate to GameDetailsPage without TabBar
-        public async Task ShowGameDetailsPageAsync(string gameCode)
+        public async Task NavigateToGameDetails(string gameCode)
         {
-            // You can also pass gameCode or other parameters here if necessary
-            await GoToAsync($"gameDetails?gameCode={gameCode}");
+            try
+            {
+                if (string.IsNullOrEmpty(gameCode))
+                {
+                    return;
+                }
+
+                await GameNavigationService.ShowGameDetailsPageAsync(gameCode);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Navigation error: {ex}");
+                await MainThread.InvokeOnMainThreadAsync(async () =>
+                {
+                    await DisplayAlert("Error", "Unable to open game details. Please try again.", "OK");
+                });
+            }
         }
     }
+
 }

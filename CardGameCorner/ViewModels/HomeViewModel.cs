@@ -100,8 +100,8 @@ namespace CardGameCorner.ViewModels
         {
             if (game == null) return;
 
-            // Navigate to GameDetailsPage without tab bar
-            await ((AppShell)Shell.Current).ShowGameDetailsPageAsync(game.GameCode);
+            // Navigate to GameDetailsPage and pass gameCode as a query parameter
+            await ((AppShell)Shell.Current).NavigateToGameDetails(game.GameCode);
         }
 
         private async void OnLogout()

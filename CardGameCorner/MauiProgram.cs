@@ -35,6 +35,11 @@ namespace CardGameCorner
             builder.Services.AddTransient<MyAccountPage>();
             builder.Services.AddTransient<SearchPage>();
             builder.Services.AddTransient<ScanPage>();
+            builder.Services.AddTransient<GameDetailsViewModel>();
+            builder.Services.AddTransient<GameDetailsPage>();
+
+            builder.Services.AddSingleton<IMyAccountService, MyAccountService>();
+            builder.Services.AddTransient<MyAccountViewModel>();
 
             // Register HttpClient
             builder.Services.AddHttpClient();

@@ -9,6 +9,7 @@
             InitializeComponent();
             _serviceProvider = serviceProvider;
             MainPage = new AppShell(_serviceProvider);
+
         }
 
         public void RestartAppForNewSession()

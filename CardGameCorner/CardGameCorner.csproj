@@ -62,6 +62,9 @@
 	  <None Remove="Resources\Images\bxqrscan.svg" />
 	  <None Remove="Resources\Images\bxsearchalt.svg" />
 	  <None Remove="Resources\Images\bxuser.svg" />
+	  <None Remove="Resources\Images\img1.png" />
+	  <None Remove="Resources\Images\left.png" />
+	  <None Remove="Resources\Images\next.png" />
 	  <None Remove="Resources\Images\splashscreenlogo.png" />
 	</ItemGroup>
 

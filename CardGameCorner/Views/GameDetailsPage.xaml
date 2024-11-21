@@ -1,19 +1,122 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CardGameCorner.Views.GameDetailsPage">
-    
-    <StackLayout Padding="20">
-        <!-- Game details content -->
-        <Label Text="Game Details"
-          FontSize="24"
-          FontAttributes="Bold"
-          TextColor="White"
-       HorizontalOptions="Center" />
-
-        <Label Text="Game Details will go here!" 
-               HorizontalOptions="Center" 
-               VerticalOptions="Center" />
+             x:Class="CardGameCorner.Views.GameDetailsPage"
+             xmlns:local="clr-namespace:CardGameCorner.ViewModels"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             Title="Game Details"
+             BackgroundColor="#1B3B48">
+   
+    <ContentPage.Resources>
+        <DataTemplate x:Key="ImageTemplate">
+            <Image Source="{Binding .}" Aspect="AspectFit" />
+        </DataTemplate>
         
-    </StackLayout>
+        <DataTemplate x:Key="CardTemplate">
+    <Frame BorderColor="Gray" CornerRadius="0" Padding="0" Margin="10" BackgroundColor="#1B3B48">
+        <Frame.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:GameDetailsViewModel}}, Path=OpenProductUrlCommand}" CommandParameter="{Binding ProductUrl}" />
+        </Frame.GestureRecognizers>
+        <StackLayout Spacing="5">
+            <!-- Image in Card -->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Image Source="{Binding Image}" 
+                       Aspect="AspectFit" 
+                       HeightRequest="100" 
+                       WidthRequest="100" 
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center" 
+                       Grid.Row="0" Margin="5"/>
+                
+                <Label Text="{Binding Label}" 
+                       TextColor="White" 
+                       FontAttributes="Bold" 
+                       FontSize="8" 
+                       BackgroundColor="Red" 
+                       Opacity="0.8"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start" 
+                       Grid.Row="0" 
+                       Margin="0" 
+                       Padding="5">
+                    <Label.Triggers>
+                        <!-- Trigger to hide the Label if the text is null or empty -->
+                        <DataTrigger TargetType="Label" Binding="{Binding Label}" Value="{x:Static sys:String.Empty}">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Grid>
+            
+            <!-- Note -->
+            <Label Text="{Binding Note}" Padding="2"
+                     TextColor="White" FontSize="7"
+                     HorizontalTextAlignment="Start" Margin="0"
+                     VerticalTextAlignment="Start"
+                     HorizontalOptions="FillAndExpand" HeightRequest="25"/>
+            
+            <!-- Price Range -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="5" Margin="0">
+                <Label Text="{Binding MinPrice, StringFormat='{0} €'}" FontAttributes="Bold" FontSize="10" TextColor="LightGray" Margin="0,10,0,0" TextDecorations="Strikethrough" />
+                <Label Text="{Binding MaxPrice, StringFormat='{0} €'}" FontAttributes="Bold" FontSize="10" TextColor="LightBlue" Margin="0,10,0,0" />
+            </StackLayout>
+        </StackLayout>
+    </Frame>
+</DataTemplate>
+
+
+        <!-- Button Styles -->
+        <Style x:Key="NavigationButtonStyle" TargetType="Button">
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="TextColor" Value="black"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="WidthRequest" Value="60"/>
+            <Setter Property="HeightRequest" Value="50"/>
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="20">
+            <!-- CarouselView to display banner images -->
+            <Grid HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="300" HeightRequest="200">
+                <CarouselView x:Name="carouselView" ItemsSource="{Binding Banners}" HorizontalScrollBarVisibility="Never" Loop="False">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BackgroundColor="Transparent" Padding="0" Margin="10" BorderColor="Gray" HasShadow="True">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OpenProductUrlCommand}" CommandParameter="{Binding Url}" />
+                                </Frame.GestureRecognizers>
+                                <Image Source="{Binding Image}" 
+                                       Aspect="AspectFit" 
+                                       HeightRequest="100" 
+                                       WidthRequest="100" 
+                                       HorizontalOptions="Center" 
+                                       VerticalOptions="Center" 
+                                       Grid.Row="0" Margin="5"/>
+                            </Frame>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+
+                <!-- Previous and Next Buttons -->
+                <Button ImageSource="left.png" Style="{StaticResource NavigationButtonStyle}" VerticalOptions="Center" HorizontalOptions="Start" Margin="0,0,10,0"  />
+                <Button ImageSource="next.png" Style="{StaticResource NavigationButtonStyle}" VerticalOptions="Center" HorizontalOptions="End" Margin="10,0,0,0"  />
+            </Grid>
+
+            <AbsoluteLayout HorizontalOptions="FillAndExpand" HeightRequest="100">
+                <Image Source="img1.png" Aspect="AspectFill" AbsoluteLayout.LayoutBounds="0.5, 0.5, 1, 1" AbsoluteLayout.LayoutFlags="All" />
+                <Label Text="Best Deals" TextColor="White" FontSize="24" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.5, 0.5, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional" />
+            </AbsoluteLayout>
+            <CollectionView ItemsSource="{Binding Cards}" ItemTemplate="{StaticResource CardTemplate}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10" HorizontalItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
