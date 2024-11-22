@@ -25,6 +25,7 @@ namespace CardGameCorner
             // Register services
             builder.Services.AddSingleton<IAuthService, AuthService>();
             builder.Services.AddSingleton<ISecureStorage, SecureStorageService>();
+            builder.Services.AddSingleton<IScanCardService, ScanCardService>();
 
             // Register pages and viewmodels
             builder.Services.AddSingleton<IGameService, GameService>();
@@ -40,6 +41,7 @@ namespace CardGameCorner
             builder.Services.AddTransient<ScanPage>();
             builder.Services.AddTransient<GameDetailsViewModel>();
             builder.Services.AddTransient<GameDetailsPage>();
+            builder.Services.AddTransient<ScanCardViewModel>();
 
             builder.Services.AddSingleton<IMyAccountService, MyAccountService>();
             builder.Services.AddTransient<MyAccountViewModel>();
