@@ -53,7 +53,6 @@ namespace CardGameCorner.Views
     {
         private readonly GameDetailsViewModel _viewModel;
         private bool _isLoading;
-
         public string GameCode { get; set; }
         public string UiCode { get; set; }
 
@@ -94,16 +93,30 @@ namespace CardGameCorner.Views
             {
                 if (!_isLoading)
                 {
+                    // Show loader overlay
+                    loaderOverlay.IsVisible = true;
+                    loadingIndicator.IsRunning = true;
+
                     _isLoading = true;
                     await _viewModel.LoadGameDetails(UiCode, GameCode);
+
+                    // Hide loader
+                    loaderOverlay.IsVisible = false;
+                    loadingIndicator.IsRunning = false;
+
                     _isLoading = false;
                 }
             }
             catch (Exception ex)
             {
                 _isLoading = false;
+
+                // Hide loader in case of error
+                loaderOverlay.IsVisible = false;
+                loadingIndicator.IsRunning = false;
+
                 System.Diagnostics.Debug.WriteLine($"LoadGameDetails error: {ex}");
-                throw;
+                await DisplayAlert("Error", "Failed to load game details.", "OK");
             }
         }
 
@@ -115,10 +128,5 @@ namespace CardGameCorner.Views
                 disposable.Dispose();
             }
         }
-
-      
     }
-
 }
-
-

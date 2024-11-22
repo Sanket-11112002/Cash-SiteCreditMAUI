@@ -13,10 +13,12 @@ public partial class SearchPage : ContentPage
     private async void OnScanButtonClicked(object sender, EventArgs e)
     {
         // Trigger camera scanning logic
-        await Navigation.PushAsync(new ScanPage()); // Navigate to a scanning page
-                                                    // OR handle scanning logic directly
-                                                    // Call a method to open the camera
-
+        await Navigation.PushAsync(new ScanPage());    
+    }
+    private async void OnSearchButtonClicked(object sender, EventArgs e)
+    {
+        // Trigger camera scanning logic
+        await Navigation.PushAsync(new SearchQueryPage());
     }
 
 

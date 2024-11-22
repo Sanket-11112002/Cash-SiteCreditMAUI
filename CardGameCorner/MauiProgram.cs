@@ -1,6 +1,7 @@
 ﻿using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 using CardGameCorner.Views;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using ISecureStorage = CardGameCorner.Services.ISecureStorage;
 
@@ -13,6 +14,8 @@ namespace CardGameCorner
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkitCamera()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -37,10 +40,12 @@ namespace CardGameCorner
             builder.Services.AddTransient<ScanPage>();
             builder.Services.AddTransient<GameDetailsViewModel>();
             builder.Services.AddTransient<GameDetailsPage>();
+            builder.Services.AddTransient<SearchViewModel>();
+            builder.Services.AddTransient<SearchQueryPage>();
 
             builder.Services.AddSingleton<IMyAccountService, MyAccountService>();
             builder.Services.AddTransient<MyAccountViewModel>();
-
+            
             // Register HttpClient
             builder.Services.AddHttpClient();
 #if DEBUG
