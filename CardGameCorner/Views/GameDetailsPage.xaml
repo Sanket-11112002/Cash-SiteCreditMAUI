@@ -6,7 +6,11 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              Title="Game Details"
              BackgroundColor="#1B3B48">
-   
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="settings_icon.png" Text="Settings" Clicked="OnSettingsClicked" />
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Resources>
         <DataTemplate x:Key="ImageTemplate">
             <Image Source="{Binding .}" Aspect="AspectFit" />
@@ -128,11 +132,7 @@
               Grid.RowSpan="2"
               AbsoluteLayout.LayoutBounds="0,0,1,1"
               AbsoluteLayout.LayoutFlags="All">
-            <!-- Blur Effect Container -->
-            <!--<Grid.Effects>
-                <BlurEffect Radius="10" />
-            </Grid.Effects>-->
-
+            
             <!-- Centered Loader -->
             <ActivityIndicator 
                 x:Name="loadingIndicator"

@@ -186,10 +186,6 @@ namespace CardGameCorner.ViewModels
             }
         }
 
-        
-
-      
-
         [RelayCommand]
         private async Task GameSelectedAsync(Game game)
         {
