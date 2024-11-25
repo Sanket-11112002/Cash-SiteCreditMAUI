@@ -5,44 +5,42 @@
 
     <ScrollView>
         <VerticalStackLayout Spacing="20" 
-                            Padding="20"
-                            VerticalOptions="Start">
+                             Padding="20"
+                             VerticalOptions="Start">
+
             <!-- Logo -->
             <Image Source="splashscreenlogo.png"
                    HeightRequest="100"
-                   HorizontalOptions="Center"
                    WidthRequest="100"
-                   Aspect="AspectFit"/>
+                   Aspect="AspectFit"
+                   HorizontalOptions="Center" />
 
             <!-- Banner -->
             <Image Source="banner.jpg" 
                    Aspect="AspectFit"
-                   Margin="0,0,0,10"/>
+                   Margin="0,0,0,10" />
 
             <!-- Grid for Buttons -->
             <Grid ColumnDefinitions="*,*"
                   ColumnSpacing="20"
                   Margin="0,0,0,20">
-
                 <!-- Search Button -->
                 <Frame Grid.Column="0"
                        BackgroundColor="#2A3947"
                        BorderColor="White"
                        CornerRadius="10"
-                       HeightRequest="120"
-                       Margin="0">
-                    <Grid RowDefinitions="*,Auto" 
-                          RowSpacing="10">
-                        <Image Source="search.png"
-                               HeightRequest="40"
-                               VerticalOptions="End"
-                               HorizontalOptions="Center"/>
+                       HeightRequest="120">
+                    <VerticalStackLayout Spacing="10" 
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center">
+                        <ImageButton Source="scan.png"
+                      HeightRequest="40"
+                      BackgroundColor="Transparent"
+                      Clicked="OnSearchButtonClicked" />      
                         <Label Text="Search"
                                TextColor="White"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Start"
-                               Grid.Row="1"/>
-                    </Grid>
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
                 </Frame>
 
                 <!-- Scan Button -->
@@ -50,24 +48,21 @@
                        BackgroundColor="#2A3947"
                        BorderColor="White"
                        CornerRadius="10"
-                       HeightRequest="120"
-                       Margin="0">
-                    <Grid RowDefinitions="*,Auto"
-                          RowSpacing="10">
+                       HeightRequest="120">
+                    <VerticalStackLayout Spacing="10" 
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center">
                         <ImageButton Source="scan.png"
-                     HeightRequest="40"
-                     BackgroundColor="Transparent"
-                     HorizontalOptions="Center"
-                     VerticalOptions="Center"
-                     Clicked="OnScanButtonClicked" />
+                                     HeightRequest="40"
+                                     BackgroundColor="Transparent"
+                                     Clicked="OnScanButtonClicked" />
                         <Label Text="Scan with camera"
                                TextColor="White"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Start"
-                               Grid.Row="1"/>
-                    </Grid>
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
                 </Frame>
             </Grid>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

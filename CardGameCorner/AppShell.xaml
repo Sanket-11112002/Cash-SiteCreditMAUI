@@ -5,23 +5,45 @@
        Shell.FlyoutBehavior="Disabled"
        BackgroundColor="#1B3B48">
 
-    <!--<TabBar>
-        <ShellContent
-            Title="Login"
-            ContentTemplate="{DataTemplate views:LoginPage}"
-            Route="login" />
+    <TabBar>
 
         <ShellContent
-            Title="Home"
-            ContentTemplate="{DataTemplate views:HomePage}"
-            Route="home" />
-    </TabBar>-->
+         Title="Home"
+         Icon="bxhomealt"
+         ContentTemplate="{DataTemplate views:HomePage}"
+         Route="home" />
+        
+        <ShellContent
+        Title="Search"
+        Icon="bxsearchalt.svg"
+        ContentTemplate="{DataTemplate views:SearchPage }"
+        Route="SearchPage" />
 
-    <ShellContent
+        <ShellContent
+        Title="Scan"
+        Icon="bxqrscan.svg"
+        ContentTemplate="{DataTemplate views:ScanPage }"
+        Route="ScanPage" />
+
+        <ShellContent
+        Title="My Account"
+        Icon="bxuser.svg"
+        ContentTemplate="{DataTemplate views:MyAccountPage }"
+        Route="MyAccountPage" />
+
+        <ShellContent
+        Title="My List"
+        Icon="bxlistul.svg"
+        ContentTemplate="{DataTemplate views:MyListPage }"
+        Route="MyListPage" />
+
+    </TabBar>
+
+    <!--<ShellContent
         ContentTemplate="{DataTemplate views:LoginPage}"
         Route="login" />
 
-    <ShellContent Route="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
+    <ShellContent Route="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />-->
 
 
 </Shell>

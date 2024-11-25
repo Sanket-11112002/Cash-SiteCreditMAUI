@@ -43,6 +43,8 @@ namespace CardGameCorner
             builder.Services.AddTransient<GameDetailsViewModel>();
             builder.Services.AddTransient<GameDetailsPage>();
             builder.Services.AddTransient<ScanCardViewModel>();
+            builder.Services.AddTransient<SearchViewModel>();
+            builder.Services.AddTransient<SearchQueryPage>();
 
             builder.Services.AddSingleton<IMyAccountService, MyAccountService>();
             builder.Services.AddTransient<MyAccountViewModel>();

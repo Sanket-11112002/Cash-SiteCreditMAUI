@@ -80,8 +80,10 @@
             <Setter Property="HeightRequest" Value="50"/>
         </Style>
     </ContentPage.Resources>
-    <ScrollView>
+    <Grid>
+        <ScrollView x:Name="MainContentScrollView">
         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="20">
+           
             <!-- CarouselView to display banner images -->
             <Grid HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="300" HeightRequest="200">
                 <CarouselView x:Name="carouselView" ItemsSource="{Binding Banners}" HorizontalScrollBarVisibility="Never" Loop="False">
@@ -107,7 +109,7 @@
                 <Button ImageSource="left.png" Style="{StaticResource NavigationButtonStyle}" VerticalOptions="Center" HorizontalOptions="Start" Margin="0,0,10,0"  />
                 <Button ImageSource="next.png" Style="{StaticResource NavigationButtonStyle}" VerticalOptions="Center" HorizontalOptions="End" Margin="10,0,0,0"  />
             </Grid>
-
+          
             <AbsoluteLayout HorizontalOptions="FillAndExpand" HeightRequest="100">
                 <Image Source="img1.png" Aspect="AspectFill" AbsoluteLayout.LayoutBounds="0.5, 0.5, 1, 1" AbsoluteLayout.LayoutFlags="All" />
                 <Label Text="Best Deals" TextColor="White" FontSize="24" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.5, 0.5, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional" />
@@ -119,4 +121,26 @@
             </CollectionView>
         </VerticalStackLayout>
     </ScrollView>
+        <Grid x:Name="loaderOverlay"
+              IsVisible="False"
+              BackgroundColor="#801B3B48"
+              ZIndex="1000"
+              Grid.RowSpan="2"
+              AbsoluteLayout.LayoutBounds="0,0,1,1"
+              AbsoluteLayout.LayoutFlags="All">
+            <!-- Blur Effect Container -->
+            <!--<Grid.Effects>
+                <BlurEffect Radius="10" />
+            </Grid.Effects>-->
+
+            <!-- Centered Loader -->
+            <ActivityIndicator 
+                x:Name="loadingIndicator"
+                Color="White"
+                IsRunning="False"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Scale="2"/>
+        </Grid>
+    </Grid>
 </ContentPage>
