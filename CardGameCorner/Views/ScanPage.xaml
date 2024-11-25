@@ -1,14 +1,14 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<!--<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="CardGameCorner.Views.ScanPage"
              Title="Scan Page">
     <ScrollView>
         <VerticalStackLayout Padding="10" Spacing="20">
-            <!-- Camera View for Scanning -->
-          
-            
-            
+            --><!-- Camera View for Scanning --><!--
+
+
+
             <toolkit:CameraView 
         x:Name="cameraView"
          MediaCaptured="OnMediaCaptured"
@@ -19,7 +19,7 @@
         
         />
 
-            <!-- Capture Button -->
+            --><!-- Capture Button --><!--
             <Button Text="Capture"
             Clicked="OnCaptureButtonClicked"
             BackgroundColor="#FF6347"
@@ -38,5 +38,130 @@
 
         </VerticalStackLayout>
     </ScrollView>
-    
+
+</ContentPage>-->
+
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="CardGameCorner.Views.ScanPage"
+             Title="Scan Page">
+    <!--<ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="20">
+            --><!-- Camera View for Scanning -->
+            <!--<toolkit:CameraView 
+                x:Name="cameraView"
+                MediaCaptured="OnMediaCaptured"
+                HeightRequest="500"
+                WidthRequest="500"
+                HorizontalOptions="Center"
+                BackgroundColor="Black"
+                IsVisible="False" />-->
+
+            <!-- Capture Button --><!--
+            <Button Text="Capture"
+                    Clicked="OnCaptureButtonClicked"
+                    BackgroundColor="#FF6347"
+                    TextColor="White"
+                    FontSize="20"
+                    WidthRequest="200"
+                    HeightRequest="50"
+                    HorizontalOptions="Center" />
+
+             --><!--Upload Button--><!-- 
+            <Button Text="Upload"
+                    Clicked="OnUploadButtonClicked"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    FontSize="20"
+                    WidthRequest="200"
+                    HeightRequest="50"
+                    HorizontalOptions="Center"
+                    IsEnabled="true"
+                    x:Name="uploadButton" />
+
+            --><!-- Captured Image --><!--
+            <Image x:Name="capturedImage"
+                   HeightRequest="300"
+                   Aspect="AspectFit"
+                   IsVisible="False"
+                   SemanticProperties.Description="Captured image will appear here" />
+        </VerticalStackLayout>
+    </ScrollView>-->
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" 
+                          Padding="20"
+                          VerticalOptions="Start">
+            <!-- Logo -->
+            <Image Source="splashscreenlogo.png"
+                 HeightRequest="100"
+                 HorizontalOptions="Center"
+                 WidthRequest="100"
+                 Aspect="AspectFit"/>
+
+            <!-- Banner -->
+            <Image Source="banner.jpg" 
+                 Aspect="AspectFit"
+                 Margin="0,0,0,10"/>
+
+            <Image x:Name="capturedImage"
+         HeightRequest="300"
+         Aspect="AspectFit"
+         IsVisible="False"
+         SemanticProperties.Description="Captured image will appear here" />
+
+            <!-- Grid for Buttons -->
+            <Grid ColumnDefinitions="*,*"
+                ColumnSpacing="20"
+                Margin="0,0,0,20">
+
+                <!-- Search Button -->
+                <Frame Grid.Column="0"
+                     BackgroundColor="#2A3947"
+                     BorderColor="White"
+                     CornerRadius="10"
+                     HeightRequest="120"
+                     Margin="0">
+                    <Grid RowDefinitions="*,Auto" 
+                        RowSpacing="10">
+                        <ImageButton Source="camera.png"
+                             HeightRequest="40"
+                             VerticalOptions="End"
+                             HorizontalOptions="Center"
+                             Clicked="OnCaptureButtonClicked" />
+                        <Label Text="Capture Image"
+                             TextColor="White"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Start"
+                             Grid.Row="1"/>
+                    </Grid>
+                </Frame>
+
+                <!-- Scan Button -->
+                <Frame Grid.Column="1"
+                     BackgroundColor="#2A3947"
+                     BorderColor="White"
+                     CornerRadius="10"
+                     HeightRequest="120"
+                     Margin="0">
+                    <Grid RowDefinitions="*,Auto"
+                        RowSpacing="10">
+                        <ImageButton Source="uploadicon.png"
+                   HeightRequest="40"
+                   BackgroundColor="Transparent"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Clicked="OnUploadButtonClicked" />
+                        <Label Text="Upload Image"
+                             TextColor="White"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Start"
+                             Grid.Row="1"/>
+                    </Grid>
+                </Frame>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

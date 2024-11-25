@@ -33,6 +33,7 @@ namespace CardGameCorner
             Routing.RegisterRoute(nameof(SearchPage), typeof(SearchPage));
             Routing.RegisterRoute(nameof(MyAccountPage), typeof(MyAccountPage));
             Routing.RegisterRoute(nameof(ScanPage), typeof(ScanPage));
+            Routing.RegisterRoute(nameof(CardComparisonPage), typeof(CardComparisonPage));
         }
 
         // Navigate to HomePage with TabBar after login
@@ -74,8 +75,8 @@ namespace CardGameCorner
                     {
                          Title="My List",
                          Icon="bxlistul.svg",
-                        ContentTemplate = new DataTemplate(typeof(MyListPage)),
-                        Route = "MyListPage"
+                        ContentTemplate = new DataTemplate(typeof(CardComparisonPage)),
+                        Route = "CardComparisonPage"
                     },
 
                 }
