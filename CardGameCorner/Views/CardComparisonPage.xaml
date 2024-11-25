@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CardGameCorner.Views.CardComparisonPage"
+             BackgroundColor="#1A2634">
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto,*,Auto"
+         Padding="20">
+
+            <!-- Pokemon Logo -->
+            <Image Grid.Row="0"
+              Source="pokemon_logo.png"
+              HeightRequest="50"
+              HorizontalOptions="Center"
+              Margin="0,10,0,20"/>
+
+            <!-- Main Content -->
+            <Grid Grid.Row="1" 
+             RowDefinitions="*,Auto,Auto"
+             ColumnDefinitions="*,*"
+             ColumnSpacing="15">
+
+                <!-- Card Images -->
+                <!--<Frame Grid.Row="0" 
+                  Grid.Column="0"
+                  BorderColor="#FF4444"
+                  CornerRadius="10"
+                  Padding="5"
+                       HeightRequest="50"
+                       
+                  BackgroundColor="Transparent">
+                    <Image Aspect="AspectFit"
+                      Source="pokemon_card.jpg"
+                             HeightRequest="80"
+                           WidthRequest="80"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CaptureImageCommand}"/>
+                    </Frame.GestureRecognizers>
+                </Frame>-->
+                <Frame Grid.Row="0" Grid.Column="0"  BorderColor="#FF4444">
+                    <Image Aspect="AspectFit"  Source="pokemon_card.jpg" HeightRequest="300" WidthRequest="300" />
+
+                </Frame>
+
+                <Frame Grid.Row="0" Grid.Column="1"  BorderColor="#FF4444">
+                    <Image Aspect="AspectFit"  Source="pokemon_card.jpg" HeightRequest="300" WidthRequest="300" />
+
+                </Frame>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!--<Frame Grid.Row="0" 
+                  Grid.Column="1"
+                  BorderColor="#44FF44"
+                  CornerRadius="10"
+                  Padding="5"
+                           HeightRequest="20"
+                  BackgroundColor="Transparent">
+                    <Image Aspect="AspectFit"
+                      Source="{Binding SearchResultImage}"/>
+                </Frame>-->
+
+                <!-- Labels -->
+                <Label Grid.Row="1" 
+                  Grid.Column="0"
+                  Text="YOUR PICTURE"
+                  TextColor="White"
+                  HorizontalOptions="Center"
+                  Margin="0,10,0,0"/>
+
+                <Label Grid.Row="1" 
+                  Grid.Column="1"
+                  Text="SEARCH RESULT"
+                  TextColor="White"
+                  HorizontalOptions="Center"
+                  Margin="0,10,0,0"/>
+            </Grid>
+
+            <!-- Card Details -->
+            <Frame Grid.Row="2"
+              BackgroundColor="#2A3644"
+              CornerRadius="15"
+              Padding="20"
+              Margin="0,20,0,0">
+                <StackLayout Spacing="10">
+                    <Label Text="{Binding CardName}"
+                      TextColor="White"
+                      FontSize="20"
+                      HorizontalOptions="Center"/>
+
+                    <Label Text="{Binding CardRarity}"
+                      TextColor="LightGray"
+                      FontSize="16"
+                      HorizontalOptions="Center"/>
+
+                    <Label Text="{Binding CardSet}"
+                      TextColor="LightGray"
+                      FontSize="16"
+                      HorizontalOptions="Center"/>
+
+                    <Label Text="Is this Your card?"
+                      TextColor="White"
+                      FontSize="18"
+                      HorizontalOptions="Center"
+                      Margin="0,10,0,10"/>
+
+                    <Grid ColumnDefinitions="*,*" 
+                     ColumnSpacing="20">
+                        <Button Grid.Column="0"
+                           Text="Yes! Add to my list"
+                           BackgroundColor="#44FF44"
+                           TextColor="White"
+                           CornerRadius="25"
+                           HeightRequest="50"
+                           Command="{Binding ConfirmCardCommand}"/>
+
+                        <Button Grid.Column="1"
+                           Text="No! I will try again"
+                           BackgroundColor="#FF4444"
+                           TextColor="White"
+                           CornerRadius="25"
+                           HeightRequest="50"
+                           Command="{Binding RetryCommand}"/>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+        </Grid>
+
+    </ScrollView>
+ 
+</ContentPage>

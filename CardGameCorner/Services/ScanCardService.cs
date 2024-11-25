@@ -159,15 +159,15 @@ namespace CardGameCorner.Services
 
                         if (response.IsSuccessStatusCode)
                         {
-                            //await Application.Current.MainPage.DisplayAlert("Success",
-                            //    "Image uploaded successfully", "OK");
+                            await Application.Current.MainPage.DisplayAlert("Success",
+                                "Image uploaded successfully", "OK");
                         }
                         else
                         {
-                            //var errorMessage = $"Status Code: {response.StatusCode}\nError: {responseContent}";
-                            //Console.WriteLine($"Error details: {errorMessage}");
-                            //await Application.Current.MainPage.DisplayAlert("Upload Failed",
-                            //    errorMessage, "OK");
+                            var errorMessage = $"Status Code: {response.StatusCode}\nError: {responseContent}";
+                            Console.WriteLine($"Error details: {errorMessage}");
+                            await Application.Current.MainPage.DisplayAlert("Upload Failed",
+                                errorMessage, "OK");
                         }
                     }
                 }

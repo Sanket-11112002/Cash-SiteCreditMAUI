@@ -29,6 +29,9 @@
     <MauiXaml Update="Views\MyListPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
+    <MauiXaml Update="Views\CardComparisonPage.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
     <MauiXaml Update="Views\RegistrationPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>

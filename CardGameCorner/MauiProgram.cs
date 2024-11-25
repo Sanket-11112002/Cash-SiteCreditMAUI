@@ -36,6 +36,7 @@ namespace CardGameCorner
             builder.Services.AddTransient<HomePage>();
             builder.Services.AddSingleton<AppShell>();
             builder.Services.AddTransient<RegistrationPage>();
+            builder.Services.AddTransient<CardComparisonPage>();
             builder.Services.AddTransient<MyListPage>();
             builder.Services.AddTransient<MyAccountPage>();
             builder.Services.AddTransient<SearchPage>();
@@ -50,7 +51,10 @@ namespace CardGameCorner
 
             builder.Services.AddSingleton<IMyAccountService, MyAccountService>();
             builder.Services.AddTransient<MyAccountViewModel>();
-            
+
+          
+            builder.Services.AddTransient<CardComparisonViewModel>();
+
             // Register HttpClient
             builder.Services.AddHttpClient();
 #if DEBUG
