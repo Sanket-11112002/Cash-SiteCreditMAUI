@@ -5,6 +5,7 @@ using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
 using ISecureStorage = CardGameCorner.Services.ISecureStorage;
+using CommunityToolkit.Maui;
 
 namespace CardGameCorner
 {
@@ -13,20 +14,15 @@ namespace CardGameCorner
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
-            builder
-                .UseMauiApp<App>()
-                .UseMauiCommunityToolkitCamera()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
-
+            builder.UseMauiApp<App>().UseMauiCommunityToolkitCamera().ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            }).UseMauiCommunityToolkit();
             // Register services
             builder.Services.AddSingleton<IAuthService, AuthService>();
             builder.Services.AddSingleton<ISecureStorage, SecureStorageService>();
             builder.Services.AddSingleton<IScanCardService, ScanCardService>();
-
             // Register pages and viewmodels
             builder.Services.AddSingleton<IGameService, GameService>();
             builder.Services.AddSingleton<HomeViewModel>();
@@ -45,19 +41,17 @@ namespace CardGameCorner
             builder.Services.AddTransient<ScanCardViewModel>();
             builder.Services.AddTransient<SearchViewModel>();
             builder.Services.AddTransient<SearchQueryPage>();
-
             builder.Services.AddSingleton<IMyAccountService, MyAccountService>();
             builder.Services.AddTransient<MyAccountViewModel>();
-
-          
             builder.Services.AddTransient<CardComparisonViewModel>();
+            builder.Services.AddTransient<ApiResponse_Card>();
+            builder.Services.AddTransient<ScannedCardDetails>();
 
             // Register HttpClient
             builder.Services.AddHttpClient();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
-
             return builder.Build();
         }
     }

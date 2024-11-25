@@ -39,7 +39,7 @@
                     </Frame.GestureRecognizers>
                 </Frame>-->
                 <Frame Grid.Row="0" Grid.Column="0"  BorderColor="#FF4444">
-                    <Image Aspect="AspectFit"  Source="pokemon_card.jpg" HeightRequest="300" WidthRequest="300" />
+                    <Image x:Name="scannedimage" Aspect="AspectFit"  HeightRequest="300" WidthRequest="300" />
 
                 </Frame>
 
@@ -47,18 +47,6 @@
                     <Image Aspect="AspectFit"  Source="pokemon_card.jpg" HeightRequest="300" WidthRequest="300" />
 
                 </Frame>
-
-
-
-
-
-
-
-
-
-
-
-
 
                 <!--<Frame Grid.Row="0" 
                   Grid.Column="1"
@@ -131,7 +119,7 @@
                            TextColor="White"
                            CornerRadius="25"
                            HeightRequest="50"
-                           Command="{Binding RetryCommand}"/>
+                           Clicked="Retry"/>
                     </Grid>
                 </StackLayout>
             </Frame>
