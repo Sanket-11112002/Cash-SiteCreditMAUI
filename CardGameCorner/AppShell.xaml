@@ -24,7 +24,13 @@
         Icon="bxqrscan.svg"
         ContentTemplate="{DataTemplate views:ScanPage }"
         Route="ScanPage" />
-
+        
+        <ShellContent
+        Title="Card Page"
+        Icon="bxlistul.svg"
+        ContentTemplate="{DataTemplate views:CardDetailPage }"
+        Route="CardDetailPage" />
+        
         <ShellContent
         Title="My Account"
         Icon="bxuser.svg"

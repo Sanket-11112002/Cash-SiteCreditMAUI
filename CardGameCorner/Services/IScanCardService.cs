@@ -8,6 +8,9 @@ namespace CardGameCorner.Services
 {
     public interface IScanCardService
     {
-       public Task UploadImageAsync(Stream imageStream);
+        //Task<string> UploadImageAsync(byte[] imageData);
+        //Task<string> UploadInvalidImageAsync(string errorMessage);
+
+        public Task UploadImageAsync(Stream imageStream);
     }
 }

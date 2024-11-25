@@ -1,42 +1,39 @@
+<!--<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="CardGameCorner.Views.ScanPage"
-             Title="Scan Page">
-    <ScrollView>
-        <VerticalStackLayout Padding="10" Spacing="20">
-            <!-- Camera View for Scanning -->
-          
-            
-            
-            <toolkit:CameraView 
-        x:Name="cameraView"
-         MediaCaptured="OnMediaCaptured"
-        HeightRequest="500"
-        WidthRequest="500"
-        HorizontalOptions="Center"
-        BackgroundColor="Black"
-        
-        />
+             Title="Scan Card">
 
-            <!-- Capture Button -->
-            <Button Text="Capture"
-            Clicked="OnCaptureButtonClicked"
-            BackgroundColor="#FF6347"
-            TextColor="White"
-            FontSize="20"
+    <Grid RowDefinitions="*, Auto, Auto">
+        <toolkit:CameraView 
+            x:Name="cameraView"
+            Grid.Row="0"
+            HeightRequest="500"
+            WidthRequest="500"
+            MediaCaptured="OnMediaCaptured"/>
+
+        <Button 
+            Grid.Row="1"
+            Text="Capture"
+            Clicked="OnCaptureClicked"
+            HorizontalOptions="Center"
             WidthRequest="200"
             HeightRequest="50"
-            HorizontalOptions="Center" />
+            Margin="0,20"/>
 
-            <Image x:Name="capturedImage"
-      HeightRequest="300"
-      Aspect="AspectFit"
-      IsVisible="False"
-      SemanticProperties.Description="Captured image will appear here" />
+        <Image 
+            x:Name="previewImage"
+            Grid.Row="2"
+            HeightRequest="300"
+            Aspect="AspectFit"
+            HorizontalOptions="Center"
+            IsVisible="False"/>
+    </Grid>
+</ContentPage>-->
 
-
-        </VerticalStackLayout>
-    </ScrollView>
-    
-</ContentPage>
+<!--<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"             x:Class="CardGameCorner.Views.ScanPage"             Title="Scan Page">    <ScrollView>        <VerticalStackLayout Padding="10" Spacing="20">            -->
+<!-- Camera View for Scanning -->
+<!--            <toolkit:CameraView         x:Name="cameraView"         MediaCaptured="OnMediaCaptured"        HeightRequest="500"        WidthRequest="500"        HorizontalOptions="Center"        BackgroundColor="Black"                />            -->
+<!-- Capture Button -->
+<!--            <Button Text="Capture"            Clicked="OnCaptureButtonClicked"            BackgroundColor="#FF6347"            TextColor="White"            FontSize="20"            WidthRequest="200"            HeightRequest="50"            HorizontalOptions="Center" />            <Image x:Name="capturedImage"      HeightRequest="300"      Aspect="AspectFit"      IsVisible="False"      SemanticProperties.Description="Captured image will appear here" />        </VerticalStackLayout>    </ScrollView></ContentPage>--><ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"             x:Class="CardGameCorner.Views.ScanPage"             Title="Scan Page">    <ScrollView>        <VerticalStackLayout Padding="10" Spacing="20">            <!-- Camera View for Scanning -->            <!--<toolkit:CameraView                 x:Name="cameraView"                MediaCaptured="OnMediaCaptured"                HeightRequest="500"                WidthRequest="500"                HorizontalOptions="Center"                BackgroundColor="Black"                IsVisible="False" />-->            <!-- Capture Button -->            <Button Text="Capture"                    Clicked="OnCaptureButtonClicked"                    BackgroundColor="#FF6347"                    TextColor="White"                    FontSize="20"                    WidthRequest="200"                    HeightRequest="50"                    HorizontalOptions="Center" />            <!-- Upload Button -->            <Button Text="Upload"                    Clicked="OnUploadButtonClicked"                    BackgroundColor="#4CAF50"                    TextColor="White"                    FontSize="20"                    WidthRequest="200"                    HeightRequest="50"                    HorizontalOptions="Center"                    IsEnabled="True"                    x:Name="uploadButton" />            <!-- Captured Image -->            <Image x:Name="capturedImage"                   HeightRequest="300"                   Aspect="AspectFit"                   IsVisible="False"                   SemanticProperties.Description="Captured image will appear here" />        </VerticalStackLayout>    </ScrollView></ContentPage>

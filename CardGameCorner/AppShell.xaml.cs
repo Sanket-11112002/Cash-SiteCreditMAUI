@@ -33,6 +33,7 @@ namespace CardGameCorner
             Routing.RegisterRoute(nameof(SearchPage), typeof(SearchPage));
             Routing.RegisterRoute(nameof(MyAccountPage), typeof(MyAccountPage));
             Routing.RegisterRoute(nameof(ScanPage), typeof(ScanPage));
+            Routing.RegisterRoute(nameof(CardDetailPage), typeof(CardDetailPage));
         }
 
         // Navigate to HomePage with TabBar after login
@@ -77,6 +78,7 @@ namespace CardGameCorner
                         ContentTemplate = new DataTemplate(typeof(MyListPage)),
                         Route = "MyListPage"
                     },
+                    
 
                 }
             };

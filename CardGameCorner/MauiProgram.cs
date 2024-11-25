@@ -16,6 +16,7 @@ namespace CardGameCorner
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkitCamera()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -44,6 +45,8 @@ namespace CardGameCorner
             builder.Services.AddTransient<ScanCardViewModel>();
             builder.Services.AddTransient<SearchViewModel>();
             builder.Services.AddTransient<SearchQueryPage>();
+            builder.Services.AddTransient<CardDetailPage>();
+            builder.Services.AddTransient<CardDetailViewModel>();
 
             builder.Services.AddSingleton<IMyAccountService, MyAccountService>();
             builder.Services.AddTransient<MyAccountViewModel>();
