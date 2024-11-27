@@ -6,14 +6,8 @@
              x:Class="CardGameCorner.Views.HomePage"
              x:DataType="vm:HomeViewModel">
 
-    <!--<ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="settings_icon.png" Text="Settings" Clicked="OnSettingsClicked" />
-    </ContentPage.ToolbarItems>-->
     <ContentPage.ToolbarItems>
-        <ToolbarItem 
-            IconImageSource="settings_icon.png" 
-            Text="Settings" 
-            Clicked="OnSettingsClicked" />
+        <ToolbarItem IconImageSource="setting.png" Text="Settings" Clicked="OnSettingsClicked" />
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="Auto,*">
