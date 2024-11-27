@@ -2,10 +2,34 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.MyListPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <!-- Header -->
+        <Button Text="Back" Grid.Row="0" Grid.Column="0" Margin="16" />
+        <Button Text="Done" Grid.Row="0" Grid.Column="1" Margin="16" />
+        <!-- List of Items -->
+        <CollectionView Grid.Row="1" Grid.ColumnSpan="2" Margin="16">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnSpan="2" ColumnDefinitions="Auto,*,Auto" Margin="0,8,0,0">
+                        <Image Source="pokemon_card.jpg" WidthRequest="48" HeightRequest="48" Margin="0,0,16,0" />
+                        <VerticalStackLayout Grid.Column="1">
+                            <!--<Label Text="{Binding Name}" FontAttributes="Bold" />-->
+                            <Label Text="sample name" FontAttributes="Bold" />
+                            <!--<Label Text="{Binding Quantity, StringFormat='Quantity: {0}'}" TextColor="Gray" />-->
+                            <Label Text="1" TextColor="Gray" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="200" FontAttributes="Bold" VerticalOptions="Center" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

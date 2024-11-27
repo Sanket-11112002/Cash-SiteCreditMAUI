@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CardGameCorner.ViewModels
 {
-    internal class MyListViewModel
+    public class MyListViewModel: ObservableObject
     {
+        
     }
 }
