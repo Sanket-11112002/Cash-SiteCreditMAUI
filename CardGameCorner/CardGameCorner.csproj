@@ -66,6 +66,7 @@
 	  <None Remove="Resources\Images\left.png" />
 	  <None Remove="Resources\Images\next.png" />
 	  <None Remove="Resources\Images\pokemon_card.jpg" />
+	  <None Remove="Resources\Images\Setting.png" />
 	  <None Remove="Resources\Images\splashscreenlogo.png" />
 	</ItemGroup>
 
