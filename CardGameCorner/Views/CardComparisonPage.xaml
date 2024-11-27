@@ -2,7 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.CardComparisonPage"
-             BackgroundColor="#1A2634">
+           
+             BackgroundColor="#1A2634"
+           
+             >
 
     <ScrollView>
         <Grid RowDefinitions="Auto,*,Auto"
@@ -44,7 +47,7 @@
                 </Frame>
 
                 <Frame Grid.Row="0" Grid.Column="1"  BorderColor="#FF4444">
-                    <Image Aspect="AspectFit"  Source="pokemon_card.jpg" HeightRequest="300" WidthRequest="300" />
+                    <Image Aspect="AspectFit"  Source="{Binding searchResultImage}" HeightRequest="300" WidthRequest="300" />
 
                 </Frame>
 

@@ -55,8 +55,9 @@ namespace CardGameCorner
                          Title="Search",
                          Icon="bxsearchalt.svg",
                         ContentTemplate = new DataTemplate(typeof(SearchPage)),
-                        Route = "SearchPage"
+                        Route = nameof(SearchPage) // Ensure consistency
                     },
+                       
                     new ShellContent
                     {
                          Title="Scan",

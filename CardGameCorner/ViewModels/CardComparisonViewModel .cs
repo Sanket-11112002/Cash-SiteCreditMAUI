@@ -19,7 +19,7 @@ namespace CardGameCorner.ViewModels
         private string cardSet;
 
         [ObservableProperty]
-        private ImageSource searchResultImage;
+        private string searchResultImage;
 
 
         [ObservableProperty]
@@ -27,7 +27,7 @@ namespace CardGameCorner.ViewModels
 
 
         [ObservableProperty]
-        public ApiResponse_Card responseContent;
+        public CardSearchResponseViewModel responseContent;
 
 
 
@@ -56,23 +56,41 @@ namespace CardGameCorner.ViewModels
 
         public CardComparisonViewModel()
         {
-            // Default initialization if needed
+            
         }
 
-        public void Initialize(ApiResponse_Card response, ImageSource image)
+        //public void Initialize(ApiResponse_Card response, ImageSource image)
+        //{
+        //    ResponseContent = response;
+        //    ScannedImage = image;
+
+        //    if (ResponseContent?.Result != null)
+        //    {
+        //        CardName = ResponseContent.Result.Title;
+        //        CardRarity = ResponseContent.Result.Rarity;
+        //        CardSet = ResponseContent.Result.Set;
+
+
+        //    }
+        //}
+
+        public void Initialize(CardSearchResponseViewModel response, ImageSource image)
         {
-            ResponseContent = response;
-            ScannedImage = image;
+            responseContent = response;
+            scannedImage = image;
 
-            if (ResponseContent?.Result != null)
+            if (responseContent?.Products[0] != null)
             {
-                CardName = ResponseContent.Result.Title;
-                CardRarity = ResponseContent.Result.Rarity;
-                CardSet = ResponseContent.Result.Set;
+                CardName = responseContent.Products[0].Model;
+                CardRarity = responseContent.Products[0].Rarity;
+                CardSet = responseContent.Products[0].Category;
 
-
+                searchResultImage= "https://www.cardgamecorner.com"+responseContent.Products[0].Image;
+            
             }
         }
+
+
         //[RelayCommand]
         //private async Task CaptureImage()
         //{

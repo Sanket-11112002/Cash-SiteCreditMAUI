@@ -17,5 +17,6 @@ public partial class HomePage : ContentPage
     {
         base.OnAppearing();
         await _viewModel.LoadGamesCommand.ExecuteAsync(null);
+
     }
 }
