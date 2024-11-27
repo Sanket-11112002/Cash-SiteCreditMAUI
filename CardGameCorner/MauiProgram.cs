@@ -14,11 +14,16 @@ namespace CardGameCorner
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
-            builder.UseMauiApp<App>().UseMauiCommunityToolkitCamera().ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            }).UseMauiCommunityToolkit();
+            builder
+                .UseMauiApp<App>()
+                .UseMauiCommunityToolkitCamera()
+                .UseMauiCommunityToolkit()
+                .ConfigureFonts(fonts =>
+                {
+                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                });
+
             // Register services
             builder.Services.AddSingleton<IAuthService, AuthService>();
             builder.Services.AddSingleton<ISecureStorage, SecureStorageService>();
@@ -41,11 +46,17 @@ namespace CardGameCorner
             builder.Services.AddTransient<ScanCardViewModel>();
             builder.Services.AddTransient<SearchViewModel>();
             builder.Services.AddTransient<SearchQueryPage>();
+            builder.Services.AddTransient<CardDetailPage>();
+            builder.Services.AddTransient<CardDetailViewModel>();
+
             builder.Services.AddSingleton<IMyAccountService, MyAccountService>();
             builder.Services.AddTransient<MyAccountViewModel>();
             builder.Services.AddTransient<CardComparisonViewModel>();
             builder.Services.AddTransient<ApiResponse_Card>();
             builder.Services.AddTransient<ScannedCardDetails>();
+
+            // Register GlobalSettingsService as a singleton
+            builder.Services.AddSingleton(GlobalSettingsService.Current);
 
             // Register HttpClient
             builder.Services.AddHttpClient();

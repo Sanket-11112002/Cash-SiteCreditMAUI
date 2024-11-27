@@ -47,7 +47,7 @@
                 </Frame>
 
                 <Frame Grid.Row="0" Grid.Column="1"  BorderColor="#FF4444">
-                    <Image Aspect="AspectFit"  Source="{Binding searchResultImage}" HeightRequest="300" WidthRequest="300" />
+                    <Image x:Name="searchimage" Aspect="AspectFit"  HeightRequest="300" WidthRequest="300" />
 
                 </Frame>
 

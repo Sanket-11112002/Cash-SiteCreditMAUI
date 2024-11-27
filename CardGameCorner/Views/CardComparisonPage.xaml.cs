@@ -1,6 +1,5 @@
 
 using CardGameCorner.ViewModels;
-using CommunityToolkit.Mvvm.Input;
 
 
 namespace CardGameCorner.Views;
@@ -13,9 +12,22 @@ public partial class CardComparisonPage : ContentPage
 
         BindingContext = ComparisonData;
         scannedimage.Source = ComparisonData.ScannedImage;
+        searchimage.Source = "https://www.cardgamecorner.com/prodotti/1/1115/IMA006.jpg";
+
 
     }
 
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+
+        // Clean up scannedimage
+        //if (scannedimage?.Source != null)
+        //{
+        //    scannedimage.Source = null;
+        //    scannedimage = null;        
+        //}
+    }
 
     private async void Retry(object sender, EventArgs e)
     {

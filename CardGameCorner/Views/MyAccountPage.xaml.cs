@@ -22,6 +22,7 @@ public partial class MyAccountPage : ContentPage
         viewModel.PropertyChanged += ViewModel_PropertyChanged;
     }
 
+
     private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(MyAccountViewModel.IsEditMode))
@@ -38,5 +39,29 @@ public partial class MyAccountPage : ContentPage
                 ToolbarItems.Add(_editButton);
             }
         }
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        // Ensure login before accessing the page
+        await EnsureUserLoggedIn();
+    }
+
+    private async Task EnsureUserLoggedIn()
+    {
+        if (!App.IsUserLoggedIn)
+        {
+            // Clear any existing navigation stack
+            await Shell.Current.GoToAsync("//login");
+
+        }
+    }
+
+    private async Task LogoutAsync()
+    {
+        App.IsUserLoggedIn = false;
+        await Shell.Current.GoToAsync("//login");
     }
 }

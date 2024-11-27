@@ -23,7 +23,7 @@ namespace CardGameCorner
         private void RegisterRoutes()
         {
             Routing.RegisterRoute($"login", typeof(LoginPage));
-            Routing.RegisterRoute($"//{nameof(HomePage)}", typeof(HomePage));
+            Routing.RegisterRoute("//HomePage", typeof(HomePage));  // Register HomePage route
             //Routing.RegisterRoute("GameDetailsPage", typeof(GameDetailsPage));
             //Routing.RegisterRoute(nameof(GameDetailsPage), typeof(GameDetailsPage));
             Routing.RegisterRoute("GameDetailsPage", typeof(CardGameCorner.Views.GameDetailsPage));
@@ -33,62 +33,17 @@ namespace CardGameCorner
             Routing.RegisterRoute(nameof(SearchPage), typeof(SearchPage));
             Routing.RegisterRoute(nameof(MyAccountPage), typeof(MyAccountPage));
             Routing.RegisterRoute(nameof(ScanPage), typeof(ScanPage));
+            Routing.RegisterRoute(nameof(CardDetailPage), typeof(CardDetailPage));
             Routing.RegisterRoute(nameof(CardComparisonPage), typeof(CardComparisonPage));
         }
 
-        // Navigate to HomePage with TabBar after login
-        public async Task ShowHomePageWithTabBarAsync()
+        private async void MyAccountTab_Navigated(object sender, ShellNavigatedEventArgs e)
         {
-            var homeTabBar = new TabBar
+            // Check if user is logged in before accessing MyAccountTab
+            if (!App.IsUserLoggedIn)
             {
-                Items =
-            {
-                    new ShellContent
-                    {
-                        Title="Home",
-                         Icon="bxhomealt",
-                        ContentTemplate = new DataTemplate(typeof(HomePage)),
-                        Route = "home"
-                    },
-                    new ShellContent
-                    {
-                         Title="Search",
-                         Icon="bxsearchalt.svg",
-                        ContentTemplate = new DataTemplate(typeof(SearchPage)),
-                        Route = nameof(SearchPage) // Ensure consistency
-                    },
-                       
-                    new ShellContent
-                    {
-                         Title="Scan",
-                         Icon="bxqrscan.svg",
-                        ContentTemplate = new DataTemplate(typeof(ScanPage)),
-                        Route = "ScanPage"
-                    },
-                    new ShellContent
-                    {
-                         Title="My Account",
-                         Icon="bxuser.svg",
-                        ContentTemplate = new DataTemplate(typeof(MyAccountPage)),
-                        Route = "MyAccountPage"
-                    },
-                    new ShellContent
-                    {
-                         Title="My List",
-                         Icon="bxlistul.svg",
-                        ContentTemplate = new DataTemplate(typeof(CardComparisonPage)),
-                        Route = "CardComparisonPage"
-                    },
-
-                }
-            };
-
-            // Clear any existing TabBars and add the new one
-            Items.Clear();
-            Items.Add(homeTabBar);
-
-            // Navigate to the Home tab
-            await GoToAsync("///home");
+                await GoToAsync("//login");
+            }
         }
 
         public async Task NavigateToGameDetails(string gameCode)
@@ -112,5 +67,4 @@ namespace CardGameCorner
             }
         }
     }
-
 }

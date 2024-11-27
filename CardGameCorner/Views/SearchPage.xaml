@@ -1,13 +1,21 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.SearchPage"
+             xmlns:vm="clr-namespace:CardGameCorner.ViewModels"
              BackgroundColor="#002A3E">
-
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="settings_icon.png" Text="Settings" Clicked="OnSettingsClicked" />
+    </ContentPage.ToolbarItems>
+    
     <ScrollView>
         <VerticalStackLayout Spacing="20" 
                              Padding="20"
                              VerticalOptions="Start">
-
+            
+            <Label Text="{Binding WelcomeMessage}" 
+                FontSize="24"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
             <!-- Logo -->
             <Image Source="splashscreenlogo.png"
                    HeightRequest="100"
@@ -33,16 +41,16 @@
                     <VerticalStackLayout Spacing="10" 
                                          HorizontalOptions="Center"
                                          VerticalOptions="Center">
-                        <ImageButton Source="scan.png"
+                        <ImageButton Source="search.png"
                       HeightRequest="40"
                       BackgroundColor="Transparent"
-                      Clicked="OnSearchButtonClicked" />      
-                        <Label Text="Search"
+                      Clicked="OnSearchButtonClicked" />
+                        <Label Text="{Binding SearchText}"
                                TextColor="White"
                                HorizontalOptions="Center" />
                     </VerticalStackLayout>
                 </Frame>
-
+               
                 <!-- Scan Button -->
                 <Frame Grid.Column="1"
                        BackgroundColor="#2A3947"
@@ -56,7 +64,7 @@
                                      HeightRequest="40"
                                      BackgroundColor="Transparent"
                                      Clicked="OnScanButtonClicked" />
-                        <Label Text="Scan with camera"
+                        <Label Text="{Binding ScanText}"
                                TextColor="White"
                                HorizontalOptions="Center" />
                     </VerticalStackLayout>

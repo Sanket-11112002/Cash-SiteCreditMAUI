@@ -2,7 +2,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="CardGameCorner.Views.ScanPage"
-             Title="Scan Page">
+             Title="Scan Card">
+
+    <Grid RowDefinitions="*, Auto, Auto">
+        <toolkit:CameraView 
+            x:Name="cameraView"
+            Grid.Row="0"
+            HeightRequest="500"
+            WidthRequest="500"
+            MediaCaptured="OnMediaCaptured"/>
+
+        <Button 
+            Grid.Row="1"
+            Text="Capture"
+            Clicked="OnCaptureClicked"
+            HorizontalOptions="Center"
+            WidthRequest="200"
+            HeightRequest="50"
+            Margin="0,20"/>
+
+        <Image 
+            x:Name="previewImage"
+            Grid.Row="2"
+            HeightRequest="300"
+            Aspect="AspectFit"
+            HorizontalOptions="Center"
+            IsVisible="False"/>
+    </Grid>
+</ContentPage>-->
+
+<!--<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"             x:Class="CardGameCorner.Views.ScanPage"             Title="Scan Page">
     <ScrollView>
         <VerticalStackLayout Padding="10" Spacing="20">
             --><!-- Camera View for Scanning --><!--
@@ -161,6 +190,10 @@
                              Grid.Row="1"/>
                     </Grid>
                 </Frame>
+               
+            </Grid>
+            <Grid BackgroundColor="Red" Opacity="0.5" IsVisible="{Binding IsLoading}">
+                <ActivityIndicator IsRunning="{Binding IsLoading}" HorizontalOptions="Center" VerticalOptions="Center" />
             </Grid>
         </VerticalStackLayout>
     </ScrollView>

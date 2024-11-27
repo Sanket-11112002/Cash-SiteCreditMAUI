@@ -3,7 +3,7 @@
     public partial class App : Application
     {
         private readonly IServiceProvider _serviceProvider;
-
+        public static bool IsUserLoggedIn { get; set; }
         public App(IServiceProvider serviceProvider)
         {
             InitializeComponent();

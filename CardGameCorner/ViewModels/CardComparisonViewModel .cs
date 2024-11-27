@@ -115,6 +115,8 @@ namespace CardGameCorner.ViewModels
         [RelayCommand]
         private async Task ConfirmCard()
         {
+
+
             // Add card to user's collection
             await Application.Current.MainPage.DisplayAlert("Success",
                 "Card added to your collection!", "OK");

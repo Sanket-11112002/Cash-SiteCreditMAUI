@@ -14,6 +14,7 @@ using Microsoft.Maui.Controls;
 using SkiaSharp;
 using Stream = System.IO.Stream;
 
+
 namespace CardGameCorner.Views
 {
     public partial class ScanPage : ContentPage
@@ -464,9 +465,6 @@ namespace CardGameCorner.Views
         //}
 
     }
-
-
-
 }
 
 

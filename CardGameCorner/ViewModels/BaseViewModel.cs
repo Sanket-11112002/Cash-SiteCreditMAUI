@@ -1,23 +1,38 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Input;
+using CardGameCorner.Services;
 
 namespace CardGameCorner.ViewModels
 {
     public abstract class BaseViewModel : ObservableObject
     {
-        protected BaseViewModel()
-        {
-        }
+        protected GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
 
         private bool _isBusy;
         public bool IsBusy
         {
             get => _isBusy;
             set => SetProperty(ref _isBusy, value);
+        }
+
+        // Commands for language and game selection
+        public IAsyncRelayCommand SelectLanguageCommand { get; }
+        public IAsyncRelayCommand SelectGameCommand { get; }
+
+        protected BaseViewModel()
+        {
+            SelectLanguageCommand = new AsyncRelayCommand(ChangeLanguage);
+            SelectGameCommand = new AsyncRelayCommand(ChangeGame);
+        }
+
+        private async Task ChangeLanguage()
+        {
+            await GlobalSettings.ChangeLanguageAsync();
+        }
+
+        private async Task ChangeGame()
+        {
+            await GlobalSettings.ChangeGameAsync();
         }
     }
 }

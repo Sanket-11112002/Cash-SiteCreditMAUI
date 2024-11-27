@@ -1,4 +1,84 @@
-﻿using System;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Net.Http.Headers;
+//using System.Text;
+//using System.Text.Json;
+//using System.Threading.Tasks;
+//using CommunityToolkit.Maui.Views;
+
+//namespace CardGameCorner.Services
+//{
+//    public class ScanCardService : IScanCardService
+//    {
+//        private readonly HttpClient _httpClient;
+//        private const string ApiKey = "0d66cf7894c3ed46592332829e6d467b";
+
+//        public ScanCardService()
+//        {
+//            _httpClient = new HttpClient
+//            {
+//                Timeout = TimeSpan.FromSeconds(30)
+//            };
+//        }
+
+//        public async Task<string> UploadImageAsync(byte[] imageData)
+//        {
+//            if (imageData == null || imageData.Length == 0)
+//                return await UploadInvalidImageAsync("Empty image data");
+
+//            string game = "pokemon";
+//            string apiUrl = $"https://api2.magic-sorter.com/image/{game}?mess_detector=0&upside=0&foil=0&lang=en&set_type=2&set[]=&api_key={ApiKey}";
+
+//            try
+//            {
+//                using var content = new MultipartFormDataContent();
+//                var imageContent = new ByteArrayContent(imageData);
+//                imageContent.Headers.ContentType = MediaTypeHeaderValue.Parse("image/jpeg");
+//                content.Add(imageContent, "image", "scannedimage.jpg");
+
+//                var response = await _httpClient.PostAsync(apiUrl, content);
+//                var responseContent = await response.Content.ReadAsStringAsync();
+
+//                if (!response.IsSuccessStatusCode)
+//                {
+//                    return await UploadInvalidImageAsync($"API request failed: {response.StatusCode}");
+//                }
+
+//                return responseContent;
+//            }
+//            catch (Exception ex)
+//            {
+//                return await UploadInvalidImageAsync($"Image upload error: {ex.Message}");
+//            }
+//        }
+
+//        public async Task<string> UploadInvalidImageAsync(string errorMessage)
+//        {
+//            string game = "pokemon";
+//            string apiUrl = $"https://api2.magic-sorter.com/image/{game}/error?api_key={ApiKey}";
+
+//            try
+//            {
+//                var content = new StringContent(
+//                    JsonSerializer.Serialize(new { error = errorMessage }),
+//                    Encoding.UTF8,
+//                    "application/json"
+//                );
+
+//                var response = await _httpClient.PostAsync(apiUrl, content);
+//                return await response.Content.ReadAsStringAsync();
+//            }
+//            catch
+//            {
+//                // Fallback error logging
+//                return $"Failed to log error: {errorMessage}";
+//            }
+//        }
+//    }
+//}
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;

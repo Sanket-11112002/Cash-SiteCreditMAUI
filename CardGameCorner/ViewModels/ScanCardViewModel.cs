@@ -1,4 +1,60 @@
-﻿using CardGameCorner.Services;
+﻿//using CardGameCorner.Models;
+//using CardGameCorner.Services;
+//using CommunityToolkit.Maui.Views;
+//using CommunityToolkit.Mvvm.ComponentModel;
+//using CommunityToolkit.Mvvm.Input;
+
+
+//namespace CardGameCorner.Views
+//{
+//    public partial class ScanCardViewModel : ObservableObject
+//    {
+//        private readonly IScanCardService _scanCardService;
+
+//        [ObservableProperty]
+//        private ImageSource capturedImageSource;
+
+//        [ObservableProperty]
+//        private bool isImageVisible;
+
+//        [ObservableProperty]
+//        private string apiResponse;
+
+//        public ScanCardViewModel(IScanCardService scanCardService)
+//        {
+//            _scanCardService = scanCardService;
+//        }
+
+//        [RelayCommand]
+//        public async Task HandleImageCaptured(MediaCapturedEventArgs e)
+//        {
+//            if (e?.Media == null) return;
+
+//            try
+//            {
+//                // Convert stream to byte array
+//                using var memoryStream = new MemoryStream();
+//                await e.Media.CopyToAsync(memoryStream);
+//                byte[] imageData = memoryStream.ToArray();
+
+//                // Update UI with captured image
+//                capturedImageSource = ImageSource.FromStream(() => new MemoryStream(imageData));
+//                isImageVisible = true;
+
+//                // Upload to API
+//                apiResponse = await _scanCardService.UploadImageAsync(imageData);
+
+//                await Application.Current.MainPage.DisplayAlert("Success", "Image processed successfully!", "OK");
+//            }
+//            catch (Exception ex)
+//            {
+//                await Application.Current.MainPage.DisplayAlert("Error", $"Failed to process image: {ex.Message}", "OK");
+//            }
+//        }
+//    }
+//}
+
+using CardGameCorner.Services;
 using CardGameCorner.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -59,7 +115,8 @@ namespace CardGameCorner.ViewModels
         //}
 
         // The method to compress the image
-
+        [ObservableProperty]
+        private bool isLoading;
         public IAsyncRelayCommand CaptureImageCommand { get; }
 
         public ScanCardViewModel()
@@ -104,6 +161,7 @@ namespace CardGameCorner.ViewModels
         {
             try
             {
+                isLoading = true;
                 using var skiaImage = SKBitmap.Decode(inputStream);
                 if (skiaImage == null)
                     throw new Exception("Failed to decode the input image.");
@@ -147,52 +205,67 @@ namespace CardGameCorner.ViewModels
 
         public async Task<CardComparisonViewModel> SearchCardAsync(CardSearchRequest cardSearch,ImageSource imageSource)
         {
-            CardSearchResponseViewModel cardSearchResponseViewModel = await _scanCardService.SearchCardAsync(cardSearch);
-
-            if (cardSearchResponseViewModel != null && cardSearchResponseViewModel.Products.Count > 0)
+            try
             {
-                // Here, you can access and display data from the response
-                var product = cardSearchResponseViewModel.Products[0];
-                Console.WriteLine($"Product Model: {product.ModelEn}, Price: {product.MinPrice}");
+                CardSearchResponseViewModel cardSearchResponseViewModel = await _scanCardService.SearchCardAsync(cardSearch);
 
-                // Initialize the CardComparisonPage ViewModel
-                CardComparisonViewModel comparisonData = new CardComparisonViewModel();
+                if (cardSearchResponseViewModel != null && cardSearchResponseViewModel.Products.Count > 0)
+                {
+                    // Here, you can access and display data from the response
+                    var product = cardSearchResponseViewModel.Products[0];
+                    Console.WriteLine($"Product Model: {product.ModelEn}, Price: {product.MinPrice}");
 
-                // Initialize the comparison data (you can pass the full response or use specific data)
-                 comparisonData.Initialize(cardSearchResponseViewModel, imageSource);
+                    // Initialize the CardComparisonPage ViewModel
+                    CardComparisonViewModel comparisonData = new CardComparisonViewModel();
 
-                return comparisonData;
+                    // Initialize the comparison data (you can pass the full response or use specific data)
+                    comparisonData.Initialize(cardSearchResponseViewModel, imageSource);
 
-
-                //await Shell.Current.GoToAsync(nameof(CardComparisonPage), new Dictionary<string, object>
-                //{
-                //    { "ComparisonData", comparisonData }
-                //});
-
-        //        var navigationParameters = new Dictionary<string, object>
-        //{
-        //    { "ComparisonData", comparisonData }
-        //};
-
-        //        await Shell.Current.GoToAsync(nameof(CardComparisonPage), navigationParameters);
+                    isLoading = false;
+                    return comparisonData;
 
 
+                    //await Shell.Current.GoToAsync(nameof(CardComparisonPage), new Dictionary<string, object>
+                    //{
+                    //    { "ComparisonData", comparisonData }
+                    //});
+
+                    //        var navigationParameters = new Dictionary<string, object>
+                    //{
+                    //    { "ComparisonData", comparisonData }
+                    //};
+
+                    //        await Shell.Current.GoToAsync(nameof(CardComparisonPage), navigationParameters);
 
 
 
 
+
+
+                }
+                else
+                {
+                    Console.WriteLine("No products found in card search.");
+                    return null;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                Console.WriteLine("No products found in card search.");
+                Console.WriteLine($"Image compression failed: {ex.Message}");
                 return null;
             }
+            finally
+            {
+                isLoading = false;
+            }
+           
         }
 
 
 
         public async Task<ApiResponse_Card> UploadImageAsync(Stream imageStream)
         {
+           
             var ApiResponse_Card=await _scanCardService.UploadImageAsync(imageStream);
 
             return ApiResponse_Card;

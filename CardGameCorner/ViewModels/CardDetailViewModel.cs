@@ -1,4 +1,6 @@
 ﻿using CardGameCorner.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -6,13 +8,22 @@ using System.Windows.Input;
 
 namespace CardGameCorner.ViewModels
 {
-    public class CardDetailViewModel : INotifyPropertyChanged
+    public partial class CardDetailViewModel : ObservableObject
     {
         private CardModel _card;
         private int _quantity = 1;
         private ICommand _addToListCommand;
         private ICommand _goBackCommand;
         private ICommand _doneCommand;
+
+
+        [ObservableProperty]
+        private List<string> languages;  // Collection of languages
+
+        [ObservableProperty]
+        private string selectedLanguage;  // The selected language
+
+        
 
         public CardDetailViewModel()
         {
@@ -33,6 +44,17 @@ namespace CardGameCorner.ViewModels
             AddToListCommand = new Command(ExecuteAddToList);
             GoBackCommand = new Command(ExecuteGoBack);
             DoneCommand = new Command(ExecuteDone);
+
+
+            // Initialize the list of languages (this could come from a service or API)
+            languages = new List<string>
+            {
+                "English",
+                "Spanish",
+                "French",
+                "German",
+                "Chinese"
+            };
         }
         public ICommand GoBackCommand
         {

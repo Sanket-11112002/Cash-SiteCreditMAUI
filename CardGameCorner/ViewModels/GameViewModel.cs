@@ -10,13 +10,16 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Windows.Input;
 using System.Reflection;
+using CardGameCorner.Services;
 
 namespace CardGameCorner.ViewModels
 {
-    public class GameDetailsViewModel : INotifyPropertyChanged
+    public class GameDetailsViewModel : BaseViewModel,INotifyPropertyChanged
+
     {
         private ObservableCollection<Card> _cards;
         private ObservableCollection<Banner1> _banners;
+        public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
 
         public ObservableCollection<Card> Cards
         {
@@ -89,6 +92,7 @@ namespace CardGameCorner.ViewModels
                     {
                         Debug.WriteLine($"Title: {banner.Title}, Image: {banner.Image}, Url: {banner.Url}");
                     }
+                    Debug.WriteLine(GlobalSettings.SelectedLanguage);
                 }
                 catch (Exception ex)
                 {

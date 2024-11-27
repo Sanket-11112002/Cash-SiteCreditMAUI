@@ -24,8 +24,14 @@
         Icon="bxqrscan.svg"
         ContentTemplate="{DataTemplate views:ScanPage }"
         Route="ScanPage" />
-
+        
         <ShellContent
+        Title="Card Page"
+        Icon="bxlistul.svg"
+        ContentTemplate="{DataTemplate views:CardDetailPage }"
+        Route="CardDetailPage" />
+
+        <ShellContent x:Name="MyAccountTab"
         Title="My Account"
         Icon="bxuser.svg"
         ContentTemplate="{DataTemplate views:MyAccountPage }"
@@ -38,12 +44,13 @@
         Route="MyListPage" />
 
     </TabBar>
+    
 
-    <!--<ShellContent
+    <ShellContent
         ContentTemplate="{DataTemplate views:LoginPage}"
         Route="login" />
 
-    <ShellContent Route="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />-->
+    <ShellContent Route="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
 
 
 </Shell>
