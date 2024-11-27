@@ -5,6 +5,7 @@ using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
 using ISecureStorage = CardGameCorner.Services.ISecureStorage;
+using CommunityToolkit.Maui;
 
 namespace CardGameCorner
 {
@@ -27,7 +28,6 @@ namespace CardGameCorner
             builder.Services.AddSingleton<IAuthService, AuthService>();
             builder.Services.AddSingleton<ISecureStorage, SecureStorageService>();
             builder.Services.AddSingleton<IScanCardService, ScanCardService>();
-
             // Register pages and viewmodels
             builder.Services.AddSingleton<IGameService, GameService>();
             builder.Services.AddSingleton<HomeViewModel>();
@@ -51,16 +51,18 @@ namespace CardGameCorner
 
             builder.Services.AddSingleton<IMyAccountService, MyAccountService>();
             builder.Services.AddTransient<MyAccountViewModel>();
-
-          
             builder.Services.AddTransient<CardComparisonViewModel>();
+            builder.Services.AddTransient<ApiResponse_Card>();
+            builder.Services.AddTransient<ScannedCardDetails>();
+
+            // Register GlobalSettingsService as a singleton
+            builder.Services.AddSingleton(GlobalSettingsService.Current);
 
             // Register HttpClient
             builder.Services.AddHttpClient();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
-
             return builder.Build();
         }
     }

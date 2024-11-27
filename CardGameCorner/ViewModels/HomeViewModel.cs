@@ -125,6 +125,7 @@
 //}
 
 using CardGameCorner.Models;
+using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
 using CardGameCorner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -150,12 +151,30 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private ObservableCollection<Game> games;
 
+        public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
+        [ObservableProperty]
+        private string welcomeMessage;
+       
 
         public HomeViewModel(IGameService gameService, ISecureStorage secureStorage)
         {
+            UpdateLocalizedStrings();
+
+            // Listen for language changes
+            GlobalSettings.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(GlobalSettings.SelectedLanguage))
+                {
+                    UpdateLocalizedStrings();
+                }
+            };
             _gameService = gameService;
             _secureStorage = secureStorage;
             Games = new ObservableCollection<Game>();
+        }
+        private void UpdateLocalizedStrings()
+        {
+            WelcomeMessage = AppResources.WelcomeMessage; 
         }
 
         [RelayCommand]

@@ -5,10 +5,13 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CardGameCorner.Services;
+using CardGameCorner.Resources.Language;
 
 namespace CardGameCorner.ViewModels
 {
-    public class SearchViewModel : INotifyPropertyChanged
+    public partial class SearchViewModel : ObservableObject,INotifyPropertyChanged
     {
         private readonly SearchService _searchService;
         private string _searchQuery = string.Empty;
@@ -80,8 +83,25 @@ namespace CardGameCorner.ViewModels
 
         private readonly int _searchDelayMilliseconds = 500;
 
+        public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
+
+        [ObservableProperty]
+        private string searchText;
+
+        [ObservableProperty]
+        private string scanText;
+
+        [ObservableProperty]
+        private string welcomeMessage;
+
         public SearchViewModel()
         {
+            // Initialize with current language
+            UpdateLocalizedStrings();
+
+            // Subscribe to language change events
+            GlobalSettings.PropertyChanged += OnGlobalSettingsPropertyChanged;
+
             _searchService = new SearchService();
             Products = new ObservableCollection<Product>();
             RefreshCommand = new Command(async () => await LoadDataAsync(SearchQuery));
@@ -94,6 +114,30 @@ namespace CardGameCorner.ViewModels
             });
         }
 
+        private void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(GlobalSettings.SelectedLanguage))
+            {
+                // Update localized strings when language changes
+                UpdateLocalizedStrings();
+            }
+        }
+
+        private void UpdateLocalizedStrings()
+        {
+            // Ensure these are called on the main thread
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                SearchText = AppResources.Search; // Localized string for "Search"
+                ScanText = AppResources.Scan_with_camera; // Localized string for "Scan with camera"
+                WelcomeMessage = AppResources.WelcomeMessage;
+
+                // Trigger property changed events to update UI
+                OnPropertyChanged(nameof(SearchText));
+                OnPropertyChanged(nameof(ScanText));
+                OnPropertyChanged(nameof(WelcomeMessage));
+            });
+        }
         private void CancelPreviousSearch()
         {
             _searchCancellationTokenSource?.Cancel();
@@ -199,7 +243,7 @@ namespace CardGameCorner.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

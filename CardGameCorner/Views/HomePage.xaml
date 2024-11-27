@@ -6,8 +6,14 @@
              x:Class="CardGameCorner.Views.HomePage"
              x:DataType="vm:HomeViewModel">
 
-    <ContentPage.ToolbarItems>
+    <!--<ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="settings_icon.png" Text="Settings" Clicked="OnSettingsClicked" />
+    </ContentPage.ToolbarItems>-->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            IconImageSource="settings_icon.png" 
+            Text="Settings" 
+            Clicked="OnSettingsClicked" />
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="Auto,*">
@@ -29,7 +35,11 @@
 
         </Grid>
 
-
+        <Label Text="{Binding WelcomeMessage}" 
+           FontSize="24"
+           HorizontalOptions="Center"
+           VerticalOptions="Center" />
+        
         <!-- Title label -->
         <Label Text="Card Game Corner"
                FontSize="20"
