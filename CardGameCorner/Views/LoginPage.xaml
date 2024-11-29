@@ -4,6 +4,10 @@
              x:Class="CardGameCorner.Views.LoginPage"
              Title="Login">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="setting.png" Text="Settings" Clicked="OnSettingsClicked" />
+    </ContentPage.ToolbarItems>
+
     <ScrollView>
         <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
 

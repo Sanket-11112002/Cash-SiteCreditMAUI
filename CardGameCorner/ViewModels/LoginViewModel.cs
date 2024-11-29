@@ -87,6 +87,55 @@ namespace CardGameCorner.ViewModels
         //    !string.IsNullOrWhiteSpace(Password) &&
         //    !IsBusy;
 
+        //private async Task LoginAsync()
+        //{
+        //    if (IsBusy) return;
+
+        //    try
+        //    {
+        //        IsBusy = true;
+
+        //        var request = new LoginRequest
+        //        {
+        //            Username = Username,
+        //            Password = Password
+        //        };
+
+        //        if (string.IsNullOrWhiteSpace(Username))
+        //        {
+
+        //            await Application.Current.MainPage.DisplayAlert("Error", "Username cannot be empty", "OK");
+        //            return;
+        //        }
+
+        //        if (string.IsNullOrWhiteSpace(Password))
+        //        {
+
+        //            await Application.Current.MainPage.DisplayAlert("Error", "Password cannot be empty.", "OK");
+        //            return;
+        //        }
+
+
+        //        var response = await _authService.LoginAsync(request);
+        //        await _secureStorage.SetAsync("jwt_token", response.Token);
+
+        //        App.IsUserLoggedIn = true;
+        //        await Shell.Current.GoToAsync("..");
+
+        //        // Update navigation to use Shell.GoToAsync with the route
+        //        // await (App.Current.MainPage as AppShell).ShowHomePageWithTabBarAsync();
+        //        await Shell.Current.GoToAsync(nameof(MyAccountPage));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+        //    }
+        //    finally
+        //    {
+        //        IsBusy = false;
+        //    }
+        //}
+
         private async Task LoginAsync()
         {
             if (IsBusy) return;
@@ -95,35 +144,34 @@ namespace CardGameCorner.ViewModels
             {
                 IsBusy = true;
 
-                var request = new LoginRequest
-                {
-                    Username = Username,
-                    Password = Password
-                };
-
+                // Validate inputs (as you already have)
                 if (string.IsNullOrWhiteSpace(Username))
                 {
-
                     await Application.Current.MainPage.DisplayAlert("Error", "Username cannot be empty", "OK");
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(Password))
                 {
-
                     await Application.Current.MainPage.DisplayAlert("Error", "Password cannot be empty.", "OK");
                     return;
                 }
 
+                var request = new LoginRequest
+                {
+                    Username = Username,
+                    Password = Password
+                };
 
                 var response = await _authService.LoginAsync(request);
                 await _secureStorage.SetAsync("jwt_token", response.Token);
 
+                // Set logged in state
                 App.IsUserLoggedIn = true;
-                await Shell.Current.GoToAsync("..");
 
-                // Update navigation to use Shell.GoToAsync with the route
-                // await (App.Current.MainPage as AppShell).ShowHomePageWithTabBarAsync();
+                // Navigate to the tab bar and select My Account tab
+                //await Shell.Current.GoToAsync(nameof(MyAccountPage));
+                await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)
             {
@@ -134,7 +182,6 @@ namespace CardGameCorner.ViewModels
                 IsBusy = false;
             }
         }
-
         private async Task RequestPasswordResetAsync()
         {
             if (string.IsNullOrWhiteSpace(ForgotPasswordEmail))

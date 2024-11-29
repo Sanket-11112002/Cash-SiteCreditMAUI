@@ -1,3 +1,6 @@
+CommunityToolkit.Maui.Camera.dll
+CommunityToolkit.Maui.Core.dll
+CommunityToolkit.Maui.dll
 GoogleGson.dll
 Jsr305Binding.dll
 Microsoft.Maui.Controls.Compatibility.dll
@@ -6,6 +9,7 @@ Microsoft.Maui.Controls.Xaml.dll
 Microsoft.Maui.dll
 Microsoft.Maui.Essentials.dll
 Microsoft.Maui.Graphics.dll
+SkiaSharp.dll
 Xamarin.Android.Glide.Annotations.dll
 Xamarin.Android.Glide.DiskLruCache.dll
 Xamarin.Android.Glide.dll
@@ -20,8 +24,14 @@ Xamarin.AndroidX.AppCompat.dll
 Xamarin.AndroidX.Arch.Core.Common.dll
 Xamarin.AndroidX.Arch.Core.Runtime.dll
 Xamarin.AndroidX.Browser.dll
+Xamarin.AndroidX.Camera.Camera2.dll
+Xamarin.AndroidX.Camera.Core.dll
+Xamarin.AndroidX.Camera.Lifecycle.dll
+Xamarin.AndroidX.Camera.Video.dll
+Xamarin.AndroidX.Camera.View.dll
 Xamarin.AndroidX.CardView.dll
 Xamarin.AndroidX.Collection.dll
+Xamarin.AndroidX.Collection.Jvm.dll
 Xamarin.AndroidX.Collection.Ktx.dll
 Xamarin.AndroidX.Concurrent.Futures.dll
 Xamarin.AndroidX.ConstraintLayout.Core.dll
@@ -78,15 +88,14 @@ Xamarin.AndroidX.ViewPager2.dll
 Xamarin.AndroidX.Window.dll
 Xamarin.AndroidX.Window.Extensions.Core.Core.dll
 Xamarin.Google.Android.Material.dll
+Xamarin.Google.AutoValue.Annotations.dll
 Xamarin.Google.Crypto.Tink.Android.dll
 Xamarin.Google.ErrorProne.Annotations.dll
 Xamarin.Google.Guava.ListenableFuture.dll
 Xamarin.Jetbrains.Annotations.dll
-Xamarin.Kotlin.StdLib.Common.dll
 Xamarin.Kotlin.StdLib.dll
-Xamarin.Kotlin.StdLib.Jdk7.dll
-Xamarin.Kotlin.StdLib.Jdk8.dll
 Xamarin.KotlinX.Coroutines.Android.dll
+Xamarin.KotlinX.Coroutines.Core.dll
 Xamarin.KotlinX.Coroutines.Core.Jvm.dll
 androidx.versionedparcelable.versionedparcelable.aar
 androidx.tracing.tracing.aar
@@ -146,6 +155,11 @@ androidx.fragment.fragment-ktx.aar
 androidx.navigation.navigation-fragment.aar
 androidx.lifecycle.lifecycle-livedata.aar
 androidx.exifinterface.exifinterface.aar
+androidx.camera.camera-core.aar
+androidx.camera.camera-video.aar
+androidx.camera.camera-lifecycle.aar
+androidx.camera.camera-view.aar
+androidx.camera.camera-camera2.aar
 androidx.browser.browser.aar
 gifdecoder.aar
 glide.aar
@@ -156,5 +170,6 @@ Microsoft.Maui.Controls.aar
 maui.aar
 Microsoft.Maui.aar
 Microsoft.Maui.Essentials.aar
+Xamarin.Google.AutoValue.Annotations.aar
 Xamarin.Google.Crypto.Tink.Android.aar
 Xamarin.Google.ErrorProne.Annotations.aar

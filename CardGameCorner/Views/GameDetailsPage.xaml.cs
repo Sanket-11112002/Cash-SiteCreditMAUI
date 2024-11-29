@@ -151,6 +151,7 @@ namespace CardGameCorner.Views
                     break;
             }
         }
+
     }
 
     //private async void OnSettingsClicked(object sender, EventArgs e)

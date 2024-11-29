@@ -11,19 +11,40 @@
         <vm:SearchViewModel />
     </ContentPage.BindingContext>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="setting.png" Text="Settings" Clicked="OnSettingsClicked" />
+    </ContentPage.ToolbarItems>
+
     <Grid>
         <ScrollView>
             <VerticalStackLayout Spacing="20" 
                                Padding="20"
                                VerticalOptions="Start">
 
-                <SearchBar Text="{Binding SearchQuery}" 
-                          Placeholder="Search..." 
-                          BackgroundColor="#2A3947" 
-                          TextColor="White" 
-                          PlaceholderColor="Gray"
-                          Margin="0,0,0,10" />
+                <!-- Updated SearchBar with Search Button SearchButtonPressed="OnSearchButtonPressed"-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <SearchBar Grid.Column="0" 
+                               Text="{Binding SearchQuery}" 
+                               Placeholder="Search..." 
+                               BackgroundColor="#2A3947" 
+                               TextColor="White" 
+                               PlaceholderColor="Gray"
+                               Margin="0,0,0,10"
+                               />
 
+                    <Button Grid.Column="1" 
+                            Text="Search" 
+                            Command="{Binding SearchCommand}"
+                            BackgroundColor="#2A3947"
+                            TextColor="White"
+                            Margin="10,0,0,10"
+                            VerticalOptions="Center"/>
+                </Grid>
                 <!-- Error Message -->
                 <VerticalStackLayout IsVisible="{Binding HasError}"
                                    HorizontalOptions="Center"

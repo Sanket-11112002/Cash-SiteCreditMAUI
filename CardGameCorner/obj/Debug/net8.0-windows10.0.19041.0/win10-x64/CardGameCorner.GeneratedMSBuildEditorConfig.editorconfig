@@ -48,3 +48,69 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = CardGameCorner.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
+
+[C:/Users/Netwin/Desktop/CardGameCorner/CardGameCorner/Views/CardComparisonPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = CardGameCorner.Views.CardComparisonPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\CardComparisonPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\CardComparisonPage.xaml
+
+[C:/Users/Netwin/Desktop/CardGameCorner/CardGameCorner/Views/CardDetailPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = CardGameCorner.Views.CardDetailPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\CardDetailPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\CardDetailPage.xaml
+
+[C:/Users/Netwin/Desktop/CardGameCorner/CardGameCorner/Views/GameDetailsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = CardGameCorner.Views.GameDetailsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\GameDetailsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\GameDetailsPage.xaml
+
+[C:/Users/Netwin/Desktop/CardGameCorner/CardGameCorner/Views/HomePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = CardGameCorner.Views.HomePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\HomePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\HomePage.xaml
+
+[C:/Users/Netwin/Desktop/CardGameCorner/CardGameCorner/Views/LoginPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = CardGameCorner.Views.LoginPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\LoginPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\LoginPage.xaml
+
+[C:/Users/Netwin/Desktop/CardGameCorner/CardGameCorner/Views/MyAccountPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = CardGameCorner.Views.MyAccountPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\MyAccountPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\MyAccountPage.xaml
+
+[C:/Users/Netwin/Desktop/CardGameCorner/CardGameCorner/Views/MyListPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = CardGameCorner.Views.MyListPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\MyListPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\MyListPage.xaml
+
+[C:/Users/Netwin/Desktop/CardGameCorner/CardGameCorner/Views/RegistrationPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = CardGameCorner.Views.RegistrationPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\RegistrationPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\RegistrationPage.xaml
+
+[C:/Users/Netwin/Desktop/CardGameCorner/CardGameCorner/Views/ScanPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = CardGameCorner.Views.ScanPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ScanPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ScanPage.xaml
+
+[C:/Users/Netwin/Desktop/CardGameCorner/CardGameCorner/Views/SearchPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = CardGameCorner.Views.SearchPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\SearchPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\SearchPage.xaml
+
+[C:/Users/Netwin/Desktop/CardGameCorner/CardGameCorner/Views/SearchQueryPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = CardGameCorner.Views.SearchQueryPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\SearchQueryPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\SearchQueryPage.xaml

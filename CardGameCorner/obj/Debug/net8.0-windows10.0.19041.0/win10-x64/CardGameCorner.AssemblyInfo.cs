@@ -18,7 +18,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CardGameCorner")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+b7e863579a71a049caebbc4b5d923a2116344ec0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+59704e98f6a0df7cd23df84ae6bf33481e5b594b")]
 [assembly: System.Reflection.AssemblyProductAttribute("CardGameCorner")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CardGameCorner")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -11,12 +11,20 @@ public partial class SearchPage : ContentPage
         _viewModel = viewModel;
         BindingContext = _viewModel;
     }
+
+    private void OnSearchButtonPressed(object sender, EventArgs e)
+    {
+        // Get the ViewModel
+        var viewModel = (SearchViewModel)BindingContext;
+
+        // Trigger the search
+        viewModel.SearchCommand.Execute(null);
+    }
+
     private async void OnScanButtonClicked(object sender, EventArgs e)
     {
         // Trigger camera scanning logic
         await Navigation.PushAsync(new ScanPage());
-
-
     }
     private async void OnSearchButtonClicked(object sender, EventArgs e)
     {

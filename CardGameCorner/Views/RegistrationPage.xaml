@@ -9,7 +9,11 @@
     <ContentPage.BindingContext>
         <viewmodel:RegistrationViewModel />
     </ContentPage.BindingContext>
-
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="setting.png" Text="Settings" Clicked="OnSettingsClicked" />
+    </ContentPage.ToolbarItems>
+    
     <ScrollView>
         <StackLayout Padding="30" Spacing="15">
 

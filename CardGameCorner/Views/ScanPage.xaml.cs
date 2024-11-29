@@ -264,6 +264,7 @@ namespace CardGameCorner.Views
                             else
                             {
                                 await DisplayAlert("Error", "Card Not Found", "OK");
+                                viewModel.IsLoading = false;
                             }
 
                         
@@ -374,6 +375,7 @@ namespace CardGameCorner.Views
                     else
                     {
                         await DisplayAlert("Error", "Card Not Found", "OK");
+                        viewModel.IsLoading = false;
                     }
                 }
                 else
@@ -387,6 +389,30 @@ namespace CardGameCorner.Views
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
+
+        private async void OnSettingsClicked(object sender, EventArgs e)
+        {
+            // Use the global settings service to show settings
+            var globalSettings = GlobalSettingsService.Current;
+
+            string result = await DisplayActionSheet(
+                "Settings",
+                "Cancel",
+                null,
+                "Select Language",
+                "Select Game");
+
+            switch (result)
+            {
+                case "Select Language":
+                    await globalSettings.ChangeLanguageAsync();
+                    break;
+                case "Select Game":
+                    await globalSettings.ChangeGameAsync();
+                    break;
+            }
+        }
+
 
         //private async Task UploadImageToApi(Stream imageStream)
         //{
@@ -423,7 +449,7 @@ namespace CardGameCorner.Views
         //        {
         //           // await DisplayAlert("Success", "Image uploaded successfully!", "OK");
         //            Console.WriteLine($"Upload successful: {responseContent}");
-                  
+
 
         //            // Deserialize the response into ScannedCardDetails
         //            var options = new JsonSerializerOptions

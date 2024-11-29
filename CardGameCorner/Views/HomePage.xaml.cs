@@ -17,7 +17,8 @@ public partial class HomePage : ContentPage
 
     protected override async void OnAppearing()
     {
-        //base.OnAppearing();
+        base.OnAppearing();
+       
         await _viewModel.LoadGamesCommand.ExecuteAsync(null);
 
     }

@@ -66,6 +66,22 @@
         "net8.0-android34.0": {
           "targetAlias": "net8.0-android",
           "dependencies": {
+            "CommunityToolkit.Maui": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "CommunityToolkit.Maui.Camera": {
+              "target": "Package",
+              "version": "[1.0.5, )"
+            },
+            "CommunityToolkit.Mvvm": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
               "version": "[8.0.0, )"
@@ -78,11 +94,27 @@
               "target": "Package",
               "version": "[8.0.82, )"
             },
+            "Microsoft.Maui.Essentials": {
+              "target": "Package",
+              "version": "[8.0.100, )"
+            },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.10, )",
+              "version": "[8.0.11, )",
               "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Utilities": {
+              "target": "Package",
+              "version": "[17.11.40262, )"
+            },
+            "SkiaSharp": {
+              "target": "Package",
+              "version": "[3.118.0-preview.1.2, )"
+            },
+            "System.Net.Http.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -104,11 +136,27 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
         },
         "net8.0-ios18.0": {
           "targetAlias": "net8.0-ios",
           "dependencies": {
+            "CommunityToolkit.Maui": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "CommunityToolkit.Maui.Camera": {
+              "target": "Package",
+              "version": "[1.0.5, )"
+            },
+            "CommunityToolkit.Mvvm": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
               "version": "[8.0.0, )"
@@ -121,11 +169,27 @@
               "target": "Package",
               "version": "[8.0.82, )"
             },
+            "Microsoft.Maui.Essentials": {
+              "target": "Package",
+              "version": "[8.0.100, )"
+            },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.10, )",
+              "version": "[8.0.11, )",
               "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Utilities": {
+              "target": "Package",
+              "version": "[17.11.40262, )"
+            },
+            "SkiaSharp": {
+              "target": "Package",
+              "version": "[3.118.0-preview.1.2, )"
+            },
+            "System.Net.Http.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -147,11 +211,27 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
         },
         "net8.0-maccatalyst18.0": {
           "targetAlias": "net8.0-maccatalyst",
           "dependencies": {
+            "CommunityToolkit.Maui": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "CommunityToolkit.Maui.Camera": {
+              "target": "Package",
+              "version": "[1.0.5, )"
+            },
+            "CommunityToolkit.Mvvm": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
               "version": "[8.0.0, )"
@@ -164,11 +244,27 @@
               "target": "Package",
               "version": "[8.0.82, )"
             },
+            "Microsoft.Maui.Essentials": {
+              "target": "Package",
+              "version": "[8.0.100, )"
+            },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.10, )",
+              "version": "[8.0.11, )",
               "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Utilities": {
+              "target": "Package",
+              "version": "[17.11.40262, )"
+            },
+            "SkiaSharp": {
+              "target": "Package",
+              "version": "[3.118.0-preview.1.2, )"
+            },
+            "System.Net.Http.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -191,11 +287,27 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
         },
         "net8.0-windows10.0.19041": {
           "targetAlias": "net8.0-windows10.0.19041.0",
           "dependencies": {
+            "CommunityToolkit.Maui": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "CommunityToolkit.Maui.Camera": {
+              "target": "Package",
+              "version": "[1.0.5, )"
+            },
+            "CommunityToolkit.Mvvm": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
               "version": "[8.0.0, )"
@@ -207,6 +319,22 @@
             "Microsoft.Maui.Controls.Compatibility": {
               "target": "Package",
               "version": "[8.0.82, )"
+            },
+            "Microsoft.Maui.Essentials": {
+              "target": "Package",
+              "version": "[8.0.100, )"
+            },
+            "Microsoft.VisualStudio.Utilities": {
+              "target": "Package",
+              "version": "[17.11.40262, )"
+            },
+            "SkiaSharp": {
+              "target": "Package",
+              "version": "[3.118.0-preview.1.2, )"
+            },
+            "System.Net.Http.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -223,7 +351,7 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.Windows.SDK.NET.Ref",
-              "version": "[10.0.19041.44, 10.0.19041.44]"
+              "version": "[10.0.19041.53, 10.0.19041.53]"
             }
           ],
           "frameworkReferences": {
@@ -234,7 +362,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {
