@@ -142,6 +142,7 @@ namespace CardGameCorner.ViewModels
         private readonly IGameService _gameService;
         private readonly ISecureStorage _secureStorage;
 
+
         [ObservableProperty]
         private bool isLoading;
 
@@ -209,6 +210,13 @@ namespace CardGameCorner.ViewModels
         private async Task GameSelectedAsync(Game game)
         {
             if (game == null) return;
+
+            GlobalSettings.SelectedGame = game.GameCode;
+
+            Preferences.Set("IsGameSelected", true);
+            Preferences.Set("SelectedGame", game.GameCode);
+
+
 
             // Navigate to GameDetailsPage and pass gameCode as a query parameter
             await ((AppShell)Shell.Current).NavigateToGameDetails(game.GameCode);

@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SQLite;
 
 namespace CardGameCorner.Models
 {
-    public class Product
+    public class ProductList
     {
-        [PrimaryKey, AutoIncrement]
         public string Id { get; set; }
         public string Game { get; set; }
         public string Model { get; set; }
@@ -18,13 +16,10 @@ namespace CardGameCorner.Models
         public string Color { get; set; }
         public string Rarity { get; set; }
         public string Category { get; set; }
-        public decimal MinPrice { get; set; }
-        public decimal MaxPrice { get; set; }
-    }
-
-    public class ApiResponse
-    {
-        public List<Product> Products { get; set; }
-        public int Total { get; set; }
+        public decimal Buylist { get; set; }
+        public decimal Sitecredit { get; set; }
+        public int Quantity { get; set; }
+        public string Language { get; set; }
+        public string Condition { get; set; }
     }
 }

@@ -6,13 +6,32 @@ namespace CardGameCorner.Views;
 
 public partial class CardComparisonPage : ContentPage
 {
-	public CardComparisonPage(CardComparisonViewModel ComparisonData)
-	{
-		InitializeComponent();
+    //public CardComparisonPage(List<CardComparisonViewModel> ComparisonData)
+    //{
+    //	InitializeComponent();
+
+    //       BindingContext = ComparisonData;
+    //       for(int i=0;i< ComparisonData.Count; i++)
+    //       {
+    //           scannedimage.Source = ComparisonData[i].ScannedImage;
+    //           searchimage.Source = ComparisonData[i].SearchResultImage;
+    //       }   
+    //      // scannedimage.Source = ComparisonData.ScannedImage;
+    //       searchimage.Source = "https://www.cardgamecorner.com/prodotti/1/1115/IMA006.jpg";
+
+
+    //   }
+
+    public CardComparisonPage(CardComparisonViewModel ComparisonData)
+    {
+        InitializeComponent();
 
         BindingContext = ComparisonData;
-        scannedimage.Source = ComparisonData.ScannedImage;
-        searchimage.Source = "https://www.cardgamecorner.com/prodotti/1/1115/IMA006.jpg";
+       
+            scannedimage.Source = ComparisonData.ScannedImage;
+            searchimage.Source = ComparisonData.SearchResultImage;
+       
+     
 
 
     }

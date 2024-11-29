@@ -16,5 +16,6 @@ namespace CardGameCorner.Models
             public decimal SiteCredit { get; set; }
             public bool IsFirstEdition { get; set; }
             public bool IsReverse { get; set; }
+            public string game { get; set; }
         }
 }

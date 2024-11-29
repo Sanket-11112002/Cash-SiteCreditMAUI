@@ -14,11 +14,23 @@ namespace CardGameCorner
             _serviceProvider = serviceProvider;
             RegisterRoutes();
 
-            // Set initial page
-            //GoToAsync($"//{nameof(LoginPage)}");
+            // Delay navigation until after the Shell has been initialized
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                var selectedGameCode = Preferences.Get("SelectedGame", string.Empty);
 
-            GoToAsync("//HomePage");
+                // Navigate based on whether a game is selected or not
+                if (string.IsNullOrEmpty(selectedGameCode))
+                {
+                    GoToAsync("//HomePage"); // Navigate to HomePage if no game is selected
+                }
+                else
+                {
+                    NavigateToGameDetails(selectedGameCode); // Navigate to GameDetailsPage with the selected game code
+                }
+            });
         }
+
 
         private void RegisterRoutes()
         {

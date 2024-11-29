@@ -50,7 +50,7 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame BorderColor="Gray" CornerRadius="0" Padding="0" Margin="10" BackgroundColor="#1B3B48">
+                            <Frame    BorderColor="Gray" CornerRadius="0" Padding="0" Margin="10" BackgroundColor="#1B3B48">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SearchViewModel}}, Path=OpenProductUrlCommand}" 
                                                         CommandParameter="{Binding ProductUrl}" />
@@ -62,13 +62,13 @@
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
 
-                                        <Image Source="{Binding Image}" 
+                                        <ImageButton Source="{Binding Image}" 
                                                Aspect="AspectFit" 
                                                HeightRequest="100" 
                                                WidthRequest="100" 
                                                HorizontalOptions="Center" 
                                                VerticalOptions="Center" 
-                                               Grid.Row="0" Margin="5"/>
+                                               Grid.Row="0" Margin="5" Clicked="OnUploadButtonClicked"/>
 
                                         <Label Text="{Binding Rarity}" 
                                                TextColor="White" 

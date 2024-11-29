@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
         <!-- Header -->
         <Button Text="Back" Grid.Row="0" Grid.Column="0" Margin="16" />
-        <Button Text="Done" Grid.Row="0" Grid.Column="1" Margin="16" />
+        <Button Text="Done" Clicked="getlist" Grid.Row="0" Grid.Column="1" Margin="16" />
         <!-- List of Items -->
         <CollectionView Grid.Row="1" Grid.ColumnSpan="2" Margin="16">
             <CollectionView.ItemTemplate>
