@@ -1,9 +1,9 @@
 
-using Android.Content;
+
 using CardGameCorner.Models;
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
-using IntelliJ.Lang.Annotations;
+
 
 namespace CardGameCorner.Views;
 
