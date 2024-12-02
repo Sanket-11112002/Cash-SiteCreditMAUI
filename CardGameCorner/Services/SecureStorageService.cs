@@ -8,17 +8,17 @@ namespace CardGameCorner.Services
 {
     public class SecureStorageService : ISecureStorage
     {
-        public async Task SetAsync(string key, string value)
-        {
-            await SecureStorage.SetAsync(key, value);
-        }
-
         public async Task<string> GetAsync(string key)
         {
             return await SecureStorage.GetAsync(key);
         }
 
-        public void Remove(string key)
+        public async Task SetAsync(string key, string value)
+        {
+            await SecureStorage.SetAsync(key, value);
+        }
+
+        public async Task RemoveAsync(string key)
         {
             SecureStorage.Remove(key);
         }

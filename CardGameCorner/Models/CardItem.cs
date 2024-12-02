@@ -18,6 +18,5 @@ namespace CardGameCorner.Models
         public int Quantity { get; set; }
         public decimal SiteCredit { get; set; }
     }
-    //public string CardNumber { get; set; }
-    //public string Condition { get; set; }
+
 }

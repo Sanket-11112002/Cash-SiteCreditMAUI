@@ -6,10 +6,6 @@
              x:Class="CardGameCorner.Views.HomePage"
              x:DataType="vm:HomeViewModel">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="setting.png" Text="Settings" Clicked="OnSettingsClicked" />
-    </ContentPage.ToolbarItems>
-
     <Grid RowDefinitions="Auto,*">
         <!-- Header with logo at the top -->
         <Grid Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">

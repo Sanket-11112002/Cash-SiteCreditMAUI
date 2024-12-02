@@ -5,9 +5,6 @@
              Title="Card Comparision"
              BackgroundColor="#1A2634">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="setting.png" Text="Settings" Clicked="OnSettingsClicked" />
-    </ContentPage.ToolbarItems>
 
     <ScrollView>
         <Grid RowDefinitions="Auto,*,Auto"

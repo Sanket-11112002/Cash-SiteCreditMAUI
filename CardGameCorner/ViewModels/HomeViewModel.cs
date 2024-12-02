@@ -1,4 +1,6 @@
-﻿//using CardGameCorner.Models;
+﻿
+//using CardGameCorner.Models;
+//using CardGameCorner.Resources.Language;
 //using CardGameCorner.Services;
 //using CardGameCorner.Views;
 //using CommunityToolkit.Mvvm.ComponentModel;
@@ -24,15 +26,33 @@
 //        [ObservableProperty]
 //        private ObservableCollection<Game> games;
 
-//        //public ICommand LogoutCommand { get; }
+//        public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
+//        [ObservableProperty]
+//        private string welcomeMessage;
+
 
 //        public HomeViewModel(IGameService gameService, ISecureStorage secureStorage)
 //        {
+//            UpdateLocalizedStrings();
+
+//            // Listen for language changes
+//            GlobalSettings.PropertyChanged += (s, e) =>
+//            {
+//                if (e.PropertyName == nameof(GlobalSettings.SelectedLanguage))
+//                {
+//                    UpdateLocalizedStrings();
+//                }
+//            };
 //            _gameService = gameService;
 //            _secureStorage = secureStorage;
 //            Games = new ObservableCollection<Game>();
-//            //LogoutCommand = new Command(OnLogout);
 //        }
+//        private void UpdateLocalizedStrings()
+//        {
+//            WelcomeMessage = AppResources.WelcomeMessage; 
+//        }
+
+
 
 //        [RelayCommand]
 //        private async Task LoadGamesAsync()
@@ -50,10 +70,7 @@
 //                    Games.Add(game);
 //                }
 //            }
-//            //catch (UnauthorizedAccessException)
-//            //{
-//            //    await HandleUnauthorizedAccess();
-//            //}
+
 //            catch (Exception ex)
 //            {
 //                ErrorMessage = "Failed to load games. Please try again.";
@@ -65,64 +82,20 @@
 //            }
 //        }
 
-//        //private async Task HandleUnauthorizedAccess()
-//        //{
-//        //    try
-//        //    {
-//        //        // Clear the stored token
-//        //        _secureStorage.Remove("jwt_token");
-
-//        //        // Show message to user
-//        //        await Application.Current.MainPage.DisplayAlert(
-//        //            "Session Expired",
-//        //            "Your session has expired. Please login again.",
-//        //            "OK");
-
-//        //        // Navigate back to login page
-//        //        await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
-//        //    }
-//        //    catch (Exception ex)
-//        //    {
-//        //        Debug.WriteLine($"Error handling unauthorized access: {ex.Message}");
-//        //        ErrorMessage = "Session expired. Please restart the application.";
-//        //    }
-//        //}
-
-//        //[RelayCommand]
-//        //private async Task GameSelectedAsync(Game game)
-//        //{
-//        //    if (game == null) return;
-//        //    await Shell.Current.GoToAsync($"gameDetails?gameCode={game.GameCode}");
-//        //}
-
 //        [RelayCommand]
 //        private async Task GameSelectedAsync(Game game)
 //        {
 //            if (game == null) return;
 
 //            // Navigate to GameDetailsPage and pass gameCode as a query parameter
-//            await ((AppShell)Shell.Current).NavigateToGameDetails(game.GameCode);
+//           await ((AppShell)Shell.Current).NavigateToGameDetails(game.GameCode);
 //        }
 
-//        //private async void OnLogout()
-//        //{
-//        //    try
-//        //    {
-//        //        // Clear stored token if needed
-//        //        _secureStorage.Remove("jwt_token");
-
-//        //        // Reset the application to start a new session
-//        //        ((App)Application.Current).RestartAppForNewSession();
-//        //    }
-//        //    catch (Exception ex)
-//        //    {
-//        //        Debug.WriteLine($"Error during logout: {ex.Message}");
-//        //    }
-//        //}
 
 
 //    }
 //}
+
 
 using CardGameCorner.Models;
 using CardGameCorner.Resources.Language;
@@ -154,7 +127,7 @@ namespace CardGameCorner.ViewModels
         public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
         [ObservableProperty]
         private string welcomeMessage;
-       
+
 
         public HomeViewModel(IGameService gameService, ISecureStorage secureStorage)
         {
@@ -174,10 +147,10 @@ namespace CardGameCorner.ViewModels
         }
         private void UpdateLocalizedStrings()
         {
-            WelcomeMessage = AppResources.WelcomeMessage; 
+            WelcomeMessage = AppResources.WelcomeMessage;
         }
 
-       
+
 
         [RelayCommand]
         private async Task LoadGamesAsync()
@@ -195,7 +168,7 @@ namespace CardGameCorner.ViewModels
                     Games.Add(game);
                 }
             }
-           
+
             catch (Exception ex)
             {
                 ErrorMessage = "Failed to load games. Please try again.";
@@ -207,16 +180,19 @@ namespace CardGameCorner.ViewModels
             }
         }
 
+
         [RelayCommand]
         private async Task GameSelectedAsync(Game game)
         {
             if (game == null) return;
 
-            // Navigate to GameDetailsPage and pass gameCode as a query parameter
-            await ((AppShell)Shell.Current).NavigateToGameDetails(game.GameCode);
+            // Save the selected game to secure storage
+            await _secureStorage.SetAsync("LastSelectedGame", game.GameCode);
+
+            await Shell.Current.GoToAsync("..");
+
+            // Navigate to GameDetailsPage
+            // await ((AppShell)Shell.Current).NavigateToGameDetails(game.GameCode);
         }
-
-      
-
     }
 }

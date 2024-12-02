@@ -1,0 +1,135 @@
+﻿<!--<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CardGameCorner.Views.SettingsSlidePage"
+             BackgroundColor="LightGray">
+   
+    <StackLayout Padding="20" VerticalOptions="Start">
+        <Label Text="Settings" FontSize="24" FontAttributes="Bold" />
+
+        --><!-- Language Picker --><!--
+        <Label Text="Language" FontSize="Medium" />
+        <Picker Title="Select Language" 
+                x:Name="LanguagePicker"
+                SelectedItem="{Binding SelectedLanguage}"
+                SelectedIndexChanged="OnLanguagePickerSelectedIndexChanged">
+            <Picker.Items>
+                <x:String>English</x:String>
+                <x:String>Italian</x:String>
+            </Picker.Items>
+        </Picker>
+
+        --><!-- Game Picker -->
+        <!--<Label Text="Game" FontSize="Medium" />
+        <Picker Title="Select Game" 
+                x:Name="GamePicker"
+                SelectedItem="{Binding SelectedGame}"
+                SelectedIndexChanged="OnGamePickerSelectedIndexChanged">
+            <Picker.Items>
+                <x:String>pokemon</x:String>
+                <x:String>onepiece</x:String>
+                <x:String>magic</x:String>
+                <x:String>yugioh</x:String>
+            </Picker.Items>
+        </Picker>--><!--
+
+        <Picker Title="Select Game"
+        x:Name="GamePicker"
+        SelectedItem="{Binding SelectedGame}"
+        ItemsSource="{Binding Games}"
+        ItemDisplayBinding="{Binding DisplayName}"
+        SelectedIndexChanged="OnGamePickerSelectedIndexChanged">
+        </Picker>
+
+        --><!-- Close Button --><!--
+        <Button Text="Close" 
+                Clicked="OnCloseClicked"
+                VerticalOptions="End" />
+    </StackLayout>
+</ContentPage>-->
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CardGameCorner.Views.SettingsSlidePage"
+             Title="Settings"
+             BackgroundColor="#1B3B48">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="16" Padding="20">
+            <Grid>
+                <Label Text="Settings" 
+                       FontSize="24" 
+                       FontAttributes="Bold" 
+                       TextColor="White"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"/>
+
+                <!--<Button Text="✕" 
+                        Clicked="OnCloseClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        FontSize="20"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"/>-->
+            </Grid>
+
+            <VerticalStackLayout Spacing="12">
+                <Label Text="Language" 
+                       FontSize="16" 
+                       FontAttributes="Bold" 
+                       TextColor="White"/>
+
+                <Border Stroke="#4A8BA8" 
+                        Background="White" 
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 8">
+                    <Picker x:Name="LanguagePicker"
+                            TitleColor="#1B3B48"
+                            SelectedItem="{Binding SelectedLanguage}"
+                            SelectedIndexChanged="OnLanguagePickerSelectedIndexChanged"
+                            FontSize="14"
+                            TextColor="#1B3B48"
+                            WidthRequest="200">
+                        <Picker.Items>
+                            <x:String>English</x:String>
+                            <x:String>Italian</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </Border>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="12">
+                <Label Text="Game" 
+                       FontSize="16" 
+                       FontAttributes="Bold" 
+                       TextColor="White"/>
+
+                <Border Stroke="#4A8BA8" 
+                        Background="White" 
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 8">
+                    <Picker x:Name="GamePicker"
+                            TitleColor="#1B3B48"
+                            SelectedItem="{Binding SelectedGame}"
+                            ItemsSource="{Binding Games}"
+                            ItemDisplayBinding="{Binding DisplayName}"
+                            SelectedIndexChanged="OnGamePickerSelectedIndexChanged"
+                            FontSize="14"
+                            TextColor="#1B3B48"
+                            WidthRequest="200">
+                    </Picker>
+                </Border>
+            </VerticalStackLayout>
+
+            <Button Text="Save Changes" 
+                    BackgroundColor="#4A8BA8"
+                    TextColor="White"
+                    CornerRadius="8"
+                    Clicked="OnCloseClicked"
+                    FontSize="16"
+                    Padding="16,12"
+                    HorizontalOptions="Fill"
+                    BorderColor="#2C5F73"
+                    BorderWidth="1"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -7,10 +7,6 @@
              Title="Game Details"
              BackgroundColor="#1B3B48">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="settings_icon.png" Text="Settings" Clicked="OnSettingsClicked" />
-    </ContentPage.ToolbarItems>
-    
     <ContentPage.Resources>
         <DataTemplate x:Key="ImageTemplate">
             <Image Source="{Binding .}" Aspect="AspectFit" />

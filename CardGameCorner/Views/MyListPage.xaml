@@ -39,9 +39,10 @@
                                         <Image Source="{Binding LanguageFlag}" 
                                                HeightRequest="20" 
                                                WidthRequest="30" /> 
-                                        <!-- Condition -->
+                                        <!-- Condition --> 
                                         <Frame BackgroundColor="LightGreen" Padding="2,2" CornerRadius="2" HasShadow="False">
-                                            <Label Text="{Binding Condition}" 
+                                            <!--<Label Text="{Binding Condition}"-->
+                                            <Label Text="NM" 
                                                    TextColor="Black" 
                                                    FontSize="12" 
                                                    HorizontalTextAlignment="Center" />  
@@ -51,7 +52,7 @@
                                     <!-- Edition and Rarity Section -->
                                     <StackLayout Orientation="Vertical" Spacing="5" HorizontalOptions="Center">
                                         <!-- Edition -->
-                                        <Label Text="{Binding Edition}" 
+                                        <Label Text="{Binding Edition}"
                                                FontSize="12" 
                                                TextColor="#5DADE2" 
                                                HorizontalTextAlignment="Center" />                  
@@ -59,7 +60,7 @@
                                         <Label Text="{Binding Rarity}" 
                                                FontSize="12" 
                                                TextColor="#F5B041" 
-                                               HorizontalTextAlignment="Center" />              
+                                               HorizontalTextAlignment="Center" />   
                                     </StackLayout>
                                 </StackLayout>
 
@@ -88,10 +89,7 @@
                                                    HorizontalTextAlignment="Center" />
                                 </StackLayout>
 
-                               
-
-                                <!-- Quantity and Edit Button (Column 4, Second Row) -->
-                                <StackLayout Grid.Column="4" Grid.Row="0" Orientation="Vertical" HorizontalOptions="End" Spacing="5">
+                            <StackLayout Grid.Column="4" Grid.Row="0" Orientation="Vertical" HorizontalOptions="End" Spacing="5">
                                     <Label Text="Quantity" 
                                            FontSize="12" 
                                            TextColor="LightGreen" 

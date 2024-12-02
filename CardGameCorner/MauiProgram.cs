@@ -48,6 +48,8 @@ namespace CardGameCorner
             builder.Services.AddTransient<SearchViewModel>();
             builder.Services.AddTransient<SearchQueryPage>();
             builder.Services.AddTransient<CardDetailPage>();
+            builder.Services.AddTransient<SettingsSlidePage>();
+            builder.Services.AddTransient<SettingsViewModel>();
             builder.Services.AddTransient<CardDetailViewModel>();
 
             builder.Services.AddSingleton<IMyAccountService, MyAccountService>();
@@ -58,6 +60,7 @@ namespace CardGameCorner
 
             // Register GlobalSettingsService as a singleton
             builder.Services.AddSingleton(GlobalSettingsService.Current);
+
 
             // Register HttpClient
             builder.Services.AddHttpClient();
