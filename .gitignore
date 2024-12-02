@@ -362,8 +362,12 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-*/bin/
-*/obj/
+*/bin/*
+*/obj/*
+bin/
+obj/
+/.vs/*
+/CardGameCorner/obj/Debug/*
 /.vs/CardGameCorner/v17/.suo
 /.vs/CardGameCorner/v17/DocumentLayout.json
 /.vs/CardGameCorner/v17/DocumentLayout.backup.json
