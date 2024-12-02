@@ -61,6 +61,9 @@ namespace CardGameCorner
             builder.Services.AddTransient<ApiResponse_Card>();
             builder.Services.AddTransient<ScannedCardDetails>();
 
+            builder.Services.AddSingleton<IAlertService, AlertService>();
+            builder.Services.AddSingleton<INavigationService, NavigationService>();
+
             // Register GlobalSettingsService as a singleton
             builder.Services.AddSingleton(GlobalSettingsService.Current);
 
