@@ -37,6 +37,14 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
+                <Button Text="Logout"
+                BackgroundColor="Red"
+                TextColor="White"
+                CornerRadius="5"
+                HorizontalOptions="Center"
+                VerticalOptions="End"
+                Clicked="LogoutButton_Clicked"/>
+
                 <!-- Email -->
                 <Label Grid.Row="0" Grid.Column="0" Text="Email:" 
                        TextColor="White"

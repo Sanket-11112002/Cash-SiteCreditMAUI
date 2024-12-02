@@ -212,6 +212,7 @@ namespace CardGameCorner.Services
 
             if (response.IsSuccessStatusCode)
             {
+
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                 Console.WriteLine($"Upload successful: {responseContent}");
 
@@ -220,9 +221,6 @@ namespace CardGameCorner.Services
                 var apiResponse = JsonSerializer.Deserialize<ApiResponse_Card>(responseContent, options);
                 Console.WriteLine($"Card Title: {apiResponse.Result.Title}");
 
-               
-                  
-                
                 return JsonSerializer.Deserialize<ApiResponse_Card>(responseContent, options);
 
             }

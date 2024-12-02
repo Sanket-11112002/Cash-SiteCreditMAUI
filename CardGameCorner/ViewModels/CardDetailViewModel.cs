@@ -1,4 +1,6 @@
-﻿using CardGameCorner.Models;
+﻿
+using CardGameCorner.Models;
+using CardGameCorner.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 using System;
@@ -8,7 +10,7 @@ using System.Windows.Input;
 
 namespace CardGameCorner.ViewModels
 {
-    public partial class CardDetailViewModel : ObservableObject
+    public partial class CardDetailViewModel : ObservableObject,INotifyPropertyChanged
     {
         private CardModel _card;
         private int _quantity = 1;
@@ -18,43 +20,70 @@ namespace CardGameCorner.ViewModels
 
 
         [ObservableProperty]
-        private List<string> languages;  // Collection of languages
+        public int id;
+
 
         [ObservableProperty]
-        private string selectedLanguage;  // The selected language
+        public string name;
 
-        
+        [ObservableProperty]
+        public string rarity;
+
+        [ObservableProperty]
+        public string category;
+
+        [ObservableProperty]
+        public string imageUrl;
+
+        [ObservableProperty]
+        public decimal cashPrice;
+
+        [ObservableProperty]
+        public decimal siteCredit;
+
+        [ObservableProperty]
+        public bool isFirstEdition;
+
+        [ObservableProperty]
+        public bool isReverse;
+
+        [ObservableProperty]
+        public string game;
+
+        [ObservableProperty]
+        public List<string> languages;
+
+        [ObservableProperty]
+        public List<string> conditions;  // Collection of languages
+
+        [ObservableProperty]
+        public string selectedLanguage;  // The selected language
+
+        [ObservableProperty]
+        public decimal buylist;  // The selected language
+
+
+        [ObservableProperty]
+        public string selectedCondition;
+
+
+ // The selected language
+
 
         public CardDetailViewModel()
         {
-            // Initialize with sample data
-            Card = new CardModel
-            {
-                Name = "Blue-Eyes White Dragon",
-                Rarity = "Secret Rare",
-                Category = "RAGE OF THE ABYSS",
-                ImageUrl = "pokemon_card.jpg",
-                CashPrice = 13.90m,
-                SiteCredit = 17.00m,
-                IsFirstEdition = true,
-                IsReverse = false
-            };
+           
 
             // Initialize commands
-            AddToListCommand = new Command(ExecuteAddToList);
+         //   AddToListCommand = new Command(ExecuteAddToList);
             GoBackCommand = new Command(ExecuteGoBack);
             DoneCommand = new Command(ExecuteDone);
 
-
+            
             // Initialize the list of languages (this could come from a service or API)
-            languages = new List<string>
-            {
-                "English",
-                "Spanish",
-                "French",
-                "German",
-                "Chinese"
-            };
+           
+
+            selectedLanguage = "Choose Lanugage";
         }
         public ICommand GoBackCommand
         {
@@ -67,7 +96,7 @@ namespace CardGameCorner.ViewModels
             get => _doneCommand;
             set => SetProperty(ref _doneCommand, value);
         }
-
+            
         private async void ExecuteGoBack()
         {
             await Application.Current.MainPage.Navigation.PopAsync();
@@ -75,9 +104,19 @@ namespace CardGameCorner.ViewModels
 
         private async void ExecuteDone()
         {
-            // Implement your done logic here
-            await Application.Current.MainPage.Navigation.PopAsync();
+            try
+            {
+                // Reset navigation stack to ScanPage
+                await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
+                await Shell.Current.GoToAsync("//MyListPage"); // Navigate to ScanPage tab
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Navigation error: {ex.Message}");
+            }
         }
+
+
         public CardModel Card
         {
             get => _card;
@@ -101,7 +140,7 @@ namespace CardGameCorner.ViewModels
                     _quantity = value;
                     OnPropertyChanged();
                     // Refresh command can execute state when quantity changes
-                    (AddToListCommand as Command)?.ChangeCanExecute();
+                   // (AddToListCommand as Command)?.ChangeCanExecute();
                 }
             }
         }
@@ -119,25 +158,13 @@ namespace CardGameCorner.ViewModels
             }
         }
 
-        private void ExecuteAddToList()
-        {
-            try
-            {
-                // Add your logic here to handle adding the card to the list
-                // For example:
-                // await cardService.AddToList(Card, Quantity);
 
-                // You can also show a success message using Page.DisplayAlert
-                // await Application.Current.MainPage.DisplayAlert("Success", "Added to your list", "OK");
-            }
-            catch (Exception ex)
-            {
-                // Handle any errors
-                // await Application.Current.MainPage.DisplayAlert("Error", "Failed to add to list", "OK");
-                System.Diagnostics.Debug.WriteLine($"Error adding to list: {ex.Message}");
-            }
-        }
 
+
+
+
+
+       
         // Implementing INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -1,13 +1,19 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.MyListPage"
-             Title="My List">
+             xmlns:vm="clr-namespace:CardGameCorner.ViewModels"
+             Title="My List"
+             x:Name="MyListPageRoot">
+
+    <ContentPage.BindingContext>
+        <vm:MyListViewModel />
+    </ContentPage.BindingContext>
     <ScrollView>
         <VerticalStackLayout>
             <ListView ItemsSource="{Binding CardItems}" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
+                        <ViewCell  >
                             <Grid Padding="16" ColumnDefinitions="Auto, Auto, Auto, Auto,Auto" 
                                   RowDefinitions="Auto, Auto" 
                                   BackgroundColor="#22313F" ColumnSpacing="10">
@@ -35,15 +41,15 @@
                                 <StackLayout Grid.Column="2" Grid.RowSpan="2" Orientation="Vertical" HorizontalOptions="Center" Spacing="5">
                                     <!-- Language and Condition Section -->
                                     <StackLayout Orientation="Vertical"  HorizontalOptions="Center">
-                                        <!-- Language Flag -->
-                                        <Image Source="{Binding LanguageFlag}" 
+                                       
+                                        <Image x:Name="Lngflag" 
                                                HeightRequest="20" 
-                                               WidthRequest="30" /> 
-                                        <!-- Condition --> 
+                                               WidthRequest="30" />
+                                        <Label Text="{Binding Language}" FontSize="14" TextColor="White" BackgroundColor="black"/>
+                                        <!-- Condition -->
                                         <Frame BackgroundColor="LightGreen" Padding="2,2" CornerRadius="2" HasShadow="False">
-                                            <!--<Label Text="{Binding Condition}"-->
-                                            <Label Text="NM" 
-                                                   TextColor="Black" 
+                                            <Label Text="{Binding Condition}" 
+                                                   TextColor="white" 
                                                    FontSize="12" 
                                                    HorizontalTextAlignment="Center" />  
                                         </Frame>
@@ -103,10 +109,20 @@
 
                                     <Button Text="Edit" 
                                             FontSize="12" 
+                                            Command="{Binding BindingContext.NavigateToCardDetailCommand, Source={x:Reference MyListPageRoot}}" 
+                                            CommandParameter="{Binding .}"
                                             TextColor="White" 
                                             BackgroundColor="#6C3483" 
                                             CornerRadius="5" 
                                             Padding="5,2" />
+                                    <Button Text="Delete" 
+                                      FontSize="12" 
+                                      Command="{Binding BindingContext.DeleteCardCommand, Source={x:Reference MyListPageRoot}}" 
+                                      CommandParameter="{Binding .}"
+                                      TextColor="White" 
+                                      BackgroundColor="Red" 
+                                      CornerRadius="5" 
+                                      Padding="5,2" />              
                                 </StackLayout>
                             </Grid>
                         </ViewCell>

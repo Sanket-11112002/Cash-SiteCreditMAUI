@@ -1,9 +1,11 @@
 ﻿using System.Runtime.InteropServices;
+using System.Text.Json;
 using System.Windows.Input;
 using CardGameCorner.Models;
 using CardGameCorner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+
 
 namespace CardGameCorner.ViewModels
 {
@@ -88,6 +90,8 @@ namespace CardGameCorner.ViewModels
                 searchResultImage= "https://www.cardgamecorner.com"+responseContent.Products[0].Image;
             
             }
+            
+
         }
 
 
@@ -115,15 +119,74 @@ namespace CardGameCorner.ViewModels
         [RelayCommand]
         private async Task ConfirmCard()
         {
+            try
+            {
+                // Ensure the responseContent is not null
+                if (responseContent?.Products?.Count > 0)
+                {
+                    // Get the first product
+                    var product = responseContent.Products[0];
+
+                    // Deserialize the Variants JSON string into a list of ProductVariant1 objects
+                    var variants = product.Variants;
+
+                    if (variants != null)
+                    {
+                        // Extract distinct languages and conditions
+                        var distinctLanguages = variants.Select(v => v.Language).Distinct().ToList();
+                        var distinctConditions = variants.Select(v => v.Condition).Distinct().ToList();
+
+                        // For testing, log the results to the console
+                        Console.WriteLine("Languages:");
+                        foreach (var lang in distinctLanguages)
+                        {
+                            Console.WriteLine(lang);
+                        }
+
+                        Console.WriteLine("Conditions:");
+                        foreach (var condition in distinctConditions)
+                        {
+                            Console.WriteLine(condition);
+                        }
+
+                        var details = new CardDetailViewModel
+                        {
+                            Languages = distinctLanguages,
+                            Conditions = distinctConditions,
+                            Name = product.Model,
+                            Rarity = product.Rarity,
+                            Category = product.Category,
+                            ImageUrl = "https://www.cardgamecorner.com" + product.Image,
+                            game = product.Game
+                        };
+
+                        // Navigate to the CardDetailsPage
+                       
+
+                        await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
 
 
-            // Add card to user's collection
-            await Application.Current.MainPage.DisplayAlert("Success",
-                "Card added to your collection!", "OK");
-            // Navigate back or refresh
+
+                    }
+
+                    // Show success confirmation
+                    await Application.Current.MainPage.DisplayAlert("Success",
+                        "Card added to your collection!", "OK");
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error",
+                        "No product data found in the response!", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle errors gracefully
+                await Application.Current.MainPage.DisplayAlert("Error",
+                    $"An error occurred: {ex.Message}", "OK");
+            }
         }
 
-        
 
         //private async Task ProcessCapturedImage(Stream imageStream)
         //{

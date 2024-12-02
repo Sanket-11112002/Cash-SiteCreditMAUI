@@ -115,6 +115,7 @@ namespace CardGameCorner.ViewModels
         private readonly IGameService _gameService;
         private readonly ISecureStorage _secureStorage;
 
+
         [ObservableProperty]
         private bool isLoading;
 

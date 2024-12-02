@@ -1,73 +1,141 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CardGameCorner.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Input;
 
-namespace CardGameCorner.ViewModels
-{
+using CardGameCorner.Models;
+using CardGameCorner.Services;
+using CardGameCorner.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Newtonsoft.Json;
+
+
+
+namespace CardGameCorner.ViewModels {
     public class MyListViewModel : ObservableObject
     {
-        private List<CardItem> _cardItems;
+        // Observable collection to hold card items
+        public ObservableCollection<ProductListViewModel> CardItems { get; set; } = new ObservableCollection<ProductListViewModel>();
 
-        public List<CardItem> CardItems
+
+        private ICommand _navigateToCardDetailCommand;
+        private ICommand _deleteCardCommand;
+
+        public ICommand NavigateToCardDetailCommand
         {
-            get { return _cardItems; }
-            set
-            {
-                _cardItems = value;
-                OnPropertyChanged(nameof(CardItems));
-            }
+            get => _navigateToCardDetailCommand;
+            set => SetProperty(ref _navigateToCardDetailCommand, value);
+        }
+        public ICommand DeleteCardCommand
+        {
+            get => _deleteCardCommand;
+            set => SetProperty(ref _deleteCardCommand, value);
         }
 
         public MyListViewModel()
         {
-            // Initialize the card items
-            CardItems = new List<CardItem>
+            CardItems = new ObservableCollection<ProductListViewModel>();
+            NavigateToCardDetailCommand = new Command<ProductListViewModel>(NavigateToCardDetail);
+            DeleteCardCommand = new Command<ProductListViewModel>(DeleteCard);
+            getlist(); // Get the card data asynchronously
+        }
+
+        // Method to handle navigation to card details
+        private async void NavigateToCardDetail(ProductListViewModel selectedCard)
         {
-            new CardItem
+            if (selectedCard == null) return;
+
+            // Create a new instance of CardDetailViewModel and populate it with data from selectedCard
+            var cardDetailViewModel = new CardDetailViewModel
             {
-                Image = "pokemon_card.jpg",
-                Name = "Mr. Mime",
-                Model = "151",
-                Language = "NM",
-                Edition = "1ST Ed.",
-                Rarity = "Illustration Rare",
-                Cash = 13.20m,
-                Quantity = 11,
-                SiteCredit = 11.00m
-            },
-            new CardItem
+                Id=selectedCard.Id ?? 0,
+                Name = selectedCard.Model,
+                Rarity = selectedCard.Rarity,
+                Category = selectedCard.Category,
+                ImageUrl = selectedCard.Image,
+                //CashPrice = selectedCard.CashPrice,
+                SiteCredit = selectedCard.Sitecredit ?? 0,
+              //  IsFirstEdition = selectedCard.IsFirstEdition,
+               // IsReverse = selectedCard.IsReverse,
+                Game = selectedCard.Game,
+                 Languages = selectedCard.Languages,
+                Conditions = selectedCard.Conditions,
+                SelectedLanguage = selectedCard.Language,
+                SelectedCondition = selectedCard.Condition,
+                Buylist = selectedCard.Buylist?? 0,
+                Quantity = selectedCard.Quantity ?? 0,
+            };
+
+            // Pass the ViewModel instance as a navigation parameter
+    //        var navigationParameter = new Dictionary<string, object>
+    //{
+    //    { "CardDetailViewModel", cardDetailViewModel }
+    //};
+
+         //   await Shell.Current.GoToAsync(nameof(CardDetailPage), navigationParameter);
+
+            await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(cardDetailViewModel));
+        }
+
+        public async Task getlist()
+        {
+            var myListService = new SQLiteService();
+            var items = await myListService.GetAllItemsAsync();
+
+            if (items != null)
             {
-                Image = "pokemon_card.jpg",
-                Name = "Mr. Mime",
-                Model = "151",
-                Language = "NM",
-                Edition = "1ST Ed.",
-                Rarity = "Illustration",
-                Cash = 11.11m,
-                Quantity = 4,
-                SiteCredit = 17.00m
-            },
-            new CardItem
-            {
-                Image = "pokemon_card.jpg",
-                Name = "Mr. Mime",
-                Model = "151",
-                Language = "NM",
-                Edition = "1ST Ed.",
-                Rarity = "Illustration Rare",
-                Cash = 13.20m,
-                Quantity = 111,
-                SiteCredit = 121.00m
+                CardItems.Clear();
+                foreach (var item in items)
+                {
+                    var card = new ProductListViewModel
+                    {
+                        Id = item.Id ?? 0,
+                        Model = item.Model,
+                        Rarity = item.Rarity,
+                        Category = item.Category,
+                        Image = item.Image,
+                        //CashPrice = selectedCard.CashPrice,
+                        Sitecredit = item.Sitecredit ?? 0,
+                          IsFirstEdition = item.IsFirstEdition,
+                         IsReverse = item.IsReverse,
+                        Game = item.Game,
+                      
+                        Language = item.Language,
+                        Condition = item.Condition,
+                        Buylist = item.Buylist ?? 0,
+                        Quantity = item.Quantity ?? 0,
+                        Languageflag= "italianlng.svg"
+                    };
+
+                    if(item.Languagejsonlst!=null && item.Conditionjsonlst != null)
+                    {
+                        card.Languages = JsonConvert.DeserializeObject<List<string>>(item.Languagejsonlst);
+                        card.Conditions = JsonConvert.DeserializeObject<List<string>>(item.Conditionjsonlst);
+                    }
+
+                    CardItems.Add(card);
+                }
             }
-        };
+        }
+
+        public async Task LoadDataAsync()
+        {
+            await getlist();
+        }
+
+        private async void DeleteCard(ProductListViewModel selectedCard)
+        {
+            if(selectedCard != null)
+            {
+                var myListService = new SQLiteService();
+                var product = selectedCard.MapToProductList();
+
+                // Call your SQLite service to delete the item
+                await myListService.DeleteItemAsync(product);
+
+                await getlist();
+
+            }
         }
     }
 }
 
-
-     
