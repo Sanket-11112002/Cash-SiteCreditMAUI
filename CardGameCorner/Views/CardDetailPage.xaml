@@ -4,7 +4,13 @@
              x:Class="CardGameCorner.Views.CardDetailPage"
               NavigationPage.HasNavigationBar="False">
 
+<<<<<<< HEAD
    
+=======
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="setting.png" Text="Settings" Clicked="OnSettingsClicked" />
+    </ContentPage.ToolbarItems>
+>>>>>>> 7b0dbb8d07214d580f7bb56ca853b12c0d9ea50b
 
     <Grid RowDefinitions="Auto,*">
         <!-- Header -->
