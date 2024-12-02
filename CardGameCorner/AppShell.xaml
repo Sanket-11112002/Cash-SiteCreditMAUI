@@ -5,14 +5,21 @@
        Shell.FlyoutBehavior="Disabled"
        BackgroundColor="#1B3B48">
 
+    <Shell.ToolbarItems>
+        <ToolbarItem x:Name="SettingsToolbarItem"
+                 IconImageSource="settings_icon.png" 
+                 Text="Settings" 
+                 Clicked="OnSettingsClicked" />
+    </Shell.ToolbarItems>
+
     <TabBar>
 
         <ShellContent
          Title="Home"
          Icon="bxhomealt"
-         ContentTemplate="{DataTemplate views:HomePage}"
-         Route="home" />
-        
+         ContentTemplate="{DataTemplate views:GameDetailsPage}"
+         Route="GameDetailsPage" />
+
         <ShellContent
         Title="Search"
         Icon="bxsearchalt.svg"
@@ -24,7 +31,7 @@
         Icon="bxqrscan.svg"
         ContentTemplate="{DataTemplate views:ScanPage }"
         Route="ScanPage" />
-        
+
         <!--<ShellContent
         Title="Card Page"
         Icon="bxlistul.svg"
@@ -44,14 +51,13 @@
         Route="MyListPage" />
 
     </TabBar>
-    
 
     <ShellContent
         ContentTemplate="{DataTemplate views:LoginPage}"
         Route="login" />
 
     <ShellContent Route="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
-
+    
 
 </Shell>
 

@@ -77,10 +77,6 @@
              x:Class="CardGameCorner.Views.ScanPage"
              Title="Scan Page">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="setting.png" Text="Settings" Clicked="OnSettingsClicked" />
-    </ContentPage.ToolbarItems>
-    
     <!--<ScrollView>
         <VerticalStackLayout Padding="10" Spacing="20">
             --><!-- Camera View for Scanning -->

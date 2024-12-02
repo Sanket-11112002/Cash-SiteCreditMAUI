@@ -15,9 +15,11 @@ namespace CardGameCorner.Services
         {
             // Initialize with default values
             SelectedLanguage = "English";
+
         }
 
         private string _selectedLanguage = "English";
+
         public string SelectedLanguage
         {
             get => _selectedLanguage;
@@ -45,14 +47,6 @@ namespace CardGameCorner.Services
             }
         }
 
-        // Method to handle language change
-        //private void OnLanguageChanged()
-        //{
-        //    // Implement language change logic
-        //    // For example, update UI or load language resources
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedLanguage)));
-        //}
-
         private void OnLanguageChanged()
         {
             try
@@ -70,8 +64,6 @@ namespace CardGameCorner.Services
             }
         }
 
-
-        // Method to handle game change
         private void OnGameChanged()
         {
             // Implement game change logic
@@ -131,10 +123,10 @@ namespace CardGameCorner.Services
                     "Choose a Game",
                     "Cancel",
                     null,
-                    "Pokémon",
+                    "Pokemon",
                     "One Piece",
                     "Magic",
-                    "Yu-Gi-Oh!");
+                    "Yu-Gi-Oh");
 
                 if (!string.IsNullOrEmpty(game) && game != "Cancel")
                 {
@@ -149,3 +141,4 @@ namespace CardGameCorner.Services
         }
     }
 }
+

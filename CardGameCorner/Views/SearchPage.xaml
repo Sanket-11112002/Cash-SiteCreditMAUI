@@ -2,10 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.SearchPage"
              xmlns:vm="clr-namespace:CardGameCorner.ViewModels">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="setting.png" Text="Settings" Clicked="OnSettingsClicked" />
-    </ContentPage.ToolbarItems>
-    
+   
     <ScrollView>
         <VerticalStackLayout Spacing="20" 
                              Padding="20"
