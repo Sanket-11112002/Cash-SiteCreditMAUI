@@ -111,3 +111,9 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = CardGameCorner.Views.SearchQueryPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\SearchQueryPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\SearchQueryPage.xaml
+
+[C:/Users/Netwin/Desktop/CardGameCorner/CardGameCorner/Views/SettingsSlidePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = CardGameCorner.Views.SettingsSlidePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\SettingsSlidePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\SettingsSlidePage.xaml
