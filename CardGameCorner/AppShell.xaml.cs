@@ -34,8 +34,10 @@ namespace CardGameCorner
 
         private void RegisterRoutes()
         {
-            Routing.RegisterRoute($"login", typeof(LoginPage));
+            //Routing.RegisterRoute($"login", typeof(LoginPage));
+            Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
             Routing.RegisterRoute("//HomePage", typeof(HomePage));  // Register HomePage route
+           // Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));  // Register HomePage route
             //Routing.RegisterRoute("GameDetailsPage", typeof(GameDetailsPage));
             //Routing.RegisterRoute(nameof(GameDetailsPage), typeof(GameDetailsPage));
             Routing.RegisterRoute("GameDetailsPage", typeof(CardGameCorner.Views.GameDetailsPage));
@@ -48,13 +50,25 @@ namespace CardGameCorner
             Routing.RegisterRoute(nameof(CardDetailPage), typeof(CardDetailPage));
             Routing.RegisterRoute(nameof(CardComparisonPage), typeof(CardComparisonPage));
         }
+       
+        //private async void MyAccountTab_Navigated(object sender, ShellNavigatedEventArgs e)
+        //{
+        //    // Check if user is logged in before accessing MyAccountTab
+        //    if (!App.IsUserLoggedIn)
+        //    {
+        //        await GoToAsync("//login");
+        //    }
+        //}
 
-        private async void MyAccountTab_Navigated(object sender, ShellNavigatedEventArgs e)
+        protected override void OnNavigatedTo(NavigatedToEventArgs args)
         {
-            // Check if user is logged in before accessing MyAccountTab
-            if (!App.IsUserLoggedIn)
+            base.OnNavigatedTo(args);
+
+            // Check if user is logged in when trying to access My Account
+            if (CurrentPage is MyAccountPage && !App.IsUserLoggedIn)
             {
-                await GoToAsync("//login");
+                // Redirect to login if not logged in
+                GoToAsync("//login");
             }
         }
 

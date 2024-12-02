@@ -76,6 +76,11 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="CardGameCorner.Views.ScanPage"
              Title="Scan Page">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="setting.png" Text="Settings" Clicked="OnSettingsClicked" />
+    </ContentPage.ToolbarItems>
+    
     <!--<ScrollView>
         <VerticalStackLayout Padding="10" Spacing="20">
             --><!-- Camera View for Scanning -->
@@ -118,8 +123,8 @@
                    SemanticProperties.Description="Captured image will appear here" />
         </VerticalStackLayout>
     </ScrollView>-->
-
-    <ScrollView>
+    <Grid>
+        <ScrollView>
         <VerticalStackLayout Spacing="20" 
                           Padding="20"
                           VerticalOptions="Start">
@@ -131,7 +136,7 @@
                  Aspect="AspectFit"/>
 
             <!-- Banner -->
-            <Image Source="banner.jpg" 
+            <Image Source="banner.jpg"
                  Aspect="AspectFit"
                  Margin="0,0,0,10"/>
 
@@ -192,9 +197,21 @@
                 </Frame>
                
             </Grid>
-            <Grid BackgroundColor="Red" Opacity="0.5" IsVisible="{Binding IsLoading}">
-                <ActivityIndicator IsRunning="{Binding IsLoading}" HorizontalOptions="Center" VerticalOptions="Center" />
-            </Grid>
+           
         </VerticalStackLayout>
     </ScrollView>
+
+        <Grid 
+            BackgroundColor="Black" 
+            Opacity="0.5" 
+            IsVisible="{Binding IsLoading}"
+            ZIndex="100">
+            <ActivityIndicator 
+                IsRunning="{Binding IsLoading}" 
+                Color="White"
+                HorizontalOptions="Center" 
+                VerticalOptions="Center" 
+                Scale="2"/>
+        </Grid>
+    </Grid>
 </ContentPage>

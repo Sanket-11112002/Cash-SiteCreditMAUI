@@ -1,35 +1,137 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CardGameCorner.Views.MyListPage">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <!-- Header -->
-        <Button Text="Back" Grid.Row="0" Grid.Column="0" Margin="16" />
-        <Button Text="Done" Clicked="getlist" Grid.Row="0" Grid.Column="1" Margin="16" />
-        <!-- List of Items -->
-        <CollectionView Grid.Row="1" Grid.ColumnSpan="2" Margin="16">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid ColumnSpan="2" ColumnDefinitions="Auto,*,Auto" Margin="0,8,0,0">
-                        <Image Source="pokemon_card.jpg" WidthRequest="48" HeightRequest="48" Margin="0,0,16,0" />
-                        <VerticalStackLayout Grid.Column="1">
-                            <!--<Label Text="{Binding Name}" FontAttributes="Bold" />-->
-                            <Label Text="sample name" FontAttributes="Bold" />
-                            <!--<Label Text="{Binding Quantity, StringFormat='Quantity: {0}'}" TextColor="Gray" />-->
-                            <Label Text="1" TextColor="Gray" />
-                        </VerticalStackLayout>
-                        <Label Grid.Column="2" Text="200" FontAttributes="Bold" VerticalOptions="Center" />
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </Grid>
+             x:Class="CardGameCorner.Views.MyListPage"
+             xmlns:vm="clr-namespace:CardGameCorner.ViewModels"
+             Title="My List"
+             x:Name="MyListPageRoot">
+
+    <ContentPage.BindingContext>
+        <vm:MyListViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <VerticalStackLayout>
+            <ListView ItemsSource="{Binding CardItems}" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell  >
+                            <Grid Padding="16" ColumnDefinitions="Auto, Auto, Auto, Auto,Auto" 
+                                  RowDefinitions="Auto, Auto" 
+                                  BackgroundColor="#22313F" ColumnSpacing="10">
+
+                                <!-- Image (Column 0) -->
+                                <Image Source="{Binding Image}" 
+                                       HeightRequest="100" 
+                                       WidthRequest="70" 
+                                       Aspect="AspectFit" 
+                                       Grid.Column="0" 
+                                       Grid.RowSpan="2" />
+
+                                <!-- Name and Model (Column 1) -->
+                                <StackLayout Grid.Column="1" Grid.Row="0" Grid.RowSpan="1" Orientation="Vertical" Spacing="5">
+                                    <Label Text="{Binding Name}" 
+                                           FontSize="14" 
+                                           FontAttributes="Bold" 
+                                           TextColor="White" />
+                                    <Label Text="{Binding Model}" 
+                                           FontSize="14" 
+                                           TextColor="#cccccc" />
+                                </StackLayout>
+
+                                <!-- Combined Language, Condition, Edition, and Rarity (Column 2) -->
+                                <StackLayout Grid.Column="2" Grid.RowSpan="2" Orientation="Vertical" HorizontalOptions="Center" Spacing="5">
+                                    <!-- Language and Condition Section -->
+                                    <StackLayout Orientation="Vertical"  HorizontalOptions="Center">
+                                       
+                                        <Image x:Name="Lngflag" 
+                                               HeightRequest="20" 
+                                               WidthRequest="30" />
+                                        <Label Text="{Binding Language}" FontSize="14" TextColor="White" BackgroundColor="black"/>
+                                        <!-- Condition -->
+                                        <Frame BackgroundColor="LightGreen" Padding="2,2" CornerRadius="2" HasShadow="False">
+                                            <Label Text="{Binding Condition}" 
+                                                   TextColor="white" 
+                                                   FontSize="12" 
+                                                   HorizontalTextAlignment="Center" />  
+                                        </Frame>
+                                    </StackLayout>
+
+                                    <!-- Edition and Rarity Section -->
+                                    <StackLayout Orientation="Vertical" Spacing="5" HorizontalOptions="Center">
+                                        <!-- Edition -->
+                                        <Label Text="{Binding Edition}" 
+                                               FontSize="12" 
+                                               TextColor="#5DADE2" 
+                                               HorizontalTextAlignment="Center" />                  
+                                        <!-- Rarity -->
+                                        <Label Text="{Binding Rarity}" 
+                                               FontSize="12" 
+                                               TextColor="#F5B041" 
+                                               HorizontalTextAlignment="Center" />              
+                                    </StackLayout>
+                                </StackLayout>
+
+                                <!-- Cash and Credit (Column 4) -->
+                                <StackLayout Grid.Column="3" Grid.Row="0" Orientation="Vertical" Spacing="5">
+                                    <Label Text="Cash" 
+                                               FontSize="12" 
+                                               TextColor="LightGreen" 
+                                               FontAttributes="Bold" 
+                                               HorizontalTextAlignment="Center" />
+                                    <!-- Binding Value -->
+                                    <Label Text="{Binding Cash, StringFormat='{0:C}'}" 
+                                                   FontSize="12" 
+                                                   TextColor="White" 
+                                                   HorizontalTextAlignment="Center" />
+
+                                    <Label Text="Site Credit" 
+                                               FontSize="12" 
+                                               TextColor="LightGreen" 
+                                               FontAttributes="Bold" 
+                                               HorizontalTextAlignment="Center" />
+                                    <!-- Binding Value -->
+                                    <Label Text="{Binding SiteCredit, StringFormat='{0:C}'}" 
+                                                   FontSize="12" 
+                                                   TextColor="White" 
+                                                   HorizontalTextAlignment="Center" />
+                                </StackLayout>
+
+                               
+
+                                <!-- Quantity and Edit Button (Column 4, Second Row) -->
+                                <StackLayout Grid.Column="4" Grid.Row="0" Orientation="Vertical" HorizontalOptions="End" Spacing="5">
+                                    <Label Text="Quantity" 
+                                           FontSize="12" 
+                                           TextColor="LightGreen" 
+                                           FontAttributes="Bold" 
+                                           HorizontalTextAlignment="Center" />          
+                                    <!-- Binding Value -->
+                                    <Label Text="{Binding Quantity}" 
+                                           FontSize="12" 
+                                           TextColor="White" 
+                                           HorizontalTextAlignment="Center" />
+
+                                    <Button Text="Edit" 
+                                            FontSize="12" 
+                                            Command="{Binding BindingContext.NavigateToCardDetailCommand, Source={x:Reference MyListPageRoot}}" 
+                                            CommandParameter="{Binding .}"
+                                            TextColor="White" 
+                                            BackgroundColor="#6C3483" 
+                                            CornerRadius="5" 
+                                            Padding="5,2" />
+                                    <Button Text="Delete" 
+                                      FontSize="12" 
+                                      Command="{Binding BindingContext.DeleteCardCommand, Source={x:Reference MyListPageRoot}}" 
+                                      CommandParameter="{Binding .}"
+                                      TextColor="White" 
+                                      BackgroundColor="Red" 
+                                      CornerRadius="5" 
+                                      Padding="5,2" />              
+                                </StackLayout>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

@@ -178,6 +178,8 @@ namespace CardGameCorner.ViewModels
             WelcomeMessage = AppResources.WelcomeMessage; 
         }
 
+       
+
         [RelayCommand]
         private async Task LoadGamesAsync()
         {

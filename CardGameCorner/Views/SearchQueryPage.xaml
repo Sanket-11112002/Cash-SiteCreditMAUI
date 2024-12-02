@@ -11,111 +11,122 @@
         <vm:SearchViewModel />
     </ContentPage.BindingContext>
 
-    <Grid>
-        <ScrollView>
-            <VerticalStackLayout Spacing="20" 
-                               Padding="20"
-                               VerticalOptions="Start">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="setting.png" Text="Settings" Clicked="OnSettingsClicked" />
+    </ContentPage.ToolbarItems>
 
-                <SearchBar Text="{Binding SearchQuery}" 
-                          Placeholder="Search..." 
-                          BackgroundColor="#2A3947" 
-                          TextColor="White" 
-                          PlaceholderColor="Gray"
-                          Margin="0,0,0,10" />
+    <Grid Padding="10">
+        <ScrollView>
+            <VerticalStackLayout Spacing="20" VerticalOptions="Start">
+                <!-- Search Bar and Button -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <SearchBar Grid.Column="0" 
+                               Text="{Binding SearchQuery}" 
+                               Placeholder="Search..." 
+                               BackgroundColor="#2A3947" 
+                               TextColor="White" 
+                               PlaceholderColor="Gray"
+                               Margin="0,0,0,10"
+                               />
+
+                    <Button Grid.Column="1" 
+                            Text="Search" 
+                            Command="{Binding SearchCommand}"
+                            BackgroundColor="#2A3947"
+                            TextColor="White"
+                            Margin="10,0,0,10"
+                            VerticalOptions="Center"/>
+                </Grid>
 
                 <!-- Error Message -->
-                <VerticalStackLayout IsVisible="{Binding HasError}"
-                                   HorizontalOptions="Center"
-                                   Spacing="10">
-                    <Label Text="{Binding ErrorMessage}"
-                           TextColor="Red"
-                           HorizontalOptions="Center" />
-                    <Button Text="Retry"
-                            Command="{Binding RefreshCommand}"
-                            HorizontalOptions="Center" />
+                <VerticalStackLayout IsVisible="{Binding HasError}" HorizontalOptions="Center" Spacing="10">
+                    <Label Text="{Binding ErrorMessage}" TextColor="Red" HorizontalOptions="Center" />
+                    <Button Text="Retry" Command="{Binding RefreshCommand}" HorizontalOptions="Center" />
                 </VerticalStackLayout>
 
                 <!-- No Results Message -->
                 <Label Text="No results found. Try a different search term."
-                       IsVisible="{Binding NoResultsFound}"
+                       IsVisible="{Binding NoResultsFound}" 
                        TextColor="Gray"
                        HorizontalOptions="Center" />
 
                 <!-- Products List -->
-                <CollectionView ItemsSource="{Binding Products}"
-                              IsVisible="{Binding NoResultsFound, Converter={StaticResource InverseBoolConverter}}">
+                <CollectionView ItemsSource="{Binding Products}" 
+                                IsVisible="{Binding NoResultsFound, Converter={StaticResource InverseBoolConverter}}">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10" HorizontalItemSpacing="10" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame    BorderColor="Gray" CornerRadius="0" Padding="0" Margin="10" BackgroundColor="#1B3B48">
+                            <Frame BorderColor="Gray" CornerRadius="8" Padding="0" Margin="10" BackgroundColor="#1B3B48">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SearchViewModel}}, Path=OpenProductUrlCommand}" 
-                                                        CommandParameter="{Binding ProductUrl}" />
+                                                          CommandParameter="{Binding ProductUrl}" />
                                 </Frame.GestureRecognizers>
                                 <StackLayout Spacing="5">
-                                    <!-- Image in Card -->
+                                    <!-- Image Section -->
                                     <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-
                                         <ImageButton Source="{Binding Image}" 
-                                               Aspect="AspectFit" 
-                                               HeightRequest="100" 
-                                               WidthRequest="100" 
-                                               HorizontalOptions="Center" 
-                                               VerticalOptions="Center" 
-                                               Grid.Row="0" Margin="5" Clicked="OnUploadButtonClicked"/>
-
-                                        <Label Text="{Binding Rarity}" 
-                                               TextColor="White" 
-                                               FontAttributes="Bold" 
-                                               FontSize="8" 
-                                               BackgroundColor="Red" 
-                                               Opacity="0.8"
-                                               VerticalOptions="Center" 
-                                               HorizontalOptions="Start" 
-                                               Grid.Row="0" 
-                                               Margin="0" 
-                                               Padding="5">
-                                            <Label.Triggers>
-                                                <DataTrigger TargetType="Label" 
-                                                           Binding="{Binding Rarity}" 
-                                                           Value="{x:Static sys:String.Empty}">
-                                                    <Setter Property="IsVisible" Value="False" />
-                                                </DataTrigger>
-                                            </Label.Triggers>
-                                        </Label>
+                                                     Aspect="AspectFit" 
+                                                     HeightRequest="120" 
+                                                     WidthRequest="120" 
+                                                     HorizontalOptions="Center" 
+                                                     VerticalOptions="Center" 
+                                                     Margin="5" 
+                                                     Clicked="OnUploadButtonClicked"/>
                                     </Grid>
 
-                                    <!-- Note -->
+                                    <!-- Favorite Button -->
+                                    <ImageButton 
+                        Source="{Binding FavoriteIcon}" 
+                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SearchViewModel}}, Path=ToggleFavoriteCommand}" 
+                                
+                        CommandParameter="{Binding .}" 
+                        HorizontalOptions="End" 
+                        VerticalOptions="Start" 
+                        Margin="5"
+                        HeightRequest="20" 
+                        WidthRequest="20" 
+                        BackgroundColor="Transparent" />
+
+                                    <!-- Rarity Label -->
+                                    <Label Text="{Binding Rarity}" 
+                                           TextColor="White" 
+                                           FontAttributes="Bold" 
+                                           FontSize="10" 
+                                           BackgroundColor="Red" 
+                                           Opacity="0.8"
+                                           VerticalOptions="Center" 
+                                           HorizontalOptions="Start" 
+                                           Padding="5"/>
+
+                                    <!-- Model and Price -->
                                     <Label Text="{Binding ModelEn}" 
                                            Padding="2"
                                            TextColor="White" 
-                                           FontSize="7"
+                                           FontSize="10"
                                            HorizontalTextAlignment="Start" 
-                                           Margin="0"
                                            VerticalTextAlignment="Start"
                                            HorizontalOptions="FillAndExpand" 
-                                           HeightRequest="25"/>
+                                           HeightRequest="30"/>
 
-                                    <!-- Price Range -->
                                     <StackLayout Orientation="Horizontal" 
-                                               HorizontalOptions="Center" 
-                                               Spacing="5" 
-                                               Margin="0">
+                                                 HorizontalOptions="Center" 
+                                                 Spacing="5">
                                         <Label Text="{Binding MinPrice, StringFormat='{0} €'}" 
                                                FontAttributes="Bold" 
-                                               FontSize="10" 
+                                               FontSize="12" 
                                                TextColor="LightGray" 
                                                Margin="0,10,0,0" 
                                                TextDecorations="Strikethrough" />
                                         <Label Text="{Binding MaxPrice, StringFormat='{0} €'}" 
                                                FontAttributes="Bold" 
-                                               FontSize="10" 
+                                               FontSize="12" 
                                                TextColor="LightBlue" 
                                                Margin="0,10,0,0" />
                                     </StackLayout>
@@ -127,14 +138,13 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- Single Loading Indicator -->
-        <Grid IsVisible="{Binding IsLoading}"
-              BackgroundColor="#801B3B48">
+        <!-- Loading Indicator -->
+        <Grid IsVisible="{Binding IsLoading}" BackgroundColor="#801B3B48">
             <ActivityIndicator Color="White"
-                             IsRunning="{Binding IsLoading}"
-                             HorizontalOptions="Center"
-                             VerticalOptions="Center"
-                             Scale="2"/>
+                               IsRunning="{Binding IsLoading}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Scale="2"/>
         </Grid>
     </Grid>
 </ContentPage>

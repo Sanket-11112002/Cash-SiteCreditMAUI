@@ -1,3 +1,4 @@
+using CardGameCorner.Services;
 using System.ComponentModel;
 
 namespace CardGameCorner.Views;
@@ -41,20 +42,35 @@ public partial class MyAccountPage : ContentPage
         }
     }
 
-    protected override async void OnAppearing()
+    //protected override async void OnAppearing()
+    //{
+    //    base.OnAppearing();
+
+    //    // Ensure login before accessing the page
+    //    await EnsureUserLoggedIn();
+    //}
+
+    //private async Task EnsureUserLoggedIn()
+    //{
+    //    if (!App.IsUserLoggedIn)
+    //    {
+    //        // Clear any existing navigation stack
+    //        await Shell.Current.GoToAsync("//login");
+
+    //    }
+    //}
+
+    protected async override void OnAppearing()
     {
         base.OnAppearing();
 
-        // Ensure login before accessing the page
-        await EnsureUserLoggedIn();
-    }
-
-    private async Task EnsureUserLoggedIn()
-    {
+        // Ensure user is logged in
         if (!App.IsUserLoggedIn)
         {
-            // Clear any existing navigation stack
-            await Shell.Current.GoToAsync("//login");
+            // Redirect to login page
+            // await Shell.Current.GoToAsync("//login");
+            //await Shell.Current.Navigation.PushAsync(new LoginPage());
+            await Shell.Current.GoToAsync(nameof(LoginPage));
 
         }
     }
@@ -64,4 +80,28 @@ public partial class MyAccountPage : ContentPage
         App.IsUserLoggedIn = false;
         await Shell.Current.GoToAsync("//login");
     }
+
+    private async void OnSettingsClicked(object sender, EventArgs e)
+    {
+        // Use the global settings service to show settings
+        var globalSettings = GlobalSettingsService.Current;
+
+        string result = await DisplayActionSheet(
+            "Settings",
+            "Cancel",
+            null,
+            "Select Language",
+            "Select Game");
+
+        switch (result)
+        {
+            case "Select Language":
+                await globalSettings.ChangeLanguageAsync();
+                break;
+            case "Select Game":
+                await globalSettings.ChangeGameAsync();
+                break;
+        }
+    }
+
 }

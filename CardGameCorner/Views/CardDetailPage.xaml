@@ -2,8 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.CardDetailPage"
-           
               NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="setting.png" Text="Settings" Clicked="OnSettingsClicked" />
+    </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="Auto,*">
         <!-- Header -->
@@ -83,9 +86,9 @@
                 <VerticalStackLayout Grid.Row="1" Spacing="15">
                     <!-- Language Dropdown -->
 
-                    
-                        <Border Stroke="White">
-                            <Picker 
+
+                    <Border Stroke="White">
+                        <Picker 
                                
                                 TitleColor="White"
                                 ItemsSource="{Binding Languages}"
@@ -95,9 +98,9 @@
                                 HorizontalOptions="FillAndExpand"
                                 BackgroundColor="Transparent" 
                                 />
-                        </Border>
-                  
-                    
+                    </Border>
+
+
                     <!-- Condition Dropdown -->
                     <Border Stroke="White">
                         <Picker 
@@ -185,7 +188,7 @@
                     </Border>
                 </Grid>
 
-        <Border Grid.Row="3"
+                <Border Grid.Row="3"
         StrokeThickness="1"
         BackgroundColor="#1B3B48"
         StrokeShape="RoundRectangle 5"
@@ -199,7 +202,7 @@
                VerticalOptions="Center"
                Grid.Column="0"/>
 
-                      
+
                         <Label x:Name="Counttxt" Text="{Binding Quantity}"
                TextColor="White"
                HorizontalOptions="Center"
@@ -215,8 +218,8 @@
                      Grid.Column="2"
                      Clicked="OnDecreaseQuantityClicked"/>
 
-                         
-                            <ImageButton Source="plus_1.png" 
+
+                        <ImageButton Source="plus_1.png" 
                                 HeightRequest="25"
                      WidthRequest="25"
                             BackgroundColor="Transparent"              
@@ -228,7 +231,7 @@
                 </Border>
 
                 <!-- Add to my list Button -->
-                <Button Grid.Row="4"
+                <Button Grid.Row="4" x:Name="BtnText"
                 Text="Add to my list"
                 TextColor="White"
                 BackgroundColor="Transparent"
@@ -249,4 +252,5 @@
             </VerticalStackLayout>
         </ScrollView>
     </Grid>
+
 </ContentPage>

@@ -4,6 +4,11 @@
              x:Class="CardGameCorner.Views.MyAccountPage"
              Title="My Account"
              BackgroundColor="#1B3B48">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="setting.png" Text="Settings" Clicked="OnSettingsClicked" />
+    </ContentPage.ToolbarItems>
+    
     <!-- ScrollView for smaller screens -->
     <ScrollView>
         <StackLayout Padding="20" Spacing="15">

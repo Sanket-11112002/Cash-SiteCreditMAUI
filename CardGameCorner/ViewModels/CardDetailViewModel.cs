@@ -20,6 +20,10 @@ namespace CardGameCorner.ViewModels
 
 
         [ObservableProperty]
+        public int id;
+
+
+        [ObservableProperty]
         public string name;
 
         [ObservableProperty]
@@ -68,7 +72,6 @@ namespace CardGameCorner.ViewModels
 
         public CardDetailViewModel()
         {
-            // Initialize with sample data
            
 
             // Initialize commands
@@ -76,7 +79,7 @@ namespace CardGameCorner.ViewModels
             GoBackCommand = new Command(ExecuteGoBack);
             DoneCommand = new Command(ExecuteDone);
 
-
+            
             // Initialize the list of languages (this could come from a service or API)
            
 
@@ -105,7 +108,7 @@ namespace CardGameCorner.ViewModels
             {
                 // Reset navigation stack to ScanPage
                 await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
-                await Shell.Current.GoToAsync("//SearchPage"); // Navigate to ScanPage tab
+                await Shell.Current.GoToAsync("//MyListPage"); // Navigate to ScanPage tab
             }
             catch (Exception ex)
             {

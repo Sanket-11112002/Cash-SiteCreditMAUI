@@ -92,7 +92,7 @@ namespace CardGameCorner.ViewModels
                     {
                         Debug.WriteLine($"Title: {banner.Title}, Image: {banner.Image}, Url: {banner.Url}");
                     }
-                    Debug.WriteLine(GlobalSettings.SelectedLanguage);
+                    Debug.WriteLine(GlobalSettings.SelectedGame);
                 }
                 catch (Exception ex)
                 {

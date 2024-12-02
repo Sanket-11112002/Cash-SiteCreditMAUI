@@ -3,6 +3,8 @@ using CardGameCorner.Models;
 using CardGameCorner.ViewModels;
 
 
+using CardGameCorner.Services;
+
 namespace CardGameCorner.Views;
 
 public partial class SearchQueryPage : ContentPage
@@ -11,7 +13,32 @@ public partial class SearchQueryPage : ContentPage
 	public SearchQueryPage()
 	{
 		InitializeComponent();
+
 	}
+
+    private async void OnSettingsClicked(object sender, EventArgs e)
+    {
+        // Use the global settings service to show settings
+        var globalSettings = GlobalSettingsService.Current;
+
+        string result = await DisplayActionSheet(
+            "Settings",
+            "Cancel",
+            null,
+            "Select Language",
+            "Select Game");
+
+        switch (result)
+        {
+            case "Select Language":
+                await globalSettings.ChangeLanguageAsync();
+                break;
+            case "Select Game":
+                await globalSettings.ChangeGameAsync();
+                break;
+        }
+    }
+
 
 
     private async void OnUploadButtonClicked(object sender, EventArgs e)
@@ -166,4 +193,9 @@ public partial class SearchQueryPage : ContentPage
         return null;
     }
 
+    private void OnFavoriteButtonClicked(object sender, EventArgs e)
+    {
+         DisplayAlert("Cardd", "favouritee", "OK");
+       
+    }
 }

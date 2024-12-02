@@ -2,10 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.CardComparisonPage"
-           
-             BackgroundColor="#1A2634"
-           
-             >
+             Title="Card Comparision"
+             BackgroundColor="#1A2634">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="setting.png" Text="Settings" Clicked="OnSettingsClicked" />
+    </ContentPage.ToolbarItems>
 
     <ScrollView>
         <Grid RowDefinitions="Auto,*,Auto"
