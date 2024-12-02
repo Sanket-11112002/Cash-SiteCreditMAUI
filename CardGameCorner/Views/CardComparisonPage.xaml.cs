@@ -29,8 +29,8 @@ public partial class CardComparisonPage : ContentPage
 
         BindingContext = ComparisonData;
        
-            scannedimage.Source = ComparisonData.ScannedImage;
-            searchimage.Source = ComparisonData.SearchResultImage;
+       scannedimage.Source = ComparisonData.ScannedImage;
+       searchimage.Source = ComparisonData.SearchResultImage;
        
      
 

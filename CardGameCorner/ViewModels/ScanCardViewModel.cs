@@ -399,9 +399,11 @@ namespace CardGameCorner.ViewModels
 
                 if (cardSearchResponseViewModel != null && cardSearchResponseViewModel.Products.Count > 0)
                 {
-                    // Access and display data from the response
-                    var product = cardSearchResponseViewModel.Products[0];
-                    Console.WriteLine($"Product Model: {product.ModelEn}, Price: {product.MinPrice}");
+                    // Access and display data from the response for each product
+                    foreach (var product in cardSearchResponseViewModel.Products)
+                    {
+                        Console.WriteLine($"Product Model: {product.ModelEn}, Price: {product.MinPrice}");
+                    }
 
                     // Initialize the CardComparisonPage ViewModel
                     var comparisonData = new CardComparisonViewModel();

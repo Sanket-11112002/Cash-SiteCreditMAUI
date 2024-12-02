@@ -17,7 +17,7 @@ public partial class CardDetailPage : ContentPage
         BindingContext = viewmodel;
       
         if(viewmodel.Id!=0 && viewmodel.Id!=null) {
-            BtnText.Text = "Update Card";
+            BtnText.Text = "Update to my list";
         }
        
     }
@@ -115,8 +115,15 @@ public partial class CardDetailPage : ContentPage
                     // Add the product to the database
                     await productListService.AddItemToListAsync(product);
 
+                if(viewModel!=null && viewModel.Id != 0)
+                {
+                    await DisplayAlert("Success", "Product Updated to your list!", "OK");
+                }
+                else
+                {
                     await DisplayAlert("Success", "Product added to your list!", "OK");
-
+                }
+                    viewModel.ExecuteDone();
                 }
                 // Example data fetched from the ViewModel
 

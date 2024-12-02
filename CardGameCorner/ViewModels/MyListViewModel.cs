@@ -124,18 +124,30 @@ namespace CardGameCorner.ViewModels {
 
         private async void DeleteCard(ProductListViewModel selectedCard)
         {
-            if(selectedCard != null)
+            if (selectedCard != null)
             {
-                var myListService = new SQLiteService();
-                var product = selectedCard.MapToProductList();
+                // Show a confirmation dialog
+                bool isConfirmed = await Application.Current.MainPage.DisplayAlert(
+                    "Confirm Delete", // Title of the alert
+                    "Are you sure you want to delete this card?", // Message
+                    "Yes", // Confirmation button
+                    "No" // Cancel button
+                );
 
-                // Call your SQLite service to delete the item
-                await myListService.DeleteItemAsync(product);
+                if (isConfirmed)
+                {
+                    var myListService = new SQLiteService();
+                    var product = selectedCard.MapToProductList();
 
-                await getlist();
+                    // Call your SQLite service to delete the item
+                    await myListService.DeleteItemAsync(product);
 
+                    // Refresh the list or perform necessary actions after deletion
+                    await getlist();
+                }
             }
         }
+
     }
 }
 

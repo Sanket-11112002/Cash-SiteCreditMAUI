@@ -4,9 +4,9 @@
              x:Class="CardGameCorner.Views.CardDetailPage"
               NavigationPage.HasNavigationBar="False">
 
-    <ContentPage.ToolbarItems>
+    <!--<ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="setting.png" Text="Settings" Clicked="OnSettingsClicked" />
-    </ContentPage.ToolbarItems>
+    </ContentPage.ToolbarItems>-->
 
     <Grid RowDefinitions="Auto,*">
         <!-- Header -->
@@ -89,12 +89,13 @@
 
                     <Border Stroke="White">
                         <Picker 
-                               
-                                TitleColor="White"
+                                Title="Choose Language" 
+                                
+                                TitleColor="#FFFFFF"
                                 ItemsSource="{Binding Languages}"
                                 SelectedItem="{Binding SelectedLanguage}"
                                 TextColor="White"
-                                FontSize="16"
+                                FontSize="17"
                                 HorizontalOptions="FillAndExpand"
                                 BackgroundColor="Transparent" 
                                 />
@@ -104,14 +105,14 @@
                     <!-- Condition Dropdown -->
                     <Border Stroke="White">
                         <Picker 
-       
-        TitleColor="White"
-        ItemsSource="{Binding Conditions}"
-        SelectedItem="{Binding SelectedCondition}"
-        TextColor="White"
-        FontSize="16"
-        HorizontalOptions="FillAndExpand"
-        BackgroundColor="Transparent" 
+                        Title="Choose Condition" 
+                        TitleColor="black"
+                        ItemsSource="{Binding Conditions}"
+                        SelectedItem="{Binding SelectedCondition}"
+                        TextColor="White"
+                        FontSize="16"
+                        HorizontalOptions="FillAndExpand"
+                        BackgroundColor="Transparent" 
         />
                     </Border>
 
