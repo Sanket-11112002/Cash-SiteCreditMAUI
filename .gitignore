@@ -369,5 +369,8 @@ FodyWeavers.xsd
 /.vs/CardGameCorner/v17/DocumentLayout.backup.json
 /CardGameCorner/obj/Debug/net8.0-android
 /CardGameCorner/obj/Debug/net8.0-ios
+/CardGameCorner/obj/Debug/net8.0-ios/iossimulator-x64
 /CardGameCorner/obj/Debug/net8.0-maccatalyst
+/CardGameCorner/obj/Debug/net8.0-maccatalyst/maccatalyst-x64
 /CardGameCorner/obj/Debug/net8.0-windows10.0.19041.0
+/.vs/CardGameCorner/v17/.futdcache.v2
