@@ -14,7 +14,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell  >
-                            <Grid Padding="16" ColumnDefinitions="Auto, Auto, Auto, Auto,Auto" 
+                            <Grid Padding="16" ColumnDefinitions="*,*,*,*,*" 
                                   RowDefinitions="Auto, Auto" 
                                   BackgroundColor="#22313F" ColumnSpacing="10">
 

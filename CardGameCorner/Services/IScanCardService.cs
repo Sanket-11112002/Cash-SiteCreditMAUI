@@ -12,6 +12,9 @@ namespace CardGameCorner.Services
     {
         Task<MemoryStream> CompressImageAsync(Stream inputStream, long maxSize);
         Task<ApiResponse_Card> UploadImageAsync(Stream imageStream);
-        Task<CardSearchResponseViewModel> SearchCardAsync(CardSearchRequest cardRequest);
+        //Task<CardSearchResponseViewModel> SearchCardAsync(CardSearchRequest cardRequest);
+
+        Task<List<CardSearchResponseViewModel>> SearchCardAsync(CardSearchRequest cardRequest);
+        //Task<List<Product1>> SearchCardAsync(CardSearchRequest cardRequest);
     }
 }

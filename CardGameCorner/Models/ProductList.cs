@@ -20,7 +20,8 @@ namespace CardGameCorner.Models
         public int? Quantity { get; set; }
         public string Language { get; set; }
 
-        // Store as string (JSON) in SQLite
+       // public string LoggedInToken { get; set; }
+       // public string LoggedInToken { get; set; }
         public string? Languagejsonlst { get; set; }
         public string? Conditionjsonlst { get; set; }
 

@@ -233,8 +233,7 @@ namespace CardGameCorner.Services
 
 
 
-        // Method to perform card search
-        public async Task<CardSearchResponseViewModel> SearchCardAsync(CardSearchRequest cardRequest)
+        public async Task<List<CardSearchResponseViewModel>> SearchCardAsync(CardSearchRequest cardRequest)
         {
             string cardSearchUrl = "https://api.magiccorner.it/api/cardsearch";
             var cardRequestContent = new StringContent(
@@ -246,33 +245,134 @@ namespace CardGameCorner.Services
             var response = await _httpClient.PostAsync(cardSearchUrl, cardRequestContent);
             var responseContent = await response.Content.ReadAsStringAsync();
 
+
             if (response.IsSuccessStatusCode)
             {
-                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                // return JsonSerializer.Deserialize<CardSearchResponseViewModel>(responseContent, options);
-
                 try
                 {
-                    var cardSearchResponseViewModel = JsonSerializer.Deserialize<CardSearchResponseViewModel>(responseContent, options);
-                    return cardSearchResponseViewModel;
+                    Console.WriteLine($"Response Content: {responseContent}");
+
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                    // Check if the response is a list or single object
+                    var responseWrapper = JsonSerializer.Deserialize<CardSearchResponseViewModel>(responseContent, options);
+
+                    // Wrap the response in a list to return as a List<CardSearchResponseViewModel>
+                    return new List<CardSearchResponseViewModel> { responseWrapper };
                 }
                 catch (JsonException ex)
                 {
                     Console.WriteLine($"JSON deserialization failed: {ex.Message}");
                     throw;
                 }
-
-
-
-
             }
             else
             {
                 throw new Exception($"Card search failed: {response.StatusCode}. {responseContent}");
-
-
             }
         }
+        //    public async Task<List<CardSearchResponseViewModel>> SearchCardAsync(CardSearchRequest cardRequest)
+        //    {
+        //        // Hardcoded response JSON
+        //        var responseContent = @"
+        //{
+        //    ""Products"": [
+        //        {
+        //            ""Id"": ""IMA006"",
+        //            ""Game"": ""magic"",
+        //            ""Model"": ""Angelo della Misericordia"",
+        //            ""ModelEn"": ""Angel of Mercy"",
+        //            ""ModelSeo"": ""angelo-della-misericordia"",
+        //            ""ModelSeoEn"": ""angel-of-mercy"",
+        //            ""Image"": ""/prodotti/1/1115/IMA006.jpg"",
+        //            ""Color"": ""a"",
+        //            ""ColorLong"": ""White"",
+        //            ""Rarity"": ""Common"",
+        //            ""CategorySeo"": ""iconic-masters"",
+        //            ""Category"": ""Iconic Masters"",
+        //            ""IdCategory"": 1115,
+        //            ""Icon"": ""IMA"",
+        //            ""Quantity"": 7,
+        //            ""Variants"": [
+        //                {
+        //                    ""IdProduct"": 240683,
+        //                    ""FirstEdition"": """",
+        //                    ""Condition"": ""NM/M"",
+        //                    ""Foil"": ""Foil"",
+        //                    ""Language"": ""English"",
+        //                    ""Price"": 0.3000,
+        //                    ""Quantity"": 7
+        //                }
+        //            ],
+        //            ""MinPrice"": 0.16,
+        //            ""MaxPrice"": 0.3,
+        //            ""BuyListLock"": false,
+        //            ""isFoil"": false,
+        //            ""CategorySortOrder"": 337,
+        //            ""SetCode"": ""IMA""
+        //        },
+        //        {
+        //            ""Id"": ""IMA007"",
+        //            ""Game"": ""magic"",
+        //            ""Model"": ""Second Product"",
+        //            ""ModelEn"": ""Second Product"",
+        //            ""ModelSeo"": ""second-product"",
+        //            ""ModelSeoEn"": ""second-product"",
+        //            ""Image"": ""/prodotti/1/1115/IMA007.jpg"",
+        //            ""Color"": ""b"",
+        //            ""ColorLong"": ""Black"",
+        //            ""Rarity"": ""Rare"",
+        //            ""CategorySeo"": ""iconic-masters-rare"",
+        //            ""Category"": ""Iconic Masters Rare"",
+        //            ""IdCategory"": 1116,
+        //            ""Icon"": ""IMA"",
+        //            ""Quantity"": 3,
+        //            ""Variants"": [
+        //                {
+        //                    ""IdProduct"": 240684,
+        //                    ""FirstEdition"": """",
+        //                    ""Condition"": ""NM/M"",
+        //                    ""Foil"": ""Foil"",
+        //                    ""Language"": ""English"",
+        //                    ""Price"": 0.5000,
+        //                    ""Quantity"": 3
+        //                }
+        //            ],
+        //            ""MinPrice"": 0.4,
+        //            ""MaxPrice"": 0.5,
+        //            ""BuyListLock"": false,
+        //            ""isFoil"": true,
+        //            ""CategorySortOrder"": 338,
+        //            ""SetCode"": ""IMA""
+        //        }
+        //    ],
+        //    ""Total"": 2
+        //}";
+
+        //        try
+        //        {
+        //            Console.WriteLine($"Response Content: {responseContent}");
+
+        //            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+
+
+
+        //            // Deserialize into the wrapper class
+        //            // Deserialize into the wrapper class
+        //            var responseWrapper = JsonSerializer.Deserialize<CardSearchResponseViewModel>(responseContent, options);
+
+        //            // Wrap the response in a list to return as a List<CardSearchResponseViewModel>
+        //            return new List<CardSearchResponseViewModel> { responseWrapper };
+        //            // Return the list of products
+        //        }
+        //        catch (JsonException ex)
+        //        {
+        //            Console.WriteLine($"JSON deserialization failed: {ex.Message}");
+        //            throw;
+        //        }
+        //    }
+
 
         public Task<MemoryStream> CompressImageAsync(Stream inputStream, long maxSize)
         {

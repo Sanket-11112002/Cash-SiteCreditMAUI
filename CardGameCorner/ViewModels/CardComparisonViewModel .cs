@@ -5,6 +5,7 @@ using CardGameCorner.Models;
 using CardGameCorner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Newtonsoft.Json;
 
 
 namespace CardGameCorner.ViewModels
@@ -249,13 +250,18 @@ namespace CardGameCorner.ViewModels
                             {
                                 Languages = distinctLanguages,
                                 Conditions = distinctConditions,
-                                Name = product.Model,
+                                Name = product.Model, 
                                 Rarity = product.Rarity,
                                 Category = product.Category,
                                 ImageUrl = "https://www.cardgamecorner.com" + product.Image,
                                 game = product.Game
                             };
 
+                            string detailsJson = JsonConvert.SerializeObject(details);
+
+                            // Store the serialized string in SecureStorage
+                            await SecureStorage.SetAsync("CardDetailsObject", detailsJson);
+                           
                             // Navigate to the CardDetailsPage for each product
                             await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
                         }

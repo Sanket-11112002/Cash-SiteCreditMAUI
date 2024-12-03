@@ -133,7 +133,7 @@ namespace CardGameCorner.ViewModels
             set => SetProperty(ref _userProfile, value);
         }
 
-        public async Task InitializeAsync()
+        public async Task<UserProfile> InitializeAsync()
         {
             // Check if user is logged in before loading profile
             var token = await _secureStorage.GetAsync("jwt_token");
@@ -141,19 +141,21 @@ namespace CardGameCorner.ViewModels
             {
                 // Clear any existing profile data
                 UserProfile = null;
-                return;
+                return UserProfile;
             }
 
             try
             {
                 IsBusy = true;
                 UserProfile = await _myAccountService.GetUserProfileAsync();
+                return UserProfile;
             }
             catch (Exception ex)
             {
                 // Clear profile on failure
                 UserProfile = null;
                 await Shell.Current.DisplayAlert("Error", "Failed to load profile", "OK");
+                return UserProfile;
             }
             finally
             {

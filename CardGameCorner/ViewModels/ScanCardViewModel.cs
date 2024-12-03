@@ -395,30 +395,36 @@ namespace CardGameCorner.ViewModels
         {
             try
             {
-                var cardSearchResponseViewModel = await _scanCardService.SearchCardAsync(cardSearch);
+                var cardSearchResponseList = await _scanCardService.SearchCardAsync(cardSearch);
 
-                if (cardSearchResponseViewModel != null && cardSearchResponseViewModel.Products.Count > 0)
+                if (cardSearchResponseList != null && cardSearchResponseList.Any())
                 {
-                    // Access and display data from the response for each product
-                    foreach (var product in cardSearchResponseViewModel.Products)
+                    foreach (var cardSearchResponseViewModel in cardSearchResponseList)
                     {
-                        Console.WriteLine($"Product Model: {product.ModelEn}, Price: {product.MinPrice}");
+                        if (cardSearchResponseViewModel.Products != null && cardSearchResponseViewModel.Products.Any())
+                        {
+                            foreach (var product in cardSearchResponseViewModel.Products)
+                            {
+                                Console.WriteLine($"Product Model: {product.ModelEn}, Price: {product.MinPrice}");
+                            }
+
+                            // Initialize the CardComparisonPage ViewModel
+                            var comparisonData = new CardComparisonViewModel();
+                            comparisonData.Initialize(cardSearchResponseViewModel, imageSource);
+
+                            IsLoading = false;
+                            return comparisonData; // Return the first valid comparison data
+                        }
                     }
 
-                    // Initialize the CardComparisonPage ViewModel
-                    var comparisonData = new CardComparisonViewModel();
-
-                    // Initialize the comparison data
-                    comparisonData.Initialize(cardSearchResponseViewModel, imageSource);
-
-                    IsLoading = false;
-                    return comparisonData;
+                    Console.WriteLine("No products found in the card search responses.");
                 }
                 else
                 {
-                    Console.WriteLine("No products found in card search.");
-                    return null;
+                    Console.WriteLine("No card search responses found.");
                 }
+
+                return null;
             }
             catch (Exception ex)
             {
@@ -430,6 +436,7 @@ namespace CardGameCorner.ViewModels
                 IsLoading = false;
             }
         }
+
 
         public async Task<ApiResponse_Card> UploadImageAsync(Stream imageStream)
         {

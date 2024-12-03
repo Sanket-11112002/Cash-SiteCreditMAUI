@@ -1,26 +1,44 @@
 
 
+
 using CardGameCorner.Models;
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 using Newtonsoft.Json;
+using ISecureStorage = CardGameCorner.Services.ISecureStorage;
 
 
 namespace CardGameCorner.Views;
 
 public partial class CardDetailPage : ContentPage
 {
+    private readonly ISecureStorage secureStorage;
+
     int count = 0;
     public CardDetailPage(CardDetailViewModel viewmodel)
     {
         InitializeComponent();
         BindingContext = viewmodel;
       
-        if(viewmodel.Id!=0 && viewmodel.Id!=null) {
+
+
+        if (viewmodel.Id!=0 && viewmodel.Id!=null) {
             BtnText.Text = "Update to my list";
         }
+
        
+
     }
+
+    //protected override void OnDisappearing()
+    //{
+    //    base.OnDisappearing();
+
+    //     Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
+
+    //     Shell.Current.GoToAsync("//SearchPage");
+    //}
+
 
 
 
@@ -87,14 +105,46 @@ public partial class CardDetailPage : ContentPage
     {
         try
         {
-            // Fetch data from the BindingContext (ViewModel)
-            if (BindingContext is CardDetailViewModel viewModel)
+            if (!App.IsUserLoggedIn)
             {
+                var _alertService = new AlertService();
+           
+                var _navigationService = new NavigationService(_alertService, secureStorage);
+                bool result = await _alertService.ShowConfirmationAsync(
+                 "Login Required",
+                 "You need to log in to add card to list. Would you like to log in?",
+                 "Login",
+                 "Continue");
 
-                
+                if (result)
+                {
+                    // User chose to login
+                   
+                    await _navigationService.NavigateToLoginAsync();
+                  
+
+                }
+                else
+                {
+                    string detailsJson = await SecureStorage.GetAsync("CardDetailsObject");
+
+                    var details = JsonConvert.DeserializeObject<CardDetailViewModel>(detailsJson);
+
+                    // User chose to continue without login
+                    await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
+                    return;
+                }
+
+            }
+            else
+            {
+                if (BindingContext is CardDetailViewModel viewModel)
+                {
+
+
                     var product = new ProductList
                     {
-                        Id=viewModel.Id ,
+                        Id = viewModel.Id,
                         Game = viewModel.Game,
                         Model = viewModel.Name,
                         Image = viewModel.imageUrl,
@@ -106,7 +156,7 @@ public partial class CardDetailPage : ContentPage
                         Language = viewModel.selectedLanguage,
                         Condition = viewModel.selectedCondition,
                         Languagejsonlst = JsonConvert.SerializeObject(viewModel.languages),
-                        Conditionjsonlst = JsonConvert.SerializeObject(viewModel.conditions) , // This will serialize the list to JSON
+                        Conditionjsonlst = JsonConvert.SerializeObject(viewModel.conditions), // This will serialize the list to JSON
                         IsFirstEdition = false,
                         IsReverse = true
                     };
@@ -115,27 +165,34 @@ public partial class CardDetailPage : ContentPage
                     // Add the product to the database
                     await productListService.AddItemToListAsync(product);
 
-                if(viewModel!=null && viewModel.Id != 0)
-                {
-                    await DisplayAlert("Success", "Product Updated to your list!", "OK");
-                }
-                else
-                {
-                    await DisplayAlert("Success", "Product added to your list!", "OK");
-                }
+                    if (viewModel != null && viewModel.Id != 0)
+                    {
+                        await DisplayAlert("Success", "Product Updated to your list!", "OK");
+                    }
+                    else
+                    {
+                        await DisplayAlert("Success", "Product added to your list!", "OK");
+                    }
                     viewModel.ExecuteDone();
                 }
+
                 // Example data fetched from the ViewModel
 
                 // Initialize the SQLite service
 
                 // Display a success message
-              
-       
-            else
-            {
-                await DisplayAlert("Error", "Failed to retrieve product details.", "OK");
+
+
+                else
+                {
+                    await DisplayAlert("Error", "Failed to retrieve product details.", "OK");
+                }
+
+                // Fetch data from the BindingContext (ViewModel)
+
             }
+
+
         }
         catch (Exception ex)
         {

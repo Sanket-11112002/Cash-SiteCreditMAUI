@@ -715,40 +715,47 @@ namespace CardGameCorner.ViewModels
         {
             try
             {
-                CardSearchResponseViewModel cardSearchResponseViewModel = await _scanCardService.SearchCardAsync(cardSearch);
+                var cardSearchResponseList = await _scanCardService.SearchCardAsync(cardSearch);
 
-                if (cardSearchResponseViewModel != null && cardSearchResponseViewModel.Products.Count > 0)
+                if (cardSearchResponseList != null && cardSearchResponseList.Any())
                 {
-                    // Initialize the CardComparisonPage ViewModel
-                    CardComparisonViewModel comparisonData = new CardComparisonViewModel();
-
-                    // Loop through each product in the response
-                    foreach (var product in cardSearchResponseViewModel.Products)
+                    foreach (var cardSearchResponseViewModel in cardSearchResponseList)
                     {
-                        // Here, you can access and display data for each product
-                        Console.WriteLine($"Product Model: {product.ModelEn}, Price: {product.MinPrice}");
+                        if (cardSearchResponseViewModel.Products != null && cardSearchResponseViewModel.Products.Any())
+                        {
+                            foreach (var product in cardSearchResponseViewModel.Products)
+                            {
+                                Console.WriteLine($"Product Model: {product.ModelEn}, Price: {product.MinPrice}");
+                            }
 
-                        // Initialize or update comparison data with information from each product
-                        // (this assumes comparisonData has a method to handle adding/updating product data)
-                      // comparisonData.AddProductToComparison(product, imageSource);
+                            // Initialize the CardComparisonPage ViewModel
+                            var comparisonData = new CardComparisonViewModel();
+                            comparisonData.Initialize(cardSearchResponseViewModel, imageSource);
+
+                            IsLoading = false;
+                            return comparisonData; // Return the first valid comparison data
+                        }
                     }
 
-                    return comparisonData;
-
+                    Console.WriteLine("No products found in the card search responses.");
                 }
                 else
                 {
-                    Console.WriteLine("No products found in card search.");
-                    return null;
+                    Console.WriteLine("No card search responses found.");
                 }
+
+                return null;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Image compression failed: {ex.Message}");
+                Console.WriteLine($"Card search failed: {ex.Message}");
                 return null;
             }
+            finally
+            {
+                IsLoading = false;
+            }
         }
-
         public async Task<ApiResponse_Card> UploadImageAsync(Stream imageStream)
         {
             

@@ -332,11 +332,38 @@ namespace CardGameCorner.ViewModels
                 App.IsUserLoggedIn = true;
 
                 // Clear any sensitive data
+               
+
+                // Clear sensitive data
                 Username = string.Empty;
                 Password = string.Empty;
 
-                // Navigate back to the previous page
-                await Shell.Current.GoToAsync("..");
+
+                var loginaccount = await SecureStorage.GetAsync("Login");
+                switch (loginaccount)
+                {
+                    case "loginmethod":
+                        // Assuming you have a method to navigate to the add to list page or trigger the action
+                        await Shell.Current.GoToAsync("..");
+                        break;
+                    default:
+                        // Default navigation (e.g., to home or previous page)
+                        await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
+
+                        await Shell.Current.GoToAsync("//MyListPage");
+                        break;
+                }
+
+                // Clear the post-login action
+                await SecureStorage.SetAsync("Login","");
+                //await Shell.Current.GoToAsync("..");
+               
+
+                //await Shell.Current.GoToAsync($"{nameof(MyListPage)}", true);
+
+
+
+
             }
             catch (Exception ex)
             {
@@ -347,6 +374,7 @@ namespace CardGameCorner.ViewModels
                 IsBusy = false;
             }
         }
+
 
         private async Task RequestPasswordResetAsync()
         {

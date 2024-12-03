@@ -151,6 +151,7 @@
 
 //}
 
+
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 using System.ComponentModel;
@@ -165,6 +166,8 @@ public partial class MyAccountPage : ContentPage
     private readonly MyAccountViewModel _viewModel;
     private readonly IAlertService _alertService;
     private readonly INavigationService _navigationService;
+    private readonly IMyAccountService _myAccountService;
+    private readonly Services.ISecureStorage _secureStorage;
 
     public MyAccountPage(MyAccountViewModel viewModel, IAlertService alertService, INavigationService navigationService)
     {
@@ -217,6 +220,7 @@ public partial class MyAccountPage : ContentPage
             if (result)
             {
                 // User chose to login
+                await SecureStorage.SetAsync("Login", "loginmethod");
                 await _navigationService.NavigateToLoginAsync();
             }
             else
@@ -225,6 +229,17 @@ public partial class MyAccountPage : ContentPage
                 await _navigationService.NavigateToHomeAsync();
                 return;
             }
+        }
+        else
+        {
+
+            InitializeComponent(); // Reinitialize the page layout
+            BindingContext = _viewModel;
+            MyAccountViewModel viewmodel=new MyAccountViewModel(_myAccountService, _secureStorage);
+            viewmodel.UserProfile= await _viewModel.InitializeAsync(); ;
+            BindingContext = viewmodel;
+
+
         }
 
         // Initialize the view model and load profile
@@ -239,6 +254,7 @@ public partial class MyAccountPage : ContentPage
 
         if (confirm)
         {
+            this.BindingContext = null;
             await _navigationService.LogoutAsync();
         }
     }

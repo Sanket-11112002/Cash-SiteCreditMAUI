@@ -1,109 +1,84 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CardGameCorner.Models;
+﻿using CardGameCorner.Models;
 using SQLite;
 
-namespace CardGameCorner.Services
+public class SQLiteService
 {
-    public class SQLiteService
+    private SQLiteAsyncConnection _database;
+    string databasePath = Path.Combine(FileSystem.AppDataDirectory, "mylistdatabase.db3");
+
+    public SQLiteService()
     {
-        private SQLiteAsyncConnection _database;
+        _database = new SQLiteAsyncConnection(databasePath);
+    }
 
-        string databasePath = Path.Combine(FileSystem.AppDataDirectory, "mylistdatabase.db3");
+    // Initialize the database and apply migration if necessary
+    public async Task Init()
+    {
+        // Ensure the table is created or migrated
+        var tableInfo = await _database.GetTableInfoAsync("ProductList");
 
-        public SQLiteService()
+        if (tableInfo.Count == 0)
         {
-           
-          
-
-           
+            // If the table doesn't exist, create it
+            await _database.CreateTableAsync<ProductList>();
         }
-        //async Task Init()
-        //{
-        //    if (_database is not null)
-        //        return;
-
-        //    _database = new SQLiteAsyncConnection(databasePath);
-        //    var result = await _database.CreateTableAsync<ProductList>(); result = await _database.CreateTableAsync<ProductList>();
-        //}
-
-        async Task Init()
+        else
         {
-            if (_database is not null)
-                return;
+            // If the table exists, check if the new column is already added
+            bool columnExists = tableInfo.Any(t => t.Name == "Description");
 
-            _database = new SQLiteAsyncConnection(databasePath);
-
-            // Check if table exists before creating
-            var tableInfo = await _database.GetTableInfoAsync("ProductList");
-            if (tableInfo.Count == 0)
+            if (!columnExists)
             {
-                await _database.CreateTableAsync<ProductList>();
-            }
-            else
-            {
-                Console.WriteLine("Exist");
+                // If the new column doesn't exist, perform migration
+                await MigrateDatabaseAsync();
             }
         }
+    }
 
+    // Perform the database migration
+    private async Task MigrateDatabaseAsync()
+    {
+        // Create a new temporary table with the new schema (including the new column)
+        await _database.ExecuteAsync("CREATE TABLE IF NOT EXISTS ProductList_temp AS SELECT * FROM ProductList;");
 
-        // Ensure the table is created before performing any database operations
-        //public async Task InitializeDatabaseAsync()
-        //{
-        //    bool tableExists = await CheckTableExistsAsync();
+        // Add the new column (Description) to the ProductList table
+        await _database.ExecuteAsync("ALTER TABLE ProductList ADD COLUMN Description TEXT;");
 
-        //    if (tableExists)
-        //    {
-        //        await _database.CreateTableAsync<ProductList>();
-        //    }
-        //}
+        // Copy data from the temp table back to the original table
+        await _database.ExecuteAsync("INSERT INTO ProductList SELECT * FROM ProductList_temp;");
 
-        //public async Task<bool> CheckTableExistsAsync()
-        //{
-        //    try
-        //    {
-        //        // Attempt to query the table
-        //        var count = await _database.Table<ProductList>().CountAsync();
-        //        return true;
-        //    }
-        //    catch (SQLiteException e)
-        //    {
-        //        // Table doesn't exist
-        //        return false;
-        //    }
-        //}
+        // Drop the temporary table
+        await _database.ExecuteAsync("DROP TABLE ProductList_temp;");
 
-        // Add a new item to the list in SQLite
-        public async Task AddItemToListAsync(ProductList item)
+        Console.WriteLine("Database migration completed!");
+    }
+
+    // Add an item to the list
+    public async Task AddItemToListAsync(ProductList item)
+    {
+        await Init();
+
+        if (item.Id != 0)
         {
-            // Ensure the table is created before adding an item
-            await Init();
-            if (item.Id != 0 && item.Id!=null)
-            {
-                 await _database.UpdateAsync(item);
-            }
-            else
-            {
-                 await _database.InsertAsync(item);
-            }
+            await _database.UpdateAsync(item);
         }
-        
-
-        // Get all items in the list from SQLite
-        public async Task<List<ProductList>> GetAllItemsAsync()
+        else
         {
-            await Init();
-
-            return await _database.Table<ProductList>().ToListAsync();
+            await _database.InsertAsync(item);
         }
+    }
 
-        public async Task<int> DeleteItemAsync(ProductList item)
-        {
-            await Init();
-            return await _database.DeleteAsync(item);
-        }
+    // Get all items in the list
+    public async Task<List<ProductList>> GetAllItemsAsync()
+    {
+        await Init();
+        return await _database.Table<ProductList>().ToListAsync();
+    }
+
+    // Delete an item
+    public async Task<int> DeleteItemAsync(ProductList item)
+    {
+        await Init();
+        return await _database.DeleteAsync(item);
     }
 }
