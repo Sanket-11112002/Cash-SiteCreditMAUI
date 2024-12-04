@@ -25,7 +25,7 @@ public class SQLiteService
         else
         {
             // If the table exists, check if the new column is already added
-            bool columnExists = tableInfo.Any(t => t.Name == "Description");
+            bool columnExists = tableInfo.Any(t => t.Name == "UserName");
 
             if (!columnExists)
             {
@@ -42,7 +42,7 @@ public class SQLiteService
         await _database.ExecuteAsync("CREATE TABLE IF NOT EXISTS ProductList_temp AS SELECT * FROM ProductList;");
 
         // Add the new column (Description) to the ProductList table
-        await _database.ExecuteAsync("ALTER TABLE ProductList ADD COLUMN Description TEXT;");
+        await _database.ExecuteAsync("ALTER TABLE ProductList ADD COLUMN UserName TEXT;");
 
         // Copy data from the temp table back to the original table
         await _database.ExecuteAsync("INSERT INTO ProductList SELECT * FROM ProductList_temp;");
@@ -69,10 +69,20 @@ public class SQLiteService
     }
 
     // Get all items in the list
-    public async Task<List<ProductList>> GetAllItemsAsync()
+    //public async Task<List<ProductList>> GetAllItemsAsync()
+    //{
+    //    await Init();
+
+    //    return await _database.Table<ProductList>().ToListAsync();
+    //}
+    public async Task<List<ProductList>> GetAllItemsAsync(string username)
     {
         await Init();
-        return await _database.Table<ProductList>().ToListAsync();
+
+        // Return only items where the Username matches the provided username
+        return await _database.Table<ProductList>()
+                              .Where(item => item.Username == username)
+                              .ToListAsync();
     }
 
     // Delete an item

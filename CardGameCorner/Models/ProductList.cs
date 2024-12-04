@@ -20,8 +20,8 @@ namespace CardGameCorner.Models
         public int? Quantity { get; set; }
         public string Language { get; set; }
 
-       // public string LoggedInToken { get; set; }
-       // public string LoggedInToken { get; set; }
+        // public string LoggedInToken { get; set; }
+         public string Username { get; set; }
         public string? Languagejsonlst { get; set; }
         public string? Conditionjsonlst { get; set; }
 
