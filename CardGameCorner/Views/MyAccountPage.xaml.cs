@@ -151,6 +151,7 @@
 
 //}
 
+
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 using System.ComponentModel;
@@ -165,9 +166,12 @@ public partial class MyAccountPage : ContentPage
     private readonly MyAccountViewModel _viewModel;
     private readonly IAlertService _alertService;
     private readonly INavigationService _navigationService;
+    private readonly IMyAccountService _myAccountService;
+    private readonly Services.ISecureStorage _secureStorage;
 
     public MyAccountPage(MyAccountViewModel viewModel, IAlertService alertService, INavigationService navigationService)
     {
+
         InitializeComponent();
         _alertService = alertService;
         _navigationService = navigationService;
@@ -201,6 +205,43 @@ public partial class MyAccountPage : ContentPage
         }
     }
 
+    //protected async override void OnAppearing()
+    //{
+    //    base.OnAppearing();
+
+    //    // Check if user is logged in
+    //    if (!App.IsUserLoggedIn)
+    //    {
+    //        BindingContext = null;
+    //        bool result = await _alertService.ShowConfirmationAsync(
+    //            "Login Required",
+    //            "You need to log in to access this page. Would you like to log in?",
+    //            "Login",
+    //            "Continue");
+
+    //        if (result)
+    //        {
+    //            // User chose to login
+    //            await _navigationService.NavigateToLoginAsync();
+    //        }
+    //        else
+    //        {
+    //            // User chose to continue without login
+    //            await _navigationService.NavigateToHomeAsync();
+    //            return;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        InitializeComponent();
+
+    //       await _viewModel.InitializeAsync();
+
+    //    }
+    //    // Initialize the view model and load profile
+
+    //}
+
     protected async override void OnAppearing()
     {
         base.OnAppearing();
@@ -208,6 +249,7 @@ public partial class MyAccountPage : ContentPage
         // Check if user is logged in
         if (!App.IsUserLoggedIn)
         {
+            BindingContext = null;
             bool result = await _alertService.ShowConfirmationAsync(
                 "Login Required",
                 "You need to log in to access this page. Would you like to log in?",
@@ -225,6 +267,17 @@ public partial class MyAccountPage : ContentPage
                 await _navigationService.NavigateToHomeAsync();
                 return;
             }
+        }
+        else
+        {
+
+            InitializeComponent(); // Reinitialize the page layout
+            BindingContext = _viewModel;
+            MyAccountViewModel viewmodel = new MyAccountViewModel(_myAccountService, _secureStorage);
+            viewmodel.UserProfile = await _viewModel.InitializeAsync(); 
+            BindingContext = viewmodel;
+
+
         }
 
         // Initialize the view model and load profile

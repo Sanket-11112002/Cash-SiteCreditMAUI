@@ -115,6 +115,7 @@ namespace CardGameCorner.ViewModels
             EditCommand = new Command(() => IsEditMode = true);
             BackCommand = new Command(() => IsEditMode = false);
             DoneCommand = new AsyncRelayCommand(SaveProfileAsync);
+           // Task.Run(LoadProfileAsync);
         }
 
         public ICommand EditCommand { get; }
@@ -133,7 +134,34 @@ namespace CardGameCorner.ViewModels
             set => SetProperty(ref _userProfile, value);
         }
 
-        public async Task InitializeAsync()
+        //public async Task InitializeAsync()
+        //{
+        //    // Check if user is logged in before loading profile
+        //    var token = await _secureStorage.GetAsync("jwt_token");
+        //    if (string.IsNullOrEmpty(token))
+        //    {
+        //        // Clear any existing profile data
+        //        UserProfile = null;
+        //        return;
+        //    }
+
+        //    try
+        //    {
+        //        IsBusy = true;
+        //        UserProfile = await _myAccountService.GetUserProfileAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Clear profile on failure
+        //        UserProfile = null;
+        //        await Shell.Current.DisplayAlert("Error", "Failed to load profile", "OK");
+        //    }
+        //    finally
+        //    {
+        //        IsBusy = false;
+        //    }
+        //}
+        public async Task<UserProfile> InitializeAsync()
         {
             // Check if user is logged in before loading profile
             var token = await _secureStorage.GetAsync("jwt_token");
@@ -141,23 +169,26 @@ namespace CardGameCorner.ViewModels
             {
                 // Clear any existing profile data
                 UserProfile = null;
-                return;
+                return null;
             }
 
             try
             {
                 IsBusy = true;
                 UserProfile = await _myAccountService.GetUserProfileAsync();
+                return UserProfile;
             }
             catch (Exception ex)
             {
                 // Clear profile on failure
                 UserProfile = null;
+                return UserProfile;
                 await Shell.Current.DisplayAlert("Error", "Failed to load profile", "OK");
             }
             finally
             {
                 IsBusy = false;
+              
             }
         }
 

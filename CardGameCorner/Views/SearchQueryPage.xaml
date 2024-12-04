@@ -135,14 +135,16 @@
                 </CollectionView>
             </VerticalStackLayout>
         </ScrollView>
+        
 
         <!-- Loading Indicator -->
         <Grid IsVisible="{Binding IsLoading}" BackgroundColor="#801B3B48">
             <ActivityIndicator Color="White"
-                               IsRunning="{Binding IsLoading}"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center"
-                               Scale="2"/>
+                       IsRunning="{Binding IsLoading}"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       Scale="2"/>
         </Grid>
+
     </Grid>
 </ContentPage>

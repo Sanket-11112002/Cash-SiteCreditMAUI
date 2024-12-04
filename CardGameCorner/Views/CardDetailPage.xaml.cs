@@ -22,7 +22,18 @@ public partial class CardDetailPage : ContentPage
        
     }
 
-
+    private void Picker_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        var picker = sender as Picker;
+        if (picker.SelectedItem != null)
+        {
+            picker.Title = string.Empty;
+        }
+        else
+        {
+            picker.Title = "Choose Language"; // or "Choose Condition"
+        }
+    }
 
     //private async void OnAddToMyListClicked(object sender, EventArgs e)
     //{

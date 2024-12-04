@@ -118,12 +118,16 @@ namespace CardGameCorner
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly ISecureStorage _secureStorage;
+        private readonly IAlertService _alertService;
+        private readonly INavigationService _navigationService;
         public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
-        public AppShell(IServiceProvider serviceProvider, ISecureStorage secureStorage)
+        public AppShell(IServiceProvider serviceProvider, ISecureStorage secureStorage, IAlertService alertService, INavigationService navigationService)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
             _secureStorage = secureStorage;
+            _alertService = alertService;
+            _navigationService = navigationService;
             RegisterRoutes();
 
             // Determine initial navigation
@@ -152,12 +156,12 @@ namespace CardGameCorner
                 }
                 else
                 {
-                    // If no last selected game, go to home page
-                    //await GoToAsync("//HomePage");
+                   // If no last selected game, go to home page
+                   // await GoToAsync("//HomePage");
                     // await Shell.Current.GoToAsync(nameof(SettingsSlidePage));
                     var settingsViewModel = _serviceProvider.GetService<SettingsViewModel>();
-                    var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage);
-                    //var settingsPage = new SettingsSlidePage(settingsViewModel);
+                    var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage, _alertService, _navigationService);
+                    ////var settingsPage = new SettingsSlidePage(settingsViewModel);
                     await Shell.Current.Navigation.PushModalAsync(settingsPage);
                 }
             }
@@ -167,7 +171,7 @@ namespace CardGameCorner
                 System.Diagnostics.Debug.WriteLine($"Navigation error: {ex}");
                 //await GoToAsync("//HomePage");
                 var settingsViewModel = _serviceProvider.GetService<SettingsViewModel>();
-                var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage);
+                var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage, _alertService, _navigationService);
                 //var settingsPage = new SettingsSlidePage(settingsViewModel);
                 await Shell.Current.Navigation.PushModalAsync(settingsPage);
             }
@@ -187,7 +191,7 @@ namespace CardGameCorner
         {
             // Register all routes for the application
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
-            Routing.RegisterRoute("//HomePage", typeof(HomePage));
+            Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
             Routing.RegisterRoute(nameof(GameDetailsPage), typeof(GameDetailsPage));
             Routing.RegisterRoute(nameof(RegistrationPage), typeof(RegistrationPage));
             Routing.RegisterRoute(nameof(MyListPage), typeof(MyListPage));
@@ -199,7 +203,6 @@ namespace CardGameCorner
             Routing.RegisterRoute(nameof(SettingsSlidePage), typeof(SettingsSlidePage));
 
         }
-
         protected override void OnNavigatedTo(NavigatedToEventArgs args)
         {
             base.OnNavigatedTo(args);
@@ -221,7 +224,7 @@ namespace CardGameCorner
                     // await GoToAsync("//HomePage");
                     //await Shell.Current.GoToAsync(nameof(SettingsSlidePage));
                     var settingsViewModel = _serviceProvider.GetService<SettingsViewModel>();
-                    var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage);
+                    var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage, _alertService, _navigationService);
                    // var settingsPage = new SettingsSlidePage(settingsViewModel);
                     await Shell.Current.Navigation.PushModalAsync(settingsPage);
                     return;
@@ -242,7 +245,7 @@ namespace CardGameCorner
                     // await GoToAsync("//HomePage");
                     // await Shell.Current.GoToAsync(nameof(SettingsSlidePage));
                     var settingsViewModel = _serviceProvider.GetService<SettingsViewModel>();
-                    var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage);
+                    var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage, _alertService, _navigationService);
                    // var settingsPage = new SettingsSlidePage(settingsViewModel);
                     await Shell.Current.Navigation.PushModalAsync(settingsPage);
 
@@ -283,7 +286,7 @@ namespace CardGameCorner
         {
 
             var settingsViewModel = _serviceProvider.GetService<SettingsViewModel>();
-            var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage);
+            var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage, _alertService, _navigationService);
            // var settingsPage = new SettingsSlidePage(settingsViewModel);
             await Shell.Current.Navigation.PushModalAsync(settingsPage);
         }

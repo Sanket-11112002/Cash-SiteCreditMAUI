@@ -58,6 +58,7 @@
 
     <ShellContent Route="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
     
+    <ShellContent Route="HomePage" ContentTemplate="{DataTemplate views:HomePage}" />
 
 </Shell>
 

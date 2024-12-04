@@ -217,7 +217,7 @@ namespace CardGameCorner.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-
+            //GlobalSettings.SelectedGame = "magic";
             Debug.WriteLine(GlobalSettings.SelectedGame);
             if (!string.IsNullOrEmpty(GlobalSettings.SelectedGame))
             {

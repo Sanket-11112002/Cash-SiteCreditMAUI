@@ -130,6 +130,18 @@
                     HorizontalOptions="Fill"
                     BorderColor="#2C5F73"
                     BorderWidth="1"/>
+
+            <Button x:Name="LogoutButton" 
+                    Text="Logout" 
+                    Clicked="LogoutButton_Clicked"
+                    BackgroundColor="#FF0000"  
+                    TextColor="White"
+                    CornerRadius="8"
+                    FontSize="16"
+                    Padding="16,12"
+                    HorizontalOptions="Fill"
+                    Margin="0,20,0,0"
+                    IsVisible="False"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

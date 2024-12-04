@@ -31,7 +31,7 @@ namespace CardGameCorner.Services
         public async Task LogoutAsync()
         {
             // Clear any stored tokens or user data
-            await _secureStorage.SetAsync("jwt_token", string.Empty);
+            await _secureStorage.RemoveAsync("jwt_token");
             App.IsUserLoggedIn = false;
 
             // Show logout confirmation

@@ -52,17 +52,21 @@ namespace CardGameCorner
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly ISecureStorage _secureStorage;
+        private readonly IAlertService _alertService;
+        private readonly INavigationService _navigationService;
 
         public static bool IsUserLoggedIn { get; set; } = false;
 
-        public App(IServiceProvider serviceProvider, ISecureStorage secureStorage)
+        public App(IServiceProvider serviceProvider, ISecureStorage secureStorage, IAlertService alertService, INavigationService navigationService)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
             _secureStorage = secureStorage;
+            _alertService = alertService;
+            _navigationService = navigationService;
 
             // Create MainPage with both serviceProvider and secureStorage
-            MainPage = new AppShell(_serviceProvider, _secureStorage);
+            MainPage = new AppShell(_serviceProvider, _secureStorage, _alertService, _navigationService);
         }
 
         public async Task RestartAppForNewSession()
@@ -71,7 +75,7 @@ namespace CardGameCorner
             await _secureStorage.RemoveAsync("LastSelectedGame");
 
             // Reset MainPage to a new AppShell instance
-            MainPage = new AppShell(_serviceProvider, _secureStorage);
+            MainPage = new AppShell(_serviceProvider, _secureStorage, _alertService, _navigationService);
 
             // Navigate to LoginPage directly to start a new session
             await Shell.Current.GoToAsync("login");
