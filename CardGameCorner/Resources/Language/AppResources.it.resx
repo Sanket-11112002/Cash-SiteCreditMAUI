@@ -129,4 +129,13 @@
   <data name="Scan" xml:space="preserve">
     <value>Scansione</value>
   </data>
+  <data name="Best Deals" xml:space="preserve">
+    <value>Le migliori offerte</value>
+  </data>
+  <data name="Capture Image" xml:space="preserve">
+    <value>Cattura immagine</value>
+  </data>
+  <data name="Upload Image" xml:space="preserve">
+    <value>Carica immagine</value>
+  </data>
 </root>

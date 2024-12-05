@@ -61,6 +61,24 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Best Deals.
+        /// </summary>
+        internal static string Best_Deals {
+            get {
+                return ResourceManager.GetString("Best Deals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Capture Image.
+        /// </summary>
+        internal static string Capture_Image {
+            get {
+                return ResourceManager.GetString("Capture Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scan.
         /// </summary>
         internal static string Scan {
@@ -84,6 +102,15 @@ namespace CardGameCorner.Resources.Language {
         internal static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Image.
+        /// </summary>
+        internal static string Upload_Image {
+            get {
+                return ResourceManager.GetString("Upload Image", resourceCulture);
             }
         }
         

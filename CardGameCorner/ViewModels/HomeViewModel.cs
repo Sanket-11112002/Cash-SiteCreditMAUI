@@ -114,7 +114,8 @@ namespace CardGameCorner.ViewModels
     {
         private readonly IGameService _gameService;
         private readonly ISecureStorage _secureStorage;
-
+        private readonly INavigationService _navigationService;
+        private readonly GlobalSettingsService _globalSettings;
 
         [ObservableProperty]
         private bool isLoading;
@@ -126,11 +127,12 @@ namespace CardGameCorner.ViewModels
         private ObservableCollection<Game> games;
 
         public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
+
         [ObservableProperty]
         private string welcomeMessage;
 
 
-        public HomeViewModel(IGameService gameService, ISecureStorage secureStorage)
+        public HomeViewModel(IGameService gameService, ISecureStorage secureStorage, INavigationService navigationService)
         {
             UpdateLocalizedStrings();
 
@@ -142,8 +144,10 @@ namespace CardGameCorner.ViewModels
                     UpdateLocalizedStrings();
                 }
             };
+            _globalSettings = GlobalSettingsService.Current;
             _gameService = gameService;
             _secureStorage = secureStorage;
+            _navigationService = navigationService;
             Games = new ObservableCollection<Game>();
         }
         private void UpdateLocalizedStrings()
@@ -181,19 +185,19 @@ namespace CardGameCorner.ViewModels
             }
         }
 
-
         [RelayCommand]
         private async Task GameSelectedAsync(Game game)
         {
             if (game == null) return;
 
             // Save the selected game to secure storage
-            await _secureStorage.SetAsync("LastSelectedGame", game.GameCode);
+            //await _secureStorage.SetAsync("LastSelectedGame", game.GameCode);
 
-            await Shell.Current.GoToAsync("..");
+            _globalSettings.SelectedGame = game.GameCode;
 
-            // Navigate to GameDetailsPage
-            // await ((AppShell)Shell.Current).NavigateToGameDetails(game.GameCode);
+            await _secureStorage.SetAsync("LastSelectedGame", _globalSettings.SelectedGame);
+            await _navigationService.NavigateToHomeAsync();
+
         }
     }
 }

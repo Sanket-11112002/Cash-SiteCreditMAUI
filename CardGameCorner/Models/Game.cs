@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace CardGameCorner.Models
 {
@@ -14,5 +9,14 @@ namespace CardGameCorner.Models
 
         [JsonPropertyName("displayName")]
         public string DisplayName { get; set; }
+
+        [JsonPropertyName("bgImage")]
+        public string BackgroundImage { get; set; }
+
+        [JsonPropertyName("logoImage")]
+        public string LogoImage { get; set; }
+
+        [JsonPropertyName("homeBestDealsImage")]
+        public string HomeBestDealsImage { get; set; }
     }
 }

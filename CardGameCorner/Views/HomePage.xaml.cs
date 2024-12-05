@@ -22,7 +22,4 @@ public partial class HomePage : ContentPage
         await _viewModel.LoadGamesCommand.ExecuteAsync(null);
 
     }
-
-   
-   
 }

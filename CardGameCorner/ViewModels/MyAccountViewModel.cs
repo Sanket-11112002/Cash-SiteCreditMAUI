@@ -94,18 +94,30 @@ using CardGameCorner.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ISecureStorage = CardGameCorner.Services.ISecureStorage;
 
 namespace CardGameCorner.ViewModels
 {
-    public partial class MyAccountViewModel : BaseViewModel
+    public partial class MyAccountViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly IMyAccountService _myAccountService;
         private readonly ISecureStorage _secureStorage;
         private UserProfile _userProfile;
         private bool _isEditMode;
+
+        public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
+
+        [ObservableProperty]
+        private string searchText;
+
+        [ObservableProperty]
+        private string scanText;
+
+        [ObservableProperty]
+        private string welcomeMessage;
 
         public MyAccountViewModel(IMyAccountService myAccountService, ISecureStorage secureStorage)
         {
@@ -134,33 +146,6 @@ namespace CardGameCorner.ViewModels
             set => SetProperty(ref _userProfile, value);
         }
 
-        //public async Task InitializeAsync()
-        //{
-        //    // Check if user is logged in before loading profile
-        //    var token = await _secureStorage.GetAsync("jwt_token");
-        //    if (string.IsNullOrEmpty(token))
-        //    {
-        //        // Clear any existing profile data
-        //        UserProfile = null;
-        //        return;
-        //    }
-
-        //    try
-        //    {
-        //        IsBusy = true;
-        //        UserProfile = await _myAccountService.GetUserProfileAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Clear profile on failure
-        //        UserProfile = null;
-        //        await Shell.Current.DisplayAlert("Error", "Failed to load profile", "OK");
-        //    }
-        //    finally
-        //    {
-        //        IsBusy = false;
-        //    }
-        //}
         public async Task<UserProfile> InitializeAsync()
         {
             // Check if user is logged in before loading profile
@@ -169,7 +154,7 @@ namespace CardGameCorner.ViewModels
             {
                 // Clear any existing profile data
                 UserProfile = null;
-                return null;
+                return UserProfile;
             }
 
             try
@@ -184,6 +169,7 @@ namespace CardGameCorner.ViewModels
                 UserProfile = null;
                 return UserProfile;
                 await Shell.Current.DisplayAlert("Error", "Failed to load profile", "OK");
+                return UserProfile;
             }
             finally
             {

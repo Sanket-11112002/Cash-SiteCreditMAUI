@@ -71,6 +71,9 @@ namespace CardGameCorner.ViewModels
         public int Total { get; set; }
     }
 
+   
+
+
     public class ProductVariantConverter : JsonConverter<List<ProductVariant1>>
     {
         public override List<ProductVariant1> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

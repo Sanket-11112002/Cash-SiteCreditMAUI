@@ -25,7 +25,6 @@ namespace CardGameCorner.Views
 
         public ScanPage()
         {
-
             InitializeComponent();
             _httpClient = new HttpClient();
 
@@ -33,8 +32,6 @@ namespace CardGameCorner.Views
             // Inject the ViewModel with the ApiService
             BindingContext = new ScanCardViewModel(new ScanCardService());
         }
-
-
 
         //private async void OnCaptureButtonClicked(object sender, EventArgs e)
         //{
@@ -201,8 +198,6 @@ namespace CardGameCorner.Views
                         var viewModel = BindingContext as ScanCardViewModel;
 
                         var compressedImageStream = await viewModel.CompressImageAsync(originalStream, 100 * 1024);
-                        
-
                      
                         var displayStream = new MemoryStream();
                         compressedImageStream.Position = 0; // Reset position before copying

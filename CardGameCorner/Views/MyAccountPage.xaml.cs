@@ -259,6 +259,7 @@ public partial class MyAccountPage : ContentPage
             if (result)
             {
                 // User chose to login
+                await SecureStorage.SetAsync("Login", "loginmethod");
                 await _navigationService.NavigateToLoginAsync();
             }
             else
@@ -292,6 +293,7 @@ public partial class MyAccountPage : ContentPage
 
         if (confirm)
         {
+            this.BindingContext = null;
             await _navigationService.LogoutAsync();
         }
     }

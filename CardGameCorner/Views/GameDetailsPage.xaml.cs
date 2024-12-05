@@ -194,7 +194,7 @@ namespace CardGameCorner.Views
 
                     await _viewModel.LoadGameDetails(UiCode, GameCode);
 
-                    //await _secureStorage.RemoveAsync("LastSelectedGame");
+                  // await _secureStorage.RemoveAsync("LastSelectedGame");
 
                     // Hide loader
                     loaderOverlay.IsVisible = false;

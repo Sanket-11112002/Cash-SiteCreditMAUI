@@ -8,10 +8,7 @@
                              Padding="20"
                              VerticalOptions="Start">
             
-            <Label Text="{Binding WelcomeMessage}" 
-                FontSize="24"
-                HorizontalOptions="Center"
-                VerticalOptions="Center" />
+            
             <!-- Logo -->
             <Image Source="splashscreenlogo.png"
                    HeightRequest="100"

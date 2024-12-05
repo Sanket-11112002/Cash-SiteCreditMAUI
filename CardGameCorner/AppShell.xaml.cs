@@ -157,12 +157,12 @@ namespace CardGameCorner
                 else
                 {
                    // If no last selected game, go to home page
-                   // await GoToAsync("//HomePage");
+                    await GoToAsync("//HomePage");
                     // await Shell.Current.GoToAsync(nameof(SettingsSlidePage));
-                    var settingsViewModel = _serviceProvider.GetService<SettingsViewModel>();
-                    var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage, _alertService, _navigationService);
+                    //var settingsViewModel = _serviceProvider.GetService<SettingsViewModel>();
+                   // var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage, _alertService, _navigationService);
                     ////var settingsPage = new SettingsSlidePage(settingsViewModel);
-                    await Shell.Current.Navigation.PushModalAsync(settingsPage);
+                    //await Shell.Current.Navigation.PushModalAsync(settingsPage);
                 }
             }
             catch (Exception ex)

@@ -14,11 +14,11 @@ namespace CardGameCorner.Services
         private GlobalSettingsService()
         {
             // Initialize with default values
-            SelectedLanguage = "English";
+           // SelectedLanguage = "English";
 
         }
 
-        private string _selectedLanguage = "English";
+        private string _selectedLanguage;
 
         public string SelectedLanguage
         {

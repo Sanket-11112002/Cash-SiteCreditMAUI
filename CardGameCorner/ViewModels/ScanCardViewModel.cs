@@ -71,6 +71,9 @@ using System.Net.Http;
 using System.Text;
 using CardGameCorner.ViewModels;
 using System.Runtime.InteropServices;
+using CardGameCorner.Resources.Language;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 // Without Loading code.
 
@@ -288,9 +291,54 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private bool isLoading;
 
+        public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
+
+        [ObservableProperty]
+        private string captureImage;
+
+        [ObservableProperty]
+        private string uploadImage;
+
         public ScanCardViewModel(IScanCardService scanCardService)
         {
+            // Initialize with current language
+            UpdateLocalizedStrings();
+
+            // Subscribe to language change events
+            GlobalSettings.PropertyChanged += OnGlobalSettingsPropertyChanged;
+
             _scanCardService = scanCardService;
+        }
+
+        // New method to handle property changes
+        private void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(GlobalSettings.SelectedLanguage))
+            {
+                // Update localized strings when language changes
+                UpdateLocalizedStrings();
+            }
+        }
+        private void UpdateLocalizedStrings()
+        {
+            // Ensure these are called on the main thread
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                CaptureImage = AppResources.Capture_Image; // Localized string for "Search"
+                UploadImage = AppResources.Upload_Image; // Localized string for "Scan with camera"
+                
+                // Trigger property changed events to update UI
+                OnPropertyChanged(nameof(CaptureImage));
+                OnPropertyChanged(nameof(UploadImage));
+               
+            });
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         [RelayCommand]
@@ -395,28 +443,36 @@ namespace CardGameCorner.ViewModels
         {
             try
             {
-                var cardSearchResponseViewModel = await _scanCardService.SearchCardAsync(cardSearch);
+                var cardSearchResponseList = await _scanCardService.SearchCardAsync(cardSearch);
 
-                if (cardSearchResponseViewModel != null && cardSearchResponseViewModel.Products.Count > 0)
+                if (cardSearchResponseList != null && cardSearchResponseList.Any())
                 {
-                    // Access and display data from the response
-                    var product = cardSearchResponseViewModel.Products[0];
-                    Console.WriteLine($"Product Model: {product.ModelEn}, Price: {product.MinPrice}");
+                    foreach (var cardSearchResponseViewModel in cardSearchResponseList)
+                    {
+                        if (cardSearchResponseViewModel.Products != null && cardSearchResponseViewModel.Products.Any())
+                        {
+                            foreach (var product in cardSearchResponseViewModel.Products)
+                            {
+                                Console.WriteLine($"Product Model: {product.ModelEn}, Price: {product.MinPrice}");
+                            }
 
-                    // Initialize the CardComparisonPage ViewModel
-                    var comparisonData = new CardComparisonViewModel();
+                            // Initialize the CardComparisonPage ViewModel
+                            var comparisonData = new CardComparisonViewModel();
+                            comparisonData.Initialize(cardSearchResponseViewModel, imageSource);
 
-                    // Initialize the comparison data
-                    comparisonData.Initialize(cardSearchResponseViewModel, imageSource);
+                            IsLoading = false;
+                            return comparisonData; // Return the first valid comparison data
+                        }
+                    }
 
-                    IsLoading = false;
-                    return comparisonData;
+                    Console.WriteLine("No products found in the card search responses.");
                 }
                 else
                 {
-                    Console.WriteLine("No products found in card search.");
-                    return null;
+                    Console.WriteLine("No card search responses found.");
                 }
+
+                return null;
             }
             catch (Exception ex)
             {
@@ -428,6 +484,7 @@ namespace CardGameCorner.ViewModels
                 IsLoading = false;
             }
         }
+
 
         public async Task<ApiResponse_Card> UploadImageAsync(Stream imageStream)
         {

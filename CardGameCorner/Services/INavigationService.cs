@@ -11,5 +11,6 @@ namespace CardGameCorner.Services
         Task NavigateToLoginAsync();
         Task NavigateToHomeAsync();
         Task LogoutAsync();
+     
     }
 }

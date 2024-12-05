@@ -11,15 +11,69 @@ using Newtonsoft.Json;
 using System.Windows.Input;
 using System.Reflection;
 using CardGameCorner.Services;
+using CommunityToolkit.Mvvm.ComponentModel;
+using ISecureStorage = CardGameCorner.Services.ISecureStorage;
+using CardGameCorner.Resources.Language;
 
 namespace CardGameCorner.ViewModels
 {
-    public class GameDetailsViewModel : BaseViewModel,INotifyPropertyChanged
-
+    public partial class GameDetailsViewModel : ObservableObject, INotifyPropertyChanged
     {
+        private readonly ISecureStorage secureStorage;
         private ObservableCollection<Card> _cards;
         private ObservableCollection<Banner1> _banners;
         public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
+
+        [ObservableProperty]
+        private string bestDeals;
+
+        public ICommand OpenProductUrlCommand { get; }
+
+        public GameDetailsViewModel()
+        {
+            UpdateLocalizedStrings();
+            
+            // Subscribe to language change events
+            GlobalSettings.PropertyChanged += OnGlobalSettingsPropertyChanged;
+
+
+            OpenProductUrlCommand = new Command<string>(async (url) =>
+            {
+                if (!string.IsNullOrWhiteSpace(url))
+                {
+                    try
+                    {
+                        await Browser.OpenAsync(url, BrowserLaunchMode.SystemPreferred);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"Error opening URL: {ex.Message}");
+                    }
+                }
+            });
+        }
+
+        private void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(GlobalSettings.SelectedLanguage))
+            {
+                // Update localized strings when language changes
+                UpdateLocalizedStrings();
+            }
+        }
+        private void UpdateLocalizedStrings()
+        {
+            // Ensure these are called on the main thread
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                BestDeals = AppResources.Best_Deals; // Localized string for "Search"
+              
+
+                // Trigger property changed events to update UI
+               
+                OnPropertyChanged(nameof(BestDeals));
+            });
+        }
 
         public ObservableCollection<Card> Cards
         {
@@ -36,13 +90,25 @@ namespace CardGameCorner.ViewModels
             set
             {
                 _banners = value;
-               //OnPropertyChanged();
+                OnPropertyChanged();
+            }
+        }
+        private string _homeBestDealsImage;
+        public string HomeBestDealsImage
+        {
+            get => _homeBestDealsImage;
+            set
+            {
+                _homeBestDealsImage = value;
+                OnPropertyChanged();
             }
         }
 
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -93,6 +159,24 @@ namespace CardGameCorner.ViewModels
                         Debug.WriteLine($"Title: {banner.Title}, Image: {banner.Image}, Url: {banner.Url}");
                     }
                     Debug.WriteLine(GlobalSettings.SelectedGame);
+
+                    var selectedgamecode = GlobalSettings.SelectedGame;
+
+                    var service = new GameService(secureStorage);
+                    var games = new List<Game>();
+                    games = await service.GetGamesAsync();
+
+                    var selectedgame = games.Where(item => item.GameCode == selectedgamecode).FirstOrDefault();
+                    if (selectedgame != null)
+                    {
+                        // Print only the HomeBestDealsImage for the specific game
+                        Debug.WriteLine($"Home Best Deals Image for {gameCode}: {selectedgame.HomeBestDealsImage}");
+                        HomeBestDealsImage = selectedgame.HomeBestDealsImage;
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"No game found with game code: {gameCode}");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -101,27 +185,10 @@ namespace CardGameCorner.ViewModels
                 }
             }
         }
-
-        public ICommand OpenProductUrlCommand { get; }
-
-        public GameDetailsViewModel()
-        {
-            OpenProductUrlCommand = new Command<string>(async (url) =>
-            {
-                if (!string.IsNullOrWhiteSpace(url))
-                {
-                    try
-                    {
-                        await Browser.OpenAsync(url, BrowserLaunchMode.SystemPreferred);
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine($"Error opening URL: {ex.Message}");
-                    }
-                }
-            });
-        }
+       
     }
-
-
 }
+
+
+
+

@@ -16,6 +16,163 @@ public partial class SearchQueryPage : ContentPage
 
 	}
 
+    private async void OnSettingsClicked(object sender, EventArgs e)
+    {
+        // Use the global settings service to show settings
+        var globalSettings = GlobalSettingsService.Current;
+
+        string result = await DisplayActionSheet(
+            "Settings",
+            "Cancel",
+            null,
+            "Select Language",
+            "Select Game");
+
+        switch (result)
+        {
+            case "Select Language":
+                await globalSettings.ChangeLanguageAsync();
+                break;
+            case "Select Game":
+                await globalSettings.ChangeGameAsync();
+                break;
+        }
+    }
+
+
+
+    //private async void OnUploadButtonClicked(object sender, EventArgs e)
+    //{
+    //    try
+    //    {
+    //        // Get the image URL bound to the ImageButton
+    //        var viewModel = BindingContext as SearchViewModel;
+    //        if (viewModel == null)
+    //        {
+    //            await DisplayAlert("Error", "ViewModel is not set.", "OK");
+    //            return;
+    //        }
+
+    //        //string imageUrl = viewModel.Products[0].Image; // Ensure this is set in the ViewModel
+    //        string imageUrl = "https://www.cardgamecorner.com/prodotti/singles/pokemon/mew/charizard-ex_733794.jpg"; // Ensure this is set in the ViewModel
+
+    //        if (string.IsNullOrEmpty(imageUrl))
+    //        {
+    //            await DisplayAlert("Error", "No image URL available.", "OK");
+    //            return;
+    //        }
+
+    //        // Fetch the image from the URL
+    //        var imageBytes = await DownloadImageAsync(imageUrl);
+    //        if (imageBytes == null || imageBytes.Length == 0)
+    //        {
+    //            await DisplayAlert("Error", "Failed to download image.", "OK");
+    //            return;
+    //        }
+
+    //        // Compress the image
+    //        var compressedImageStream = await viewModel.CompressImageAsync(new MemoryStream(imageBytes), 100 * 1024);
+
+    //        // Clone the compressed stream for display
+    //        var displayStream = new MemoryStream();
+    //        compressedImageStream.Position = 0; // Reset position for display
+    //        await compressedImageStream.CopyToAsync(displayStream);
+    //        displayStream.Position = 0; // Reset for display
+
+    //        // Clone the compressed stream for upload
+    //        var uploadStream = new MemoryStream();
+    //        compressedImageStream.Position = 0; // Reset position for upload
+    //        await compressedImageStream.CopyToAsync(uploadStream);
+    //        uploadStream.Position = 0; // Reset for upload
+
+    //        // Upload the image (uploadStream is passed to UploadImageAsync)
+    //        var apiResponse = await viewModel.UploadImageAsync(uploadStream);
+
+    //        if (apiResponse != null)
+    //        {
+    //            Console.WriteLine($"Upload successful: {apiResponse}");
+
+    //            var cardRequest = new CardSearchRequest
+    //            {
+    //                Title = "Angel of Mercy", // Example fields, update with actual API response
+    //                Set = "IMA",
+    //                Game = "magic",
+    //                Lang = "en",
+    //                Foil = 0,
+    //                FirstEdition = 0
+    //            };
+
+    //            CardComparisonViewModel data = await viewModel.SearchCardAsync(cardRequest, ImageSource.FromStream(() => new MemoryStream(displayStream.ToArray())));
+
+    //            if (data != null)
+    //            {
+    //                //await Navigation.PushAsync(new CardComparisonPage(data));
+
+    //                if (data.responseContent.Products.Count > 0)
+    //                {
+    //                    // Get the first product
+    //                    var product = data.responseContent.Products[0];
+
+    //                    // Deserialize the Variants JSON string into a list of ProductVariant1 objects
+    //                    var variants = product.Variants;
+
+    //                    if (variants != null)
+    //                    {
+    //                        // Extract distinct languages and conditions
+    //                        var distinctLanguages = variants.Select(v => v.Language).Distinct().ToList();
+    //                        var distinctConditions = variants.Select(v => v.Condition).Distinct().ToList();
+
+    //                        // For testing, log the results to the console
+    //                        Console.WriteLine("Languages:");
+    //                        foreach (var lang in distinctLanguages)
+    //                        {
+    //                            Console.WriteLine(lang);
+    //                        }
+
+    //                        Console.WriteLine("Conditions:");
+    //                        foreach (var condition in distinctConditions)
+    //                        {
+    //                            Console.WriteLine(condition);
+    //                        }
+
+    //                        var details = new CardDetailViewModel
+    //                        {
+    //                            Languages = distinctLanguages,
+    //                            Conditions = distinctConditions,
+    //                            Name = product.Model,
+    //                            Rarity = product.Rarity,
+    //                            Category = product.Category,
+    //                           // ImageUrl = "https://www.cardgamecorner.com" + product.Image,
+    //                            ImageUrl = imageUrl,
+    //                            game = product.Game
+    //                        };
+
+    //                        // Navigate to the CardDetailsPage
+
+
+    //                        await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
+
+    //                    }
+    //                    else
+    //                    {
+    //                        await DisplayAlert("Error", "Something went wrong", "OK");
+    //                    }
+    //                }
+    //                else
+    //                {
+    //                    await DisplayAlert("Error", "Card not found", "OK");
+    //                }
+    //            }
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        await DisplayAlert("Error", $"Failed to fetch or upload image: {ex.Message}", "OK");
+    //        Console.WriteLine($"Error: {ex.Message}");
+    //    }
+    //}
+
+
     private async void OnUploadButtonClicked(object sender, EventArgs e)
     {
         // Show loading overlay
@@ -32,6 +189,8 @@ public partial class SearchQueryPage : ContentPage
             }
 
             string imageUrl = "https://www.cardgamecorner.com/prodotti/singles/pokemon/mew/charizard-ex_733794.jpg";
+          //  string imageUrl = "https://www.cardgamecorner.com/prodotti/singles/pokemon/mew/charizard-ex_733794.jpg";
+
             if (string.IsNullOrEmpty(imageUrl))
             {
                 await DisplayAlert("Error", "No image URL available.", "OK");
@@ -50,12 +209,6 @@ public partial class SearchQueryPage : ContentPage
 
             // Compress the image
             var compressedImageStream = await viewModel.CompressImageAsync(new MemoryStream(imageBytes), 100 * 1024);
-
-            // Clone the compressed stream for display
-            var displayStream = new MemoryStream();
-            compressedImageStream.Position = 0;
-            await compressedImageStream.CopyToAsync(displayStream);
-            displayStream.Position = 0;
 
             // Clone the compressed stream for upload
             var uploadStream = new MemoryStream();
@@ -79,56 +232,56 @@ public partial class SearchQueryPage : ContentPage
                 };
 
                 // Perform card search
-                CardComparisonViewModel data = await viewModel.SearchCardAsync(cardRequest, ImageSource.FromStream(() => new MemoryStream(displayStream.ToArray())));
+               // CardComparisonViewModel data = await viewModel.SearchCardAsync(cardRequest, ImageSource.FromStream(() => new MemoryStream(displayStream.ToArray())));
+                CardComparisonViewModel data = await viewModel.SearchCardAsync(cardRequest, ImageSource.FromStream(() => new MemoryStream(uploadStream.ToArray())));
 
-                if (data != null && data.responseContent.Products.Count > 0)
+                if (data != null && data.responseContent.Products != null)
                 {
-                    var product = data.responseContent.Products[0];
-                    var variants = product.Variants;
+                    foreach (var product in data.responseContent.Products)
+                    {
+                        // Deserialize the Variants JSON string into a list of ProductVariant1 objects
+                        var variants = product.Variants;
 
                     if (variants != null)
                     {
                         var distinctLanguages = variants.Select(v => v.Language).Distinct().ToList();
                         var distinctConditions = variants.Select(v => v.Condition).Distinct().ToList();
 
-                        Console.WriteLine("Languages:");
-                        foreach (var lang in distinctLanguages)
-                        {
-                            Console.WriteLine(lang);
+                            Console.WriteLine("Languages:");
+                            foreach (var lang in distinctLanguages)
+                            {
+                                Console.WriteLine(lang);
+                            }
+
+                            Console.WriteLine("Conditions:");
+                            foreach (var condition in distinctConditions)
+                            {
+                                Console.WriteLine(condition);
+                            }
+
+                            var details = new CardDetailViewModel
+                            {
+                                Languages = distinctLanguages,
+                                Conditions = distinctConditions,
+                                Name = product.Model,
+                                Rarity = product.Rarity,
+                                Category = product.Category,
+                                ImageUrl = imageUrl,
+                                game = product.Game
+                            };
+
+                            // Navigate to the CardDetailsPage for each product
+                            await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
                         }
-                        Console.WriteLine("Conditions:");
-                        foreach (var condition in distinctConditions)
+                        else
                         {
-                            Console.WriteLine(condition);
+                            Console.WriteLine("No variants found for product.");
                         }
-
-                        var details = new CardDetailViewModel
-                        {
-                            Languages = distinctLanguages,
-                            Conditions = distinctConditions,
-                            Name = product.Model,
-                            Rarity = product.Rarity,
-                            Category = product.Category,
-                            ImageUrl = imageUrl,
-                            game = product.Game
-                        };
-
-                        // Dismiss loading before navigation
-                        SetLoadingState(false);
-
-                        // Navigate to the CardDetailsPage
-                        await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
-                    }
-                    else
-                    {
-                        SetLoadingState(false);
-                        await DisplayAlert("Error", "Something went wrong", "OK");
                     }
                 }
                 else
                 {
-                    SetLoadingState(false);
-                    await DisplayAlert("Error", "Card not found", "OK");
+                    await DisplayAlert("Error", "No products found.", "OK");
                 }
             }
         }

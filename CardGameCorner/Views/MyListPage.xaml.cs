@@ -138,7 +138,7 @@
 //    }
 //}
 
-
+using System.Diagnostics;
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 
@@ -182,6 +182,7 @@ namespace CardGameCorner.Views
             // Check if user is logged in
             if (!App.IsUserLoggedIn)
             {
+                 //_viewModel.CardItems = null;
                 bool result = await _alertService.ShowConfirmationAsync(
                     "Login Required",
                     "You need to log in to access this page. Would you like to log in?",
@@ -205,8 +206,9 @@ namespace CardGameCorner.Views
                 // Load data only if logged in
                 try
                 {
+                    
                     await _viewModel.LoadDataAsync();
-
+                  
                     if (_viewModel.CardItems == null || !_viewModel.CardItems.Any())
                     {
                         await _alertService.ShowAlertAsync("Info", "Your list is empty. Add items to see them here.");
@@ -227,9 +229,9 @@ namespace CardGameCorner.Views
 
             if (confirm)
             {
+                this.BindingContext = null;
                 await _navigationService.LogoutAsync();
             }
         }
     }
 }
-

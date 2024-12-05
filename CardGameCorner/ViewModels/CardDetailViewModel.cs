@@ -96,13 +96,13 @@ namespace CardGameCorner.ViewModels
             get => _doneCommand;
             set => SetProperty(ref _doneCommand, value);
         }
-            
-        private async void ExecuteGoBack()
+
+        public async void ExecuteGoBack()
         {
             await Application.Current.MainPage.Navigation.PopAsync();
         }
 
-        private async void ExecuteDone()
+        public async void ExecuteDone()
         {
             try
             {

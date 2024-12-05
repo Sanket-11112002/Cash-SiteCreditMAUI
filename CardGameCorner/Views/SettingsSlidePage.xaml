@@ -87,6 +87,7 @@
                             SelectedItem="{Binding SelectedLanguage}"
                             SelectedIndexChanged="OnLanguagePickerSelectedIndexChanged"
                             FontSize="14"
+                            FontAttributes="Bold"
                             TextColor="#1B3B48"
                             WidthRequest="200">
                         <Picker.Items>

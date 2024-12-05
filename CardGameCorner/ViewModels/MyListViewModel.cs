@@ -7,6 +7,7 @@ using CardGameCorner.Services;
 using CardGameCorner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 
 
@@ -78,44 +79,123 @@ namespace CardGameCorner.ViewModels {
 
         public async Task getlist()
         {
-            var myListService = new SQLiteService();
-            var items = await myListService.GetAllItemsAsync();
-
-            if (items != null)
+            try
             {
+                // Validate user is logged in
+                if (!App.IsUserLoggedIn)
+                {
+                    throw new Exception("User is not logged in.");
+                }
+
+                // Retrieve JWT token
+                var jwtToken = await SecureStorage.GetAsync("jwt_token");
+                if (string.IsNullOrEmpty(jwtToken))
+                {
+                    throw new Exception("JWT token is missing in SecureStorage.");
+                }
+
+                // Decode username from token
+                var username = DecodeJwtAndGetUsername(jwtToken);
+
+                // Get items from database
+                var myListService = new SQLiteService();
+                var items = await myListService.GetAllItemsAsync(username) ?? new List<ProductList>();
+
+                // Ensure CardItems is initialized
+                if (CardItems == null)
+                {
+                    CardItems = new ObservableCollection<ProductListViewModel>();
+                }
                 CardItems.Clear();
+
+                // Map items to CardItems
                 foreach (var item in items)
                 {
                     var card = new ProductListViewModel
                     {
                         Id = item.Id ?? 0,
-                        Model = item.Model,
-                        Rarity = item.Rarity,
-                        Category = item.Category,
-                        Image = item.Image,
-                        //CashPrice = selectedCard.CashPrice,
+                        Model = item.Model ?? string.Empty,
+                        ModelEn = item.ModelEn ?? string.Empty,
+                        Image = item.Image ?? string.Empty,
+                        Color = item.Color ?? string.Empty,
+                        Rarity = item.Rarity ?? string.Empty,
+                        Category = item.Category ?? string.Empty,
                         Sitecredit = item.Sitecredit ?? 0,
-                          IsFirstEdition = item.IsFirstEdition,
-                         IsReverse = item.IsReverse,
-                        Game = item.Game,
-                      
-                        Language = item.Language,
-                        Condition = item.Condition,
+                        IsFirstEdition = item.IsFirstEdition ?? false,
+                        IsReverse = item.IsReverse ?? false,
+                        Game = item.Game ?? string.Empty,
+                        UserName = item.Username ?? string.Empty,
+                        Language = item.Language ?? string.Empty,
+                        Condition = item.Condition ?? string.Empty,
                         Buylist = item.Buylist ?? 0,
                         Quantity = item.Quantity ?? 0,
-                        Languageflag= "italianlng.svg"
+                        Languageflag = "italianlng.svg",
+                        Languages = !string.IsNullOrEmpty(item.Languagejsonlst)
+                            ? JsonConvert.DeserializeObject<List<string>>(item.Languagejsonlst)
+                            : new List<string>(),
+                        Conditions = !string.IsNullOrEmpty(item.Conditionjsonlst)
+                            ? JsonConvert.DeserializeObject<List<string>>(item.Conditionjsonlst)
+                            : new List<string>(),
                     };
-
-                    if(item.Languagejsonlst!=null && item.Conditionjsonlst != null)
-                    {
-                        card.Languages = JsonConvert.DeserializeObject<List<string>>(item.Languagejsonlst);
-                        card.Conditions = JsonConvert.DeserializeObject<List<string>>(item.Conditionjsonlst);
-                    }
 
                     CardItems.Add(card);
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error in getlist: {e.Message}");
+            }
         }
+
+        //public async Task<List<ProductListViewModel>> getlist()
+        //{
+        //    var fetchedList = new List<ProductListViewModel>();
+        //    try
+        //    {
+        //        var myListService = new SQLiteService();
+        //        var items = await myListService.GetAllItemsAsync();
+
+        //        if (items != null)
+        //        {
+        //            CardItems.Clear();
+        //            foreach (var item in items)
+        //            {
+        //                var card = new ProductListViewModel
+        //                {
+        //                    Id = item.Id ?? 0,
+        //                    Model = item.Model,
+        //                    Rarity = item.Rarity,
+        //                    Category = item.Category,
+        //                    Image = item.Image,
+        //                    Sitecredit = item.Sitecredit ?? 0,
+        //                    IsFirstEdition = item.IsFirstEdition,
+        //                    IsReverse = item.IsReverse,
+        //                    Game = item.Game,
+        //                    Language = item.Language,
+        //                    Condition = item.Condition,
+        //                    Buylist = item.Buylist ?? 0,
+        //                    Quantity = item.Quantity ?? 0,
+        //                    Languageflag = "italianlng.svg",
+        //                    Languages = !string.IsNullOrEmpty(item.Languagejsonlst)
+        //                        ? JsonConvert.DeserializeObject<List<string>>(item.Languagejsonlst)
+        //                        : null,
+        //                    Conditions = !string.IsNullOrEmpty(item.Conditionjsonlst)
+        //                        ? JsonConvert.DeserializeObject<List<string>>(item.Conditionjsonlst)
+        //                        : null
+        //                };
+
+        //                CardItems.Add(card);
+        //                fetchedList.Add(card);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine($"Error fetching card list: {e.Message}");
+        //    }
+
+        //    return fetchedList;
+        //}
 
         public async Task LoadDataAsync()
         {
@@ -124,18 +204,85 @@ namespace CardGameCorner.ViewModels {
 
         private async void DeleteCard(ProductListViewModel selectedCard)
         {
-            if(selectedCard != null)
+            if (selectedCard != null)
             {
-                var myListService = new SQLiteService();
-                var product = selectedCard.MapToProductList();
+                // Show a confirmation dialog
+                bool isConfirmed = await Application.Current.MainPage.DisplayAlert(
+                    "Confirm Delete", // Title of the alert
+                    "Are you sure you want to delete this card?", // Message
+                    "Yes", // Confirmation button
+                    "No" // Cancel button
+                );
 
-                // Call your SQLite service to delete the item
-                await myListService.DeleteItemAsync(product);
+                if (isConfirmed)
+                {
+                    var myListService = new SQLiteService();
+                    var product = selectedCard.MapToProductList();
 
-                await getlist();
+                    // Call your SQLite service to delete the item
+                    await myListService.DeleteItemAsync(product);
 
+                    // Refresh the list or perform necessary actions after deletion
+                    await getlist();
+
+                    if (CardItems.Count == 0)
+                    {
+                        await Application.Current.MainPage.DisplayAlert(
+                            "Card List Empty",
+                            "Your card list is empty.",
+                            "OK"
+                        );
+
+                        await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
+
+                        await Shell.Current.GoToAsync("//SearchPage");
+                    }
+
+                    
+
+
+
+                }
             }
         }
+
+        public string DecodeJwtAndGetUsername(string jwtToken)
+        {
+            try
+            {
+                // Split the JWT into its three parts
+                var parts = jwtToken.Split('.');
+                if (parts.Length != 3)
+                    throw new Exception("Invalid JWT format");
+
+                // Decode the payload (second part of the JWT)
+                var payload = parts[1];
+
+                // Base64 decode the payload
+                var jsonBytes = Convert.FromBase64String(PadBase64String(payload));
+                var jsonString = System.Text.Encoding.UTF8.GetString(jsonBytes);
+
+                // Parse the payload to get the username
+                var payloadJson = JObject.Parse(jsonString);
+
+                // Extract the username using the claim name
+                var usernameClaim = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name";
+
+                return payloadJson[usernameClaim]?.ToString() ?? throw new Exception("Username claim not found in the JWT");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error decoding JWT: {ex.Message}");
+                return null;
+            }
+        }
+
+        // Helper method to pad Base64 strings properly
+        private string PadBase64String(string base64)
+        {
+            return base64.PadRight(base64.Length + (4 - base64.Length % 4) % 4, '=');
+        }
+
     }
 }
 
