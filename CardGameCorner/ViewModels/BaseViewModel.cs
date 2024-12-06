@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CardGameCorner.Services;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace CardGameCorner.ViewModels
 {
@@ -23,8 +25,34 @@ namespace CardGameCorner.ViewModels
         {
             SelectLanguageCommand = new AsyncRelayCommand(ChangeLanguage);
             SelectGameCommand = new AsyncRelayCommand(ChangeGame);
+
+            // Initialize with current language
+            UpdateLocalizedStrings();
+
+            // Subscribe to language change events
+            GlobalSettings.PropertyChanged += OnGlobalSettingsPropertyChanged;
         }
 
+        private void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(GlobalSettings.SelectedLanguage))
+            {
+                // Update localized strings when language changes
+                UpdateLocalizedStrings();
+            }
+        }
+
+        protected virtual void UpdateLocalizedStrings()
+        {
+            // To be overridden by derived view models
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         private async Task ChangeLanguage()
         {
             await GlobalSettings.ChangeLanguageAsync();

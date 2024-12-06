@@ -281,7 +281,7 @@ using System.Runtime.CompilerServices;
 
 namespace CardGameCorner.ViewModels
 {
-    public partial class ScanCardViewModel : ObservableObject
+    public partial class ScanCardViewModel :BaseViewModel, INotifyPropertyChanged
     {
         private readonly IScanCardService _scanCardService;
 
@@ -302,23 +302,24 @@ namespace CardGameCorner.ViewModels
         public ScanCardViewModel(IScanCardService scanCardService)
         {
             // Initialize with current language
-            UpdateLocalizedStrings();
+           // UpdateLocalizedStrings();
 
             // Subscribe to language change events
-            GlobalSettings.PropertyChanged += OnGlobalSettingsPropertyChanged;
+            //GlobalSettings.PropertyChanged += OnGlobalSettingsPropertyChanged;
 
             _scanCardService = scanCardService;
         }
 
         // New method to handle property changes
-        private void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(GlobalSettings.SelectedLanguage))
-            {
-                // Update localized strings when language changes
-                UpdateLocalizedStrings();
-            }
-        }
+        //private void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        //{
+        //    if (e.PropertyName == nameof(GlobalSettings.SelectedLanguage))
+        //    {
+        //        // Update localized strings when language changes
+        //        UpdateLocalizedStrings();
+        //    }
+        //}
+
         private void UpdateLocalizedStrings()
         {
             // Ensure these are called on the main thread
@@ -328,8 +329,8 @@ namespace CardGameCorner.ViewModels
                 UploadImage = AppResources.Upload_Image; // Localized string for "Scan with camera"
                 
                 // Trigger property changed events to update UI
-                OnPropertyChanged(nameof(CaptureImage));
-                OnPropertyChanged(nameof(UploadImage));
+               OnPropertyChanged(nameof(CaptureImage));
+               OnPropertyChanged(nameof(UploadImage));
                
             });
         }
