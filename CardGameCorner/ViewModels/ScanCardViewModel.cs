@@ -326,11 +326,13 @@ namespace CardGameCorner.ViewModels
             {
                 CaptureImage = AppResources.Capture_Image; // Localized string for "Search"
                 UploadImage = AppResources.Upload_Image; // Localized string for "Scan with camera"
-                
+
+                OnPropertyChanged(string.Empty);
+
                 // Trigger property changed events to update UI
                 OnPropertyChanged(nameof(CaptureImage));
                 OnPropertyChanged(nameof(UploadImage));
-               
+
             });
         }
 

@@ -121,13 +121,13 @@
     <value>Benvenuti al Card Game Corner!</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Ricerca</value>
+    <value>Cerca</value>
   </data>
   <data name="Scan with camera" xml:space="preserve">
     <value>Scansiona con la fotocamera</value>
   </data>
   <data name="Scan" xml:space="preserve">
-    <value>Scansione</value>
+    <value>Scansiona</value>
   </data>
   <data name="Best Deals" xml:space="preserve">
     <value>Le migliori offerte</value>
@@ -137,5 +137,53 @@
   </data>
   <data name="Upload Image" xml:space="preserve">
     <value>Carica immagine</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>Cognome</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>Azienda</value>
+  </data>
+  <data name="VAT Number" xml:space="preserve">
+    <value>Partita IVA</value>
+  </data>
+  <data name="Fiscal Code" xml:space="preserve">
+    <value>Codice Fiscale</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Telefono</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Indirizzo</value>
+  </data>
+  <data name="ZIP" xml:space="preserve">
+    <value>CAP</value>
+  </data>
+  <data name="Province" xml:space="preserve">
+    <value>Provincia</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Città</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Paese</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="MyAccount" xml:space="preserve">
+    <value>Il Mio Account</value>
+  </data>
+  <data name="MyList" xml:space="preserve">
+    <value>La Mia Lista</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Impostazioni</value>
   </data>
 </root>

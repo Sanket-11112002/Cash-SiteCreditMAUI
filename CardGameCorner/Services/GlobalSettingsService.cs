@@ -14,12 +14,10 @@ namespace CardGameCorner.Services
         private GlobalSettingsService()
         {
             // Initialize with default values
-           // SelectedLanguage = "English";
-
+            // SelectedLanguage = "English";
         }
 
         private string _selectedLanguage;
-
         public string SelectedLanguage
         {
             get => _selectedLanguage;
@@ -46,7 +44,6 @@ namespace CardGameCorner.Services
                 }
             }
         }
-
         private void OnLanguageChanged()
         {
             try
@@ -66,7 +63,6 @@ namespace CardGameCorner.Services
 
         private void OnGameChanged()
         {
-            // Implement game change logic
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedGame)));
         }
 

@@ -90,11 +90,13 @@
 
 
 using CardGameCorner.Models;
+using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ISecureStorage = CardGameCorner.Services.ISecureStorage;
@@ -111,16 +113,48 @@ namespace CardGameCorner.ViewModels
         public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
 
         [ObservableProperty]
-        private string searchText;
+        private string email;
 
         [ObservableProperty]
-        private string scanText;
+        private string name;
 
         [ObservableProperty]
-        private string welcomeMessage;
+        private string lastName;
+
+        [ObservableProperty]
+        private string company;
+
+        [ObservableProperty]
+        private string vatNumber;
+
+        [ObservableProperty]
+        private string fiscalCode;
+
+        [ObservableProperty]
+        private string phone;
+
+        [ObservableProperty]
+        private string address;
+
+        [ObservableProperty]
+        private string zip;
+
+        [ObservableProperty]
+        private string province;
+
+        [ObservableProperty]
+        private string city;
+
+        [ObservableProperty]
+        private string country;
 
         public MyAccountViewModel(IMyAccountService myAccountService, ISecureStorage secureStorage)
         {
+            UpdateLocalizedStrings();
+
+            // Subscribe to language change events
+            GlobalSettings.PropertyChanged += OnGlobalSettingsPropertyChanged;
+
             _myAccountService = myAccountService;
             _secureStorage = secureStorage;
 
@@ -130,6 +164,55 @@ namespace CardGameCorner.ViewModels
            // Task.Run(LoadProfileAsync);
         }
 
+        private void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(GlobalSettings.SelectedLanguage))
+            {
+                // Update localized strings when language changes
+                UpdateLocalizedStrings();
+            }
+        }
+
+        private void UpdateLocalizedStrings()
+        {
+            // Ensure these are called on the main thread
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Email = AppResources.Email; 
+                Name = AppResources.Name; 
+                LastName = AppResources.Last_Name;
+                Company = AppResources.Company; 
+                VatNumber = AppResources.VAT_Number; 
+                FiscalCode = AppResources.Fiscal_Code;
+                Phone = AppResources.Phone; 
+                Address = AppResources.Address;
+                Zip = AppResources.ZIP;
+                Province = AppResources.Province; 
+                City = AppResources.City; 
+                Country = AppResources.Country;
+              
+
+                // Trigger property changed events to update UI
+                OnPropertyChanged(nameof(Email));
+                OnPropertyChanged(nameof(Name));
+                OnPropertyChanged(nameof(LastName));
+                OnPropertyChanged(nameof(Company));
+                OnPropertyChanged(nameof(VatNumber));
+                OnPropertyChanged(nameof(FiscalCode));
+                OnPropertyChanged(nameof(Phone));
+                OnPropertyChanged(nameof(Address));
+                OnPropertyChanged(nameof(Zip));
+                OnPropertyChanged(nameof(Province));
+                OnPropertyChanged(nameof(City));
+                OnPropertyChanged(nameof(Country));
+            });
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public ICommand EditCommand { get; }
         public ICommand BackCommand { get; }
         public ICommand DoneCommand { get; }

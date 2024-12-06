@@ -61,6 +61,15 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        internal static string Address {
+            get {
+                return ResourceManager.GetString("Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Best Deals.
         /// </summary>
         internal static string Best_Deals {
@@ -75,6 +84,114 @@ namespace CardGameCorner.Resources.Language {
         internal static string Capture_Image {
             get {
                 return ResourceManager.GetString("Capture Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to City.
+        /// </summary>
+        internal static string City {
+            get {
+                return ResourceManager.GetString("City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Company.
+        /// </summary>
+        internal static string Company {
+            get {
+                return ResourceManager.GetString("Company", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Country.
+        /// </summary>
+        internal static string Country {
+            get {
+                return ResourceManager.GetString("Country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        internal static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fiscal Code.
+        /// </summary>
+        internal static string Fiscal_Code {
+            get {
+                return ResourceManager.GetString("Fiscal Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        internal static string Home {
+            get {
+                return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Name.
+        /// </summary>
+        internal static string Last_Name {
+            get {
+                return ResourceManager.GetString("Last Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MyAccount.
+        /// </summary>
+        internal static string MyAccount {
+            get {
+                return ResourceManager.GetString("MyAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MyList.
+        /// </summary>
+        internal static string MyList {
+            get {
+                return ResourceManager.GetString("MyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone.
+        /// </summary>
+        internal static string Phone {
+            get {
+                return ResourceManager.GetString("Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Province.
+        /// </summary>
+        internal static string Province {
+            get {
+                return ResourceManager.GetString("Province", resourceCulture);
             }
         }
         
@@ -106,6 +223,15 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        internal static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upload Image.
         /// </summary>
         internal static string Upload_Image {
@@ -115,11 +241,29 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to VAT Number.
+        /// </summary>
+        internal static string VAT_Number {
+            get {
+                return ResourceManager.GetString("VAT Number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Welcome to Card Game Corner!.
         /// </summary>
         internal static string WelcomeMessage {
             get {
                 return ResourceManager.GetString("WelcomeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZIP.
+        /// </summary>
+        internal static string ZIP {
+            get {
+                return ResourceManager.GetString("ZIP", resourceCulture);
             }
         }
     }
