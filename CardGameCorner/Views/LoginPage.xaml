@@ -2,35 +2,25 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.LoginPage"
-             Title="Login">
-
-    
-
+             Title="{Binding LoginButtonText}">
     <ScrollView>
         <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
-
-            <!--<Label Text="Login"
-                   FontSize="24"
-                   FontAttributes="Bold"
-                   TextColor="White"
-                HorizontalOptions="Center" />-->
-
-                <!-- Logo Image -->
+            <!-- Logo Image -->
                 <Image Source="Resources/Images/splashscreenlogo.png"
                    HeightRequest="100"
-                   HorizontalOptions="Center" />
+                   HorizontalOptions="Center"/>
 
                 <!-- Username and Password Fields -->
                 <VerticalStackLayout Spacing="5">
                     <Entry Text="{Binding Username}"
-                       Placeholder="Username"
+                        Placeholder="{Binding UsernamePlaceholder}"
                        PlaceholderColor="LightGray"
                        TextColor="White"
                        BackgroundColor="#2A4B5D"
                        Keyboard="Email" />
 
                     <Entry Text="{Binding Password}"
-                       Placeholder="Password"
+                       Placeholder="{Binding PasswordPlaceholder}"
                        PlaceholderColor="LightGray"
                        TextColor="White"
                        BackgroundColor="#2A4B5D"
@@ -38,33 +28,33 @@
                 </VerticalStackLayout>
 
                 <!-- Login Button -->
-                <Button Text="Login"
+            <Button Text="{Binding LoginButtonText}"
                     Command="{Binding LoginCommand}"
                     IsEnabled="{Binding !IsBusy}"
                     HorizontalOptions="Center"
                     BackgroundColor="#3B92A0"
                     TextColor="White"
                     WidthRequest="200"       
-                    HeightRequest="50" /> 
+                    HeightRequest="50"/> 
 
                 <!-- Sign Up Button (Styled Same as Login Button) -->
-            <Button Text="Sign Up"
+            <Button Text="{Binding SignUpButtonText}"
                     Command="{Binding NavigateToRegistrationCommand}"
                     BackgroundColor="#3B92A0"
                     HorizontalOptions="Center"
                     TextColor="White"
                     WidthRequest="200"     
-                    HeightRequest="50" />
+                    HeightRequest="50"/>
 
             <!-- Forgot Password Toggle Button -->
-                <Button Text="Forgot Password?"
-                    Command="{Binding ToggleForgotPasswordCommand}" 
+            <Button Text="{Binding ForgotPasswordText}"
+                    Command="{Binding ToggleForgotPasswordCommand}"
                     HorizontalOptions="Center"
                     TextColor="LightGray"
-                    BackgroundColor="Transparent" />
+                    BackgroundColor="Transparent"/>
 
                     <!-- Forgot Password Popup (Visible When Toggled) -->
-                    <Frame IsVisible="{Binding ShowForgotPassword}"
+              <Frame  IsVisible="{Binding ShowForgotPassword}"
                    BackgroundColor="White"
                    Padding="20"
                    HasShadow="True"
@@ -72,19 +62,19 @@
                    HorizontalOptions="Center"
                    VerticalOptions="Center">
                         <VerticalStackLayout Spacing="15">
-                            <Label Text="Enter your email address"
-                           TextColor="#1B3B48" />
+                         <Label Text="{Binding ForgotPasswordEmailLabel}"
+                           TextColor="#1B3B48"/>
                             <!-- Dark text on white background -->
                             <Entry Text="{Binding ForgotPasswordEmail}"
-                           Placeholder="Email"
+                           Placeholder="{Binding Email}"
                            PlaceholderColor="Gray"
                            TextColor="#1B3B48"
                            Keyboard="Email"
                            BackgroundColor="#E0E0E0" />
-                            <Button Text="Send Reset Link"
+                    <Button Text="{Binding SendResetLinkText}"
                             Command="{Binding ForgotPasswordCommand}"
                             BackgroundColor="#3B92A0"
-                            TextColor="White" />
+                            TextColor="White"/>
                         </VerticalStackLayout>
                     </Frame>
 
@@ -92,7 +82,9 @@
                     <ActivityIndicator IsRunning="{Binding IsBusy}"
                                IsVisible="{Binding IsBusy}"
                                HorizontalOptions="Center"
-                               Color="White" />
+                               Color="White"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
+
+

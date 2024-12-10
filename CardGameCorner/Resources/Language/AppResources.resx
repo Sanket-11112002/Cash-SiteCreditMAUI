@@ -138,4 +138,223 @@
   <data name="Upload Image" xml:space="preserve">
     <value>Upload Image</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="VAT Number" xml:space="preserve">
+    <value>VAT Number</value>
+  </data>
+  <data name="Fiscal Code" xml:space="preserve">
+    <value>Fiscal Code</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="ZIP" xml:space="preserve">
+    <value>ZIP</value>
+  </data>
+  <data name="Province" xml:space="preserve">
+    <value>Province</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="MyAccount" xml:space="preserve">
+    <value>MyAccount</value>
+  </data>
+  <data name="MyList" xml:space="preserve">
+    <value>MyList</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Game Details" xml:space="preserve">
+    <value>Game Details</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>An error occurred while loading data. Please try again.</value>
+  </data>
+  <data name="NoResultsFound" xml:space="preserve">
+    <value>No results found. Try a different search term.</value>
+  </data>
+  <data name="Card Comparision" xml:space="preserve">
+    <value>Card Comparision</value>
+  </data>
+  <data name="Is this Your Card?" xml:space="preserve">
+    <value>Is this Your Card?</value>
+  </data>
+  <data name="No! I will try again" xml:space="preserve">
+    <value>No! I will try again</value>
+  </data>
+  <data name="Search Result" xml:space="preserve">
+    <value>Search Result</value>
+  </data>
+  <data name="Yes! Add to my list" xml:space="preserve">
+    <value>Yes! Add to my list</value>
+  </data>
+  <data name="Your Picture" xml:space="preserve">
+    <value>La tua immagine</value>
+  </data>
+  <data name="AddToList" xml:space="preserve">
+    <value>Add to my list</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Card Details" xml:space="preserve">
+    <value>Card Details</value>
+  </data>
+  <data name="Cash" xml:space="preserve">
+    <value>Cash</value>
+  </data>
+  <data name="Choose condition/grade" xml:space="preserve">
+    <value>Choose condition/grade...</value>
+  </data>
+  <data name="Choose Language" xml:space="preserve">
+    <value>Choose Language...</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="Edition" xml:space="preserve">
+    <value>1ST Edition</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="Reverse" xml:space="preserve">
+    <value>Reverse</value>
+  </data>
+  <data name="Site credit" xml:space="preserve">
+    <value>Site credit</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Game" xml:space="preserve">
+    <value>Game</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="LoginRequiredMessage" xml:space="preserve">
+    <value>You need to log in to access this page. Would you like to log in?</value>
+  </data>
+  <data name="LoginRequiredTitle" xml:space="preserve">
+    <value>Login Required</value>
+  </data>
+  <data name="EmailEmptyError" xml:space="preserve">
+    <value>Please enter your email address</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Forgot Password?</value>
+  </data>
+  <data name="ForgotPasswordEmailLabel" xml:space="preserve">
+    <value>Enter your email address</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="PasswordEmptyError" xml:space="preserve">
+    <value>Password cannot be empty</value>
+  </data>
+  <data name="PasswordPlaceholder" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordResetSuccessMessage" xml:space="preserve">
+    <value>Password reset link has been sent to your email</value>
+  </data>
+  <data name="SendResetLink" xml:space="preserve">
+    <value>Send Reset Link</value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="SuccessTitle" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="UsernameEmptyError" xml:space="preserve">
+    <value>Username cannot be empty</value>
+  </data>
+  <data name="UsernamePlaceholder" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="ErrorLoadingGames" xml:space="preserve">
+    <value>Failed to load games. Please try again.</value>
+  </data>
+  <data name="LogoutConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to log out?</value>
+  </data>
+  <data name="LogoutConfirmationTitle" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="LogoutMessage" xml:space="preserve">
+    <value>You have been successfully logged out.</value>
+  </data>
+  <data name="LogoutTitle" xml:space="preserve">
+    <value>Logged Out</value>
+  </data>
+  <data name="ErrorAddProduct" xml:space="preserve">
+    <value>Failed to add product.</value>
+  </data>
+  <data name="ErrorRetrieveProduct" xml:space="preserve">
+    <value>Failed to retrieve product details.</value>
+  </data>
+  <data name="ErrorRetrieveToken" xml:space="preserve">
+    <value>Failed to retrieve authentication token.</value>
+  </data>
+  <data name="ProductAddedToList" xml:space="preserve">
+    <value>Product added to your list!</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="SuccessAddedToList" xml:space="preserve">
+    <value />
+  </data>
+  <data name="successmsg" xml:space="preserve">
+    <value>Card added to your collection!</value>
+  </data>
 </root>

@@ -1,19 +1,8 @@
-using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Json;
 
+using System.Text.Json;
 using CardGameCorner.Models;
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
-using CommunityToolkit.Maui.Views;
-//using Java.Util.Streams;
-using Microsoft.Maui.Controls;
-
-using SkiaSharp;
-using Stream = System.IO.Stream;
-
 
 namespace CardGameCorner.Views
 {
@@ -132,25 +121,11 @@ namespace CardGameCorner.Views
         //                        cardrequest.Foil = apiResponse.Result.Foil;
         //                        cardrequest.FirstEdition = 0;
 
-
-
-
-
-
-
-
-
-
-
-
-
         //                        var comparisonData = new CardComparisonViewModel();
-
 
         //                         comparisonData.Initialize(apiResponse, ImageSource.FromStream(() => new MemoryStream(displayStream.ToArray())));
 
         //                        // Navigate to the CardComparisonPage
-
 
         //                       // byte[] imageBytes = displayStream.ToArray();
         //                      //  // Pass the file path to CardComparisonViewModel

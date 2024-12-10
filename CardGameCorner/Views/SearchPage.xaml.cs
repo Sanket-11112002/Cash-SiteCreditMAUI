@@ -41,7 +41,8 @@ public partial class SearchPage : ContentPage
     }
     private async void OnSearchButtonClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new SearchQueryPage());
+       // await Navigation.PushAsync(new SearchQueryPage());
+        await Shell.Current.GoToAsync(nameof(SearchQueryPage));
     }
     protected async override void OnAppearing()
     {

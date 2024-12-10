@@ -7,8 +7,8 @@
         <Label Text="Settings" FontSize="24" FontAttributes="Bold" />
 
         --><!-- Language Picker --><!--
-        <Label Text="Language" FontSize="Medium" />
-        <Picker Title="Select Language" 
+        <Label Text="Language" FontSize="Medium"/>
+        <Picker Title="Select Language"
                 x:Name="LanguagePicker"
                 SelectedItem="{Binding SelectedLanguage}"
                 SelectedIndexChanged="OnLanguagePickerSelectedIndexChanged">
@@ -50,20 +50,19 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.SettingsSlidePage"
-             Title="Settings"
              BackgroundColor="#1B3B48">
 
     <ScrollView>
         <VerticalStackLayout Spacing="16" Padding="20">
             <Grid>
-                <Label Text="Settings" 
-                       FontSize="24" 
+                <Label Text="{Binding Settings}" 
+                       FontSize="22"
                        FontAttributes="Bold" 
                        TextColor="White"
                        HorizontalOptions="Start"
                        VerticalOptions="Center"/>
 
-                <!--<Button Text="✕" 
+                <!--<Button Text="✕"
                         Clicked="OnCloseClicked"
                         BackgroundColor="Transparent"
                         TextColor="White"
@@ -73,13 +72,13 @@
             </Grid>
 
             <VerticalStackLayout Spacing="12">
-                <Label Text="Language" 
-                       FontSize="16" 
-                       FontAttributes="Bold" 
+                <Label Text="{Binding Language}"
+                       FontSize="16"
+                       FontAttributes="Bold"
                        TextColor="White"/>
 
-                <Border Stroke="#4A8BA8" 
-                        Background="White" 
+                <Border Stroke="#4A8BA8"
+                        Background="White"
                         StrokeThickness="1"
                         StrokeShape="RoundRectangle 8">
                     <Picker x:Name="LanguagePicker"
@@ -99,7 +98,7 @@
             </VerticalStackLayout>
 
             <VerticalStackLayout Spacing="12">
-                <Label Text="Game" 
+                <Label Text="{Binding Game}" 
                        FontSize="16" 
                        FontAttributes="Bold" 
                        TextColor="White"/>
@@ -121,7 +120,7 @@
                 </Border>
             </VerticalStackLayout>
 
-            <Button Text="Save Changes" 
+            <Button Text="{Binding Exit}" 
                     BackgroundColor="#4A8BA8"
                     TextColor="White"
                     CornerRadius="8"
@@ -133,7 +132,7 @@
                     BorderWidth="1"/>
 
             <Button x:Name="LogoutButton" 
-                    Text="Logout" 
+                    Text="{Binding Logout}" 
                     Clicked="LogoutButton_Clicked"
                     BackgroundColor="#FF0000"  
                     TextColor="White"

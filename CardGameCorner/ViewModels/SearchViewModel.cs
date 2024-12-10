@@ -262,11 +262,13 @@ using CardGameCorner.Services;
 using CardGameCorner.Resources.Language;
 using SkiaSharp;
 using System.Globalization;
+using System.Resources;
 
 namespace CardGameCorner.ViewModels
 {
     public partial class SearchViewModel : ObservableObject, INotifyPropertyChanged
     {
+
         private readonly SearchService _searchService;
         private string _searchQuery = string.Empty;
         private bool _isLoading;
@@ -345,11 +347,6 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private string scanText;
 
-        [ObservableProperty]
-        private string welcomeMessage;
-
-      
-
 
         public ICommand ToggleFavoriteCommand { get; }
         public SearchViewModel()
@@ -424,12 +421,12 @@ namespace CardGameCorner.ViewModels
             {
                 SearchText = AppResources.Search; // Localized string for "Search"
                 ScanText = AppResources.Scan_with_camera; // Localized string for "Scan with camera"
-                WelcomeMessage = AppResources.WelcomeMessage;
+                ErrorMessage = AppResources.ErrorMessage;
 
                 // Trigger property changed events to update UI
                 OnPropertyChanged(nameof(SearchText));
                 OnPropertyChanged(nameof(ScanText));
-                OnPropertyChanged(nameof(WelcomeMessage));
+                OnPropertyChanged(nameof(ErrorMessage));
             });
         }
 

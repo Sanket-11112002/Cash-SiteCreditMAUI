@@ -120,10 +120,13 @@ namespace CardGameCorner
         private readonly ISecureStorage _secureStorage;
         private readonly IAlertService _alertService;
         private readonly INavigationService _navigationService;
+        private readonly AppShellViewModel _viewModel;
         public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
         public AppShell(IServiceProvider serviceProvider, ISecureStorage secureStorage, IAlertService alertService, INavigationService navigationService)
         {
             InitializeComponent();
+            _viewModel = new AppShellViewModel(GlobalSettingsService.Current);
+            BindingContext = _viewModel;
             _serviceProvider = serviceProvider;
             _secureStorage = secureStorage;
             _alertService = alertService;
@@ -201,7 +204,9 @@ namespace CardGameCorner
             Routing.RegisterRoute(nameof(CardDetailPage), typeof(CardDetailPage));
             Routing.RegisterRoute(nameof(CardComparisonPage), typeof(CardComparisonPage));
             Routing.RegisterRoute(nameof(SettingsSlidePage), typeof(SettingsSlidePage));
-
+            Routing.RegisterRoute(nameof(SearchQueryPage), typeof(SearchQueryPage));
+            Routing.RegisterRoute("SearchQueryPage", typeof(SearchQueryPage));
+            Routing.RegisterRoute("CardDetailPage", typeof(CardDetailPage));
         }
         protected override void OnNavigatedTo(NavigatedToEventArgs args)
         {
@@ -284,7 +289,6 @@ namespace CardGameCorner
 
         private async void OnSettingsClicked(object sender, EventArgs e)
         {
-
             var settingsViewModel = _serviceProvider.GetService<SettingsViewModel>();
             var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage, _alertService, _navigationService);
            // var settingsPage = new SettingsSlidePage(settingsViewModel);

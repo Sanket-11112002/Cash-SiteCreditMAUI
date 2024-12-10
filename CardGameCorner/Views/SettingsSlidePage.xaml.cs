@@ -1,4 +1,5 @@
 using CardGameCorner.Models;
+using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 using Microsoft.Maui.Storage;
@@ -120,15 +121,27 @@ public partial class SettingsSlidePage : ContentPage, INotifyPropertyChanged
         // Use Shell navigation to go back
         await Shell.Current.GoToAsync("..");
     }
+    //private async void LogoutButton_Clicked(object sender, EventArgs e)
+    //{
+    //    bool confirm = await _alertService.ShowConfirmationAsync(
+    //        "Logout",
+    //        "Are you sure you want to log out?");
+
+    //    if (confirm)
+    //    {
+    //        await _navigationService.LogoutAsync();
+    //    }
+    //}
+
     private async void LogoutButton_Clicked(object sender, EventArgs e)
     {
         bool confirm = await _alertService.ShowConfirmationAsync(
-            "Logout",
-            "Are you sure you want to log out?");
+            AppResources.LogoutConfirmationTitle,
+            AppResources.LogoutConfirmationMessage
+        );
 
         if (confirm)
         {
-
             await _navigationService.LogoutAsync();
         }
     }

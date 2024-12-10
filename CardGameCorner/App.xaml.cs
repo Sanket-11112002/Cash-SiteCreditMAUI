@@ -81,6 +81,15 @@ namespace CardGameCorner
             await Shell.Current.GoToAsync("login");
         }
 
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            // Initialize language from GlobalSettings
+            var language = GlobalSettingsService.Current.SelectedLanguage ?? "English";
+            GlobalSettingsService.Current.SelectedLanguage = language; // Ensures OnLanguageChanged triggers
+        }
+
         protected override Window CreateWindow(IActivationState activationState)
         {
             Window window = base.CreateWindow(activationState);

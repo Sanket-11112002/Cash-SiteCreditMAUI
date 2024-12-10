@@ -4,7 +4,7 @@
              x:Class="CardGameCorner.Views.GameDetailsPage"
              xmlns:local="clr-namespace:CardGameCorner.ViewModels"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             Title="Game Details"
+            
              BackgroundColor="#1B3B48">
 
     <ContentPage.Resources>
