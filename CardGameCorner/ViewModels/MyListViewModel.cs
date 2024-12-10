@@ -101,6 +101,8 @@ namespace CardGameCorner.ViewModels {
         // Method to handle navigation to card details
         private async void NavigateToCardDetail(ProductListViewModel selectedCard)
         {
+            var details = new List<CardDetailViewModel>();
+
             if (selectedCard == null) return;
             
             // Create a new instance of CardDetailViewModel and populate it with data from selectedCard
@@ -123,16 +125,16 @@ namespace CardGameCorner.ViewModels {
               //  Buylist = selectedCard.Buylist?? 0,
                 Quantity = selectedCard.Quantity ?? 0,
             };
-
+            details.Add(cardDetailViewModel);
             // Pass the ViewModel instance as a navigation parameter
-    //        var navigationParameter = new Dictionary<string, object>
-    //{
-    //    { "CardDetailViewModel", cardDetailViewModel }
-    //};
+            //        var navigationParameter = new Dictionary<string, object>
+            //{
+            //    { "CardDetailViewModel", cardDetailViewModel }
+            //};
 
-         //   await Shell.Current.GoToAsync(nameof(CardDetailPage), navigationParameter);
+            //   await Shell.Current.GoToAsync(nameof(CardDetailPage), navigationParameter);
 
-           // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(cardDetailViewModel));
+            await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
         }
 
         public async Task getlist()

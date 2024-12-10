@@ -43,6 +43,7 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private string yourPicture;
 
+
         [ObservableProperty]
         private string searchResult;
 
@@ -324,6 +325,7 @@ namespace CardGameCorner.ViewModels
         {
             try
             {
+                var detaillst = new List<CardDetailViewModel>();
                 // Ensure the responseContent is not null
                 if (responseContent?.Products?.Count > 0)
                 {
@@ -368,6 +370,8 @@ namespace CardGameCorner.ViewModels
                                 IsFoil = product.IsFoil
 
                             };
+                            detaillst.Add(details);
+
 
                             string detailsJson = JsonConvert.SerializeObject(details);
 
@@ -378,6 +382,8 @@ namespace CardGameCorner.ViewModels
                            // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
                         }
                     }
+                    await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(detaillst));
+
 
                     // Show success confirmation
                     await Application.Current.MainPage.DisplayAlert(AppResources.Success,

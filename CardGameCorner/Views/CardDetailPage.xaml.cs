@@ -22,7 +22,7 @@ public partial class CardDetailPage : ContentPage
         {
             if (i.Id != 0 && i.Id != null)
             {
-                // BtnText.Text = "Update to my list";
+                BtnText.Text = "Update to my list";
             }
 
         }
@@ -39,11 +39,6 @@ public partial class CardDetailPage : ContentPage
         base.OnNavigatedTo(args);
         
     }
-
-     
-
-
-    
 
 
     private async void OnAddToMyListClicked(object sender, EventArgs e)
@@ -77,8 +72,11 @@ public partial class CardDetailPage : ContentPage
                     string detailsJson = await SecureStorage.GetAsync("CardDetailsObject");
                     var details = JsonConvert.DeserializeObject<CardDetailViewModel>(detailsJson);
 
+
+                    var detaillst = new List<CardDetailViewModel>();
+                    detaillst.Add(details);
                     // User chose to continue without login
-                  //  await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
+                      await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(detaillst));
                     return;
                 }
             }
@@ -102,24 +100,26 @@ public partial class CardDetailPage : ContentPage
                     // Decode and extract username from the token
                     var username = DecodeJwtAndGetUsername(jwtToken);
 
+                    var selectedCard = viewModel.SelectedCard;
+
                     var product = new ProductList
                     {
-                        Id = viewModel.Id,
-                        Game = viewModel.Game,
-                        Model = viewModel.Name,
-                        Image = viewModel.imageUrl,
-                        Rarity = viewModel.Rarity,
-                        Category = viewModel.Category,
-                        Sitecredit = viewModel.siteCredit,
-                        Buylist = viewModel.buyList,
-                        Quantity = viewModel.Quantity,
-                        Language = viewModel.SelectedLanguage,
-                        Condition = viewModel.selectedCondition,
-                        Languagejsonlst = JsonConvert.SerializeObject(viewModel.languages),
-                        Conditionjsonlst = JsonConvert.SerializeObject(viewModel.conditions), // Serialize the list to JSON
-                        Username = username, // Save the username from the JWT token
-                        IsFirstEdition = viewModel.IsFirstEdition,
-                        IsReverse = viewModel.IsReverse
+                        Id = selectedCard.Id,
+                        Game = selectedCard.Game,
+                        Model = selectedCard.Name,
+                        Image = selectedCard.ImageUrl,
+                        Rarity = selectedCard.Rarity,
+                        Category = selectedCard.Category,
+                        Sitecredit = selectedCard.siteCredit,
+                        Buylist = selectedCard.buyList,
+                        Quantity = selectedCard.Quantity,
+                        Language = selectedCard.SelectedLanguage,
+                        Condition = selectedCard.SelectedCondition,
+                        Languagejsonlst = JsonConvert.SerializeObject(selectedCard.Languages),
+                        Conditionjsonlst = JsonConvert.SerializeObject(selectedCard.Conditions),
+                        Username = DecodeJwtAndGetUsername(await SecureStorage.GetAsync("jwt_token")),
+                        IsFirstEdition = selectedCard.IsFirstEdition,
+                        IsReverse = selectedCard.IsReverse
                     };
 
                     var productListService = new SQLiteService();
@@ -212,7 +212,7 @@ public partial class CardDetailPage : ContentPage
     {
         if (BindingContext is CardDetailViewModel viewModel)
         {
-            viewModel.Quantity++; // Increment the quantity
+            viewModel.SelectedCard.Quantity++; // Increment the quantity
            // SemanticScreenReader.Announce(Counttxt.Text);
         }
     }
@@ -223,7 +223,7 @@ public partial class CardDetailPage : ContentPage
         {
             if (viewModel.Quantity > 1)
             {
-                viewModel.Quantity--; // Decrement the quantity, ensuring it doesn't go below 1
+                viewModel.SelectedCard.Quantity--; // Decrement the quantity, ensuring it doesn't go below 1
             }
         }
     }
