@@ -28,16 +28,18 @@ public partial class CardComparisonPage : ContentPage
         InitializeComponent();
 
         BindingContext = ComparisonData;
-       
-       scannedimage.Source = ComparisonData.ScannedImage;
-       searchimage.Source = ComparisonData.SearchResultImage;
-       searchimage1.Source = ComparisonData.SearchResultImage;
-       searchimage2.Source = ComparisonData.SearchResultImage;
-       
-     
+
+        scannedimage.Source = ComparisonData.ScannedImage;
+        searchimage.Source = ComparisonData.SearchResultImage;
+        searchimage1.Source = ComparisonData.SearchResultImage;
+        searchimage2.Source = ComparisonData.SearchResultImage;
+
+
 
 
     }
+
+
 
     protected override void OnDisappearing()
     {
@@ -73,10 +75,6 @@ public partial class CardComparisonPage : ContentPage
     //        } // Replace 'default_image.png' with your static image file.
 
     //    }
-      
-
-         
-
     //}
 //   protected override async  void OnDisappearing()
 //{

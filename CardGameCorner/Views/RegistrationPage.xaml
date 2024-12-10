@@ -3,33 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.RegistrationPage"
              xmlns:viewmodel="clr-namespace:CardGameCorner.ViewModels"
-             Title="Register">
+             Title="{Binding PTitle}">
  
-
     <ContentPage.BindingContext>
         <viewmodel:RegistrationViewModel />
     </ContentPage.BindingContext>
     
-    
-    
     <ScrollView>
         <StackLayout Padding="30" Spacing="15">
 
-            <!--<Label Text="Registration"
-                   FontSize="24"
-                   FontAttributes="Bold"
-                   TextColor="White"
-                HorizontalOptions="Center" />-->
-
             <!-- Email Field -->
-            <Entry Placeholder="Email" 
+            <Entry Placeholder="{Binding PEmail}" 
                    Text="{Binding Email}" 
                    PlaceholderColor="LightGray"
                    TextColor="White"
                    BackgroundColor="#2A4B5D" />
 
             <!-- Password Field -->
-            <Entry Placeholder="Password" 
+            <Entry Placeholder="{Binding PPassword}" 
                    Text="{Binding Password}" 
                    IsPassword="True"
                    PlaceholderColor="LightGray"
@@ -37,84 +28,84 @@
                    BackgroundColor="#2A4B5D" />
 
             <!-- Name Field -->
-            <Entry Placeholder="Name" 
+            <Entry Placeholder="{Binding PName}" 
                    Text="{Binding Name}" 
                    PlaceholderColor="LightGray"
                    TextColor="White"
                    BackgroundColor="#2A4B5D" />
 
             <!-- Last Name Field -->
-            <Entry Placeholder="Last Name" 
+            <Entry Placeholder="{Binding PLastName}" 
                    Text="{Binding LastName}" 
                    PlaceholderColor="LightGray"
                    TextColor="White"
                    BackgroundColor="#2A4B5D" />
 
             <!-- Company Field -->
-            <Entry Placeholder="Company" 
+            <Entry Placeholder="{Binding PCompany}" 
                    Text="{Binding Company}" 
                    PlaceholderColor="LightGray"
                    TextColor="White"
                    BackgroundColor="#2A4B5D" />
 
             <!-- VAT Number Field -->
-            <Entry Placeholder="VAT Number" 
+            <Entry Placeholder="{Binding PVatNumber}" 
                    Text="{Binding VatNumber}" 
                    PlaceholderColor="LightGray"
                    TextColor="White"
                    BackgroundColor="#2A4B5D" />
 
             <!-- Fiscal Code Field -->
-            <Entry Placeholder="Fiscal Code" 
+            <Entry Placeholder="{Binding PFiscal}" 
                    Text="{Binding FiscalCode}" 
                    PlaceholderColor="LightGray"
                    TextColor="White"
                    BackgroundColor="#2A4B5D" />
 
             <!-- Address Field -->
-            <Entry Placeholder="Address" 
+            <Entry Placeholder="{Binding PAddress}" 
                    Text="{Binding Address}" 
                    PlaceholderColor="LightGray"
                    TextColor="White"
                    BackgroundColor="#2A4B5D" />
 
             <!-- ZIP Field -->
-            <Entry Placeholder="ZIP" 
+            <Entry Placeholder="{Binding PZip}" 
                    Text="{Binding Zip}" 
                    PlaceholderColor="LightGray"
                    TextColor="White"
                    BackgroundColor="#2A4B5D" />
 
             <!-- Province Field -->
-            <Entry Placeholder="Province" 
+            <Entry Placeholder="{Binding PProvince}" 
                    Text="{Binding Province}" 
                    PlaceholderColor="LightGray"
                    TextColor="White"
                    BackgroundColor="#2A4B5D" />
 
             <!-- City Field -->
-            <Entry Placeholder="City" 
+            <Entry Placeholder="{Binding PCity}" 
                    Text="{Binding City}" 
                    PlaceholderColor="LightGray"
                    TextColor="White"
                    BackgroundColor="#2A4B5D" />
 
             <!-- Country Field -->
-            <Entry Placeholder="Country" 
+            <Entry Placeholder="{Binding PCountry}" 
                    Text="{Binding Country}" 
                    PlaceholderColor="LightGray"
                    TextColor="White"
                    BackgroundColor="#2A4B5D" />
 
             <!-- Phone Field -->
-            <Entry Placeholder="Phone" 
+            <Entry Placeholder="{Binding PPhone}" 
                    Text="{Binding Phone}" 
                    PlaceholderColor="LightGray"
                    TextColor="White"
                    BackgroundColor="#2A4B5D" />
 
             <!-- Language Picker -->
-            <Picker Title="Language" 
+            <Picker Title="{Binding PLanguage}" 
                     SelectedItem="{Binding Language}"
                     TextColor="White"
                     BackgroundColor="#2A4B5D">
@@ -127,13 +118,13 @@
             </Picker>
 
             <!-- Submit Button -->
-            <Button Text="Submit" 
+            <Button Text="{Binding PSubmit}" 
                     Command="{Binding SubmitCommand}" 
                     TextColor="White" 
                     BackgroundColor="#3B92A0" />
 
             <!-- Cancel Button -->
-            <Button Text="Cancel" 
+            <Button Text="{Binding PCancel}" 
                     Command="{Binding CancelCommand}" 
                     TextColor="White" 
                     BackgroundColor="#556B73" />

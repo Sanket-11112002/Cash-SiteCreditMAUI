@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using CardGameCorner.Resources.Language;
+using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
@@ -14,12 +15,10 @@ namespace CardGameCorner.Services
         private GlobalSettingsService()
         {
             // Initialize with default values
-            SelectedLanguage = "English";
-
+            // SelectedLanguage = "English";
         }
 
-        private string _selectedLanguage = "English";
-
+        private string _selectedLanguage;
         public string SelectedLanguage
         {
             get => _selectedLanguage;
@@ -55,6 +54,8 @@ namespace CardGameCorner.Services
                 CultureInfo.CurrentCulture = culture;
                 CultureInfo.CurrentUICulture = culture;
 
+                AppResources.Culture = culture;
+
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedLanguage)));
             }
             catch (CultureNotFoundException ex)
@@ -66,7 +67,6 @@ namespace CardGameCorner.Services
 
         private void OnGameChanged()
         {
-            // Implement game change logic
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedGame)));
         }
 

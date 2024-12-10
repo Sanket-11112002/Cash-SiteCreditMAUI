@@ -2,9 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.CardComparisonPage"
-             Title="Card Comparision"
+             Title="{Binding CardComaprision}"
              BackgroundColor="#1A2634">
-
 
     <ScrollView>
         <Grid RowDefinitions="Auto,*,Auto"
@@ -42,24 +41,13 @@
                 </Frame>-->
                 <Frame Grid.Row="0" Grid.Column="0"  BorderColor="#FF4444">
                     <Image x:Name="scannedimage" Aspect="AspectFit"  HeightRequest="300" WidthRequest="300" />
-
                 </Frame>
 
-                
                 <!--<Frame Grid.Row="0" Grid.Column="1"  BorderColor="#FF4444">
                     <Image x:Name="searchimage" Aspect="AspectFit"  HeightRequest="300" WidthRequest="300" />
+                </Frame>-->
 
-                </Frame>--><Frame Grid.Row="0" Grid.Column="1" BorderColor="green">
-                    <ScrollView Orientation="Horizontal">
-                        <HorizontalStackLayout>
-                            <!-- Add your images here -->
-                            <Image x:Name="searchimage"  Aspect="AspectFit" HeightRequest="300" WidthRequest="300"/>
-                            <Image x:Name="searchimage1" Aspect="AspectFit" HeightRequest="300" WidthRequest="300"/>
-                            <Image x:Name="searchimage2"  Aspect="AspectFit" HeightRequest="300" WidthRequest="300"/>
-                            <!-- Add more images if needed -->
-                        </HorizontalStackLayout>
-                    </ScrollView>
-                </Frame>
+                <Frame Grid.Row="0" Grid.Column="1" BorderColor="#FF4444">                    <ScrollView Orientation="Horizontal">                        <HorizontalStackLayout>                            <!-- Add your images here -->                            <Image x:Name="searchimage"  Aspect="AspectFit" HeightRequest="300" WidthRequest="300"/>                            <Image x:Name="searchimage1" Aspect="AspectFit" HeightRequest="300" WidthRequest="300"/>                            <Image x:Name="searchimage2"  Aspect="AspectFit" HeightRequest="300" WidthRequest="300"/>                            <!-- Add more images if needed -->                        </HorizontalStackLayout>                    </ScrollView>                </Frame>
 
                 <!--<Frame Grid.Row="0" 
                   Grid.Column="1"
@@ -75,14 +63,14 @@
                 <!-- Labels -->
                 <Label Grid.Row="1" 
                   Grid.Column="0"
-                  Text="YOUR PICTURE"
+                  Text="{Binding YourPicture}"
                   TextColor="White"
                   HorizontalOptions="Center"
                   Margin="0,10,0,0"/>
 
                 <Label Grid.Row="1" 
                   Grid.Column="1"
-                  Text="SEARCH RESULT"
+                  Text="{Binding SearchResult}"
                   TextColor="White"
                   HorizontalOptions="Center"
                   Margin="0,10,0,0"/>
@@ -110,7 +98,7 @@
                       FontSize="16"
                       HorizontalOptions="Center"/>
 
-                    <Label Text="Is this Your card?"
+                    <Label Text="{Binding CardComfiredMsg}"
                       TextColor="White"
                       FontSize="18"
                       HorizontalOptions="Center"
@@ -119,7 +107,7 @@
                     <Grid ColumnDefinitions="*,*" 
                      ColumnSpacing="20">
                         <Button Grid.Column="0"
-                           Text="Yes! Add to my list"
+                           Text="{Binding YesAddList}"
                            BackgroundColor="#44FF44"
                            TextColor="White"
                            CornerRadius="25"
@@ -127,7 +115,7 @@
                            Command="{Binding ConfirmCardCommand}"/>
 
                         <Button Grid.Column="1"
-                           Text="No! I will try again"
+                           Text="{Binding NoTryAgain}"
                            BackgroundColor="#FF4444"
                            TextColor="White"
                            CornerRadius="25"

@@ -1,4 +1,4 @@
-<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<!--<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:views="clr-namespace:CardGameCorner.Views"
        x:Class="CardGameCorner.AppShell"
@@ -32,12 +32,6 @@
         ContentTemplate="{DataTemplate views:ScanPage }"
         Route="ScanPage" />
 
-        <!--<ShellContent
-        Title="Card Page"
-        Icon="bxlistul.svg"
-        ContentTemplate="{DataTemplate views:CardDetailPage }"
-        Route="CardDetailPage" />-->
-
         <ShellContent x:Name="MyAccountTab"
         Title="My Account"
         Icon="bxuser.svg"
@@ -58,8 +52,69 @@
 
     <ShellContent Route="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
     
+    <ShellContent Route="HomePage" ContentTemplate="{DataTemplate views:HomePage}" />
 
+</Shell>-->
+
+
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:CardGameCorner.Views"
+       x:Class="CardGameCorner.AppShell"
+       Shell.FlyoutBehavior="Disabled"
+       BackgroundColor="#1B3B48"
+       Title="{Binding HomeTabTitle, Mode=OneWay}">
+
+    <Shell.ToolbarItems>
+        <ToolbarItem x:Name="SettingsToolbarItem"
+                 IconImageSource="settings_icon.png" 
+                 Text="{Binding SettingsToolbarItemText, Mode=OneWay}" 
+                 Clicked="OnSettingsClicked" />
+    </Shell.ToolbarItems>
+
+    <TabBar>
+
+        <ShellContent
+         Title="{Binding HomeTabTitle, Mode=OneWay}"
+         Icon="bxhomealt"
+         ContentTemplate="{DataTemplate views:GameDetailsPage}"
+         Route="GameDetailsPage" />
+
+        <ShellContent
+        Title="{Binding SearchTabTitle, Mode=OneWay}"
+        Icon="bxsearchalt.svg"
+        ContentTemplate="{DataTemplate views:SearchPage }"
+        Route="SearchPage" />
+
+        <ShellContent
+        Title="{Binding ScanTabTitle, Mode=OneWay}"
+        Icon="bxqrscan.svg"
+        ContentTemplate="{DataTemplate views:ScanPage }"
+        Route="ScanPage" />
+
+        <ShellContent x:Name="MyAccountTab"
+    Title="{Binding MyAccountTabTitle, Mode=OneWay}"
+    Icon="bxuser.svg"
+    ContentTemplate="{DataTemplate views:MyAccountPage }"
+    Route="MyAccountPage" />
+
+        <ShellContent
+    Title="{Binding MyListTabTitle, Mode=OneWay}"
+    Icon="bxlistul.svg"
+    ContentTemplate="{DataTemplate views:MyListPage }"
+    Route="MyListPage" />
+
+    </TabBar>
+
+    <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" Route="login" />
+
+    <ShellContent Route="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
+
+    <ShellContent Route="HomePage" ContentTemplate="{DataTemplate views:HomePage}" />
+
+    <ShellContent Route="CardDetailPage" ContentTemplate="{DataTemplate views:CardDetailPage}" />
+
+    <ShellContent Route="SearchQueryPage" ContentTemplate="{DataTemplate views:SearchQueryPage}" />
+    
 </Shell>
-
-
 

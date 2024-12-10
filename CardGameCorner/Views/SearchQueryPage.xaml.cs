@@ -18,40 +18,30 @@ public partial class SearchQueryPage : ContentPage
 
 	}
 
-    private async void OnSettingsClicked(object sender, EventArgs e)
-    {
-        // Use the global settings service to show settings
-        var globalSettings = GlobalSettingsService.Current;
 
-        string result = await DisplayActionSheet(
-            "Settings",
-            "Cancel",
-            null,
-            "Select Language",
-            "Select Game");
-
-        switch (result)
-        {
-            case "Select Language":
-                await globalSettings.ChangeLanguageAsync();
-                break;
-            case "Select Game":
-                await globalSettings.ChangeGameAsync();
-                break;
-        }
-    }
-
+       
 
 
  
     private async void OnUploadButtonClicked(object sender, EventArgs e)
     {
+        // Show loading overlay
+        SetLoadingState(true);
+
         try
         {
+            var viewModel = BindingContext as SearchViewModel;
+            if (viewModel == null)
+        {
+            await DisplayAlert("Error", "ViewModel is not set.", "OK");
+            SetLoadingState(false);
+            return;
+        }
             // Get the ImageButton that was clicked
             var imageButton = sender as ImageButton;
             if (imageButton == null)
             {
+               
                 await DisplayAlert("Error", "The ImageButton is null.", "OK");
                 return;
             }
@@ -71,6 +61,7 @@ public partial class SearchQueryPage : ContentPage
             if (string.IsNullOrEmpty(imageUrl))
             {
                 await DisplayAlert("Error", "No image URL available.", "OK");
+                SetLoadingState(false);
                 return;
             }
 
@@ -79,26 +70,22 @@ public partial class SearchQueryPage : ContentPage
             if (imageBytes == null || imageBytes.Length == 0)
             {
                 await DisplayAlert("Error", "Failed to download image.", "OK");
+                SetLoadingState(false);
                 return;
             }
 
             // Proceed with image compression or upload if necessary
             Console.WriteLine("Image downloaded successfully!");
 
-            var viewModel = BindingContext as SearchViewModel;
-            if (viewModel == null)
-            {
-                await DisplayAlert("Error", "ViewModel is not set.", "OK");
-                return;
-            }
+          
 
             var compressedImageStream = await viewModel.CompressImageAsync(new MemoryStream(imageBytes), 100 * 1024);
 
             // Clone the compressed stream for upload
             var uploadStream = new MemoryStream();
-            compressedImageStream.Position = 0; // Reset position for upload
+            compressedImageStream.Position = 0;
             await compressedImageStream.CopyToAsync(uploadStream);
-            uploadStream.Position = 0; // Reset for upload
+            uploadStream.Position = 0;
 
             // Upload the image
             //var apiResponse = await viewModel.UploadImageAsync(uploadStream);
@@ -127,11 +114,10 @@ public partial class SearchQueryPage : ContentPage
                         // Deserialize the Variants JSON string into a list of ProductVariant1 objects
                         var variants = product.Variants;
 
-                        if (variants != null)
-                        {
-                            // Extract distinct languages and conditions
-                            var distinctLanguages = variants.Select(v => v.Language).Distinct().ToList();
-                            var distinctConditions = variants.Select(v => v.Condition).Distinct().ToList();
+                    if (variants != null)
+                    {
+                        var distinctLanguages = variants.Select(v => v.Language).Distinct().ToList();
+                        var distinctConditions = variants.Select(v => v.Condition).Distinct().ToList();
 
                             Console.WriteLine("Languages:");
                             foreach (var lang in distinctLanguages)
@@ -177,9 +163,25 @@ public partial class SearchQueryPage : ContentPage
         }
         catch (Exception ex)
         {
+            SetLoadingState(false);
             await DisplayAlert("Error", $"Failed to fetch or upload image: {ex.Message}", "OK");
             Console.WriteLine($"Error: {ex.Message}");
         }
+    }
+
+    // New method to manage loading state
+    private void SetLoadingState(bool isLoading)
+    {
+        // This assumes you have a loading overlay in your XAML 
+        // Similar to the existing loading grid in the SearchQueryPage XAML
+        Device.BeginInvokeOnMainThread(() =>
+        {
+            // If you have a loading indicator in your ViewModel, update it
+            if (BindingContext is SearchViewModel viewModel)
+            {
+                viewModel.IsLoading = isLoading;
+            }
+        });
     }
 
     private async Task<byte[]> DownloadImageAsync(string imageUrl)

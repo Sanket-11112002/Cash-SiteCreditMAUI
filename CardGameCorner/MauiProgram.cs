@@ -24,7 +24,7 @@ namespace CardGameCorner
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-
+       
             // Register services
             builder.Services.AddSingleton<IAuthService, AuthService>();
             builder.Services.AddSingleton<ISecureStorage, SecureStorageService>();

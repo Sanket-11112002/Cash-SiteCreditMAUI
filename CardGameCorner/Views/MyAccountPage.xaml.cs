@@ -151,11 +151,143 @@
 
 //}
 
+// Last Working Code Before Lang Translation
+
+
+//using CardGameCorner.Services;
+//using CardGameCorner.ViewModels;
+//using System.ComponentModel;
+//namespace CardGameCorner.Views;
+
+//public partial class MyAccountPage : ContentPage
+//{
+//    private readonly ToolbarItem _editButton;
+//    private readonly ToolbarItem _backButton;
+//    private readonly ToolbarItem _doneButton;
+//    private readonly MyAccountViewModel _viewModel;
+//    private readonly IAlertService _alertService;
+//    private readonly INavigationService _navigationService;
+//    private readonly IMyAccountService _myAccountService;
+//    private readonly Services.ISecureStorage _secureStorage;
+
+//    public MyAccountPage(MyAccountViewModel viewModel, IAlertService alertService, INavigationService navigationService)
+//    {
+
+//        InitializeComponent();
+//        _alertService = alertService;
+//        _navigationService = navigationService;
+//        BindingContext = _viewModel = viewModel;
+
+//        // Toolbar setup
+//        _editButton = new ToolbarItem { Text = "Edit", Command = viewModel.EditCommand };
+//        _backButton = new ToolbarItem { Text = "Back", Command = viewModel.BackCommand };
+//        _doneButton = new ToolbarItem { Text = "Done", Command = viewModel.DoneCommand };
+
+//        // Add initial edit button
+//        ToolbarItems.Add(_editButton);
+//        viewModel.PropertyChanged += ViewModel_PropertyChanged;
+//    }
+
+//    private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+//    {
+//        if (e.PropertyName == nameof(MyAccountViewModel.IsEditMode))
+//        {
+//            var viewModel = (MyAccountViewModel)BindingContext;
+//            ToolbarItems.Clear();
+//            if (viewModel.IsEditMode)
+//            {
+//                ToolbarItems.Add(_backButton);
+//                ToolbarItems.Add(_doneButton);
+//            }
+//            else
+//            {
+//                ToolbarItems.Add(_editButton);
+//            }
+//        }
+//    }
+
+//    //protected async override void OnAppearing()
+//    //{
+//    //    base.OnAppearing();
+
+//    //    // Check if user is logged in
+//    //    if (!App.IsUserLoggedIn)
+//    //    {
+//    //        BindingContext = null;
+//    //        bool result = await _alertService.ShowConfirmationAsync(
+//    //            "Login Required",
+//    //            "You need to log in to access this page. Would you like to log in?",
+//    //            "Login",
+//    //            "Continue");
+
+//    //        if (result)
+//    //        {
+//    //            // User chose to login
+//    //            await _navigationService.NavigateToLoginAsync();
+//    //        }
+//    //        else
+//    //        {
+//    //            // User chose to continue without login
+//    //            await _navigationService.NavigateToHomeAsync();
+//    //            return;
+//    //        }
+//    //    }
+//    //    else
+//    //    {
+//    //        InitializeComponent();
+
+//    //       await _viewModel.InitializeAsync();
+
+//    //    }
+//    //    // Initialize the view model and load profile
+
+//    //}
+
+//    protected async override void OnAppearing()
+//    {
+//        base.OnAppearing();
+
+//        // Check if user is logged in
+//        if (!App.IsUserLoggedIn)
+//        {
+//            BindingContext = null;
+//            bool result = await _alertService.ShowConfirmationAsync(
+//                "Login Required",
+//                "You need to log in to access this page. Would you like to log in?",
+//                "Login",
+//                "Continue");
+
+//            if (result)
+//            {
+//                // User chose to login
+//                await SecureStorage.SetAsync("Login", "loginmethod");
+//                await _navigationService.NavigateToLoginAsync();
+//            }
+//            else
+//            {
+//                // User chose to continue without login
+//                await _navigationService.NavigateToHomeAsync();
+//                return;
+//            }
+//        }
+//        else
+//        {
+
+//            InitializeComponent(); // Reinitialize the page layout
+//            BindingContext = _viewModel;
+//            MyAccountViewModel viewmodel = new MyAccountViewModel(_myAccountService, _secureStorage);
+//            viewmodel.UserProfile = await _viewModel.InitializeAsync(); 
+//            BindingContext = viewmodel;
+//        }
+//        // Initialize the view model and load profile
+//        await _viewModel.InitializeAsync();
+//    }
+//}
 
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 using System.ComponentModel;
-
+using ISecureStorage = CardGameCorner.Services.ISecureStorage;
 namespace CardGameCorner.Views;
 
 public partial class MyAccountPage : ContentPage
@@ -167,19 +299,34 @@ public partial class MyAccountPage : ContentPage
     private readonly IAlertService _alertService;
     private readonly INavigationService _navigationService;
     private readonly IMyAccountService _myAccountService;
-    private readonly Services.ISecureStorage _secureStorage;
+    private readonly ISecureStorage _secureStorage;
 
-    public MyAccountPage(MyAccountViewModel viewModel, IAlertService alertService, INavigationService navigationService)
+    public MyAccountPage( MyAccountViewModel viewModel, IAlertService alertService, INavigationService navigationService,IMyAccountService myAccountService,ISecureStorage secureStorage)
     {
-        InitializeComponent();
         _alertService = alertService;
         _navigationService = navigationService;
+        _myAccountService = myAccountService;
+        _secureStorage = secureStorage;
+
+        InitializeComponent();
         BindingContext = _viewModel = viewModel;
 
-        // Toolbar setup
-        _editButton = new ToolbarItem { Text = "Edit", Command = viewModel.EditCommand };
-        _backButton = new ToolbarItem { Text = "Back", Command = viewModel.BackCommand };
-        _doneButton = new ToolbarItem { Text = "Done", Command = viewModel.DoneCommand };
+        // Toolbar setup with localized text from ViewModel
+        _editButton = new ToolbarItem
+        {
+            Text = viewModel.EditButtonText,
+            Command = viewModel.EditCommand
+        };
+        _backButton = new ToolbarItem
+        {
+            Text = viewModel.BackButtonText,
+            Command = viewModel.BackCommand
+        };
+        _doneButton = new ToolbarItem
+        {
+            Text = viewModel.DoneButtonText,
+            Command = viewModel.DoneCommand
+        };
 
         // Add initial edit button
         ToolbarItems.Add(_editButton);
@@ -194,11 +341,17 @@ public partial class MyAccountPage : ContentPage
             ToolbarItems.Clear();
             if (viewModel.IsEditMode)
             {
+                // Update button text when switching to edit mode
+                _backButton.Text = viewModel.BackButtonText;
+                _doneButton.Text = viewModel.DoneButtonText;
+
                 ToolbarItems.Add(_backButton);
                 ToolbarItems.Add(_doneButton);
             }
             else
             {
+                // Update edit button text when exiting edit mode
+                _editButton.Text = viewModel.EditButtonText;
                 ToolbarItems.Add(_editButton);
             }
         }
@@ -211,11 +364,12 @@ public partial class MyAccountPage : ContentPage
         // Check if user is logged in
         if (!App.IsUserLoggedIn)
         {
+            BindingContext = null;
             bool result = await _alertService.ShowConfirmationAsync(
-                "Login Required",
-                "You need to log in to access this page. Would you like to log in?",
-                "Login",
-                "Continue");
+                _viewModel.LoginRequiredTitle,
+                _viewModel.LoginRequiredMessage,
+                _viewModel.LoginText,
+                _viewModel.ContinueText);
 
             if (result)
             {
@@ -232,30 +386,9 @@ public partial class MyAccountPage : ContentPage
         }
         else
         {
-
-            InitializeComponent(); // Reinitialize the page layout
+            // Ensure the ViewModel is properly initialized with user details
+            await _viewModel.InitializeAsync();
             BindingContext = _viewModel;
-            MyAccountViewModel viewmodel=new MyAccountViewModel(_myAccountService, _secureStorage);
-            viewmodel.UserProfile= await _viewModel.InitializeAsync(); ;
-            BindingContext = viewmodel;
-
-
-        }
-
-        // Initialize the view model and load profile
-        await _viewModel.InitializeAsync();
-    }
-
-    private async void LogoutButton_Clicked(object sender, EventArgs e)
-    {
-        bool confirm = await _alertService.ShowConfirmationAsync(
-            "Logout",
-            "Are you sure you want to log out?");
-
-        if (confirm)
-        {
-            this.BindingContext = null;
-            await _navigationService.LogoutAsync();
         }
     }
 }

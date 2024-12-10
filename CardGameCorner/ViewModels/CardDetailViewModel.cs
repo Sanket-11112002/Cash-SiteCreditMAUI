@@ -1,5 +1,6 @@
 ﻿
 using CardGameCorner.Models;
+using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -56,21 +57,76 @@ namespace CardGameCorner.ViewModels
         public List<string> languages;
 
         [ObservableProperty]
-        public List<string> conditions;  // Collection of languages
+        public List<string> conditions; 
 
         //[ObservableProperty]
-        //public string selectedLanguage;  // The selected language
+        //public string selectedLanguage;  
 
-    
         [ObservableProperty]
-        public string sku;
-
-       // The selected language
-
+        public decimal buylist;  
 
         [ObservableProperty]
         public string selectedCondition;
 
+        public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
+
+
+        [ObservableProperty]
+        public string back;
+
+        [ObservableProperty]
+        public string done;
+        
+        [ObservableProperty]
+        public string chooseLang;
+
+        [ObservableProperty]
+        public string chooseCondition;
+
+        [ObservableProperty]
+        public string edition;
+
+        [ObservableProperty]
+        public string reverse;
+
+        [ObservableProperty]
+        public string cash;
+
+        [ObservableProperty]
+        public string credit;
+
+        [ObservableProperty]
+        public string quantityLang;
+
+        [ObservableProperty]
+        public string addToList;
+
+        [ObservableProperty]
+        public string cardDetails;
+
+        [ObservableProperty]
+        public string loginRequiredTitle;
+
+        [ObservableProperty]
+        public string loginRequiredMessage;
+
+        [ObservableProperty]
+        public string loginText;
+
+    
+        [ObservableProperty]
+        public string continueText;
+        public string sku;
+
+        [ObservableProperty]
+        public string errorRetrieveTokenTitle;
+
+
+        [ObservableProperty]
+        public string errorRetrieveTokenMessage;
+
+        [ObservableProperty]
+        public string successAddedToListTitle;
 
         private string _selectedLanguage;
         private bool _isFoil;
@@ -80,7 +136,11 @@ namespace CardGameCorner.ViewModels
         private decimal _siteCredit;
 
         // The selected language
+        [ObservableProperty]
+        public string successAddedToListMessage;
 
+        [ObservableProperty]
+        public string errorAddProductTitle;
         private ObservableCollection<CardDetailViewModel> _cards;
         private CardDetailViewModel _selectedCard;
 
@@ -98,6 +158,9 @@ namespace CardGameCorner.ViewModels
         }
 
 
+        [ObservableProperty]
+        public string errorRetrieveProductTitle;
+
         public CardDetailViewModel()
         {
             var scanserivc = new ScanCardService();
@@ -111,9 +174,83 @@ namespace CardGameCorner.ViewModels
             GoBackCommand = new Command(ExecuteGoBack);
             DoneCommand = new Command(ExecuteDone);
 
+            
             // Initialize the list of languages (this could come from a service or API)
+           
             SelectedLanguage = "Choose Lanugage";
+            InitializeLocalizedErrorMessages();
         }
+
+        private void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(GlobalSettings.SelectedLanguage))
+            {
+                // Update localized strings when language changes
+                UpdateLocalizedStrings();
+                InitializeLocalizedErrorMessages();
+            }
+        }
+        private void InitializeLocalizedErrorMessages()
+        {
+            // Populate localized error messages
+            LoginRequiredTitle = AppResources.LoginRequiredTitle;
+            LoginRequiredMessage = AppResources.LoginRequiredMessage;
+            LoginText = AppResources.Login;
+            ContinueText = AppResources.Continue;
+            ErrorRetrieveTokenTitle = AppResources.ErrorTitle;
+            ErrorRetrieveTokenMessage = AppResources.ErrorRetrieveToken;
+            SuccessAddedToListTitle = AppResources.Success;
+            SuccessAddedToListMessage = AppResources.ProductAddedToList;
+            ErrorAddProductTitle = AppResources.ErrorAddProduct;
+            ErrorRetrieveProductTitle = AppResources.ErrorRetrieveProduct;
+        }
+
+        private void UpdateLocalizedStrings()
+        {
+            // Ensure these are called on the main thread
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Back = AppResources.Back;
+                Done = AppResources.Done;
+                ChooseLang = AppResources.Choose_Language;
+                ChooseCondition = AppResources.Choose_condition_grade;
+                Edition = AppResources.Edition;
+                Reverse = AppResources.Reverse;
+                Cash = AppResources.Cash;
+                Credit = AppResources.Site_credit;
+                QuantityLang = AppResources.Quantity;
+                AddToList = AppResources.AddToList;
+                CardDetails = AppResources.Card_Details;
+
+
+                // Trigger property changed events to update UI
+                OnPropertyChanged(nameof(Back));
+                OnPropertyChanged(nameof(Done));
+                OnPropertyChanged(nameof(ChooseLang));
+                OnPropertyChanged(nameof(ChooseCondition));
+                OnPropertyChanged(nameof(Edition));
+                OnPropertyChanged(nameof(Reverse));
+                OnPropertyChanged(nameof(Cash));
+                OnPropertyChanged(nameof(Credit));
+                OnPropertyChanged(nameof(QuantityLang));
+                OnPropertyChanged(nameof(AddToList));
+                OnPropertyChanged(nameof(CardDetails));
+                OnPropertyChanged(nameof(LoginRequiredTitle));
+                OnPropertyChanged(nameof(LoginRequiredMessage));
+                OnPropertyChanged(nameof(LoginText));
+                OnPropertyChanged(nameof(ContinueText));
+
+                OnPropertyChanged(nameof(ErrorRetrieveTokenTitle));
+                OnPropertyChanged(nameof(ErrorRetrieveTokenMessage));
+                OnPropertyChanged(nameof(SuccessAddedToListTitle));
+                OnPropertyChanged(nameof(SuccessAddedToListMessage));
+                OnPropertyChanged(nameof(ErrorAddProductTitle));
+                OnPropertyChanged(nameof(ErrorRetrieveProductTitle));
+                // Initialize the list of languages (this could come from a service or API)
+                SelectedLanguage = "Choose Lanugage";
+            });
+        }
+
        
         public string SelectedLanguage
         {
@@ -216,6 +353,7 @@ namespace CardGameCorner.ViewModels
                     FetchPricesAsync(); // Call the API when Foil toggle is changed
                 }
             }
+            
         }
 
         public ICommand GoBackCommand
@@ -230,6 +368,10 @@ namespace CardGameCorner.ViewModels
             set => SetProperty(ref _doneCommand, value);
         }
 
+        //public async void ExecuteGoBack()
+        //{
+        //    await Application.Current.MainPage.Navigation.PopAsync();
+        //}
         public async void ExecuteGoBack()
         {
             //  await Application.Current.MainPage.Navigation.PopAsync();

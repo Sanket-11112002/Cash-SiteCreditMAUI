@@ -1,4 +1,5 @@
 using CardGameCorner.Models;
+using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 using Microsoft.Maui.Storage;
@@ -13,13 +14,17 @@ public partial class SettingsSlidePage : ContentPage, INotifyPropertyChanged
     private readonly GlobalSettingsService _globalSettings;
     private readonly SettingsViewModel _viewModel;
     private readonly ISecureStorage _secureStorage;
-    public SettingsSlidePage(SettingsViewModel viewModel, ISecureStorage secureStorage)
+    private readonly IAlertService _alertService;
+    private readonly INavigationService _navigationService;
+    public SettingsSlidePage(SettingsViewModel viewModel, ISecureStorage secureStorage, IAlertService alertService, INavigationService navigationService)
     {
         InitializeComponent();
 
         _globalSettings = GlobalSettingsService.Current;
         _viewModel = viewModel;
         _secureStorage = secureStorage;        // Set the binding context to the view model
+        _alertService = alertService;
+        _navigationService = navigationService;
 
         BindingContext = _viewModel;
 
@@ -69,6 +74,16 @@ public partial class SettingsSlidePage : ContentPage, INotifyPropertyChanged
     {
         base.OnAppearing();
 
+        // Check if user is logged in
+        if (App.IsUserLoggedIn)
+        {
+            LogoutButton.IsVisible = true;
+        }
+        else
+        {
+            LogoutButton.IsVisible = false;
+        }
+
         // Hide the settings toolbar item when this page appears
         if (Shell.Current is AppShell appShell)
         {
@@ -91,6 +106,8 @@ public partial class SettingsSlidePage : ContentPage, INotifyPropertyChanged
             await _secureStorage.SetAsync("LastSelectedLang", _globalSettings.SelectedLanguage);
         }
 
+       
+
         // Restore the settings toolbar item when this page disappears
         if (Shell.Current is AppShell appShell)
         {
@@ -103,5 +120,29 @@ public partial class SettingsSlidePage : ContentPage, INotifyPropertyChanged
     {
         // Use Shell navigation to go back
         await Shell.Current.GoToAsync("..");
+    }
+    //private async void LogoutButton_Clicked(object sender, EventArgs e)
+    //{
+    //    bool confirm = await _alertService.ShowConfirmationAsync(
+    //        "Logout",
+    //        "Are you sure you want to log out?");
+
+    //    if (confirm)
+    //    {
+    //        await _navigationService.LogoutAsync();
+    //    }
+    //}
+
+    private async void LogoutButton_Clicked(object sender, EventArgs e)
+    {
+        bool confirm = await _alertService.ShowConfirmationAsync(
+            AppResources.LogoutConfirmationTitle,
+            AppResources.LogoutConfirmationMessage
+        );
+
+        if (confirm)
+        {
+            await _navigationService.LogoutAsync();
+        }
     }
 }

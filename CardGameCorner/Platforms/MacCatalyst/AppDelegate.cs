@@ -1,4 +1,6 @@
 ﻿using Foundation;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui; 
 
 namespace CardGameCorner
 {

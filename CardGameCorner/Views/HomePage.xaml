@@ -13,32 +13,24 @@
                    HeightRequest="70" 
                    HorizontalOptions="Center"
                    VerticalOptions="Start"
-                   Margin="30" />
-
-            <!--<Button Text="Logout"
-                    Command="{Binding LogoutCommand}"
-                    HorizontalOptions="End"
-                    VerticalOptions="Center"
-                    BackgroundColor="Transparent"
-                    TextColor="White"
-                    Margin="10"/>-->
+                   Margin="40" />
 
         </Grid>
 
-        <Label Text="{Binding WelcomeMessage}" 
+        <!--<Label Text="{Binding WelcomeMessage}" 
            FontSize="24"
            HorizontalOptions="Center"
-           VerticalOptions="Center" />
+           VerticalOptions="Center" />-->
         
         <!-- Title label -->
-        <Label Text="Card Game Corner"
-               FontSize="20"
+        <Label Text="CARD GAME CORNER"
+               FontSize="30"
                FontAttributes="Bold"
                TextColor="White"  
-            HorizontalOptions="Center"
+               HorizontalOptions="Center"
                VerticalOptions="Start"
-               Margin="10" />
-
+               Grid.Row="0" />
+        
         <!-- Content -->
         <Grid Grid.Row="1" Padding="10">
             <CollectionView ItemsSource="{Binding Games}"
@@ -66,19 +58,24 @@
 
                             <Grid RowDefinitions="*, Auto">
                                 <Image Grid.Row="0"
-                                       Source="{Binding GameCode, StringFormat='Resources/Images/dotnet_bot.png', 
-                                               Converter={StaticResource GameImagePathConverter}}"
+                                       Source="{Binding BackgroundImage}"
                                        Aspect="AspectFill"
                                        HeightRequest="160"
                                        BackgroundColor="LightGray" />
-                                <!-- Image background color for contrast -->
 
-                                <Label Grid.Row="1"
+                                <Image Grid.Row="0"
+                                       Source="{Binding LogoImage}"
+                                       HeightRequest="100"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Start"
+                                       Margin="10" />
+
+                                    <!--<Label Grid.Row="1"
                                        Text="{Binding DisplayName}"
                                        HorizontalTextAlignment="Center"
                                        Padding="10"
                                        FontAttributes="Bold"
-                                       TextColor="Black" />
+                                       TextColor="Black" />-->
                                 <!-- Display name text color for contrast -->
                             </Grid>
                         </Frame>

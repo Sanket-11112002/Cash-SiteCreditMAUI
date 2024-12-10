@@ -74,8 +74,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="CardGameCorner.Views.ScanPage"
-             Title="Scan Page">
+             x:Class="CardGameCorner.Views.ScanPage">
 
     <!--<ScrollView>
         <VerticalStackLayout Padding="10" Spacing="20">
@@ -121,7 +120,7 @@
     </ScrollView>-->
     <Grid>
         <ScrollView>
-        <VerticalStackLayout Spacing="20" 
+        <VerticalStackLayout Spacing="20"
                           Padding="20"
                           VerticalOptions="Start">
             <!-- Logo -->
@@ -143,66 +142,64 @@
          SemanticProperties.Description="Captured image will appear here" />
 
             <!-- Grid for Buttons -->
-            <Grid ColumnDefinitions="*,*"
+                <Grid ColumnDefinitions="*,*"
                 ColumnSpacing="20"
                 Margin="0,0,0,20">
 
-                <!-- Search Button -->
-                <Frame Grid.Column="0"
+                    <!-- Search Button -->
+                    <Frame Grid.Column="0"
                      BackgroundColor="#2A3947"
                      BorderColor="White"
                      CornerRadius="10"
                      HeightRequest="120"
                      Margin="0">
-                    <Grid RowDefinitions="*,Auto" 
+                        <Grid RowDefinitions="*,Auto"
                         RowSpacing="10">
-                        <ImageButton Source="camera.png"
+                            <ImageButton Source="camera.png"
                              HeightRequest="40"
                              VerticalOptions="End"
                              HorizontalOptions="Center"
                              Clicked="OnCaptureButtonClicked" />
-                        <Label Text="Capture Image"
+                            <Label Text="{Binding CaptureImage}"
                              TextColor="White"
                              HorizontalOptions="Center"
                              VerticalOptions="Start"
                              Grid.Row="1"/>
-                    </Grid>
-                </Frame>
+                        </Grid>
+                    </Frame>
 
-                <!-- Scan Button -->
-                <Frame Grid.Column="1"
+                    <!-- Scan Button -->
+                    <Frame Grid.Column="1"
                      BackgroundColor="#2A3947"
                      BorderColor="White"
                      CornerRadius="10"
                      HeightRequest="120"
                      Margin="0">
-                    <Grid RowDefinitions="*,Auto"
+                        <Grid RowDefinitions="*,Auto"
                         RowSpacing="10">
-                        <ImageButton Source="uploadicon.png"
+                            <ImageButton Source="uploadicon.png"
                    HeightRequest="40"
                    BackgroundColor="Transparent"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
                    Clicked="OnUploadButtonClicked" />
-                        <Label Text="Upload Image"
+                            <Label Text="{Binding UploadImage}"
                              TextColor="White"
                              HorizontalOptions="Center"
                              VerticalOptions="Start"
                              Grid.Row="1"/>
-                    </Grid>
-                </Frame>
-               
-            </Grid>
-           
-        </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </VerticalStackLayout>
     </ScrollView>
 
         <Grid 
-            BackgroundColor="Black" 
-            Opacity="0.5" 
+            BackgroundColor="Black"
+            Opacity="0.5"
             IsVisible="{Binding IsLoading}"
             ZIndex="100">
-            <ActivityIndicator 
+            <ActivityIndicator
                 IsRunning="{Binding IsLoading}" 
                 Color="White"
                 HorizontalOptions="Center" 

@@ -121,12 +121,237 @@
     <value>Benvenuti al Card Game Corner!</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Ricerca</value>
+    <value>Cerca</value>
   </data>
   <data name="Scan with camera" xml:space="preserve">
     <value>Scansiona con la fotocamera</value>
   </data>
   <data name="Scan" xml:space="preserve">
-    <value>Scansione</value>
+    <value>Scansiona</value>
+  </data>
+  <data name="Best Deals" xml:space="preserve">
+    <value>Le migliori offerte</value>
+  </data>
+  <data name="Capture Image" xml:space="preserve">
+    <value>Cattura immagine</value>
+  </data>
+  <data name="Upload Image" xml:space="preserve">
+    <value>Carica immagine</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>Cognome</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>Azienda</value>
+  </data>
+  <data name="VAT Number" xml:space="preserve">
+    <value>Partita IVA</value>
+  </data>
+  <data name="Fiscal Code" xml:space="preserve">
+    <value>Codice Fiscale</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Telefono</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Indirizzo</value>
+  </data>
+  <data name="ZIP" xml:space="preserve">
+    <value>CAP</value>
+  </data>
+  <data name="Province" xml:space="preserve">
+    <value>Provincia</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Città</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Paese</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="MyAccount" xml:space="preserve">
+    <value>Il Mio Account</value>
+  </data>
+  <data name="MyList" xml:space="preserve">
+    <value>La Mia Lista</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Impostazioni</value>
+  </data>
+  <data name="Game Details" xml:space="preserve">
+    <value>eefsdfdsfs</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Si è verificato un errore durante il caricamento dei dati. Riprova.</value>
+  </data>
+  <data name="NoResultsFound" xml:space="preserve">
+    <value>Nessun risultato trovato. Prova un altro termine di ricerca.</value>
+  </data>
+  <data name="Card Comparision" xml:space="preserve">
+    <value>Confronto di carte</value>
+  </data>
+  <data name="Is this Your Card?" xml:space="preserve">
+    <value>Questa è la tua carta?</value>
+  </data>
+  <data name="No! I will try again" xml:space="preserve">
+    <value>NO! Ci proverò di nuovo</value>
+  </data>
+  <data name="Search Result" xml:space="preserve">
+    <value>Risultato della ricerca</value>
+  </data>
+  <data name="Yes! Add to my list" xml:space="preserve">
+    <value>SÌ! Aggiungi alla mia lista</value>
+  </data>
+  <data name="Your Picture" xml:space="preserve">
+    <value>La tua immagine</value>
+  </data>
+  <data name="AddToList" xml:space="preserve">
+    <value>Aggiungi alla mia lista</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Indietro</value>
+  </data>
+  <data name="Card Details" xml:space="preserve">
+    <value>Dettagli della carta</value>
+  </data>
+  <data name="Cash" xml:space="preserve">
+    <value>Contanti</value>
+  </data>
+  <data name="Choose condition/grade" xml:space="preserve">
+    <value>Scegli condizione/grado...</value>
+  </data>
+  <data name="Choose Language" xml:space="preserve">
+    <value>Scegli la lingua...</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Fatto</value>
+  </data>
+  <data name="Edition" xml:space="preserve">
+    <value>1a edizione</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantità</value>
+  </data>
+  <data name="Reverse" xml:space="preserve">
+    <value>Inversione</value>
+  </data>
+  <data name="Site credit" xml:space="preserve">
+    <value>Credito del sito</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Uscita</value>
+  </data>
+  <data name="Game" xml:space="preserve">
+    <value>Gioco</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Lingua</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Disconnessione</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continua</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Modifica</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Accedi</value>
+  </data>
+  <data name="LoginRequiredMessage" xml:space="preserve">
+    <value>Devi accedere per visualizzare questa pagina. Vuoi accedere?</value>
+  </data>
+  <data name="LoginRequiredTitle" xml:space="preserve">
+    <value>Accesso Richiesto</value>
+  </data>
+  <data name="EmailEmptyError" xml:space="preserve">
+    <value>Per favore, inserisci il tuo indirizzo email</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Errore</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Hai dimenticato la password?</value>
+  </data>
+  <data name="ForgotPasswordEmailLabel" xml:space="preserve">
+    <value>Inserisci il tuo indirizzo email</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="PasswordEmptyError" xml:space="preserve">
+    <value>La password non può essere vuota</value>
+  </data>
+  <data name="PasswordPlaceholder" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordResetSuccessMessage" xml:space="preserve">
+    <value>Un link per reimpostare la password è stato inviato alla tua email</value>
+  </data>
+  <data name="SendResetLink" xml:space="preserve">
+    <value>Invia link di reimpostazione</value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>Registrati</value>
+  </data>
+  <data name="SuccessTitle" xml:space="preserve">
+    <value>Successo</value>
+  </data>
+  <data name="UsernameEmptyError" xml:space="preserve">
+    <value>Il nome utente non può essere vuoto</value>
+  </data>
+  <data name="UsernamePlaceholder" xml:space="preserve">
+    <value>Nome utente</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancellare</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>registro</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Invia</value>
+  </data>
+  <data name="ErrorLoadingGames" xml:space="preserve">
+    <value>No se pudieron cargar los juegos. Inténtelo de nuevo.</value>
+  </data>
+  <data name="LogoutConfirmationMessage" xml:space="preserve">
+    <value>¿Está seguro de que desea cerrar sesión?</value>
+  </data>
+  <data name="LogoutConfirmationTitle" xml:space="preserve">
+    <value>Cerrar sesión</value>
+  </data>
+  <data name="LogoutMessage" xml:space="preserve">
+    <value>Ha cerrado sesión exitosamente.</value>
+  </data>
+  <data name="LogoutTitle" xml:space="preserve">
+    <value>Sesión cerrada</value>
+  </data>
+  <data name="ErrorAddProduct" xml:space="preserve">
+    <value>Impossibile aggiungere il prodotto.</value>
+  </data>
+  <data name="ErrorRetrieveProduct" xml:space="preserve">
+    <value>Impossibile recuperare i dettagli del prodotto.</value>
+  </data>
+  <data name="ErrorRetrieveToken" xml:space="preserve">
+    <value>Impossibile recuperare il token di autenticazione.</value>
+  </data>
+  <data name="ProductAddedToList" xml:space="preserve">
+    <value>Prodotto aggiunto al tuo elenco!</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Successo</value>
+  </data>
+  <data name="successmsg" xml:space="preserve">
+    <value>Carta aggiunta alla tua collezione!</value>
   </data>
 </root>

@@ -1,19 +1,8 @@
-using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Json;
 
+using System.Text.Json;
 using CardGameCorner.Models;
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
-using CommunityToolkit.Maui.Views;
-//using Java.Util.Streams;
-using Microsoft.Maui.Controls;
-
-using SkiaSharp;
-using Stream = System.IO.Stream;
-
 
 namespace CardGameCorner.Views
 {
@@ -25,7 +14,6 @@ namespace CardGameCorner.Views
 
         public ScanPage()
         {
-
             InitializeComponent();
             _httpClient = new HttpClient();
 
@@ -33,8 +21,6 @@ namespace CardGameCorner.Views
             // Inject the ViewModel with the ApiService
             BindingContext = new ScanCardViewModel(new ScanCardService());
         }
-
-
 
         //private async void OnCaptureButtonClicked(object sender, EventArgs e)
         //{
@@ -135,25 +121,11 @@ namespace CardGameCorner.Views
         //                        cardrequest.Foil = apiResponse.Result.Foil;
         //                        cardrequest.FirstEdition = 0;
 
-
-
-
-
-
-
-
-
-
-
-
-
         //                        var comparisonData = new CardComparisonViewModel();
-
 
         //                         comparisonData.Initialize(apiResponse, ImageSource.FromStream(() => new MemoryStream(displayStream.ToArray())));
 
         //                        // Navigate to the CardComparisonPage
-
 
         //                       // byte[] imageBytes = displayStream.ToArray();
         //                      //  // Pass the file path to CardComparisonViewModel
@@ -201,8 +173,6 @@ namespace CardGameCorner.Views
                         var viewModel = BindingContext as ScanCardViewModel;
 
                         var compressedImageStream = await viewModel.CompressImageAsync(originalStream, 100 * 1024);
-                        
-
                      
                         var displayStream = new MemoryStream();
                         compressedImageStream.Position = 0; // Reset position before copying

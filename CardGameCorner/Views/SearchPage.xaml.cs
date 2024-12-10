@@ -25,14 +25,14 @@ public partial class SearchPage : ContentPage
         //BindingContext = _viewModel;
     }
 
-    private void OnSearchButtonPressed(object sender, EventArgs e)
-    {
-        // Get the ViewModel
-        var viewModel = (SearchViewModel)BindingContext;
+    //private void OnSearchButtonPressed(object sender, EventArgs e)
+    //{
+    //    // Get the ViewModel
+    //    var viewModel = (SearchViewModel)BindingContext;
 
-        // Trigger the search
-        viewModel.SearchCommand.Execute(null);
-    }
+    //    // Trigger the search
+    //    viewModel.SearchCommand.Execute(null);
+    //}
 
     private async void OnScanButtonClicked(object sender, EventArgs e)
     {
@@ -41,7 +41,8 @@ public partial class SearchPage : ContentPage
     }
     private async void OnSearchButtonClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new SearchQueryPage());
+       // await Navigation.PushAsync(new SearchQueryPage());
+        await Shell.Current.GoToAsync(nameof(SearchQueryPage));
     }
     protected async override void OnAppearing()
     {
@@ -51,14 +52,10 @@ public partial class SearchPage : ContentPage
         if (GlobalSettings.SelectedGame != null)
         {
             InitializeComponent();
-
             BindingContext = _viewModel;
         }
         else
         {
-            
-
-
            await Application.Current.MainPage.DisplayAlert("Error", "No game selected. Please select a game before accessing the search page.", "OK");
             await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
           
@@ -72,7 +69,6 @@ public partial class SearchPage : ContentPage
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-
         Console.WriteLine("SearchPage is disappearing.");
     }
 

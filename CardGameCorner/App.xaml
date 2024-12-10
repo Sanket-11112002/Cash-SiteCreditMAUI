@@ -47,7 +47,7 @@
             <Style TargetType="Entry">
                 <Setter Property="TextColor" Value="{StaticResource Gray900}" />
                 <Setter Property="BackgroundColor" Value="Transparent" />
-                <Setter Property="PlaceholderColor" Value="{StaticResource Gray500}" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource White}" />
                 <Setter Property="MinimumHeightRequest" Value="44" />
                 <Setter Property="MinimumWidthRequest" Value="44" />
                 <Setter Property="VisualStateManager.VisualStateGroups">

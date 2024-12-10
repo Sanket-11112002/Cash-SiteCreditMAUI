@@ -4,7 +4,7 @@
              x:Class="CardGameCorner.Views.GameDetailsPage"
              xmlns:local="clr-namespace:CardGameCorner.ViewModels"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             Title="Game Details"
+            
              BackgroundColor="#1B3B48">
 
     <ContentPage.Resources>
@@ -83,8 +83,8 @@
     <Grid>
         <ScrollView x:Name="MainContentScrollView">
         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="20">
-           
-            <!-- CarouselView to display banner images -->
+               
+                <!-- CarouselView to display banner images -->
             <Grid HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="300" HeightRequest="200">
                     <Label Text="{Binding Banners.Count}" ></Label>
                     <CarouselView x:Name="carouselView" ItemsSource="{Binding Banners}" HorizontalScrollBarVisibility="Never" Loop="False" >
@@ -113,12 +113,12 @@
                 <Button ImageSource="left.png" Style="{StaticResource NavigationButtonStyle}" VerticalOptions="Center" HorizontalOptions="Start" Margin="0,0,10,0"  />
                 <Button ImageSource="next.png" Style="{StaticResource NavigationButtonStyle}" VerticalOptions="Center" HorizontalOptions="End" Margin="10,0,0,0"  />
             </Grid>
-          
-            <AbsoluteLayout HorizontalOptions="FillAndExpand" HeightRequest="100">
-                <Image Source="img1.png" Aspect="AspectFill" AbsoluteLayout.LayoutBounds="0.5, 0.5, 1, 1" AbsoluteLayout.LayoutFlags="All" />
-                <Label Text="Best Deals" TextColor="White" FontSize="24" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.5, 0.5, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional" />
-            </AbsoluteLayout>
-            <CollectionView ItemsSource="{Binding Cards}" ItemTemplate="{StaticResource CardTemplate}">
+
+                <AbsoluteLayout HorizontalOptions="FillAndExpand" HeightRequest="100">
+                    <Image Source="{Binding HomeBestDealsImage}" Aspect="AspectFill" AbsoluteLayout.LayoutBounds="0.5, 0.5, 1, 1" AbsoluteLayout.LayoutFlags="All" />
+                    <Label Text="{Binding BestDeals}" TextColor="White" FontSize="24" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.5, 0.5, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional" />
+                </AbsoluteLayout>
+                <CollectionView ItemsSource="{Binding Cards}" ItemTemplate="{StaticResource CardTemplate}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10" HorizontalItemSpacing="10" />
                 </CollectionView.ItemsLayout>

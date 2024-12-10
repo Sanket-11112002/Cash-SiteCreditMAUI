@@ -1,7 +1,10 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Windows.Input;
 using CardGameCorner.Models;
+using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
 using CardGameCorner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -35,6 +38,32 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         public CardSearchResponseViewModel responseContent;
 
+        public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
+
+        [ObservableProperty]
+        private string yourPicture;
+
+        [ObservableProperty]
+        private string searchResult;
+
+        [ObservableProperty]
+        private string cardComfiredMsg;
+
+        [ObservableProperty]
+        private string yesAddList;
+
+        [ObservableProperty]
+        private string noTryAgain;
+
+        [ObservableProperty]
+        private string cardComaprision;
+
+        [ObservableProperty]
+        private string success;
+
+        [ObservableProperty]
+        private string successmsg;
+
 
 
         //public CardComparisonViewModel()
@@ -62,7 +91,56 @@ namespace CardGameCorner.ViewModels
 
         public CardComparisonViewModel()
         {
-            
+            // Initialize with current language
+            UpdateLocalizedStrings();
+
+            // Subscribe to language change events
+            GlobalSettings.PropertyChanged += OnGlobalSettingsPropertyChanged;
+
+        }
+
+        // New method to handle property changes
+        private void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(GlobalSettings.SelectedLanguage))
+            {
+                // Update localized strings when language changes
+                UpdateLocalizedStrings();
+            }
+        }
+
+        private void UpdateLocalizedStrings()
+        {
+            // Ensure these are called on the main thread
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                YourPicture = AppResources.Your_Picture; 
+                SearchResult = AppResources.Search_Result;
+                CardComfiredMsg = AppResources.Is_this_Your_Card_;
+                YesAddList = AppResources.Yes__Add_to_my_list;
+                NoTryAgain = AppResources.No__I_will_try_again;
+                CardComaprision = AppResources.Card_Comparision;
+                Success = AppResources.Success;
+                Successmsg = AppResources.successmsg;
+
+                // Trigger property changed events to update UI
+                OnPropertyChanged(nameof(YourPicture));
+                OnPropertyChanged(nameof(SearchResult));
+                OnPropertyChanged(nameof(CardComfiredMsg));
+                OnPropertyChanged(nameof(YesAddList));
+                OnPropertyChanged(nameof(NoTryAgain));
+                OnPropertyChanged(nameof(CardComaprision));
+                OnPropertyChanged(nameof(Success));
+                OnPropertyChanged(nameof(Successmsg));
+            });
+        }
+
+        // Ensure the PropertyChanged event is properly implemented
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         //public void Initialize(ApiResponse_Card response, ImageSource image)
@@ -276,8 +354,8 @@ namespace CardGameCorner.ViewModels
                     }
 
                     // Show success confirmation
-                    await Application.Current.MainPage.DisplayAlert("Success",
-                        "Card added to your collection!", "OK");
+                    await Application.Current.MainPage.DisplayAlert(AppResources.Success,
+                        AppResources.successmsg,AppResources.OK);
                 }
                 else
                 {

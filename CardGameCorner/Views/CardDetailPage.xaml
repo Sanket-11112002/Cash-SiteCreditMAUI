@@ -1,25 +1,27 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.CardDetailPage"
-             NavigationPage.HasNavigationBar="False">
+              NavigationPage.HasNavigationBar="False"
+             Title="{Binding CardDetails}"
+           >
 
     <Grid RowDefinitions="Auto,*">
         <!-- Header -->
         <Grid Grid.Row="0" Padding="20,10" ColumnDefinitions="Auto,*,Auto">
             <!-- Back Button -->
             <Button Grid.Column="0"
-                    Text="Back"
+                    Text="{Binding Back}"
                     TextColor="White"
                     BackgroundColor="Transparent"
                     FontSize="16"
                     Padding="0"
                     Margin="0"
-                    Command="{Binding GoBackCommand}"/>
+                    Command="{Binding GoBackCommand}"
+                    />
 
             <!-- Done Button -->
             <Button Grid.Column="2"
-                    Text="Done"
+                    Text="{Binding Done}"
                     TextColor="White"
                     BackgroundColor="Transparent"
                     FontSize="16"

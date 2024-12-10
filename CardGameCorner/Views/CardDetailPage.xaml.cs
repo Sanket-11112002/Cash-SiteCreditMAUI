@@ -8,8 +8,6 @@ using CardGameCorner.ViewModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ISecureStorage = CardGameCorner.Services.ISecureStorage;
-
-
 namespace CardGameCorner.Views;
 
 public partial class CardDetailPage : ContentPage
@@ -22,25 +20,33 @@ public partial class CardDetailPage : ContentPage
 
         InitializeComponent();
         //BindingContext = viewmodel;
-        
-        foreach(var i in viewmodel)
+
+        foreach (var i in viewmodel)
         {
             if (i.Id != 0 && i.Id != null)
             {
-               // BtnText.Text = "Update to my list";
+                // BtnText.Text = "Update to my list";
             }
 
         }
-
         // Bind a wrapping ViewModel containing the card collection
         BindingContext = new CardDetailViewModel
         {
             Cards = new ObservableCollection<CardDetailViewModel>(viewmodel),
             SelectedCard = viewmodel.FirstOrDefault() // Default to the first card
         };
-
-
     }
+
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+        
+    }
+
+     
+
+
+    
 
 
     private async void OnAddToMyListClicked(object sender, EventArgs e)
@@ -52,11 +58,17 @@ public partial class CardDetailPage : ContentPage
                 var _alertService = new AlertService();
 
                 var _navigationService = new NavigationService(_alertService, secureStorage);
+                //bool result = await _alertService.ShowConfirmationAsync(
+                // "Login Required",
+                // "You need to log in to add card to list. Would you like to log in?",
+                // "Login",
+                // "Continue");
+
                 bool result = await _alertService.ShowConfirmationAsync(
-                 "Login Required",
-                 "You need to log in to add card to list. Would you like to log in?",
-                 "Login",
-                 "Continue");
+                  ((CardDetailViewModel)BindingContext).LoginRequiredTitle,
+                  ((CardDetailViewModel)BindingContext).LoginRequiredMessage,
+                  ((CardDetailViewModel)BindingContext).LoginText,
+                  ((CardDetailViewModel)BindingContext).ContinueText);
 
                 if (result)
                 {
@@ -82,7 +94,11 @@ public partial class CardDetailPage : ContentPage
                     var jwtToken = await SecureStorage.GetAsync("jwt_token");
                     if (string.IsNullOrEmpty(jwtToken))
                     {
-                        await DisplayAlert("Error", "Failed to retrieve authentication token.", "OK");
+                        // await DisplayAlert("Error", "Failed to retrieve authentication token.", "OK");
+                        await DisplayAlert(
+                           viewModel.ErrorRetrieveTokenTitle,
+                           viewModel.ErrorRetrieveTokenMessage,
+                           "OK");
                         return;
                     }
 
@@ -116,11 +132,19 @@ public partial class CardDetailPage : ContentPage
 
                     if (viewModel != null && viewModel.Id != 0)
                     {
-                        await DisplayAlert("Success", "Product Updated to your list!", "OK");
+                        //await DisplayAlert("Success", "Product Updated to your list!", "OK");
+                        await DisplayAlert(
+                             viewModel.SuccessAddedToListTitle,
+                             viewModel.SuccessAddedToListMessage,
+                             "OK");
                     }
                     else
                     {
-                        await DisplayAlert("Success", "Product added to your list!", "OK");
+                        //await DisplayAlert("Success", "Product added to your list!", "OK");
+                        await DisplayAlert(
+                            viewModel.SuccessAddedToListTitle,
+                            viewModel.SuccessAddedToListMessage,
+                            "OK");
                     }
                     viewModel.ExecuteDone();
 
@@ -130,14 +154,22 @@ public partial class CardDetailPage : ContentPage
                 }
                 else
                 {
-                    await DisplayAlert("Error", "Failed to retrieve product details.", "OK");
+                    // await DisplayAlert("Error", "Failed to retrieve product details.", "OK");
+                    await DisplayAlert(
+                         ((CardDetailViewModel)BindingContext).ErrorRetrieveProductTitle,
+                         "Failed to retrieve product details.",
+                         "OK");
                 }
             }
         }
         catch (Exception ex)
         {
             // Handle any exceptions that occur during the operation
-            await DisplayAlert("Error", $"Failed to add product: {ex.Message}", "OK");
+            // await DisplayAlert("Error", $"Failed to add product: {ex.Message}", "OK");
+            await DisplayAlert(
+              ((CardDetailViewModel)BindingContext).ErrorAddProductTitle,
+              $"Failed to add product: {ex.Message}",
+              "OK");
         }
     }
 

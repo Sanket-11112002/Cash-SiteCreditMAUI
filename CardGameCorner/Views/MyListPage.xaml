@@ -2,7 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.MyListPage"
              xmlns:vm="clr-namespace:CardGameCorner.ViewModels"
-             Title="My List"
              x:Name="MyListPageRoot">
 
     <ContentPage.BindingContext>
@@ -13,8 +12,8 @@
             <ListView ItemsSource="{Binding CardItems}" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell  >
-                            <Grid Padding="16" ColumnDefinitions="*,*,*,*,*" 
+                        <ViewCell>
+                            <Grid Padding="16" ColumnDefinitions="*, *, *, *,*" 
                                   RowDefinitions="Auto, Auto" 
                                   BackgroundColor="#22313F" ColumnSpacing="10">
 
@@ -88,10 +87,10 @@
                                                    TextColor="White" 
                                                    HorizontalTextAlignment="Center" />
 
-                                    <Label Text="Site Credit" 
-                                               FontSize="12" 
-                                               TextColor="LightGreen" 
-                                               FontAttributes="Bold" 
+                                    <Label Text="Site Credit"
+                                               FontSize="12"
+                                               TextColor="LightGreen"
+                                               FontAttributes="Bold"
                                                HorizontalTextAlignment="Center" />
                                     <!-- Binding Value -->
                                     <Label Text="{Binding Sitecredit}" 
@@ -101,11 +100,11 @@
                                 </StackLayout>
 
                             <StackLayout Grid.Column="4" Grid.Row="0" Orientation="Vertical" HorizontalOptions="End" Spacing="5">
-                                    <Label Text="Quantity" 
-                                           FontSize="12" 
-                                           TextColor="LightGreen" 
-                                           FontAttributes="Bold" 
-                                           HorizontalTextAlignment="Center" />          
+                                    <Label Text="Quantity"
+                                           FontSize="12"
+                                           TextColor="LightGreen"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center" />      
                                     <!-- Binding Value -->
                                     <Label Text="{Binding Quantity}" 
                                            FontSize="12" 

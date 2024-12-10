@@ -4,7 +4,7 @@
              x:Class="CardGameCorner.Views.SearchQueryPage"
              xmlns:vm="clr-namespace:CardGameCorner.ViewModels"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             Title="Search"
+             Title="{Binding SearchText}"
              BackgroundColor="#1B3B48">
 
     <ContentPage.BindingContext>
@@ -25,7 +25,7 @@
 
                     <SearchBar Grid.Column="0" 
                                Text="{Binding SearchQuery}" 
-                               Placeholder="Search..." 
+                               Placeholder="{Binding SearchText}" 
                                BackgroundColor="#2A3947" 
                                TextColor="White" 
                                PlaceholderColor="Gray"
@@ -33,7 +33,7 @@
                                />
 
                     <Button Grid.Column="1" 
-                            Text="Search" 
+                            Text="{Binding SearchText}" 
                             Command="{Binding SearchCommand}"
                             BackgroundColor="#2A3947"
                             TextColor="White"
@@ -136,14 +136,16 @@
                 </CollectionView>
             </VerticalStackLayout>
         </ScrollView>
+        
 
         <!-- Loading Indicator -->
         <Grid IsVisible="{Binding IsLoading}" BackgroundColor="#801B3B48">
             <ActivityIndicator Color="White"
-                               IsRunning="{Binding IsLoading}"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center"
-                               Scale="2"/>
+                       IsRunning="{Binding IsLoading}"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       Scale="2"/>
         </Grid>
+
     </Grid>
 </ContentPage>
