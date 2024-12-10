@@ -11,7 +11,7 @@ namespace CardGameCorner.Views
 
         private readonly HttpClient _httpClient;
         private readonly IScanCardService _scanCardService;
-
+        public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
         public ScanPage()
         {
             InitializeComponent();
@@ -198,22 +198,22 @@ namespace CardGameCorner.Views
                             {
                                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                                 Console.WriteLine($"Upload successful: {apiResponse}");
-
+                                  
                                 var cardRequest = new CardSearchRequest
                                 {
-                                    //Title = apiResponse.Result.Title,
-                                    //Set = apiResponse.Result.Set,
-                                    //Game = "pokemon",
-                                    //Lang = apiResponse.Result.Lang,
-                                    //Foil = apiResponse.Result.Foil,
-                                    //FirstEdition = 0
+                                    Title = apiResponse.Result.Title,
+                                    Set = apiResponse.Result.Set,
+                                    Game =GlobalSettings.SelectedGame,
+                                    Lang = apiResponse.Result.Lang,
+                                    Foil = apiResponse.Result.Foil,
+                                    FirstEdition = 0
 
-                                    Title = "Angel of Mercy",//apiResponse.Result.Title,
-                                    Set = "IMA",//apiResponse.Result.Set,
-                                    Game = "magic",//"pokemon",
-                                    Lang = "en",//apiResponse.Result.Lang,
-                                    Foil = 0,//apiResponse.Result.Foil,
-                                    FirstEdition = 0// 0
+                                    //Title = "Angel of Mercy",//apiResponse.Result.Title,
+                                    //Set = "IMA",//apiResponse.Result.Set,
+                                    //Game = "magic",//"pokemon",
+                                    //Lang = "en",//apiResponse.Result.Lang,
+                                    //Foil = 0,//apiResponse.Result.Foil,
+                                    //FirstEdition = 0// 0
 
 
                                 };
@@ -312,19 +312,19 @@ namespace CardGameCorner.Views
 
                         var cardRequest = new CardSearchRequest
                         {
-                            //Title = apiResponse.Result.Title,
-                            //Set = apiResponse.Result.Set,
-                            //Game = "pokemon",
-                            //Lang = apiResponse.Result.Lang,
-                            //Foil = apiResponse.Result.Foil,
-                            //FirstEdition = 0
+                            Title = apiResponse.Result.Title,
+                            Set = apiResponse.Result.Set,
+                            Game = GlobalSettings.SelectedGame,
+                            Lang = apiResponse.Result.Lang,
+                            Foil = apiResponse.Result.Foil,
+                            FirstEdition = 0
 
-                            Title = "Angel of Mercy",//apiResponse.Result.Title,
-                            Set = "IMA",//apiResponse.Result.Set,
-                            Game = "magic",//"pokemon",
-                            Lang = "en",//apiResponse.Result.Lang,
-                            Foil = 0,//apiResponse.Result.Foil,
-                            FirstEdition = 0// 0
+                            //Title = "Angel of Mercy",//apiResponse.Result.Title,
+                            //Set = "IMA",//apiResponse.Result.Set,
+                            //Game = "magic",//"pokemon",
+                            //Lang = "en",//apiResponse.Result.Lang,
+                            //Foil = 0,//apiResponse.Result.Foil,
+                            //FirstEdition = 0// 0
 
 
                         };

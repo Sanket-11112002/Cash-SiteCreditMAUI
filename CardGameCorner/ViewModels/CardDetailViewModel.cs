@@ -62,8 +62,7 @@ namespace CardGameCorner.ViewModels
         //[ObservableProperty]
         //public string selectedLanguage;  
 
-        [ObservableProperty]
-        public decimal buylist;  
+
 
         [ObservableProperty]
         public string selectedCondition;

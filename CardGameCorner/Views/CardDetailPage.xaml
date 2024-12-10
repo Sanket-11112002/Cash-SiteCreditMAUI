@@ -116,9 +116,9 @@
                           BackgroundColor="#1B3B48"
                             StrokeShape="RoundRectangle 20" Stroke="White">
                                 <HorizontalStackLayout Padding="15">
-                                    <Switch IsToggled="false"
+                                    <Switch IsToggled="{Binding SelectedCard.IsFirstEdition}"
                                     OnColor="#007AFF"/>
-                                    <Label Text="Edition"
+                                    <Label Text="1ST Edition"
                                    TextColor="White"
                                    VerticalOptions="Center"
                                    Margin="10,0,0,0"/>
@@ -131,7 +131,7 @@
                            BackgroundColor="#1B3B48"
                             StrokeShape="RoundRectangle 20" Stroke="White">
                                 <HorizontalStackLayout Padding="15">
-                                    <Switch IsToggled="False"
+                                    <Switch IsToggled="{Binding SelectedCard.IsReverse}"
                                     OnColor="#007AFF" />
                                     <Label Text="Reverse"
                                    TextColor="white"
