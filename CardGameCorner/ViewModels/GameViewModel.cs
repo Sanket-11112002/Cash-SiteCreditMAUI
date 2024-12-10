@@ -11,12 +11,15 @@ using Newtonsoft.Json;
 using System.Windows.Input;
 using System.Reflection;
 using CardGameCorner.Services;
+using ISecureStorage = CardGameCorner.Services.ISecureStorage;
 
 namespace CardGameCorner.ViewModels
 {
     public class GameDetailsViewModel : BaseViewModel,INotifyPropertyChanged
 
     {
+        private readonly ISecureStorage secureStorage;
+      
         private ObservableCollection<Card> _cards;
         private ObservableCollection<Banner1> _banners;
         public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
@@ -36,7 +39,7 @@ namespace CardGameCorner.ViewModels
             set
             {
                 _banners = value;
-               //OnPropertyChanged();
+                 // OnPropertyChanged();
             }
         }
 
@@ -83,7 +86,9 @@ namespace CardGameCorner.ViewModels
                     var banners = gameDetails.Banners.Select(banner => new Banner1
                     {
                         Title = banner.Title,
-                        Image = ImageSource.FromUri(new Uri(banner.Image)),
+                       //
+                       Image = ImageSource.FromUri(new Uri(banner.Image)),
+                      // Image=banner.Image,
                         Url = banner.Url
                     });
                     Banners = new ObservableCollection<Banner1>(banners);
@@ -104,6 +109,8 @@ namespace CardGameCorner.ViewModels
 
         public ICommand OpenProductUrlCommand { get; }
 
+
+
         public GameDetailsViewModel()
         {
             OpenProductUrlCommand = new Command<string>(async (url) =>
@@ -120,6 +127,9 @@ namespace CardGameCorner.ViewModels
                     }
                 }
             });
+
+           
+
         }
     }
 

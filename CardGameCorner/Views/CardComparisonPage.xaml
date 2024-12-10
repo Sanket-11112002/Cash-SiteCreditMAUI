@@ -45,9 +45,20 @@
 
                 </Frame>
 
-                <Frame Grid.Row="0" Grid.Column="1"  BorderColor="#FF4444">
+                
+                <!--<Frame Grid.Row="0" Grid.Column="1"  BorderColor="#FF4444">
                     <Image x:Name="searchimage" Aspect="AspectFit"  HeightRequest="300" WidthRequest="300" />
 
+                </Frame>--><Frame Grid.Row="0" Grid.Column="1" BorderColor="green">
+                    <ScrollView Orientation="Horizontal">
+                        <HorizontalStackLayout>
+                            <!-- Add your images here -->
+                            <Image x:Name="searchimage"  Aspect="AspectFit" HeightRequest="300" WidthRequest="300"/>
+                            <Image x:Name="searchimage1" Aspect="AspectFit" HeightRequest="300" WidthRequest="300"/>
+                            <Image x:Name="searchimage2"  Aspect="AspectFit" HeightRequest="300" WidthRequest="300"/>
+                            <!-- Add more images if needed -->
+                        </HorizontalStackLayout>
+                    </ScrollView>
                 </Frame>
 
                 <!--<Frame Grid.Row="0" 

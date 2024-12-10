@@ -2,6 +2,7 @@
 using System.Text.Json;
 using System.Windows.Input;
 using CardGameCorner.Models;
+using CardGameCorner.Services;
 using CardGameCorner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -12,6 +13,8 @@ namespace CardGameCorner.ViewModels
 {
     public partial class CardComparisonViewModel : ObservableObject
     {
+        private readonly IScanCardService scanservice;
+
         [ObservableProperty]
         private string cardName;
 
@@ -246,15 +249,20 @@ namespace CardGameCorner.ViewModels
                             }
 
                             // Prepare the card details for navigation (for each product)
-                            var details = new CardDetailViewModel
+                            var details = new CardDetailViewModel()
                             {
                                 Languages = distinctLanguages,
+                               // Conditions = distinctConditions,
                                 Conditions = distinctConditions,
                                 Name = product.Model, 
                                 Rarity = product.Rarity,
                                 Category = product.Category,
                                 ImageUrl = "https://www.cardgamecorner.com" + product.Image,
-                                game = product.Game
+                                game = product.Game,
+                                idMetaProductId=product.IdMetaproduct,
+                                IdCategory=product.IdCategory,
+                                IsFoil = product.IsFoil
+
                             };
 
                             string detailsJson = JsonConvert.SerializeObject(details);
@@ -263,7 +271,7 @@ namespace CardGameCorner.ViewModels
                             await SecureStorage.SetAsync("CardDetailsObject", detailsJson);
                            
                             // Navigate to the CardDetailsPage for each product
-                            await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
+                           // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
                         }
                     }
 

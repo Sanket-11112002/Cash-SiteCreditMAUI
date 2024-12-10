@@ -118,7 +118,6 @@
 
 //}
 
-
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 using Microsoft.Maui.Controls;
@@ -149,6 +148,8 @@ namespace CardGameCorner.Views
                 _secureStorage = secureStorage;
                 _viewModel = new GameDetailsViewModel();
                 BindingContext = _viewModel;
+
+               
             }
             catch (Exception ex)
             {
@@ -196,6 +197,7 @@ namespace CardGameCorner.Views
 
                     //await _secureStorage.RemoveAsync("LastSelectedGame");
 
+                    BindingContext = _viewModel;
                     // Hide loader
                     loaderOverlay.IsVisible = false;
                     loadingIndicator.IsRunning = false;

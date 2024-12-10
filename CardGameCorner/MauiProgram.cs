@@ -54,6 +54,7 @@ namespace CardGameCorner
             builder.Services.AddTransient<SettingsViewModel>();
             builder.Services.AddTransient<CardDetailViewModel>();
             builder.Services.AddTransient<ProductList>();
+            builder.Services.AddTransient<cardDetailRequest>();
 
             builder.Services.AddSingleton<IMyAccountService, MyAccountService>();
             builder.Services.AddTransient<MyAccountViewModel>();
@@ -63,6 +64,7 @@ namespace CardGameCorner
 
             builder.Services.AddSingleton<IAlertService, AlertService>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();
+            builder.Services.AddSingleton<IListboxService,ListBoxService>();
 
             // Register GlobalSettingsService as a singleton
             builder.Services.AddSingleton(GlobalSettingsService.Current);

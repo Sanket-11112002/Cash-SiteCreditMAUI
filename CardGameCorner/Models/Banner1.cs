@@ -11,6 +11,7 @@ namespace CardGameCorner.Models
     public class Banner1
     {
         public ImageSource Image;
+       // public string Image;
 
         public string Title { get; set; }
         public string Url { get; set; }

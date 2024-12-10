@@ -83,7 +83,7 @@
                                                FontAttributes="Bold" 
                                                HorizontalTextAlignment="Center" />
                                     <!-- Binding Value -->
-                                    <Label Text="{Binding Cash, StringFormat='{0:C}'}" 
+                                    <Label Text="{Binding Buylist , StringFormat='{0:C}'}" 
                                                    FontSize="12" 
                                                    TextColor="White" 
                                                    HorizontalTextAlignment="Center" />
@@ -94,7 +94,7 @@
                                                FontAttributes="Bold" 
                                                HorizontalTextAlignment="Center" />
                                     <!-- Binding Value -->
-                                    <Label Text="{Binding SiteCredit, StringFormat='{0:C}'}" 
+                                    <Label Text="{Binding Sitecredit}" 
                                                    FontSize="12" 
                                                    TextColor="White" 
                                                    HorizontalTextAlignment="Center" />

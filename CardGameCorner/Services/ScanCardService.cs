@@ -378,5 +378,58 @@ namespace CardGameCorner.Services
         {
             throw new NotImplementedException();
         }
+        public async Task<BuyListPriceResponse> FetchBuyListPriceAsync(cardDetailRequest request)
+        {
+            try
+            {
+                // Define the API URL
+                string url = "https://api.magiccorner.it/api/mcgetbuylistprice";
+
+
+                var cardRequestContent = new StringContent(
+               JsonSerializer.Serialize(request),
+               Encoding.UTF8,
+               "application/json"
+           );
+                var response = await _httpClient.PostAsync(url, cardRequestContent);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+
+
+                // Make the GET request
+             
+
+                // Ensure successful status code (200-299)
+              
+                // Read the response content as string
+              
+
+                var data = new BuyListPriceResponse();
+
+                // Deserialize the JSON content into a C# object
+                 data = JsonSerializer.Deserialize<BuyListPriceResponse>(responseContent);
+
+                // Process the data (for example, print it)
+                if (data != null)
+                {
+                    Console.WriteLine($"Cash Price: {data.buylist}");
+                    Console.WriteLine($"Site Credit: {data.SiteCredit}");
+                }
+                return data;
+            }
+            catch (HttpRequestException e)
+            {
+                // Handle HTTP request exceptions
+                return null;
+                Console.WriteLine($"Request error: {e.Message}");
+            }
+            catch (Exception e)
+            {
+                return null;
+                // Handle other exceptions
+                Console.WriteLine($"An error occurred: {e.Message}");
+            }
+        }
+
     }
 }

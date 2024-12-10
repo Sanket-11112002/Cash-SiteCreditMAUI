@@ -162,7 +162,7 @@ namespace CardGameCorner.Views
             _navigationService = navigationService;
 
             BindingContext = _viewModel;
-
+            
             // Add logout button
             var logoutButton = new Button
             {

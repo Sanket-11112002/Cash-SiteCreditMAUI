@@ -70,6 +70,7 @@
                                     <!-- Image Section -->
                                     <Grid>
                                         <ImageButton Source="{Binding Image}" 
+                                                     CommandParameter="{Binding .}" 
                                                      Aspect="AspectFit" 
                                                      HeightRequest="120" 
                                                      WidthRequest="120" 

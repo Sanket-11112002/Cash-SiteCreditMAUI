@@ -17,7 +17,7 @@ namespace CardGameCorner.ViewModels {
         // Observable collection to hold card items
         public ObservableCollection<ProductListViewModel> CardItems { get; set; } = new ObservableCollection<ProductListViewModel>();
 
-
+        private readonly IScanCardService scanCardService;
         private ICommand _navigateToCardDetailCommand;
         private ICommand _deleteCardCommand;
 
@@ -44,25 +44,25 @@ namespace CardGameCorner.ViewModels {
         private async void NavigateToCardDetail(ProductListViewModel selectedCard)
         {
             if (selectedCard == null) return;
-
+            
             // Create a new instance of CardDetailViewModel and populate it with data from selectedCard
-            var cardDetailViewModel = new CardDetailViewModel
+            var cardDetailViewModel = new CardDetailViewModel()
             {
                 Id=selectedCard.Id ?? 0,
                 Name = selectedCard.Model,
                 Rarity = selectedCard.Rarity,
                 Category = selectedCard.Category,
                 ImageUrl = selectedCard.Image,
-                //CashPrice = selectedCard.CashPrice,
-                SiteCredit = selectedCard.Sitecredit ?? 0,
-              //  IsFirstEdition = selectedCard.IsFirstEdition,
-               // IsReverse = selectedCard.IsReverse,
+                buyList = selectedCard.Buylist ?? 0,
+                siteCredit = selectedCard.Sitecredit ?? 0,
+               IsFirstEdition = selectedCard.IsFirstEdition ?? false,
+                //IsReverse = selectedCard.IsReverse,
                 Game = selectedCard.Game,
                  Languages = selectedCard.Languages,
                 Conditions = selectedCard.Conditions,
                 SelectedLanguage = selectedCard.Language,
                 SelectedCondition = selectedCard.Condition,
-                Buylist = selectedCard.Buylist?? 0,
+              //  Buylist = selectedCard.Buylist?? 0,
                 Quantity = selectedCard.Quantity ?? 0,
             };
 
@@ -74,7 +74,7 @@ namespace CardGameCorner.ViewModels {
 
          //   await Shell.Current.GoToAsync(nameof(CardDetailPage), navigationParameter);
 
-            await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(cardDetailViewModel));
+           // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(cardDetailViewModel));
         }
 
         public async Task getlist()

@@ -52,3 +52,50 @@ public class ApiResponse_Card
 {
     public ScannedCardDetails Result { get; set; }
 }
+
+public class BuyListPriceResponse
+{
+    public decimal buylist { get; set; }
+    public decimal SiteCredit { get; set; }
+    [JsonConverter(typeof(EvaluationConverter))]
+    public bool evaluation { get; set; }
+}
+
+public class cardDetailRequest
+{
+    public int ?idMetaproduct { get; set; }
+    public int ?idCategory { get; set; }
+    public int ?language { get; set; }
+    public string ?sku { get; set; }
+    public int ?condition { get; set; }
+    public bool ?IsFirstEdition { get; set; }
+   // public bool IsReverse { get; set; }
+    //public string IsFoil { get; set; }
+    public string? IsFoil { get; set; }
+
+
+      
+}
+
+public class EvaluationConverter : JsonConverter<bool>
+{
+    public override bool Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        if (reader.TokenType == JsonTokenType.String)
+        {
+            var value = reader.GetString();
+            return value?.ToLower() == "true";  // Convert "true" string to boolean true
+        }
+        else if (reader.TokenType == JsonTokenType.True || reader.TokenType == JsonTokenType.False)
+        {
+            return reader.GetBoolean();
+        }
+
+        throw new JsonException("Unexpected token type for Evaluation");
+    }
+
+    public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options)
+    {
+        writer.WriteBooleanValue(value);
+    }
+}

@@ -86,7 +86,8 @@
            
             <!-- CarouselView to display banner images -->
             <Grid HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="300" HeightRequest="200">
-                <CarouselView x:Name="carouselView" ItemsSource="{Binding Banners}" HorizontalScrollBarVisibility="Never" Loop="False">
+                    <Label Text="{Binding Banners.Count}" ></Label>
+                    <CarouselView x:Name="carouselView" ItemsSource="{Binding Banners}" HorizontalScrollBarVisibility="Never" Loop="False" >
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
                             <Frame BackgroundColor="Transparent" Padding="0" Margin="10" BorderColor="Gray" HasShadow="True">
@@ -100,9 +101,12 @@
                                        HorizontalOptions="Center" 
                                        VerticalOptions="Center" 
                                        Grid.Row="0" Margin="5"/>
-                            </Frame>
+                                    
+                                </Frame>
+                            
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
+                    
                 </CarouselView>
 
                 <!-- Previous and Next Buttons -->

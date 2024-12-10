@@ -23,7 +23,7 @@ namespace CardGameCorner.Models
         public decimal MinPrice { get; set; }
         public decimal MaxPrice { get; set; }
 
-
+        public string SetCode { get; set; }
         private bool _isFavorite;
 
         public bool IsFavorite

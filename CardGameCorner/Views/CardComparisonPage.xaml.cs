@@ -31,6 +31,8 @@ public partial class CardComparisonPage : ContentPage
        
        scannedimage.Source = ComparisonData.ScannedImage;
        searchimage.Source = ComparisonData.SearchResultImage;
+       searchimage1.Source = ComparisonData.SearchResultImage;
+       searchimage2.Source = ComparisonData.SearchResultImage;
        
      
 

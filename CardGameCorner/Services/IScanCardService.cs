@@ -16,5 +16,6 @@ namespace CardGameCorner.Services
 
         Task<List<CardSearchResponseViewModel>> SearchCardAsync(CardSearchRequest cardRequest);
         //Task<List<Product1>> SearchCardAsync(CardSearchRequest cardRequest);
+        Task<BuyListPriceResponse> FetchBuyListPriceAsync(cardDetailRequest request);
     }
 }
