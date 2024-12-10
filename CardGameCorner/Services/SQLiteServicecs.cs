@@ -25,7 +25,7 @@ public class SQLiteService
         else
         {
             // If the table exists, check if the new column is already added
-            bool columnExists = tableInfo.Any(t => t.Name == "UserName");
+            bool columnExists = tableInfo.Any(t => t.Name == "Username");
 
             if (!columnExists)
             {

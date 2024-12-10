@@ -34,12 +34,7 @@ public partial class CardComparisonPage : ContentPage
         searchimage1.Source = ComparisonData.SearchResultImage;
         searchimage2.Source = ComparisonData.SearchResultImage;
 
-
-
-
     }
-
-
 
     protected override void OnDisappearing()
     {

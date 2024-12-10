@@ -64,6 +64,8 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private string successmsg;
 
+        [ObservableProperty]
+        private string gameImageUrl;
 
 
         //public CardComparisonViewModel()
@@ -93,6 +95,7 @@ namespace CardGameCorner.ViewModels
         {
             // Initialize with current language
             UpdateLocalizedStrings();
+            UpdateGameImage();
 
             // Subscribe to language change events
             GlobalSettings.PropertyChanged += OnGlobalSettingsPropertyChanged;
@@ -106,6 +109,29 @@ namespace CardGameCorner.ViewModels
             {
                 // Update localized strings when language changes
                 UpdateLocalizedStrings();
+                UpdateGameImage();
+            }
+        }
+
+        private void UpdateGameImage()
+        {
+            switch (GlobalSettings.SelectedGame)
+            {
+                case "pokemon":
+                    GameImageUrl = "https://api.magiccorner.it/12/public/assets/app/pokemon/pokemon.png";
+                    break;
+                case "onepiece":
+                    GameImageUrl = "https://api.magiccorner.it/12/public/assets/app/onepiece/onepiece.png";
+                    break;
+                case "magic":
+                    GameImageUrl = "https://api.magiccorner.it/12/public/assets/app/magic/magic.png";
+                    break;
+                case "yugioh":
+                    GameImageUrl = "https://api.magiccorner.it/12/public/assets/app/yugioh/yugioh.png";
+                    break;
+                default:
+                    GameImageUrl = "banner.jpg";
+                    break;
             }
         }
 

@@ -256,6 +256,7 @@ namespace CardGameCorner.ViewModels
                 //OnPropertyChanged(nameof(LoginText));
             });
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
