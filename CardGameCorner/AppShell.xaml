@@ -1,61 +1,3 @@
-<!--<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:views="clr-namespace:CardGameCorner.Views"
-       x:Class="CardGameCorner.AppShell"
-       Shell.FlyoutBehavior="Disabled"
-       BackgroundColor="#1B3B48">
-
-    <Shell.ToolbarItems>
-        <ToolbarItem x:Name="SettingsToolbarItem"
-                 IconImageSource="settings_icon.png" 
-                 Text="Settings" 
-                 Clicked="OnSettingsClicked" />
-    </Shell.ToolbarItems>
-
-    <TabBar>
-
-        <ShellContent
-         Title="Home"
-         Icon="bxhomealt"
-         ContentTemplate="{DataTemplate views:GameDetailsPage}"
-         Route="GameDetailsPage" />
-
-        <ShellContent
-        Title="Search"
-        Icon="bxsearchalt.svg"
-        ContentTemplate="{DataTemplate views:SearchPage }"
-        Route="SearchPage" />
-
-        <ShellContent
-        Title="Scan"
-        Icon="bxqrscan.svg"
-        ContentTemplate="{DataTemplate views:ScanPage }"
-        Route="ScanPage" />
-
-        <ShellContent x:Name="MyAccountTab"
-        Title="My Account"
-        Icon="bxuser.svg"
-        ContentTemplate="{DataTemplate views:MyAccountPage }"
-        Route="MyAccountPage" />
-
-        <ShellContent
-        Title="My List"
-        Icon="bxlistul.svg"
-        ContentTemplate="{DataTemplate views:MyListPage }"
-        Route="MyListPage" />
-
-    </TabBar>
-
-    <ShellContent
-        ContentTemplate="{DataTemplate views:LoginPage}"
-        Route="login" />
-
-    <ShellContent Route="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
-    
-    <ShellContent Route="HomePage" ContentTemplate="{DataTemplate views:HomePage}" />
-
-</Shell>-->
-
 
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -106,7 +48,7 @@
 
     </TabBar>
 
-    <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" Route="login" />
+    <!--<ShellContent ContentTemplate="{DataTemplate views:LoginPage}" Route="login" />
 
     <ShellContent Route="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
 
@@ -114,7 +56,16 @@
 
     <ShellContent Route="CardDetailPage" ContentTemplate="{DataTemplate views:CardDetailPage}" />
 
-    <ShellContent Route="SearchQueryPage" ContentTemplate="{DataTemplate views:SearchQueryPage}" />
-    
+    <ShellContent Route="SearchQueryPage" ContentTemplate="{DataTemplate views:SearchQueryPage}" />-->
+    <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" Route="login" />
+
+    <ShellContent Title="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
+
+    <ShellContent Route="HomePage" ContentTemplate="{DataTemplate views:HomePage}" />
+
+    <ShellContent Title="CardDetailPage" ContentTemplate="{DataTemplate views:CardDetailPage}" />
+
+    <ShellContent Title="SearchQueryPage" ContentTemplate="{DataTemplate views:SearchQueryPage}" />
+
 </Shell>
 

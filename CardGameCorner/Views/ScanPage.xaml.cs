@@ -312,19 +312,19 @@ namespace CardGameCorner.Views
 
                         var cardRequest = new CardSearchRequest
                         {
-                            Title = apiResponse.Result.Title,
-                            Set = apiResponse.Result.Set,
-                            Game = GlobalSettings.SelectedGame,
-                            Lang = apiResponse.Result.Lang,
-                            Foil = apiResponse.Result.Foil,
-                            FirstEdition = 0
+                            //Title = apiResponse.Result.Title,
+                            //Set = apiResponse.Result.Set,
+                            //Game = GlobalSettings.SelectedGame,
+                            //Lang = apiResponse.Result.Lang,
+                            //Foil = apiResponse.Result.Foil,
+                            //FirstEdition = 0
 
-                            //Title = "Angel of Mercy",//apiResponse.Result.Title,
-                            //Set = "IMA",//apiResponse.Result.Set,
-                            //Game = "magic",//"pokemon",
-                            //Lang = "en",//apiResponse.Result.Lang,
-                            //Foil = 0,//apiResponse.Result.Foil,
-                            //FirstEdition = 0// 0
+                            Title = "Angel of Mercy",//apiResponse.Result.Title,
+                            Set = "IMA",//apiResponse.Result.Set,
+                            Game = "magic",//"pokemon",
+                            Lang = "en",//apiResponse.Result.Lang,
+                            Foil = 0,//apiResponse.Result.Foil,
+                            FirstEdition = 0// 0
 
 
                         };
@@ -337,7 +337,7 @@ namespace CardGameCorner.Views
                         }
                         else
                         {
-                            await DisplayAlert("Error", "Something Went Wrong", "OK");
+                            await DisplayAlert("Error","Card Not Found", "OK");
                         }
 
 

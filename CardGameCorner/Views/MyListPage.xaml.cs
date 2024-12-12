@@ -212,6 +212,13 @@ namespace CardGameCorner.Views
                     if (_viewModel.CardItems == null || !_viewModel.CardItems.Any())
                     {
                         await _alertService.ShowAlertAsync("Info", "Your list is empty. Add items to see them here.");
+                        _viewModel.listvisibility = true;
+                        _viewModel.listvisibilitycards = false;
+                    }
+                    else
+                    {
+                        _viewModel.listvisibilitycards = true;
+                        _viewModel.listvisibility = false;
                     }
                 }
                 catch (Exception ex)
