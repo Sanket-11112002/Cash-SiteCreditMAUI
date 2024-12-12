@@ -22,17 +22,7 @@ public class SQLiteService
             // If the table doesn't exist, create it
             await _database.CreateTableAsync<ProductList>();
         }
-        else
-        {
-            // If the table exists, check if the new column is already added
-            bool columnExists = tableInfo.Any(t => t.Name == "UserName");
-
-            if (!columnExists)
-            {
-                // If the new column doesn't exist, perform migration
-                await MigrateDatabaseAsync();
-            }
-        }
+       
     }
 
     // Perform the database migration

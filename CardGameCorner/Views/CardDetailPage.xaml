@@ -1,7 +1,20 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.CardDetailPage"
-             NavigationPage.HasNavigationBar="False">
+              Title="{Binding CardDetails}"
+             >
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding GoBackCommand}">
+            <BackButtonBehavior.TextOverride>
+                <OnPlatform x:TypeArguments="x:String">
+                    <OnPlatform.Platforms>
+                        <On Platform="android" Value="Go Back" />
+                    </OnPlatform.Platforms>
+                </OnPlatform>
+            </BackButtonBehavior.TextOverride>
+        </BackButtonBehavior>
+    </Shell.BackButtonBehavior>
+
     <Grid RowDefinitions="Auto,*">
         <!-- Header Section -->
         <Grid Grid.Row="0" Padding="20,10" ColumnDefinitions="Auto,*,Auto">
@@ -33,7 +46,8 @@
                 <CarouselView ItemsSource="{Binding Cards}" 
                               CurrentItem="{Binding SelectedCard}" 
                               HorizontalScrollBarVisibility="Never" 
-                              Loop="False">
+                              Loop="False"
+                              IndicatorView="cardIndicator">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
                             <VerticalStackLayout>
@@ -46,17 +60,17 @@
                     </CarouselView.ItemTemplate>
 
                     <!-- IndicatorView for Carousel -->
-                    <CarouselView.IndicatorView>
-                        <IndicatorView x:Name="cardIndicator"
-                                       ItemsSource="{Binding Cards}"
-                                       IndicatorColor="yellow"
-                                       SelectedIndicatorColor="White"
-                                       HorizontalOptions="Center"
-                                       Margin="0,5,0,0"/>
-                    </CarouselView.IndicatorView>
+
+
+
                 </CarouselView>
 
-
+                <IndicatorView x:Name="cardIndicator"
+                 ItemsSource="{Binding Cards}"
+                 IndicatorColor="yellow"
+                 SelectedIndicatorColor="White"
+                 HorizontalOptions="Center"
+                 Margin="0,5,0,0"/>
 
                 <!-- Card Details (Name, Category, etc.) -->
                 <VerticalStackLayout Spacing="15">

@@ -106,7 +106,7 @@
 
     </TabBar>
 
-    <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" Route="login" />
+    <!--<ShellContent ContentTemplate="{DataTemplate views:LoginPage}" Route="login" />
 
     <ShellContent Route="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
 
@@ -114,7 +114,16 @@
 
     <ShellContent Route="CardDetailPage" ContentTemplate="{DataTemplate views:CardDetailPage}" />
 
-    <ShellContent Route="SearchQueryPage" ContentTemplate="{DataTemplate views:SearchQueryPage}" />
-    
+    <ShellContent Route="SearchQueryPage" ContentTemplate="{DataTemplate views:SearchQueryPage}" />-->
+    <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" Route="login" />
+
+    <ShellContent Title="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
+
+    <ShellContent Title="HomePage" ContentTemplate="{DataTemplate views:HomePage}" />
+
+    <ShellContent Title="CardDetailPage" ContentTemplate="{DataTemplate views:CardDetailPage}" />
+
+    <ShellContent Title="SearchQueryPage" ContentTemplate="{DataTemplate views:SearchQueryPage}" />
+
 </Shell>
 

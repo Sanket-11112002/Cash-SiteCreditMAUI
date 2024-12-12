@@ -20,7 +20,28 @@ namespace CardGameCorner.ViewModels {
         private readonly IScanCardService scanCardService;
         private ICommand _navigateToCardDetailCommand;
         private ICommand _deleteCardCommand;
+        private bool _listvisibility;
+        private bool _listvisibilitycards;
 
+
+        public bool listvisibility
+        {
+            get => _listvisibility;
+            set
+            {
+                _listvisibility = value;
+                OnPropertyChanged();
+            }
+        }
+        public bool listvisibilitycards
+        {
+            get => _listvisibilitycards;
+            set
+            {
+                _listvisibilitycards = value;
+                OnPropertyChanged();
+            }
+        }
         public ICommand NavigateToCardDetailCommand
         {
             get => _navigateToCardDetailCommand;
@@ -76,7 +97,13 @@ namespace CardGameCorner.ViewModels {
 
             //   await Shell.Current.GoToAsync(nameof(CardDetailPage), navigationParameter);
 
-            await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
+            // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
+
+            var detailsJson = JsonConvert.SerializeObject(details);  // Ensure you have 'Newtonsoft.Json' or other serializer for this
+
+
+            // Navigate using GoToAsync with the serialized data as a query parameter
+            await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
         }
 
         public async Task getlist()

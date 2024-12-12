@@ -5,6 +5,7 @@ using CardGameCorner.ViewModels;
 
 using CardGameCorner.Services;
 using Microsoft.Maui.Controls;
+using Newtonsoft.Json;
 
 
 namespace CardGameCorner.Views;
@@ -17,10 +18,6 @@ public partial class SearchQueryPage : ContentPage
 		InitializeComponent();
 
 	}
-
-
-       
-
 
  
     private async void OnUploadButtonClicked(object sender, EventArgs e)
@@ -153,9 +150,18 @@ public partial class SearchQueryPage : ContentPage
                             Console.WriteLine("No variants found for product.");
                         }
                     }
-                     await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(detailslst));
+                // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(detailslst));
+                // Serialize the details list to a string
+                    var detailsJson = JsonConvert.SerializeObject(detailslst);  // Ensure you have 'Newtonsoft.Json' or other serializer for this
+
+                
+                    // Navigate using GoToAsync with the serialized data as a query parameter
+                    await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
+
+                //  await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailslst)}");
+              //  viewModel.OnUploadButtonClicked(detailslst);
             }
-                else
+            else
                 {
                     await DisplayAlert("Error", "No products found.", "OK");
                 }

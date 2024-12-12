@@ -387,7 +387,9 @@ public partial class MyAccountPage : ContentPage
         else
         {
             // Ensure the ViewModel is properly initialized with user details
-            await _viewModel.InitializeAsync();
+            var data=await _viewModel.InitializeAsync();
+            _viewModel.UserProfile = data;
+            InitializeComponent();
             BindingContext = _viewModel;
         }
     }

@@ -2,8 +2,9 @@
 using CardGameCorner.Models;
 using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
+using CardGameCorner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
-
+using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -374,8 +375,10 @@ namespace CardGameCorner.ViewModels
         public async void ExecuteGoBack()
         {
             //  await Application.Current.MainPage.Navigation.PopAsync();
-            await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
-            await Shell.Current.GoToAsync("//SearchPage");
+            //  await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
+              //await Shell.Current.GoToAsync(nameof(SearchQueryPage));
+            await Shell.Current.GoToAsync("..", true);
+            // await Shell.Current.Navigation.PopAsync();
 
         }
 
@@ -384,8 +387,9 @@ namespace CardGameCorner.ViewModels
             try
             {
                 // Reset navigation stack to ScanPage
-                await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
-                await Shell.Current.GoToAsync("//MyListPage"); // Navigate to ScanPage tab
+               // await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
+                await Shell.Current.GoToAsync("//MyListPage");
+               // await Shell.Current.GoToAsync(nameof(CardDetailPage));// Navigate to ScanPage tab
             }
             catch (Exception ex)
             {
@@ -543,5 +547,20 @@ namespace CardGameCorner.ViewModels
                 OnPropertyChanged(propertyName);
             }
         }
+
+
+        public async void OnUploadButtonClicked(List<CardDetailViewModel> lst)
+        {
+
+            var detailsJson = JsonConvert.SerializeObject(lst);  // Ensure you have 'Newtonsoft.Json' or other serializer for this
+
+
+            // Navigate using GoToAsync with the serialized data as a query parameter
+              await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
+
+        }
+
+
     }
+
 }

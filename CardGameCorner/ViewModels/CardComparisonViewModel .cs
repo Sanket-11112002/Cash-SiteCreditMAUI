@@ -271,6 +271,7 @@ namespace CardGameCorner.ViewModels
 
 
         //                await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
+                           
 
 
 
@@ -347,16 +348,27 @@ namespace CardGameCorner.ViewModels
                             detaillst.Add(details);
 
 
-                            string detailsJson = JsonConvert.SerializeObject(details);
+                            string detailsJson = JsonConvert.SerializeObject(detaillst);
 
                             // Store the serialized string in SecureStorage
                             await SecureStorage.SetAsync("CardDetailsObject", detailsJson);
-                           
+
                             // Navigate to the CardDetailsPage for each product
-                           // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
+                            // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
+                                    
+
+
+                            // Navigate using GoToAsync with the serialized data as a query parameter
+                            await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
                         }
                     }
-                    await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(detaillst));
+
+                    var detailsJsoncarddetails = JsonConvert.SerializeObject(detaillst);  // Ensure you have 'Newtonsoft.Json' or other serializer for this
+
+
+                    // Navigate using GoToAsync with the serialized data as a query parameter
+                    await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJsoncarddetails)}");
+                    // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(detaillst));
 
 
                     // Show success confirmation

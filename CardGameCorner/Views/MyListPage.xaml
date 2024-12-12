@@ -7,10 +7,19 @@
     <ContentPage.BindingContext>
         <vm:MyListViewModel />
     </ContentPage.BindingContext>
+
     <ScrollView>
         <VerticalStackLayout>
+            <Label Text="No items available."
+           HorizontalOptions="Center"
+           VerticalOptions="Center"
+           IsVisible="{Binding listvisibility}" />
+            
             <ListView ItemsSource="{Binding CardItems}" HasUnevenRows="True">
-                <ListView.ItemTemplate>
+
+                <!-- EmptyView for empty ListView -->
+
+                <ListView.ItemTemplate IsVisible="{Binding listvisibilitycards}">
                     <DataTemplate>
                         <ViewCell>
                             <Grid Padding="16" ColumnDefinitions="*, *, *, *,*" 
@@ -40,7 +49,6 @@
                                 <StackLayout Grid.Column="2" Grid.RowSpan="2" Orientation="Vertical" HorizontalOptions="Center" Spacing="5">
                                     <!-- Language and Condition Section -->
                                     <StackLayout Orientation="Vertical"  HorizontalOptions="Center">
-                                       
                                         <Image x:Name="Lngflag" 
                                                HeightRequest="20" 
                                                WidthRequest="30" />
@@ -51,7 +59,7 @@
                                                    TextColor="White" 
                                                    Padding="5,2" 
                                                    FontSize="10" 
-                                                   HorizontalTextAlignment="Center" />  
+                                                   HorizontalTextAlignment="Center" />
                                         </Frame>
                                     </StackLayout>
 
@@ -61,16 +69,14 @@
                                         <Label Text="{Binding Edition}"
                                                FontSize="12" 
                                                TextColor="#5DADE2" 
-                                               HorizontalTextAlignment="Center" />                  
+                                               HorizontalTextAlignment="Center" />
                                         <!-- Rarity -->
                                         <Frame CornerRadius="2" HasShadow="False"  Padding="2,2"  BackgroundColor="DodgerBlue">
                                             <Label Text="{Binding Rarity}" 
                                              TextColor="White" 
-                                            
                                              FontSize="10" 
-                                             HorizontalTextAlignment="Center" />                
+                                             HorizontalTextAlignment="Center" />
                                         </Frame>
-                                      
                                     </StackLayout>
                                 </StackLayout>
 
@@ -81,7 +87,6 @@
                                                TextColor="LightGreen" 
                                                FontAttributes="Bold" 
                                                HorizontalTextAlignment="Center" />
-                                    <!-- Binding Value -->
                                     <Label Text="{Binding Buylist , StringFormat='{0:C}'}" 
                                                    FontSize="12" 
                                                    TextColor="White" 
@@ -92,20 +97,19 @@
                                                TextColor="LightGreen"
                                                FontAttributes="Bold"
                                                HorizontalTextAlignment="Center" />
-                                    <!-- Binding Value -->
                                     <Label Text="{Binding Sitecredit}" 
                                                    FontSize="12" 
                                                    TextColor="White" 
                                                    HorizontalTextAlignment="Center" />
                                 </StackLayout>
 
-                            <StackLayout Grid.Column="4" Grid.Row="0" Orientation="Vertical" HorizontalOptions="End" Spacing="5">
+                                <!-- Quantity and Actions (Column 4) -->
+                                <StackLayout Grid.Column="4" Grid.Row="0" Orientation="Vertical" HorizontalOptions="End" Spacing="5">
                                     <Label Text="Quantity"
                                            FontSize="12"
                                            TextColor="LightGreen"
                                            FontAttributes="Bold"
-                                           HorizontalTextAlignment="Center" />      
-                                    <!-- Binding Value -->
+                                           HorizontalTextAlignment="Center" />
                                     <Label Text="{Binding Quantity}" 
                                            FontSize="12" 
                                            TextColor="White" 
@@ -126,7 +130,7 @@
                                       TextColor="White" 
                                       BackgroundColor="Red" 
                                       CornerRadius="5" 
-                                      Padding="5,2" />              
+                                      Padding="5,2" />
                                 </StackLayout>
                             </Grid>
                         </ViewCell>

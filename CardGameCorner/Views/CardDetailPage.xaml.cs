@@ -10,32 +10,99 @@ using Newtonsoft.Json.Linq;
 using ISecureStorage = CardGameCorner.Services.ISecureStorage;
 namespace CardGameCorner.Views;
 
+[QueryProperty(nameof(Details), "details")]
 public partial class CardDetailPage : ContentPage
 {
     private readonly ISecureStorage secureStorage;
 
-    int count = 0;
-    public CardDetailPage(List<CardDetailViewModel> viewmodel)
-    {
+        private string _details;
 
-        InitializeComponent();
-        //BindingContext = viewmodel;
-
-        foreach (var i in viewmodel)
+        public string Details
         {
-            if (i.Id != 0 && i.Id != null)
+            get => _details;
+            set
             {
-                BtnText.Text = "Update to my list";
-            }
+                _details = Uri.UnescapeDataString(value);
+                var viewModelList = JsonConvert.DeserializeObject<List<CardDetailViewModel>>(_details);
 
+                if (viewModelList != null)
+                {
+                    // Check for conditions and update UI
+                    foreach (var item in viewModelList)
+                    {
+                        if (item.Id != 0)
+                        {
+                            BtnText.Text = "Update to my list";
+                            break;
+                        }
+                    }
+
+                    // Bind the ViewModel as required
+                    BindingContext = new CardDetailViewModel
+                    {
+                        Cards = new ObservableCollection<CardDetailViewModel>(viewModelList),
+                        SelectedCard = viewModelList.FirstOrDefault()
+                    };
+                }
+            }
         }
-        // Bind a wrapping ViewModel containing the card collection
-        BindingContext = new CardDetailViewModel
+
+        public CardDetailPage()
         {
-            Cards = new ObservableCollection<CardDetailViewModel>(viewmodel),
-            SelectedCard = viewmodel.FirstOrDefault() // Default to the first card
-        };
-    }
+            InitializeComponent();
+        }
+       
+        
+    //public CardDetailPage()
+    //{
+
+    //    //InitializeComponent();
+    //    InitializeComponent();
+    //    var detailsJson = this.GetQueryParameter("details");
+    //    if (!string.IsNullOrEmpty(detailsJson))
+    //    {
+    //        var lst = JsonConvert.DeserializeObject<List<CardDetailViewModel>>(detailsJson);
+    //        // Use 'lst' as needed
+    //    }
+    //    //BindingContext = viewmodel;
+
+    //    foreach (var i in viewmodel)
+    //    {
+    //        if (i.Id != 0 && i.Id != null)
+    //        {
+    //            BtnText.Text = "Update to my list";
+    //        }
+
+    //    }
+    //    // Bind a wrapping ViewModel containing the card collection
+    //    BindingContext = new CardDetailViewModel
+    //    {
+    //        Cards = new ObservableCollection<CardDetailViewModel>(viewmodel),
+    //        SelectedCard = viewmodel.FirstOrDefault() // Default to the first card
+    //    };
+
+    //    try
+    //    {
+    //        var navigation = Shell.Current?.Navigation;
+    //        if (navigation != null && navigation.NavigationStack != null)
+    //        {
+    //            var stack = navigation.NavigationStack;
+    //            foreach (var page in stack)
+    //            {
+    //                Console.WriteLine(page.GetType().Name);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            Console.WriteLine("Navigation or NavigationStack is null.");
+    //        }
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        Console.WriteLine($"Error logging navigation stack: {e.Message}");
+    //    }
+
+    //}
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
@@ -79,7 +146,7 @@ public partial class CardDetailPage : ContentPage
                     var detaillst = new List<CardDetailViewModel>();
                     detaillst.Add(details);
                     // User chose to continue without login
-                      await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(detaillst));
+                     // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(detaillst));
                     return;
                 }
             }
@@ -255,6 +322,7 @@ public partial class CardDetailPage : ContentPage
             }
         }
     }
+   
 
-
+    
 }

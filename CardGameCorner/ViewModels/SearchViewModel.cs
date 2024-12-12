@@ -349,6 +349,7 @@ namespace CardGameCorner.ViewModels
 
 
         public ICommand ToggleFavoriteCommand { get; }
+        public ICommand OnUploadButtonClickedCommand { get; }
         public SearchViewModel()
         {
             // Initialize with current language
@@ -364,6 +365,7 @@ namespace CardGameCorner.ViewModels
             OpenProductUrlCommand = new Command<string>(async (url) => await OpenProductUrl(url));
             SearchCommand = new Command(async () => await LoadDataAsync(SearchQuery));
             ToggleFavoriteCommand = new Command<Product>(ToggleFavorite);
+            //OnUploadButtonClickedCommand = new Command<CardDetailViewModel>(OnUploadButtonClick);
             // Load initial data
             MainThread.BeginInvokeOnMainThread(async () =>
             {
@@ -372,6 +374,12 @@ namespace CardGameCorner.ViewModels
 
 
         }
+
+        public void OnUploadButtonClicked(List<CardDetailViewModel> list)
+        {
+            
+        }
+
 
              private void ToggleFavorite(Product product)
         {
