@@ -319,14 +319,12 @@ namespace CardGameCorner.ViewModels
                 if (_siteCredit != value)
                 {
                     _siteCredit = value;
-                    //  UpdateConditions(); // Update the conditions when language changes
+                    //  UpdateConditions();
                      OnPropertyChanged();
                 }
             }
         }
 
-        // This method is called when the SelectedLanguage changes.
-        // It updates the Conditions based on the selected language.
         public void UpdateConditions()
         {
             if (SelectedLanguage == "Italiano")

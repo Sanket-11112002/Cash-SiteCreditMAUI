@@ -55,7 +55,7 @@
                     HeightRequest="50"/>
             </HorizontalStackLayout>
 
-            <!-- Sign Up Button (Styled Same as Login Button) -->
+           
             <Button Text="{Binding SignUpButtonText}"
                     Command="{Binding NavigateToRegistrationCommand}"
                     BackgroundColor="#3B92A0"
@@ -64,14 +64,13 @@
                     WidthRequest="200"     
                     HeightRequest="50"/>
 
-            <!-- Forgot Password Toggle Button -->
+           
             <Button Text="{Binding ForgotPasswordText}"
                     Command="{Binding ToggleForgotPasswordCommand}"
                     HorizontalOptions="Center"
                     TextColor="LightGray"
                     BackgroundColor="Transparent"/>
 
-                    <!-- Forgot Password Popup (Visible When Toggled) -->
               <Frame  IsVisible="{Binding ShowForgotPassword}"
                    BackgroundColor="White"
                    Padding="20"
