@@ -1,5 +1,4 @@
-﻿
-using CardGameCorner.Models;
+﻿using CardGameCorner.Models;
 using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
 using CardGameCorner.Views;
@@ -57,6 +56,11 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private string email;
 
+        // Add new commands for social login
+        public ICommand FacebookLoginCommand { get; }
+        public ICommand GoogleLoginCommand { get; }
+
+        
         public LoginViewModel(IAuthService authService, ISecureStorage secureStorage, IServiceProvider serviceProvider)
         {
             _authService = authService;
@@ -75,6 +79,7 @@ namespace CardGameCorner.ViewModels
             ToggleForgotPasswordCommand = new Command(ToggleForgotPassword);
             ShowForgotPasswordCommand = new RelayCommand(() => ShowForgotPassword = true);
             NavigateToRegistrationCommand = new AsyncRelayCommand(NavigateToRegistrationPage);
+
         }
 
         private void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -285,6 +290,7 @@ namespace CardGameCorner.ViewModels
             await Shell.Current.GoToAsync(nameof(RegistrationPage));
         }
     }
+    
 }
 
 //namespace CardGameCorner.ViewModels

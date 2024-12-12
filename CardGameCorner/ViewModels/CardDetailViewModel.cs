@@ -339,9 +339,9 @@ namespace CardGameCorner.ViewModels
             }
             else
             {
-                Conditions = new List<string>(); // Default empty list if language is not selected
+                Conditions = new List<string>(); 
             }
-            OnPropertyChanged(nameof(Conditions)); // Notify UI that Conditions has been updated
+            OnPropertyChanged(nameof(Conditions)); 
         }
 
         public bool IsFirstEdition
@@ -353,7 +353,7 @@ namespace CardGameCorner.ViewModels
                 {
                     _isFirstEdition = value;
                     OnPropertyChanged();
-                    FetchPricesAsync(); // Call the API when First Edition toggle is changed
+                    FetchPricesAsync(); 
                 }
             }
         }

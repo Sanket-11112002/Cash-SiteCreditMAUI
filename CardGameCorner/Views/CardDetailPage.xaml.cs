@@ -252,6 +252,4 @@ public partial class CardDetailPage : ContentPage
             }
         }
     }
-
-
 }
