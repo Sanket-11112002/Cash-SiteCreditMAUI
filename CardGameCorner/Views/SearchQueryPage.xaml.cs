@@ -116,7 +116,7 @@ public partial class SearchQueryPage : ContentPage
                         var distinctLanguages = variants.Select(v => v.Language).Distinct().ToList();
                         var distinctConditions = variants.Select(v => v.Condition).Distinct().ToList();
 
-                            Console.WriteLine("Languages:");
+                           Console.WriteLine("Languages:");
                             foreach (var lang in distinctLanguages)
                             {
                                 Console.WriteLine(lang);

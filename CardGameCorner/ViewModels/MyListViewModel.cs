@@ -84,7 +84,7 @@ namespace CardGameCorner.ViewModels {
                  Languages = selectedCard.Languages,
                 Conditions = selectedCard.Conditions,
                 SelectedLanguage = selectedCard.Language,
-                SelectedCondition = selectedCard.Condition,
+                selectedCondition = selectedCard.Condition,
               //  Buylist = selectedCard.Buylist?? 0,
                 Quantity = selectedCard.Quantity ?? 0,
             };
@@ -159,12 +159,13 @@ namespace CardGameCorner.ViewModels {
                         Buylist = item.Buylist ?? 0,
                         Quantity = item.Quantity ?? 0,
                         Languageflag = "italianlng.svg",
-                        Languages = !string.IsNullOrEmpty(item.Languagejsonlst)
-                            ? JsonConvert.DeserializeObject<List<string>>(item.Languagejsonlst)
-                            : new List<string>(),
+                                        Languages = !string.IsNullOrEmpty(item.Languagejsonlst)
+                    ? new HashSet<string>(JsonConvert.DeserializeObject<List<string>>(item.Languagejsonlst)).ToList()
+                    : new List<string>(),
+
                         Conditions = !string.IsNullOrEmpty(item.Conditionjsonlst)
-                            ? JsonConvert.DeserializeObject<List<string>>(item.Conditionjsonlst)
-                            : new List<string>(),
+    ? new HashSet<string>(JsonConvert.DeserializeObject<List<string>>(item.Conditionjsonlst)).ToList()
+    : new List<string>(),
                     };
 
                     CardItems.Add(card);

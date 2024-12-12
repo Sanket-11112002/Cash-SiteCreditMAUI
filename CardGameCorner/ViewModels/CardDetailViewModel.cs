@@ -65,8 +65,8 @@ namespace CardGameCorner.ViewModels
 
 
 
-        [ObservableProperty]
-        public string selectedCondition;
+        //[ObservableProperty]
+        //public string selectedCondition;
 
         public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
 
@@ -129,6 +129,7 @@ namespace CardGameCorner.ViewModels
         public string successAddedToListTitle;
 
         private string _selectedLanguage;
+        private string _selectedCondition;
         private bool _isFoil;
         private bool _isFirstEdition;
         private bool _isReverse;
@@ -141,7 +142,7 @@ namespace CardGameCorner.ViewModels
 
         [ObservableProperty]
         public string errorAddProductTitle;
-        private ObservableCollection<CardDetailViewModel> _cards;
+        private ObservableCollection<CardDetailViewModel> ?_cards;
         private CardDetailViewModel _selectedCard;
 
         public ObservableCollection<CardDetailViewModel> Cards
@@ -261,7 +262,25 @@ namespace CardGameCorner.ViewModels
                 {
                     _selectedLanguage = value;
 
-                    UpdateConditions(); // Update the conditions when language changes
+                    UpdateConditions();
+                    // Update the conditions when language changes
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
+        public string selectedCondition
+        {
+            get => _selectedCondition;
+            set
+            {
+                if (_selectedCondition != value)
+                {
+                    _selectedCondition = value;
+
+                   // UpdateConditions();
+                    FetchPricesAsync();
                     OnPropertyChanged();
                 }
             }
@@ -298,19 +317,19 @@ namespace CardGameCorner.ViewModels
         // It updates the Conditions based on the selected language.
         public void UpdateConditions()
         {
-            if (SelectedLanguage == "Italiano")
-            {
-                Conditions = new List<string> { "NM", "HP" };
-            }
-            else if (SelectedLanguage == "English")
-            {
-                Conditions = new List<string> { "NM" };
-            }
-            else
-            {
-                Conditions = new List<string>(); // Default empty list if language is not selected
-            }
-            OnPropertyChanged(nameof(Conditions)); // Notify UI that Conditions has been updated
+            //if (SelectedLanguage == "Italiano")
+            //{
+            //    Conditions = new List<string> { "NM", "HP" };
+            //}
+            //else if (SelectedLanguage == "English")
+            //{
+            //    Conditions = new List<string> { "NM" };
+            //}
+            //else
+            //{
+            //    Conditions = new List<string>(); // Default empty list if language is not selected
+            //}
+            //OnPropertyChanged(nameof(Conditions)); // Notify UI that Conditions has been updated
         }
 
         public bool IsFirstEdition

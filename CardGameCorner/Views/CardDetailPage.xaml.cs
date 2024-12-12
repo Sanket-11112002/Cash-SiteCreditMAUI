@@ -24,13 +24,17 @@ public partial class CardDetailPage : ContentPage
             {
                 _details = Uri.UnescapeDataString(value);
                 var viewModelList = JsonConvert.DeserializeObject<List<CardDetailViewModel>>(_details);
+                  
 
                 if (viewModelList != null)
                 {
+
                     // Check for conditions and update UI
                     foreach (var item in viewModelList)
                     {
-                        if (item.Id != 0)
+                    item.Languages = item.Languages?.Distinct().ToList();
+                    item.Conditions = item.Conditions?.Distinct().ToList();
+                    if (item.Id != 0)
                         {
                             BtnText.Text = "Update to my list";
                             break;
@@ -40,6 +44,7 @@ public partial class CardDetailPage : ContentPage
                     // Bind the ViewModel as required
                     BindingContext = new CardDetailViewModel
                     {
+
                         Cards = new ObservableCollection<CardDetailViewModel>(viewModelList),
                         SelectedCard = viewModelList.FirstOrDefault()
                     };
@@ -184,7 +189,7 @@ public partial class CardDetailPage : ContentPage
                         Buylist = selectedCard.buyList,
                         Quantity = selectedCard.Quantity,
                         Language = selectedCard.SelectedLanguage,
-                        Condition = selectedCard.SelectedCondition,
+                        Condition = selectedCard.selectedCondition,
                         Languagejsonlst = JsonConvert.SerializeObject(selectedCard.Languages),
                         Conditionjsonlst = JsonConvert.SerializeObject(selectedCard.Conditions),
                         Username = DecodeJwtAndGetUsername(await SecureStorage.GetAsync("jwt_token")),

@@ -21,7 +21,7 @@ namespace CardGameCorner.ViewModels
     {
         private readonly ISecureStorage secureStorage;
       
-        private ObservableCollection<Card> _cards;
+        private ObservableCollection<Card>? _cards;
         private ObservableCollection<Banner1> _banners;
         public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
 

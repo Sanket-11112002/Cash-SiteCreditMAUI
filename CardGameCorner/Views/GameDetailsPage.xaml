@@ -91,11 +91,9 @@
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
                             <Frame BackgroundColor="Transparent" Padding="0" Margin="10" BorderColor="Gray" HasShadow="True">
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OpenProductUrlCommand}" CommandParameter="{Binding Url}" />
-                                </Frame.GestureRecognizers>
+                               
                                 <Image Source="{Binding Image}" 
-                                       Aspect="AspectFit" 
+                                       Aspect="AspectFill" 
                                        HeightRequest="100" 
                                        WidthRequest="100" 
                                        HorizontalOptions="Center" 
