@@ -1,11 +1,7 @@
 ﻿using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 using CardGameCorner.Views;
-using Microsoft.Maui.Controls;
-using System;
-using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
-using System.Threading.Tasks;
 using ISecureStorage = CardGameCorner.Services.ISecureStorage;
 
 namespace CardGameCorner
@@ -98,7 +94,7 @@ namespace CardGameCorner
                 else
                 {
                     App.IsUserLoggedIn = false;
-                    jwtTokenUser = string.Empty; 
+                    jwtTokenUser = string.Empty;
                 }
 
                 GlobalSettings.SelectedGame = lastSelectedGame;
@@ -110,9 +106,7 @@ namespace CardGameCorner
                 }
                 else
                 {
-                    
                     await GoToAsync("//HomePage");
-
                 }
             }
             catch (Exception ex)
@@ -135,7 +129,7 @@ namespace CardGameCorner
             }
             catch
             {
-                return true; // If decoding fails, consider the token expired
+                return true; 
             }
         }
 

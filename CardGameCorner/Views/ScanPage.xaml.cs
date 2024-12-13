@@ -215,7 +215,6 @@ namespace CardGameCorner.Views
                                     //Foil = 0,//apiResponse.Result.Foil,
                                     //FirstEdition = 0// 0
 
-
                                 };
 
                                 var data = await viewModel.SearchCardAsync(cardRequest, ImageSource.FromStream(() => new MemoryStream(displayStream.ToArray())));
@@ -226,7 +225,7 @@ namespace CardGameCorner.Views
                                 }
                                 else
                                 {
-                                    await DisplayAlert("Error","Something Went Wrong",  "OK");
+                                    await DisplayAlert("Error", "Card Not Found",  "OK");
                                 }
                                
 
@@ -236,16 +235,9 @@ namespace CardGameCorner.Views
                                 await DisplayAlert("Error", "Card Not Found", "OK");
                                 viewModel.IsLoading = false;
                             }
-
-                        
-
-                            // Deserialize the response into ApiResponse_Card
-
                         }
 
                         // Prepare the card search request
-                        
-
                     }
                 }
                 
@@ -360,7 +352,6 @@ namespace CardGameCorner.Views
             }
         }
 
-        
 
 
         //private async Task UploadImageToApi(Stream imageStream)
