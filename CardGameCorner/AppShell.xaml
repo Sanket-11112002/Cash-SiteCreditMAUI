@@ -10,7 +10,7 @@
     <Shell.ToolbarItems>
         <ToolbarItem x:Name="SettingsToolbarItem"
                  IconImageSource="settings_icon.png" 
-                 Text="{Binding SettingsToolbarItemText, Mode=OneWay}" 
+                 Text="{Binding SettingsToolbarItemText, Mode=OneWay}"
                  Clicked="OnSettingsClicked" />
     </Shell.ToolbarItems>
 
@@ -57,6 +57,7 @@
     <ShellContent Route="CardDetailPage" ContentTemplate="{DataTemplate views:CardDetailPage}" />
 
     <ShellContent Route="SearchQueryPage" ContentTemplate="{DataTemplate views:SearchQueryPage}" />-->
+    
     <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" Route="login" />
 
     <ShellContent Title="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
