@@ -10,14 +10,13 @@
                    HeightRequest="100"
                    HorizontalOptions="Center"/>
 
-                <!-- Username and Password Fields -->
                 <VerticalStackLayout Spacing="5">
                     <Entry Text="{Binding Username}"
                         Placeholder="{Binding UsernamePlaceholder}"
                        PlaceholderColor="LightGray"
                        TextColor="White"
                        BackgroundColor="#2A4B5D"
-                       Keyboard="Email" />
+                       Keyboard="Email"/>
 
                     <Entry Text="{Binding Password}"
                        Placeholder="{Binding PasswordPlaceholder}"
@@ -34,10 +33,29 @@
                     HorizontalOptions="Center"
                     BackgroundColor="#3B92A0"
                     TextColor="White"
-                    WidthRequest="200"       
-                    HeightRequest="50"/> 
+                    WidthRequest="200"
+                    HeightRequest="50"/>
 
-                <!-- Sign Up Button (Styled Same as Login Button) -->
+            <!-- Social Login Section -->
+            <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
+                <!-- Facebook Login Button -->
+                <Button Text="Login with Facebook"
+                    Command="{Binding FacebookLoginCommand}"
+                    BackgroundColor="#1877F2"
+                    TextColor="White"
+                    WidthRequest="200"
+                    HeightRequest="50" />
+
+                <!-- Google Login Button -->
+                <Button Text="Login with Google"
+                    Command="{Binding GoogleLoginCommand}"
+                    BackgroundColor="#DB4437"
+                    TextColor="White"
+                    WidthRequest="200"
+                    HeightRequest="50"/>
+            </HorizontalStackLayout>
+
+           
             <Button Text="{Binding SignUpButtonText}"
                     Command="{Binding NavigateToRegistrationCommand}"
                     BackgroundColor="#3B92A0"
@@ -46,14 +64,13 @@
                     WidthRequest="200"     
                     HeightRequest="50"/>
 
-            <!-- Forgot Password Toggle Button -->
+           
             <Button Text="{Binding ForgotPasswordText}"
                     Command="{Binding ToggleForgotPasswordCommand}"
                     HorizontalOptions="Center"
                     TextColor="LightGray"
                     BackgroundColor="Transparent"/>
 
-                    <!-- Forgot Password Popup (Visible When Toggled) -->
               <Frame  IsVisible="{Binding ShowForgotPassword}"
                    BackgroundColor="White"
                    Padding="20"
@@ -64,13 +81,13 @@
                         <VerticalStackLayout Spacing="15">
                          <Label Text="{Binding ForgotPasswordEmailLabel}"
                            TextColor="#1B3B48"/>
-                            <!-- Dark text on white background -->
+                           
                             <Entry Text="{Binding ForgotPasswordEmail}"
                            Placeholder="{Binding Email}"
                            PlaceholderColor="Gray"
                            TextColor="#1B3B48"
                            Keyboard="Email"
-                           BackgroundColor="#E0E0E0" />
+                           BackgroundColor="#E0E0E0"/>
                     <Button Text="{Binding SendResetLinkText}"
                             Command="{Binding ForgotPasswordCommand}"
                             BackgroundColor="#3B92A0"

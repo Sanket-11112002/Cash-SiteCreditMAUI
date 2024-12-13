@@ -63,18 +63,18 @@ public class BuyListPriceResponse
 
 public class cardDetailRequest
 {
-    public int ?idMetaproduct { get; set; }
-    public int ?idCategory { get; set; }
-    public int ?language { get; set; }
-    public string ?sku { get; set; }
-    public int ?condition { get; set; }
-    public bool ?IsFirstEdition { get; set; }
-   // public bool IsReverse { get; set; }
+    public int? idMetaproduct { get; set; }
+    public int? idCategory { get; set; }
+    public int? language { get; set; }
+    public string? sku { get; set; }
+    public int? condition { get; set; }
+    public bool? IsFirstEdition { get; set; }
+    // public bool IsReverse { get; set; }
     //public string IsFoil { get; set; }
     public string? IsFoil { get; set; }
 
 
-      
+
 }
 
 public class EvaluationConverter : JsonConverter<bool>

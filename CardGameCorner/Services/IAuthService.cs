@@ -1,4 +1,5 @@
 ﻿using CardGameCorner.Models;
+using CardGameCorner.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace CardGameCorner.Services
     {
         Task<LoginResponse> LoginAsync(LoginRequest request);
         Task RequestPasswordReset(string email);
+       
     }
 }

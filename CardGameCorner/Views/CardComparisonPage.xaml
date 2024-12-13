@@ -9,10 +9,10 @@
         <Grid RowDefinitions="Auto,*,Auto"
          Padding="20">
 
-            <!-- Pokemon Logo -->
+            <!-- Logo -->
             <Image Grid.Row="0"
-              Source="pokemon_logo.png"
-              HeightRequest="50"
+              Source="{Binding GameImageUrl}"
+              HeightRequest="90"
               HorizontalOptions="Center"
               Margin="0,10,0,20"/>
 

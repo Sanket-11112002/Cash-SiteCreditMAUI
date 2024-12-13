@@ -4,10 +4,16 @@
              x:Class="CardGameCorner.Views.GameDetailsPage"
              xmlns:local="clr-namespace:CardGameCorner.ViewModels"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:conv="clr-namespace:CardGameCorner.Resources.Converters"
             
              BackgroundColor="#1B3B48">
 
     <ContentPage.Resources>
+        <ResourceDictionary>
+        <!-- Add the converter -->
+        <conv:StringToImageSourceConverter x:Key="StringToImageSourceConverter"/>
+        </ResourceDictionary>
+
         <DataTemplate x:Key="ImageTemplate">
             <Image Source="{Binding .}" Aspect="AspectFit" />
         </DataTemplate>
@@ -82,47 +88,62 @@
     </ContentPage.Resources>
     <Grid>
         <ScrollView x:Name="MainContentScrollView">
-        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="20">
-               
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="20">
                 <!-- CarouselView to display banner images -->
-            <Grid HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="300" HeightRequest="200">
-                    <Label Text="{Binding Banners.Count}" ></Label>
-                    <CarouselView x:Name="carouselView" ItemsSource="{Binding Banners}" HorizontalScrollBarVisibility="Never" Loop="False" >
-                    <CarouselView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame BackgroundColor="Transparent" Padding="0" Margin="10" BorderColor="Gray" HasShadow="True">
-                               
-                                <Image Source="{Binding Image}" 
-                                       Aspect="AspectFill" 
-                                       HeightRequest="100" 
-                                       WidthRequest="100" 
-                                       HorizontalOptions="Center" 
-                                       VerticalOptions="Center" 
-                                       Grid.Row="0" Margin="5"/>
-                                    
+                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Center" 
+                                              HeightRequest="240" 
+                                              WidthRequest="400">
+                    <CarouselView x:Name="carouselView" 
+                                  ItemsSource="{Binding Banners}" 
+                                  HorizontalScrollBarVisibility="Never"
+                                  Loop="False"
+                                  IsBounceEnabled="True"
+                                  IsSwipeEnabled="True">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BackgroundColor="Transparent" Padding="0" Margin="10" BorderColor="Gray" HasShadow="True" CornerRadius="15">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OpenProductUrlCommand}" 
+                                          CommandParameter="{Binding Url}" />
+                                    </Frame.GestureRecognizers>
+                                    <Image Source="{Binding ImageUrl, Converter={StaticResource StringToImageSourceConverter}}" 
+                                           HeightRequest="250" 
+                                           WidthRequest="370" 
+                                           HorizontalOptions="Center" 
+                                           VerticalOptions="Center"/>
                                 </Frame>
-                            
-                        </DataTemplate>
-                    </CarouselView.ItemTemplate>
-                    
-                </CarouselView>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
 
-                <!-- Previous and Next Buttons -->
-                <Button ImageSource="left.png" Style="{StaticResource NavigationButtonStyle}" VerticalOptions="Center" HorizontalOptions="Start" Margin="0,0,10,0"  />
-                <Button ImageSource="next.png" Style="{StaticResource NavigationButtonStyle}" VerticalOptions="Center" HorizontalOptions="End" Margin="10,0,0,0"  />
-            </Grid>
+                    <!-- Previous and Next Buttons -->
+                    <Button ImageSource="left.png" 
+                            Style="{StaticResource NavigationButtonStyle}" 
+                            VerticalOptions="Center" 
+                            HorizontalOptions="Start" 
+                            Margin="0,0,10,0"
+                            Clicked="OnPreviousClicked"/>
+
+                    <Button ImageSource="next.png" 
+                            Style="{StaticResource NavigationButtonStyle}" 
+                            VerticalOptions="Center" 
+                            HorizontalOptions="End" 
+                            Margin="10,0,0,0"
+                            Clicked="OnNextClicked"/>       
+                </Grid>
 
                 <AbsoluteLayout HorizontalOptions="FillAndExpand" HeightRequest="100">
                     <Image Source="{Binding HomeBestDealsImage}" Aspect="AspectFill" AbsoluteLayout.LayoutBounds="0.5, 0.5, 1, 1" AbsoluteLayout.LayoutFlags="All" />
                     <Label Text="{Binding BestDeals}" TextColor="White" FontSize="24" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.5, 0.5, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional" />
                 </AbsoluteLayout>
                 <CollectionView ItemsSource="{Binding Cards}" ItemTemplate="{StaticResource CardTemplate}">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10" HorizontalItemSpacing="10" />
-                </CollectionView.ItemsLayout>
-            </CollectionView>
-        </VerticalStackLayout>
-    </ScrollView>
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10" HorizontalItemSpacing="10" />
+                        </CollectionView.ItemsLayout>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+        
         <Grid x:Name="loaderOverlay"
               IsVisible="False"
               BackgroundColor="#801B3B48"

@@ -48,17 +48,21 @@
                                 <!-- Combined Language, Condition, Edition, and Rarity (Column 2) -->
                                 <StackLayout Grid.Column="2" Grid.RowSpan="2" Orientation="Vertical" HorizontalOptions="Center" Spacing="5">
                                     <!-- Language and Condition Section -->
-                                    <StackLayout Orientation="Vertical"  HorizontalOptions="Center">
+                                    <StackLayout Orientation="Horizontal"  HorizontalOptions="Center">
                                         <Image x:Name="Lngflag" 
                                                HeightRequest="20" 
-                                               WidthRequest="30" />
-                                        <Label Text="{Binding Language}" FontSize="14" TextColor="White" BackgroundColor="black"/>
+                                               WidthRequest="40"
+                                               Margin="10,0,0,0" 
+                                               Source="{Binding Languageflag}"/>
+                                       
                                         <!-- Condition -->
-                                        <Frame BackgroundColor="LightGreen" Padding="2,2" CornerRadius="2" HasShadow="False">
+                                        <Frame BackgroundColor="LightGreen" Padding="2,2" CornerRadius="3" HasShadow="False">
                                             <Label Text="{Binding Condition}" 
                                                    TextColor="White" 
                                                    Padding="5,2" 
                                                    FontSize="10" 
+                                                   HeightRequest="10" 
+                                                   WidthRequest="30"
                                                    HorizontalTextAlignment="Center" />
                                         </Frame>
                                     </StackLayout>
@@ -72,7 +76,7 @@
                                                HorizontalTextAlignment="Center" />
                                         <!-- Rarity -->
                                         <Frame CornerRadius="2" HasShadow="False"  Padding="2,2"  BackgroundColor="DodgerBlue">
-                                            <Label Text="{Binding Rarity}" 
+                                            <Label Text="{Binding Rarity}"
                                              TextColor="White" 
                                              FontSize="10" 
                                              HorizontalTextAlignment="Center" />

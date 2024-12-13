@@ -162,8 +162,17 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         public string errorRetrieveProductTitle;
 
+        [ObservableProperty]
+        private string gameImageUrl;
+
         public CardDetailViewModel()
         {
+            UpdateLocalizedStrings();
+            UpdateGameImage();
+
+            // Subscribe to language change events
+            GlobalSettings.PropertyChanged += OnGlobalSettingsPropertyChanged;
+
             var scanserivc = new ScanCardService();
             _service = scanserivc;
 
@@ -189,6 +198,29 @@ namespace CardGameCorner.ViewModels
                 // Update localized strings when language changes
                 UpdateLocalizedStrings();
                 InitializeLocalizedErrorMessages();
+                UpdateGameImage();
+            }
+        }
+
+        private void UpdateGameImage()
+        {
+            switch (GlobalSettings.SelectedGame)
+            {
+                case "pokemon":
+                    GameImageUrl = "https://api.magiccorner.it/12/public/assets/app/pokemon/pokemon.png";
+                    break;
+                case "onepiece":
+                    GameImageUrl = "https://api.magiccorner.it/12/public/assets/app/onepiece/onepiece.png";
+                    break;
+                case "magic":
+                    GameImageUrl = "https://api.magiccorner.it/12/public/assets/app/magic/magic.png";
+                    break;
+                case "yugioh":
+                    GameImageUrl = "https://api.magiccorner.it/12/public/assets/app/yugioh/yugioh.png";
+                    break;
+                default:
+                    GameImageUrl = "banner.jpg";
+                    break;
             }
         }
         private void InitializeLocalizedErrorMessages()
@@ -307,14 +339,12 @@ namespace CardGameCorner.ViewModels
                 if (_siteCredit != value)
                 {
                     _siteCredit = value;
-                    //  UpdateConditions(); // Update the conditions when language changes
+                    //  UpdateConditions();
                      OnPropertyChanged();
                 }
             }
         }
 
-        // This method is called when the SelectedLanguage changes.
-        // It updates the Conditions based on the selected language.
         public void UpdateConditions()
         {
             //if (SelectedLanguage == "Italiano")
@@ -341,7 +371,7 @@ namespace CardGameCorner.ViewModels
                 {
                     _isFirstEdition = value;
                     OnPropertyChanged();
-                    FetchPricesAsync(); // Call the API when First Edition toggle is changed
+                    FetchPricesAsync(); 
                 }
             }
         }
@@ -544,10 +574,6 @@ namespace CardGameCorner.ViewModels
                 Console.WriteLine("No result returned from FetchBuyListPriceAsync.");
             }
         }
-
-
-
-
 
         // Implementing INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

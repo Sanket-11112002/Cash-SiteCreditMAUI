@@ -184,10 +184,10 @@ namespace CardGameCorner.Views
             {
                  //_viewModel.CardItems = null;
                 bool result = await _alertService.ShowConfirmationAsync(
-                    "Login Required",
-                    "You need to log in to access this page. Would you like to log in?",
-                    "Login",
-                    "Continue");
+                     _viewModel.LoginRequiredTitle,
+                     _viewModel.LoginRequiredMessage,
+                     _viewModel.LoginText,
+                     _viewModel.ContinueText);
 
                 if (result)
                 {

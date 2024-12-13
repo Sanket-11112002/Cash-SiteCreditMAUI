@@ -34,7 +34,6 @@ public partial class SearchQueryPage : ContentPage
             SetLoadingState(false);
             return;
         }
-            // Get the ImageButton that was clicked
             var imageButton = sender as ImageButton;
             if (imageButton == null)
             {
@@ -43,7 +42,6 @@ public partial class SearchQueryPage : ContentPage
                 return;
             }
 
-            // Retrieve the Card object bound to the ImageButton via CommandParameter
             var selectedCard = imageButton?.CommandParameter as Product;
             if (selectedCard == null)
             {
@@ -71,14 +69,11 @@ public partial class SearchQueryPage : ContentPage
                 return;
             }
 
-            // Proceed with image compression or upload if necessary
             Console.WriteLine("Image downloaded successfully!");
-
-          
 
             var compressedImageStream = await viewModel.CompressImageAsync(new MemoryStream(imageBytes), 100 * 1024);
 
-            // Clone the compressed stream for upload
+           
             var uploadStream = new MemoryStream();
             compressedImageStream.Position = 0;
             await compressedImageStream.CopyToAsync(uploadStream);
@@ -93,11 +88,11 @@ public partial class SearchQueryPage : ContentPage
                 var cardRequest = new CardSearchRequest
                 {
                     Title = selectedCard.Model,
-                    Set = selectedCard.SetCode, // Assuming the card has a `Set` property
-                    Game = selectedCard.Game, // Assuming the card has a `Game` property
-                    Lang = "en", // You can use a language property if needed
-                    Foil = 0, // Assuming you don't need foil info
-                    FirstEdition = 0 // Assuming you don't need first edition info
+                    Set = selectedCard.SetCode,
+                    Game = selectedCard.Game, 
+                    Lang = "en", 
+                    Foil = 0, 
+                    FirstEdition = 0 
                 };
 
                 // Search for the card based on the uploaded image

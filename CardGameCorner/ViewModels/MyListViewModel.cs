@@ -1,21 +1,42 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics.Metrics;
+using System.Net;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 using CardGameCorner.Models;
+using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
 using CardGameCorner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using static Microsoft.Maui.ApplicationModel.Permissions;
+
 
 
 
 namespace CardGameCorner.ViewModels {
-    public class MyListViewModel : ObservableObject
+    public partial class MyListViewModel : ObservableObject
     {
         // Observable collection to hold card items
         public ObservableCollection<ProductListViewModel> CardItems { get; set; } = new ObservableCollection<ProductListViewModel>();
+
+        public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
+
+        [ObservableProperty]
+        private string loginRequiredTitle;
+
+        [ObservableProperty]
+        private string loginRequiredMessage;
+
+        [ObservableProperty]
+        private string loginText;
+
+        [ObservableProperty]
+        private string continueText;
 
         private readonly IScanCardService scanCardService;
         private ICommand _navigateToCardDetailCommand;
@@ -55,10 +76,47 @@ namespace CardGameCorner.ViewModels {
 
         public MyListViewModel()
         {
+            UpdateLocalizedStrings();
+
+            // Subscribe to language change events
+            GlobalSettings.PropertyChanged += OnGlobalSettingsPropertyChanged;
+
             CardItems = new ObservableCollection<ProductListViewModel>();
             NavigateToCardDetailCommand = new Command<ProductListViewModel>(NavigateToCardDetail);
             DeleteCardCommand = new Command<ProductListViewModel>(DeleteCard);
             getlist(); // Get the card data asynchronously
+        }
+
+        private void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(GlobalSettings.SelectedLanguage))
+            {
+                // Update localized strings when language changes
+                UpdateLocalizedStrings();
+            }
+        }
+
+        private void UpdateLocalizedStrings()
+        {
+            // Ensure these are called on the main thread
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                LoginRequiredTitle = AppResources.LoginRequiredTitle;
+                LoginRequiredMessage = AppResources.LoginRequiredMessage;
+                LoginText = AppResources.Login;
+                ContinueText = AppResources.Continue;
+
+                OnPropertyChanged(nameof(LoginRequiredTitle));
+                OnPropertyChanged(nameof(LoginRequiredMessage));
+                //OnPropertyChanged(nameof(ContinueText));
+                //OnPropertyChanged(nameof(LoginText));
+            });
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         // Method to handle navigation to card details
@@ -158,7 +216,8 @@ namespace CardGameCorner.ViewModels {
                         Condition = item.Condition ?? string.Empty,
                         Buylist = item.Buylist ?? 0,
                         Quantity = item.Quantity ?? 0,
-                        Languageflag = "italianlng.svg",
+                        Languageflag = "italianlngimage.png",
+                      
                                         Languages = !string.IsNullOrEmpty(item.Languagejsonlst)
                     ? new HashSet<string>(JsonConvert.DeserializeObject<List<string>>(item.Languagejsonlst)).ToList()
                     : new List<string>(),

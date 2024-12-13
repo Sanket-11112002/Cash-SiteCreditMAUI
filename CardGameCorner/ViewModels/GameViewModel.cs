@@ -1,15 +1,10 @@
 ﻿using CardGameCorner.Models;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Windows.Input;
-using System.Reflection;
 using CardGameCorner.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using ISecureStorage = CardGameCorner.Services.ISecureStorage;
@@ -85,13 +80,14 @@ namespace CardGameCorner.ViewModels
                 OnPropertyChanged();
             }
         }
+
         public ObservableCollection<Banner1> Banners
         {
             get => _banners;
             set
             {
                 _banners = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(Banners));
             }
         }
         private string _homeBestDealsImage;
@@ -150,17 +146,19 @@ namespace CardGameCorner.ViewModels
                     var banners = gameDetails.Banners.Select(banner => new Banner1
                     {
                         Title = banner.Title,
-                       //
-                       Image = ImageSource.FromUri(new Uri(banner.Image)),
-                      // Image=banner.Image,
+                        ImageUrl = banner.Image.StartsWith("http")
+                                  ? banner.Image
+                                  : $"https://www.cardgamecorner.com{banner.Image}",
                         Url = banner.Url
                     });
                     Banners = new ObservableCollection<Banner1>(banners);
 
+                    // After populating Banners
                     foreach (var banner in Banners)
                     {
-                        Debug.WriteLine($"Title: {banner.Title}, Image: {banner.Image}, Url: {banner.Url}");
+                        Debug.WriteLine($"Banner - Title: {banner.Title}, Image URL: {banner.ImageUrl}, Url: {banner.Url}");
                     }
+
                     Debug.WriteLine(GlobalSettings.SelectedGame);
 
                     var selectedgamecode = GlobalSettings.SelectedGame;

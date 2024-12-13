@@ -16,9 +16,15 @@
     </Shell.BackButtonBehavior>
 
     <Grid RowDefinitions="Auto,*">
-        <!-- Header Section -->
-        <Grid Grid.Row="0" Padding="20,10" ColumnDefinitions="Auto,*,Auto">
-            <!-- Back Button -->
+        
+       <Image Grid.Row="0"
+       Source="{Binding GameImageUrl}"
+       HeightRequest="90"
+       HorizontalOptions="Center"
+       Margin="0,0,0,0"/>
+        
+        <Grid Grid.Row="0" Padding="5,5" ColumnDefinitions="Auto,*,Auto">
+           
             <Button Grid.Column="0"
                     Text="Back"
                     TextColor="White"
@@ -28,7 +34,7 @@
                     Margin="0"
                     Command="{Binding GoBackCommand}"/>
 
-            <!-- Done Button -->
+            
             <Button Grid.Column="2"
                     Text="Done"
                     TextColor="White"
@@ -50,12 +56,19 @@
                               IndicatorView="cardIndicator">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
-                            <VerticalStackLayout>
-                                <!-- Card Image -->
-                                <Image Source="{Binding ImageUrl}" 
-                                       Aspect="AspectFit" 
-                                       Margin="10"/>
-                            </VerticalStackLayout>
+                            <Grid Margin="10,0,0,0">
+                                <Frame BackgroundColor="Transparent" 
+                           BorderColor="White" 
+                           CornerRadius="10" 
+                           HasShadow="True" 
+                           Padding="10">
+                                    <Image Source="{Binding ImageUrl}" 
+                               Aspect="AspectFit" 
+                               HeightRequest="300"
+                               WidthRequest="250"
+                               HorizontalOptions="Center"/>
+                                </Frame>
+                            </Grid>
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
 
