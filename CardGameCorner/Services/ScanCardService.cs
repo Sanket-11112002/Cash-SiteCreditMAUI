@@ -206,29 +206,34 @@ namespace CardGameCorner.Services
             string game = "pokemon";
             string apiKey = "0d66cf7894c3ed46592332829e6d467b";
             string url = $"https://api2.magic-sorter.com/image/{game}?mess_detector=0&upside=0&foil=0&lang=en&set_type=2&set[]=&api_key={apiKey}";
+            try {
+                var response = await httpClient.PostAsync(url, multipartContent);
+                var responseContent = await response.Content.ReadAsStringAsync();
 
-            var response = await httpClient.PostAsync(url, multipartContent);
-            var responseContent = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
 
-            if (response.IsSuccessStatusCode)
-            {
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    Console.WriteLine($"Upload successful: {responseContent}");
 
-                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                Console.WriteLine($"Upload successful: {responseContent}");
+                    // Deserialize the response into ApiResponse_Card
 
-                // Deserialize the response into ApiResponse_Card
-              
-                var apiResponse = JsonSerializer.Deserialize<ApiResponse_Card>(responseContent, options);
-                Console.WriteLine($"Card Title: {apiResponse.Result.Title}");
+                    var apiResponse = JsonSerializer.Deserialize<ApiResponse_Card>(responseContent, options);
+                    Console.WriteLine($"Card Title: {apiResponse.Result.Title}");
 
-                return JsonSerializer.Deserialize<ApiResponse_Card>(responseContent, options);
+                    return JsonSerializer.Deserialize<ApiResponse_Card>(responseContent, options);
 
+                }
+                else
+                {
+                    //throw new Exception($"Upload failed with status code: {response.StatusCode}");
+                    return null;
+                }
             }
-            else
-            {
-                //throw new Exception($"Upload failed with status code: {response.StatusCode}");
+            catch (Exception e) {
                 return null;
-            }
+            }  
+            
         }
 
 

@@ -436,8 +436,8 @@ namespace CardGameCorner.ViewModels
             try
             {
                 // Reset navigation stack to ScanPage
-               // await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
-                await Shell.Current.GoToAsync("//MyListPage");
+                await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
+               // await Shell.Current.GoToAsync("//MyListPage");
                // await Shell.Current.GoToAsync(nameof(CardDetailPage));// Navigate to ScanPage tab
             }
             catch (Exception ex)

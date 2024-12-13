@@ -68,7 +68,7 @@ using System.Runtime.CompilerServices;
 
 namespace CardGameCorner.ViewModels
 {
-    public partial class ScanCardViewModel :BaseViewModel, INotifyPropertyChanged
+    public partial class ScanCardViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly IScanCardService _scanCardService;
 
@@ -89,7 +89,7 @@ namespace CardGameCorner.ViewModels
         public ScanCardViewModel(IScanCardService scanCardService)
         {
             UpdateLocalizedStrings();
-            
+
             GlobalSettings.PropertyChanged += OnGlobalSettingsPropertyChanged;
             _scanCardService = scanCardService;
         }
@@ -105,12 +105,12 @@ namespace CardGameCorner.ViewModels
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                CaptureImage = AppResources.Capture_Image; 
-                UploadImage = AppResources.Upload_Image; 
-                
+                CaptureImage = AppResources.Capture_Image;
+                UploadImage = AppResources.Upload_Image;
+
                 OnPropertyChanged(nameof(CaptureImage));
                 OnPropertyChanged(nameof(UploadImage));
-                
+
             });
         }
 
@@ -142,7 +142,7 @@ namespace CardGameCorner.ViewModels
 
                 var cardSearchRequest = new CardSearchRequest
                 {
-                    
+
                 };
 
                 var comparisonData = await SearchCardAsync(cardSearchRequest, CapturedImage);
@@ -169,17 +169,18 @@ namespace CardGameCorner.ViewModels
             }
         }
 
-        public async Task<MemoryStream> CompressImageAsync(Stream inputStream, long maxSize)
+         public async Task<MemoryStream> CompressImageAsync(Stream inputStream, long maxSize)
         {
             try
             {
-                IsLoading = true;
                 using var skiaImage = SKBitmap.Decode(inputStream);
                 if (skiaImage == null)
                     throw new Exception("Failed to decode the input image.");
 
-                var width = 800;
+                // Determine max width based on device capabilities
+                var width = Math.Min(800, skiaImage.Width);
                 var height = (int)((float)skiaImage.Height * width / skiaImage.Width);
+
                 var resizedImage = skiaImage.Resize(new SKImageInfo(width, height), SKFilterQuality.Medium);
 
                 if (resizedImage == null)
@@ -201,7 +202,7 @@ namespace CardGameCorner.ViewModels
 
                     quality -= 5;
                     compressedStream.Dispose();
-                } while (quality > 0);
+                } while (quality > 10);
 
                 compressedStream.Position = 0;
                 return compressedStream;
@@ -234,7 +235,7 @@ namespace CardGameCorner.ViewModels
                             comparisonData.Initialize(cardSearchResponseViewModel, imageSource);
 
                             IsLoading = false;
-                            return comparisonData; 
+                            return comparisonData;
                         }
                     }
 

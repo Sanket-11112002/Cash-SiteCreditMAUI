@@ -21,7 +21,8 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>CardGameCorner</ApplicationTitle>
+		<ApplicationTitle>Game Corner</ApplicationTitle>
+		
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.cardgamecorner</ApplicationId>
@@ -47,10 +48,23 @@
 	  <MtouchLink>SdkOnly</MtouchLink>
 	</PropertyGroup>
 
+	
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android33.0|AnyCPU'">
+		<AndroidPackageFormat>apk</AndroidPackageFormat>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<SingleAssembly>Flase</SingleAssembly>
+		<AssemblyOriginatorKeyFile>netcode</AssemblyOriginatorKeyFile>
+		<Description>Card Game Corner</Description>
+		<Copyright>Copyright@2024</Copyright>
+		<PackageIcon>splashscreenlogo.png</PackageIcon>
+	</PropertyGroup>
+	
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
-
+		
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#1B3B48" BaseSize="128,128" />
 

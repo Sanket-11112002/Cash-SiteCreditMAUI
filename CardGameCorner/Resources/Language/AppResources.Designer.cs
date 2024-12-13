@@ -763,7 +763,7 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to La tua immagine.
+        ///   Looks up a localized string similar to Your Picture.
         /// </summary>
         internal static string Your_Picture {
             get {

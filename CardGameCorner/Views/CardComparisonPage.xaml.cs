@@ -30,9 +30,9 @@ public partial class CardComparisonPage : ContentPage
         BindingContext = ComparisonData;
 
         scannedimage.Source = ComparisonData.ScannedImage;
-        searchimage.Source = ComparisonData.SearchResultImage;
-        searchimage1.Source = ComparisonData.SearchResultImage;
-        searchimage2.Source = ComparisonData.SearchResultImage;
+      //searchimage.Source = ComparisonData.SearchResultImage;
+       //earchimage1.Source = ComparisonData.SearchResultImage;
+      //searchimage2.Source = ComparisonData.SearchResultImage;
 
     }
 

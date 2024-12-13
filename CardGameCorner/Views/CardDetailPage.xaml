@@ -49,9 +49,9 @@
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Spacing="20" Padding="20">
                 <!-- CarouselView for Cards -->
-                <CarouselView ItemsSource="{Binding Cards}" 
-                              CurrentItem="{Binding SelectedCard}" 
-                              HorizontalScrollBarVisibility="Never" 
+                <CarouselView ItemsSource="{Binding Cards}"
+                              CurrentItem="{Binding SelectedCard}"
+                              HorizontalScrollBarVisibility="Never"
                               Loop="False"
                               IndicatorView="cardIndicator">
                     <CarouselView.ItemTemplate>

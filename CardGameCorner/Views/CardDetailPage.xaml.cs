@@ -217,7 +217,7 @@ public partial class CardDetailPage : ContentPage
                     }
                     viewModel.ExecuteDone();
 
-                    await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
+                    await Shell.Current.Navigation.PopToRootAsync(); 
 
                   
                 }
