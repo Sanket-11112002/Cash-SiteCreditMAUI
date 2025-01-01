@@ -38,7 +38,7 @@ namespace CardGameCorner.Services
                     // Clear existing headers
                     _httpClient.DefaultRequestHeaders.Authorization = null;
 
-                   
+
 
                     // Set the authorization header with the exact format
                     _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");

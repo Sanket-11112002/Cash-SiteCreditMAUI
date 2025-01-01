@@ -27,6 +27,64 @@ namespace CardGameCorner
 
             // Determine initial navigation
             Loaded += OnShellLoaded;
+            this.Navigating += AppShell_Navigating;
+        }
+
+        private void AppShell_Navigating(object sender, ShellNavigatingEventArgs e)
+        {
+            var currentRoute = e.Current?.Location?.OriginalString;
+            var targetRoute = e.Target?.Location?.OriginalString;
+
+            // Handle settings toolbar visibility
+            if (targetRoute != null)
+            {
+                if (targetRoute.Contains("CardDetailPage", StringComparison.OrdinalIgnoreCase))
+                {
+                    HideSettingsToolbarItem();
+                }
+                else
+                {
+                    ShowSettingsToolbarItem();
+                }
+            }
+
+            if (currentRoute != null && targetRoute != null)
+            {
+                // Check if we're switching between any of the main tabs
+                var mainTabs = new[] {
+                "GameDetailsPage",
+                "SearchPage",
+                "ScanPage",
+                "MyAccountPage",
+                "MyListPage"
+            };
+
+                // Get current and target tab names
+                string currentTab = mainTabs.FirstOrDefault(tab =>
+                    currentRoute.Contains(tab, StringComparison.OrdinalIgnoreCase));
+                string targetTab = mainTabs.FirstOrDefault(tab =>
+                    targetRoute.Contains(tab, StringComparison.OrdinalIgnoreCase));
+
+                // If we're switching between tabs (not within the same tab)
+                if (currentTab != null && targetTab != null && currentTab != targetTab)
+                {
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        try
+                        {
+                            var navigation = Shell.Current.CurrentPage.Navigation;
+                            while (navigation.NavigationStack.Count > 1)
+                            {
+                                navigation.RemovePage(navigation.NavigationStack[1]);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Navigation error: {ex.Message}");
+                        }
+                    });
+                }
+            }
         }
 
         private async void OnShellLoaded(object sender, EventArgs e)
@@ -96,18 +154,30 @@ namespace CardGameCorner
                     App.IsUserLoggedIn = false;
                     jwtTokenUser = string.Empty;
                 }
-
+                
                 GlobalSettings.SelectedGame = lastSelectedGame;
                 GlobalSettings.SelectedLanguage = lastSelectedlang;
+                try
+                {
+                    if (!string.IsNullOrEmpty(lastSelectedGame))
+                    {
+                        Console.WriteLine("Navigating to GameDetailsPage");
+                        await Shell.Current.GoToAsync("//GameDetailsPage", true);
+                    }
+                    else
+                    {
+                        await GoToAsync("//HomePage");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error during navigation: {ex.Message}");
+                }
+                //if (!string.IsNullOrEmpty(lastSelectedGame))
+                //{
+                //    await GoToAsync("GameDetailsPage");
+                //}
 
-                if (!string.IsNullOrEmpty(lastSelectedGame))
-                {
-                    await GoToAsync("//GameDetailsPage");
-                }
-                else
-                {
-                    await GoToAsync("//HomePage");
-                }
             }
             catch (Exception ex)
             {
@@ -129,7 +199,7 @@ namespace CardGameCorner
             }
             catch
             {
-                return true; 
+                return true;
             }
         }
 
@@ -147,7 +217,7 @@ namespace CardGameCorner
         private async Task<string> GetLastSelectedLangAsync()
         {
             // Use secure storage to get the last selected game
-            return await _secureStorage.GetAsync("LastSelectedLang") ?? string.Empty;
+            return await _secureStorage.GetAsync("LastSelectedLang") ?? "English";
         }
         //private void RegisterRoutes()
         //{
@@ -178,6 +248,8 @@ namespace CardGameCorner
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
             Routing.RegisterRoute(nameof(RegistrationPage), typeof(RegistrationPage));
             Routing.RegisterRoute(nameof(SearchQueryPage), typeof(SearchQueryPage));
+            Routing.RegisterRoute(nameof(PlaceOrderPage), typeof(PlaceOrderPage));
+            Routing.RegisterRoute(nameof(MyOrdersPage), typeof(MyOrdersPage));
         }
 
         protected override void OnNavigatedTo(NavigatedToEventArgs args)
@@ -202,7 +274,7 @@ namespace CardGameCorner
                     //await Shell.Current.GoToAsync(nameof(SettingsSlidePage));
                     var settingsViewModel = _serviceProvider.GetService<SettingsViewModel>();
                     var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage, _alertService, _navigationService);
-                   // var settingsPage = new SettingsSlidePage(settingsViewModel);
+                    // var settingsPage = new SettingsSlidePage(settingsViewModel);
                     await Shell.Current.Navigation.PushModalAsync(settingsPage);
                     return;
                 }
@@ -223,7 +295,7 @@ namespace CardGameCorner
                     // await Shell.Current.GoToAsync(nameof(SettingsSlidePage));
                     var settingsViewModel = _serviceProvider.GetService<SettingsViewModel>();
                     var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage, _alertService, _navigationService);
-                   // var settingsPage = new SettingsSlidePage(settingsViewModel);
+                    // var settingsPage = new SettingsSlidePage(settingsViewModel);
                     await Shell.Current.Navigation.PushModalAsync(settingsPage);
 
                 });
@@ -263,7 +335,7 @@ namespace CardGameCorner
         {
             var settingsViewModel = _serviceProvider.GetService<SettingsViewModel>();
             var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage, _alertService, _navigationService);
-           // var settingsPage = new SettingsSlidePage(settingsViewModel);
+            // var settingsPage = new SettingsSlidePage(settingsViewModel);
             await Shell.Current.Navigation.PushModalAsync(settingsPage);
         }
         protected override void OnNavigating(ShellNavigatingEventArgs args)

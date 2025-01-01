@@ -40,10 +40,8 @@
 //}
 
 
+using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
-using Microsoft.Maui.Controls;
-using System;
-using System.Threading.Tasks;
 using ISecureStorage = CardGameCorner.Services.ISecureStorage;
 
 namespace CardGameCorner
@@ -72,22 +70,66 @@ namespace CardGameCorner
         public async Task RestartAppForNewSession()
         {
             // Clear the last selected game when restarting
-            await _secureStorage.RemoveAsync("LastSelectedGame");
+            // await _secureStorage.RemoveAsync("LastSelectedGame");
 
             // Reset MainPage to a new AppShell instance
             MainPage = new AppShell(_serviceProvider, _secureStorage, _alertService, _navigationService);
 
             // Navigate to LoginPage directly to start a new session
-            await Shell.Current.GoToAsync("login");
+            //  await Shell.Current.GoToAsync("login");
         }
 
         protected override void OnStart()
         {
             base.OnStart();
 
+            // Check internet connection on app startup
+            CheckInternetConnection();
+
             // Initialize language from GlobalSettings
             var language = GlobalSettingsService.Current.SelectedLanguage ?? "English";
             GlobalSettingsService.Current.SelectedLanguage = language; // Ensures OnLanguageChanged triggers
+        }
+
+        private void CheckInternetConnection()
+        {
+            var connectivity = Connectivity.Current;
+            if (connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                ShowNoInternetMessage();
+            }
+
+            // Subscribe to connectivity changes
+            Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
+        }
+
+        private async void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            if (e.NetworkAccess == NetworkAccess.Internet)
+            {
+                // Internet is restored
+                //  await Application.Current.MainPage.DisplayAlert("Internet Restored", "Internet connection has been restored.", "OK");
+                await Application.Current.MainPage.DisplayAlert(AppResources.Internet_Restored, AppResources.Internet_connection_restored, AppResources.OK);
+
+                // Optionally refresh the app or reload the necessary content
+                await RestartAppForNewSession();
+            }
+            else
+            {
+                // Internet is lost
+                ShowNoInternetMessage();
+            }
+        }
+
+        private async void ShowNoInternetMessage()
+        {
+            // Keep showing the message until the user enables internet
+            while (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                // await Application.Current.MainPage.DisplayAlert("No Internet", "Please enable internet connection.", "OK");
+                await Application.Current.MainPage.DisplayAlert(AppResources.No_Internet, AppResources.Enable_internet_connection, AppResources.OK);
+                await Task.Delay(5000); // Recheck every 5 seconds
+            }
         }
 
         protected override Window CreateWindow(IActivationState activationState)

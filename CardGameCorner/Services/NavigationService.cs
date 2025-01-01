@@ -22,11 +22,11 @@ namespace CardGameCorner.Services
 
         public async Task NavigateToLoginAsync()
         {
-           
+
             await Shell.Current.GoToAsync(nameof(LoginPage));
 
         }
-    
+
 
         public async Task NavigateToHomeAsync()
         {

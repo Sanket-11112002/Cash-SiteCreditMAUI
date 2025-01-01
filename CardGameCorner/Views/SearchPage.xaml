@@ -2,46 +2,47 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.SearchPage"
              xmlns:vm="clr-namespace:CardGameCorner.ViewModels">
-   
+
     <ScrollView>
-        <VerticalStackLayout Spacing="20" 
+        <VerticalStackLayout Spacing="20"
                              Padding="20"
                              VerticalOptions="Start">
-            
-            
             <!-- Logo -->
             <Image Source="splashscreenlogo.png"
                    HeightRequest="100"
                    WidthRequest="100"
                    Aspect="AspectFit"
-                   HorizontalOptions="Center" />
+                   HorizontalOptions="Center"/>
 
-            <!-- Banner -->
-            <Image Source="banner.jpg" 
-                   Aspect="AspectFit"
-                   Margin="0,0,0,10" />
+            <AbsoluteLayout HorizontalOptions="FillAndExpand" HeightRequest="150">
+                <Image Source="{Binding HomeBestDealsImage}" Aspect="AspectFill" AbsoluteLayout.LayoutBounds="0.5, 0.5, 1, 1" AbsoluteLayout.LayoutFlags="All" />
+            </AbsoluteLayout>
 
             <!-- Grid for Buttons -->
             <Grid ColumnDefinitions="*,*"
-      RowDefinitions="Auto"
-      ColumnSpacing="20"
-      Margin="0,0,0,20">
+              RowDefinitions="Auto"
+              ColumnSpacing="20"
+              Margin="0,0,0,20">
+                
                 <!-- Search Button -->
                 <Frame Grid.Column="0"
-           BackgroundColor="#2A3947"
-           BorderColor="White"
-           CornerRadius="10"
-           HeightRequest="120"
-           HorizontalOptions="Fill"
-           VerticalOptions="Fill">
+                   BackgroundColor="#2A3947"
+                   BorderColor="White"
+                   CornerRadius="10"
+                   HeightRequest="120"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSearchButtonClicked" />
+                    </Frame.GestureRecognizers>
                     <VerticalStackLayout Spacing="10" 
                              HorizontalOptions="Center"
                              VerticalOptions="Center">
-                        <ImageButton Source="search.png"
+                        <Image Source="search.png"
                          HeightRequest="40"
                          BackgroundColor="Transparent"
-                         Clicked="OnSearchButtonClicked" />
-                        <Label Text="{Binding SearchText}"
+                         />
+                   <Label Text="{Binding SearchText}"
                    TextColor="White"
                    HorizontalOptions="Center"
                    LineBreakMode="TailTruncation" />
@@ -56,13 +57,16 @@
            HeightRequest="120"
            HorizontalOptions="Fill"
            VerticalOptions="Fill">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnScanButtonClicked" />
+                    </Frame.GestureRecognizers>
                     <VerticalStackLayout Spacing="10"
                              HorizontalOptions="Center"
                              VerticalOptions="Center">
-                        <ImageButton Source="scan.png"
+                        <Image Source="scan.png"
                          HeightRequest="40"
                          BackgroundColor="Transparent"
-                         Clicked="OnScanButtonClicked" />
+                          />
                         <Label Text="{Binding ScanText}"
                    TextColor="White"
                    HorizontalOptions="Center"

@@ -139,6 +139,7 @@
 //}
 
 using System.Diagnostics;
+using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 
@@ -162,7 +163,7 @@ namespace CardGameCorner.Views
             _navigationService = navigationService;
 
             BindingContext = _viewModel;
-            
+
             // Add logout button
             var logoutButton = new Button
             {
@@ -180,14 +181,89 @@ namespace CardGameCorner.Views
             base.OnAppearing();
 
             // Check if user is logged in
+            //if (!App.IsUserLoggedIn)
+            //{
+            //     //_viewModel.CardItems = null;
+            //    bool result = await _alertService.ShowConfirmationAsync(
+            //         _viewModel.LoginRequiredTitle,
+            //         _viewModel.LoginRequiredMessage,
+            //         _viewModel.LoginText,
+            //         _viewModel.ContinueText);
+
+            //    if (result)
+            //    {
+            //        // User chose to login
+            //        await _navigationService.NavigateToLoginAsync();
+            //    }
+            //    else
+            //    {
+            //        // User chose to continue without login
+            //        // Navigate to home page instead of staying on the current page
+            //        await _navigationService.NavigateToHomeAsync();
+            //    }
+            //}
+            //else
+            //{
+            // Load data only if logged in
+
+            try
+            {
+
+                await _viewModel.LoadDataAsync();
+
+                if (_viewModel.CardItems == null || !_viewModel.CardItems.Any())
+                {
+                    await _alertService.ShowAlertAsync(
+                     AppResources.EmptyListTitle,
+                     AppResources.EmptyListMessage);
+
+                    _viewModel.listvisibility = true;
+                    _viewModel.listvisibilitycards = false;
+                }
+                else
+                {
+                    _viewModel.listvisibilitycards = true;
+                    _viewModel.listvisibility = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                await _alertService.ShowAlertAsync(
+               AppResources.ErrorTitle,
+               string.Format(AppResources.DataLoadErrorMessage, ex.Message));
+            }
+            // }
+        }
+
+        private async Task LogoutAsync()
+        {
+            bool confirm = await _alertService.ShowConfirmationAsync(
+                "Logout",
+                "Are you sure you want to log out?");
+
+            if (confirm)
+            {
+                this.BindingContext = null;
+                await _navigationService.LogoutAsync();
+            }
+        }
+
+        //private async void PlaceOrder_Clicked(object sender, EventArgs e)
+        //{
+        //    await Shell.Current.GoToAsync("PlaceOrderPage");
+        //    // await Navigation.PushAsync(new ScanPage());
+        //}
+
+        private async void PlaceOrder_Clicked(object sender, EventArgs e)
+        {
+            // Check if user is logged in
             if (!App.IsUserLoggedIn)
             {
-                 //_viewModel.CardItems = null;
                 bool result = await _alertService.ShowConfirmationAsync(
-                     _viewModel.LoginRequiredTitle,
-                     _viewModel.LoginRequiredMessage,
-                     _viewModel.LoginText,
-                     _viewModel.ContinueText);
+                    _viewModel.LoginRequiredTitle,
+                    _viewModel.LoginRequiredMessage,
+                    _viewModel.LoginText,
+                    _viewModel.ContinueText);
 
                 if (result)
                 {
@@ -203,41 +279,8 @@ namespace CardGameCorner.Views
             }
             else
             {
-                // Load data only if logged in
-                try
-                {
-                    
-                    await _viewModel.LoadDataAsync();
-                  
-                    if (_viewModel.CardItems == null || !_viewModel.CardItems.Any())
-                    {
-                        await _alertService.ShowAlertAsync("Info", "Your list is empty. Add items to see them here.");
-                        _viewModel.listvisibility = true;
-                        _viewModel.listvisibilitycards = false;
-                    }
-                    else
-                    {
-                        _viewModel.listvisibilitycards = true;
-                        _viewModel.listvisibility = false;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    await _alertService.ShowAlertAsync("Error", $"Failed to load data: {ex.Message}");
-                }
-            }
-        }
-
-        private async Task LogoutAsync()
-        {
-            bool confirm = await _alertService.ShowConfirmationAsync(
-                "Logout",
-                "Are you sure you want to log out?");
-
-            if (confirm)
-            {
-                this.BindingContext = null;
-                await _navigationService.LogoutAsync();
+                // User is logged in, proceed to place order
+                await Shell.Current.GoToAsync("PlaceOrderPage");
             }
         }
     }

@@ -95,7 +95,7 @@ namespace CardGameCorner.Services
     public class ScanCardService : IScanCardService
     {
         private readonly HttpClient _httpClient;
-
+        public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
         public ScanCardService()
         {
             _httpClient = new HttpClient
@@ -203,10 +203,11 @@ namespace CardGameCorner.Services
 
             multipartContent.Add(fileContent, "image", "uploaded_image.jpg");
 
-            string game = "pokemon";
+            string game = GlobalSettings.SelectedGame;
             string apiKey = "0d66cf7894c3ed46592332829e6d467b";
             string url = $"https://api2.magic-sorter.com/image/{game}?mess_detector=0&upside=0&foil=0&lang=en&set_type=2&set[]=&api_key={apiKey}";
-            try {
+            try
+            {
                 var response = await httpClient.PostAsync(url, multipartContent);
                 var responseContent = await response.Content.ReadAsStringAsync();
 
@@ -230,10 +231,11 @@ namespace CardGameCorner.Services
                     return null;
                 }
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 return null;
-            }  
-            
+            }
+
         }
 
 
@@ -402,17 +404,17 @@ namespace CardGameCorner.Services
 
 
                 // Make the GET request
-             
+
 
                 // Ensure successful status code (200-299)
-              
+
                 // Read the response content as string
-              
+
 
                 var data = new BuyListPriceResponse();
 
                 // Deserialize the JSON content into a C# object
-                 data = JsonSerializer.Deserialize<BuyListPriceResponse>(responseContent);
+                data = JsonSerializer.Deserialize<BuyListPriceResponse>(responseContent);
 
                 // Process the data (for example, print it)
                 if (data != null)

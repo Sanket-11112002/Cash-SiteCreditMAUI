@@ -14,7 +14,7 @@
            HorizontalOptions="Center"
            VerticalOptions="Center"
            IsVisible="{Binding listvisibility}" />
-            
+
             <ListView ItemsSource="{Binding CardItems}" HasUnevenRows="True">
 
                 <!-- EmptyView for empty ListView -->
@@ -54,12 +54,11 @@
                                                WidthRequest="40"
                                                Margin="10,0,0,0" 
                                                Source="{Binding Languageflag}"/>
-                                       
+
                                         <!-- Condition -->
-                                        <Frame BackgroundColor="LightGreen" Padding="2,2" CornerRadius="3" HasShadow="False">
+                                        <Frame BackgroundColor="LightGreen" Padding="0,0" CornerRadius="3" HasShadow="False">
                                             <Label Text="{Binding Condition}" 
                                                    TextColor="White" 
-                                                   Padding="5,2" 
                                                    FontSize="10" 
                                                    HeightRequest="10" 
                                                    WidthRequest="30"
@@ -86,22 +85,22 @@
 
                                 <!-- Cash and Credit (Column 4) -->
                                 <StackLayout Grid.Column="3" Grid.Row="0" Orientation="Vertical" Spacing="5">
-                                    <Label Text="Cash" 
+                                    <Label Text="{Binding BindingContext.CashTitle, Source={x:Reference MyListPageRoot}}" 
                                                FontSize="12" 
                                                TextColor="LightGreen" 
                                                FontAttributes="Bold" 
                                                HorizontalTextAlignment="Center" />
-                                    <Label Text="{Binding Buylist , StringFormat='{0:C}'}" 
+                                    <Label Text="{Binding Buylist ,  StringFormat='{0:F2} EUR'}"
                                                    FontSize="12" 
                                                    TextColor="White" 
                                                    HorizontalTextAlignment="Center" />
 
-                                    <Label Text="Site Credit"
+                                    <Label Text="{Binding BindingContext.CreditTitle, Source={x:Reference MyListPageRoot}}"
                                                FontSize="12"
                                                TextColor="LightGreen"
                                                FontAttributes="Bold"
                                                HorizontalTextAlignment="Center" />
-                                    <Label Text="{Binding Sitecredit}" 
+                                    <Label Text="{Binding Sitecredit,  StringFormat='{0:F2} EUR'}"
                                                    FontSize="12" 
                                                    TextColor="White" 
                                                    HorizontalTextAlignment="Center" />
@@ -109,7 +108,7 @@
 
                                 <!-- Quantity and Actions (Column 4) -->
                                 <StackLayout Grid.Column="4" Grid.Row="0" Orientation="Vertical" HorizontalOptions="End" Spacing="5">
-                                    <Label Text="Quantity"
+                                    <Label Text="{Binding BindingContext.QuantityTitle, Source={x:Reference MyListPageRoot}}"
                                            FontSize="12"
                                            TextColor="LightGreen"
                                            FontAttributes="Bold"
@@ -119,15 +118,15 @@
                                            TextColor="White" 
                                            HorizontalTextAlignment="Center" />
 
-                                    <Button Text="Edit" 
+                                    <Button Text="{Binding BindingContext.PEdit, Source={x:Reference MyListPageRoot}}" 
                                             FontSize="12" 
                                             Command="{Binding BindingContext.NavigateToCardDetailCommand, Source={x:Reference MyListPageRoot}}" 
                                             CommandParameter="{Binding .}"
                                             TextColor="White" 
                                             BackgroundColor="#6C3483" 
-                                            CornerRadius="5" 
+                                            CornerRadius="5"
                                             Padding="5,2" />
-                                    <Button Text="Delete" 
+                                    <Button Text="{Binding BindingContext.PDelete, Source={x:Reference MyListPageRoot}}" 
                                       FontSize="12" 
                                       Command="{Binding BindingContext.DeleteCardCommand, Source={x:Reference MyListPageRoot}}" 
                                       CommandParameter="{Binding .}"
@@ -141,6 +140,18 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Button Text="{Binding PlaceOrder}"
+                    TextColor="White"
+                    BackgroundColor="#6C3483"
+                    FontSize="18"       
+                    HeightRequest="60"
+                    WidthRequest="200"
+                    CornerRadius="10"
+                    Padding="20,10"
+                    Margin="20,30,20,20"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Clicked="PlaceOrder_Clicked" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

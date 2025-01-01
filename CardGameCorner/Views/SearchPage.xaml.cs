@@ -1,10 +1,11 @@
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 using CommunityToolkit.Maui.Camera;
+using System.Diagnostics;
 namespace CardGameCorner.Views;
 public partial class SearchPage : ContentPage
 {
-    private readonly SearchViewModel _viewModel; 
+    private readonly SearchViewModel _viewModel;
     public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
     public SearchPage(SearchViewModel viewModel)
     {
@@ -16,13 +17,12 @@ public partial class SearchPage : ContentPage
         //}
         //else
         //{
-
         //    Application.Current.MainPage.DisplayAlert("Error", "No game selected. Please select a game before accessing the search page.", "OK");
         //}
 
-        //InitializeComponent();
+        InitializeComponent();
         _viewModel = viewModel;
-        //BindingContext = _viewModel;
+        BindingContext = _viewModel;
     }
 
     //private void OnSearchButtonPressed(object sender, EventArgs e)
@@ -37,33 +37,36 @@ public partial class SearchPage : ContentPage
     private async void OnScanButtonClicked(object sender, EventArgs e)
     {
         // Trigger camera scanning logic
-        await Navigation.PushAsync(new ScanPage());
+        // await Navigation.PushAsync(new ScanPage());
+        await Shell.Current.GoToAsync("//ScanPage");
     }
     private async void OnSearchButtonClicked(object sender, EventArgs e)
     {
-       // await Navigation.PushAsync(new SearchQueryPage());
+        // await Navigation.PushAsync(new SearchQueryPage());
         await Shell.Current.GoToAsync(nameof(SearchQueryPage));
     }
     protected async override void OnAppearing()
     {
         base.OnAppearing();
-
-
         if (GlobalSettings.SelectedGame != null)
         {
-            InitializeComponent();
-            BindingContext = _viewModel;
+            try
+            {
+                await _viewModel.LoadBannerImage(GlobalSettings.SelectedGame);
+                // Force refresh binding context if needed
+                BindingContext = null;
+                BindingContext = _viewModel;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading banner: {ex.Message}");
+            }
         }
         else
         {
-           await Application.Current.MainPage.DisplayAlert("Error", "No game selected. Please select a game before accessing the search page.", "OK");
-            await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
-          
-            await Shell.Current.GoToAsync("//home");
-
+            await Application.Current.MainPage.DisplayAlert("Error", "No game selected. Please select a game before accessing the search page.", "OK");
+            await Shell.Current.Navigation.PopToRootAsync();
         }
-
-        Console.WriteLine("SearchPage is appearing.");
     }
 
     protected override void OnDisappearing()
@@ -72,7 +75,21 @@ public partial class SearchPage : ContentPage
         Console.WriteLine("SearchPage is disappearing.");
     }
 
+    //protected override void OnDisappearing()
+    //{
+    //    base.OnDisappearing();
 
-    
-
+    //    // Check if we're navigating away from the Search tab
+    //    if (Shell.Current.CurrentState.Location.OriginalString.Contains("///search") == false)
+    //    {
+    //        // Clear the navigation stack
+    //        MainThread.BeginInvokeOnMainThread(async () =>
+    //        {
+    //            if (Navigation.NavigationStack.Count > 1)
+    //            {
+    //                await Navigation.PopToRootAsync(false);
+    //            }
+    //        });
+    //    }
+    //}
 }

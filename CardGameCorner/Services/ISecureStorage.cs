@@ -26,5 +26,5 @@ namespace CardGameCorner.Services
         Task RemoveAsync(string key);
     }
 
-   
+
 }

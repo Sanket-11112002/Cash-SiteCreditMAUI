@@ -15,7 +15,7 @@ namespace CardGameCorner.ViewModels
     public partial class GameDetailsViewModel : ObservableObject, INotifyPropertyChanged
     {
         private readonly ISecureStorage secureStorage;
-      
+
         private ObservableCollection<Card>? _cards;
         private ObservableCollection<Banner1> _banners;
         public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
@@ -28,7 +28,7 @@ namespace CardGameCorner.ViewModels
         public GameDetailsViewModel()
         {
             UpdateLocalizedStrings();
-            
+
             // Subscribe to language change events
             GlobalSettings.PropertyChanged += OnGlobalSettingsPropertyChanged;
 
@@ -63,10 +63,10 @@ namespace CardGameCorner.ViewModels
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 BestDeals = AppResources.Best_Deals; // Localized string for "Search"
-              
+
 
                 // Trigger property changed events to update UI
-               
+
                 OnPropertyChanged(nameof(BestDeals));
             });
         }
@@ -143,12 +143,26 @@ namespace CardGameCorner.ViewModels
                     });
                     Cards = new ObservableCollection<Card>(cards);
 
-                    var banners = gameDetails.Banners.Select(banner => new Banner1
+                    //var banners = gameDetails.Banners.Select(banner => new Banner1
+                    //{
+                    //    Title = banner.Title,
+                    //    ImageUrl = banner.Image.StartsWith("http")
+                    //              ? banner.Image
+                    //              : $"https://www.cardgamecorner.com{banner.Image}",
+                    //    Url = banner.Url
+                    //});
+                    // Banners = new ObservableCollection<Banner1>(banners);
+
+                    var banners = gameDetails.Banners
+                    .Where(banner =>
+                        !string.IsNullOrWhiteSpace(banner.Image) &&
+                        banner.Image.StartsWith("http") &&
+                        !string.Equals(banner.Image, "https://www.cardgamecorner.com", StringComparison.OrdinalIgnoreCase) &&
+                        !string.IsNullOrWhiteSpace(banner.Url))
+                    .Select(banner => new Banner1
                     {
                         Title = banner.Title,
-                        ImageUrl = banner.Image.StartsWith("http")
-                                  ? banner.Image
-                                  : $"https://www.cardgamecorner.com{banner.Image}",
+                        ImageUrl = banner.Image,
                         Url = banner.Url
                     });
                     Banners = new ObservableCollection<Banner1>(banners);
@@ -162,7 +176,7 @@ namespace CardGameCorner.ViewModels
                     Debug.WriteLine(GlobalSettings.SelectedGame);
 
                     var selectedgamecode = GlobalSettings.SelectedGame;
-
+                    
                     var service = new GameService(secureStorage);
                     var games = new List<Game>();
                     games = await service.GetGamesAsync();
@@ -186,7 +200,7 @@ namespace CardGameCorner.ViewModels
                 }
             }
         }
-       
+
     }
 }
 

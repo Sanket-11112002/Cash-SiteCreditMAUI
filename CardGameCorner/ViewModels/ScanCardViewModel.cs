@@ -169,7 +169,7 @@ namespace CardGameCorner.ViewModels
             }
         }
 
-         public async Task<MemoryStream> CompressImageAsync(Stream inputStream, long maxSize)
+        public async Task<MemoryStream> CompressImageAsync(Stream inputStream, long maxSize)
         {
             try
             {

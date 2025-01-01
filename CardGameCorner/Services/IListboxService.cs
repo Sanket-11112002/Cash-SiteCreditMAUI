@@ -9,6 +9,8 @@ namespace CardGameCorner.Services
 {
     public interface IListboxService
     {
-        public  Task<List<LanguageModal>> GetLanguagesAsync();
+        public Task<List<LanguageModal>> GetLanguagesAsync();
+
+        public Task<List<Listbox>> GetPlaceOrderDetailsAsync();
     }
 }

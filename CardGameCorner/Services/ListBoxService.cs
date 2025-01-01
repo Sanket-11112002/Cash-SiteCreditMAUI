@@ -1,21 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using CardGameCorner.Models;
 
 namespace CardGameCorner.Services
 {
-    public class ListBoxService:IListboxService
+    public class ListBoxService : IListboxService
     {
+
+        private readonly GlobalSettingsService _globalSettings;
+        public string SelectedLanguage;
+        public string SelectedGame;
+
+        public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
+
+        public ListBoxService()
+        {
+            _globalSettings = GlobalSettingsService.Current;
+        }
+
+
         public async Task<List<LanguageModal>> GetLanguagesAsync()
         {
-    
+            SelectedLanguage = _globalSettings.SelectedLanguage;
+            SelectedGame = _globalSettings.SelectedGame;
             try
             {
                 string url = "https://api.magiccorner.it/api/mclistboxes/pokemon/en";
@@ -24,7 +30,7 @@ namespace CardGameCorner.Services
                 httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "0d1bb073-9dfb-4c6d-a1c0-1e8f7d5d8e9f");
                 var response = await httpClient.GetStringAsync(url);
 
-                Console.WriteLine(response);  // Log the raw response for debugging
+                Console.WriteLine(response);
 
                 // Deserialize the API response
                 var apiResponse = JsonSerializer.Deserialize<ListBoxViewModel>(response, new JsonSerializerOptions
@@ -51,7 +57,7 @@ namespace CardGameCorner.Services
                 // Map to LanguageModal
                 var languages = languageListbox?.Options.Select(opt => new LanguageModal
                 {
-                      Id = opt.Value,
+                    Id = opt.Value,
                     Language = opt.Name
                 }).ToList();
 
@@ -67,6 +73,9 @@ namespace CardGameCorner.Services
 
         public async Task<List<ConditionModal>> GetConditionsAsync()
         {
+            SelectedLanguage = _globalSettings.SelectedLanguage;
+            SelectedGame = _globalSettings.SelectedGame;
+
             string url = "https://api.magiccorner.it/api/mclistboxes/pokemon/en";
 
 
@@ -84,7 +93,7 @@ namespace CardGameCorner.Services
 
 
             // Deserialize the API response
-         
+
 
             // Find the listbox for conditions (filter: "condition")
             var conditionListbox = apiResponse?.Listboxes.FirstOrDefault(lb => lb.Filter == "condition");
@@ -100,6 +109,38 @@ namespace CardGameCorner.Services
         }
 
 
+        public async Task<List<Listbox>> GetPlaceOrderDetailsAsync()
+        {
+            SelectedLanguage = _globalSettings.SelectedLanguage;
+            SelectedGame = _globalSettings.SelectedGame;
+            try
+            {
+                string language = SelectedLanguage == "English" ? "en" : SelectedLanguage == "Italian" ? "it" : "en";
+                string game = SelectedGame ?? "magic";
+
+                // Construct the URL with selected language and game
+                string url = $"https://api.magiccorner.it/api/mclistboxes/{game}/{language}";
+
+                // string url = "https://api.magiccorner.it/api/mclistboxes/pokemon/en";
+
+                using var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "0d1bb073-9dfb-4c6d-a1c0-1e8f7d5d8e9f");
+
+                var response = await httpClient.GetStringAsync(url);
+                var apiResponse = JsonSerializer.Deserialize<ListBoxViewModel>(response, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+                return apiResponse?.Listboxes ?? new List<Listbox>();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error fetching listboxes: {e.Message}");
+                return new List<Listbox>();
+            }
+        }
     }
 
 

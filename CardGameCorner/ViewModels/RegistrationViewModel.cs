@@ -2,13 +2,9 @@
 using CardGameCorner.Resources.Language;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace CardGameCorner.ViewModels
@@ -33,8 +29,8 @@ namespace CardGameCorner.ViewModels
         public string Country { get; set; }
         public string Phone { get; set; }
 
-        public string Language { get; set; } = "en";
-        
+        public string Language { get; set; } = "English";
+
         private string errorMessage;
         public string ErrorMessage
         {
@@ -99,7 +95,10 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private string pCancel;
 
+        [ObservableProperty]
+        private string errormsg;
 
+        private bool isInvalidEmail;
 
         //public RegistrationViewModel()
         //{
@@ -123,6 +122,8 @@ namespace CardGameCorner.ViewModels
             {
                 // Update localized strings when language changes
                 UpdateLocalizedStrings();
+
+
             }
         }
 
@@ -131,8 +132,8 @@ namespace CardGameCorner.ViewModels
             // Ensure these are called on the main thread
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                PEmail = AppResources.Email;
-                PPassword = AppResources.PasswordPlaceholder;
+                PEmail = AppResources.REmail;
+                PPassword = AppResources.RPlaceholder;
                 PName = AppResources.Name;
                 PLastName = AppResources.Last_Name;
                 PCompany = AppResources.Company;
@@ -148,6 +149,19 @@ namespace CardGameCorner.ViewModels
                 PTitle = AppResources.Register;
                 PSubmit = AppResources.Submit;
                 PCancel = AppResources.Cancel;
+                // Errormsg = AppResources.ValidEmail;
+
+                if (isInvalidEmail)
+                {
+                    ErrorMessage = AppResources.ValidEmail;
+                }
+                else
+                {
+                    ErrorMessage = string.Empty;
+                }
+
+                OnPropertyChanged(nameof(ErrorMessage));
+
 
                 // Trigger property changed events to update UI
                 OnPropertyChanged(nameof(PName));
@@ -167,6 +181,7 @@ namespace CardGameCorner.ViewModels
                 OnPropertyChanged(nameof(PTitle));
                 OnPropertyChanged(nameof(PSubmit));
                 OnPropertyChanged(nameof(PCancel));
+                // OnPropertyChanged(nameof(Errormsg));
             });
         }
 
@@ -177,12 +192,44 @@ namespace CardGameCorner.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
         private async Task RegisterAsync()
         {
             ErrorMessage = string.Empty;
 
+            if (string.IsNullOrWhiteSpace(Email) && string.IsNullOrWhiteSpace(Password))
+            {
+                ErrorMessage = AppResources.FillRequiredFieldsMessage; // Localized message for both fields empty
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(Email))
+            {
+                ErrorMessage = AppResources.EmailRequiredMessage;
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(Password))
+            {
+                ErrorMessage = AppResources.PasswordRequiredMessage;
+                return;
+            }
+
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearerToken);
+
+            if (!IsValidEmail(Email))
+            {
+                isInvalidEmail = true; // Set error state
+                ErrorMessage = AppResources.ValidEmail;
+                OnPropertyChanged(nameof(ErrorMessage));
+                return;
+            }
+            else
+            {
+                isInvalidEmail = false; // Reset error state
+            }
 
             var registrationData = new
             {
@@ -199,7 +246,7 @@ namespace CardGameCorner.ViewModels
                 city = City,
                 country = Country,
                 phone = Phone,
-                UIc = Language
+                UIc = GetLanguageCode()
             };
 
             var jsonContent = JsonConvert.SerializeObject(registrationData);
@@ -222,24 +269,99 @@ namespace CardGameCorner.ViewModels
                     }
                     else
                     {
-                        ErrorMessage = "Registration failed: Token not received";
+                        ErrorMessage = AppResources.RegistrationFailedMessage;
                     }
                 }
                 else
                 {
-                    // Handle failed registration or duplicate user message
-                    ErrorMessage = "Registration failed: " + await response.Content.ReadAsStringAsync();
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    try
+                    {
+                        // Deserialize the response content to handle structured errors
+                        var errorResponse = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(responseContent);
+
+                        if (errorResponse != null)
+                        {
+                            // Handle specific password validation errors
+                            if (errorResponse.ContainsKey("PasswordTooShort"))
+                            {
+                                ErrorMessage = AppResources.PasswordTooShortMessage;
+                            }
+                            else if (errorResponse.ContainsKey("PasswordRequiresDigit"))
+                            {
+                                ErrorMessage = AppResources.PasswordRequiresDigitMessage;
+                            }
+                            else if (errorResponse.ContainsKey("PasswordRequiresLower"))
+                            {
+                                ErrorMessage = AppResources.PasswordRequiresLowerMessage;
+                            }
+                            else if (errorResponse.ContainsKey("PasswordRequiresUpper"))
+                            {
+                                ErrorMessage = AppResources.PasswordRequiresUpperMessage;
+                            }
+                            else if (errorResponse.ContainsKey("PasswordRequiresUniqueChars"))
+                            {
+                                ErrorMessage = AppResources.PasswordRequiresUniqueCharsMessage;
+                            }
+                            else if (errorResponse.ContainsKey("PasswordRequiresNonAlphanumeric"))
+                            {
+                                ErrorMessage = AppResources.PasswordRequiresNonAlphanumericMessage;
+                            }
+                            else if (errorResponse.ContainsKey("DuplicateUserName"))
+                            {
+                                // Handle duplicate username error
+                                ErrorMessage = AppResources.DuplicateUserNameMessage;
+                            }
+                            else
+                            {
+                                // Default error message if no specific key exists
+                                ErrorMessage = AppResources.RegistrationFailedMessage;
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        // If parsing fails, fallback to default error
+                        ErrorMessage = AppResources.RegistrationFailedMessage;
+                    }
                 }
             }
             catch (Exception ex)
             {
-                ErrorMessage = "An error occurred: " + ex.Message;
+                //ErrorMessage = "An error occurred: " + ex.Message;
+                ErrorMessage = AppResources.RegistrationFailedMessage;
             }
         }
+
+        private bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
+            // Regex to match standard email format
+            var emailRegex = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return System.Text.RegularExpressions.Regex.IsMatch(email, emailRegex);
+        }
+
         private async Task NavigateToLoginPageAsync()
         {
             // Navigate to LoginPage
             await Shell.Current.GoToAsync("..");
         }
+
+        public string GetLanguageCode()
+        {
+            if (Language == "English")
+            {
+                return "en";
+            }
+            else if (Language == "Italian")
+            {
+                return "it";
+            }
+            return "en";  // Default to English if not set
+        }
+
     }
 }

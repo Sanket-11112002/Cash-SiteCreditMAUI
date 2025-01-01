@@ -17,7 +17,7 @@ namespace CardGameCorner.ViewModels
         private string _myAccountTabTitle;
         private string _myListTabTitle;
         private string _settingsToolbarItemText;
-        
+
 
         public AppShellViewModel(GlobalSettingsService globalSettings)
         {
@@ -64,7 +64,7 @@ namespace CardGameCorner.ViewModels
             set => SetProperty(ref _settingsToolbarItemText, value);
         }
 
-      
+
 
         private void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
         {

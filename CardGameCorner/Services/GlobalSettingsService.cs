@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
+
 namespace CardGameCorner.Services
 {
     public class GlobalSettingsService : INotifyPropertyChanged
@@ -15,7 +16,7 @@ namespace CardGameCorner.Services
         private GlobalSettingsService()
         {
             // Initialize with default values
-            // SelectedLanguage = "English";
+           // SelectedLanguage = "English";
         }
 
         private string _selectedLanguage;
@@ -46,11 +47,11 @@ namespace CardGameCorner.Services
             }
         }
 
-        private void OnLanguageChanged()
+        public void OnLanguageChanged()
         {
             try
             {
-                var culture = new CultureInfo(SelectedLanguage == "English" ? "en" : "it");
+                var culture = new CultureInfo(SelectedLanguage == "Italian" ? "it" : "en");
                 CultureInfo.CurrentCulture = culture;
                 CultureInfo.CurrentUICulture = culture;
 
@@ -68,6 +69,7 @@ namespace CardGameCorner.Services
         private void OnGameChanged()
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedGame)));
+            Shell.Current.GoToAsync("//GameDetailsPage");
         }
 
         // INotifyPropertyChanged Implementation
@@ -105,7 +107,11 @@ namespace CardGameCorner.Services
 
                 if (!string.IsNullOrEmpty(language) && language != "Cancel")
                 {
-                    SelectedLanguage = language;
+                    //SelectedLanguage = language;
+                    // When language changes in the UI, update the GlobalSettingsService.
+                    GlobalSettingsService.Current.SelectedLanguage = language;
+
+
                 }
             }
             catch (Exception ex)

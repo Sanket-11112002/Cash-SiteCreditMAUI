@@ -1,14 +1,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.CardDetailPage"
-              Title="{Binding CardDetails}"
-             >
+             Title="{Binding CardDetails}">
+
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding GoBackCommand}">
             <BackButtonBehavior.TextOverride>
                 <OnPlatform x:TypeArguments="x:String">
                     <OnPlatform.Platforms>
-                        <On Platform="android" Value="Go Back" />
+                        <On Platform="android" Value="{Binding Back}" />
                     </OnPlatform.Platforms>
                 </OnPlatform>
             </BackButtonBehavior.TextOverride>
@@ -16,17 +16,17 @@
     </Shell.BackButtonBehavior>
 
     <Grid RowDefinitions="Auto,*">
-        
-       <Image Grid.Row="0"
-       Source="{Binding GameImageUrl}"
-       HeightRequest="90"
-       HorizontalOptions="Center"
-       Margin="0,0,0,0"/>
-        
+
+        <Image Grid.Row="0"
+               Source="{Binding GameImageUrl}"
+               HeightRequest="90"
+               HorizontalOptions="Center"
+               Margin="0,0,0,0"/>
+
         <Grid Grid.Row="0" Padding="5,5" ColumnDefinitions="Auto,*,Auto">
-           
-            <Button Grid.Column="0"
-                    Text="Back"
+
+            <!--<Button Grid.Column="0"
+                    Text="{Binding Back}"
                     TextColor="White"
                     BackgroundColor="Transparent"
                     FontSize="16"
@@ -34,87 +34,75 @@
                     Margin="0"
                     Command="{Binding GoBackCommand}"/>
 
-            
             <Button Grid.Column="2"
-                    Text="Done"
+                    Text="{Binding Done}"
                     TextColor="White"
                     BackgroundColor="Transparent"
                     FontSize="16"
                     Padding="0"
                     Margin="0"
-                    Command="{Binding DoneCommand}"/>
+                    Command="{Binding DoneCommand}"/>-->
         </Grid>
 
-        <!-- Scrollable Content with CarouselView and Card Details -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Spacing="20" Padding="20">
-                <!-- CarouselView for Cards -->
                 <CarouselView ItemsSource="{Binding Cards}"
-                              CurrentItem="{Binding SelectedCard}"
-                              HorizontalScrollBarVisibility="Never"
-                              Loop="False"
-                              IndicatorView="cardIndicator">
+                             CurrentItem="{Binding SelectedCard}"
+                             HorizontalScrollBarVisibility="Never"
+                             Loop="False"
+                             IndicatorView="cardIndicator">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="10,0,0,0">
+                            <Grid Margin="5,5,5,5">
                                 <Frame BackgroundColor="Transparent" 
-                           BorderColor="White" 
-                           CornerRadius="10" 
-                           HasShadow="True" 
-                           Padding="10">
+                                       BorderColor="White" 
+                                       CornerRadius="10" 
+                                       HasShadow="True" 
+                                       Padding="10">
                                     <Image Source="{Binding ImageUrl}" 
-                               Aspect="AspectFit" 
-                               HeightRequest="300"
-                               WidthRequest="250"
-                               HorizontalOptions="Center"/>
+                                           Aspect="AspectFit" 
+                                           HeightRequest="300"
+                                           WidthRequest="250"
+                                           HorizontalOptions="Center"/>
                                 </Frame>
                             </Grid>
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
-
-                    <!-- IndicatorView for Carousel -->
-
-
-
                 </CarouselView>
 
                 <IndicatorView x:Name="cardIndicator"
-                 ItemsSource="{Binding Cards}"
-                 IndicatorColor="yellow"
-                 SelectedIndicatorColor="White"
-                 HorizontalOptions="Center"
-                 Margin="0,5,0,0"/>
+                              ItemsSource="{Binding Cards}"
+                              IndicatorColor="yellow"
+                              SelectedIndicatorColor="White"
+                              HorizontalOptions="Center"
+                              Margin="0,5,0,0"/>
 
-                <!-- Card Details (Name, Category, etc.) -->
                 <VerticalStackLayout Spacing="15">
                     <Border BackgroundColor="#1B3B48"
-                        StrokeShape="RoundRectangle 10"
-                        Padding="20" >
+                            StrokeShape="RoundRectangle 10"
+                            Padding="20" >
                         <VerticalStackLayout Spacing="8">
                             <Label Text="{Binding SelectedCard.Name}"
-                               TextColor="White"
-                               FontSize="20"
-                               HorizontalOptions="Center"/>
+                                   TextColor="White"
+                                   FontSize="20"
+                                   HorizontalOptions="Center"/>
 
                             <Label Text="{Binding SelectedCard.Rarity}"
-                               TextColor="LightGray"
-                               FontSize="16"
-                               HorizontalOptions="Center"/>
+                                   TextColor="LightGray"
+                                   FontSize="16"
+                                   HorizontalOptions="Center"/>
 
                             <Label Text="{Binding SelectedCard.Category}"
-                               TextColor="LightGray"
-                               FontSize="16"
-                               HorizontalOptions="Center"/>
+                                   TextColor="LightGray"
+                                   FontSize="16"
+                                   HorizontalOptions="Center"/>
                         </VerticalStackLayout>
                     </Border>
 
-
-                    <!-- Dropdowns and Toggles -->
                     <VerticalStackLayout Grid.Row="1" Spacing="15">
-
                         <Border Stroke="White">
                             <Picker 
-                                Title="Choose Language" 
+                                Title="{Binding ChooseLang}"
                                 TitleColor="#FFFFFF"
                                 ItemsSource="{Binding SelectedCard.Languages}"
                                 SelectedItem="{Binding SelectedCard.SelectedLanguage}"
@@ -122,148 +110,182 @@
                                 FontSize="17"
                                 HorizontalOptions="FillAndExpand"
                                 BackgroundColor="Transparent" 
-                                />
+                              />
                         </Border>
+
                         <Border Stroke="White">
                             <Picker 
-                        Title="Choose Condition" 
-                        TitleColor="#FFFFFF"
-                        ItemsSource="{Binding SelectedCard.Conditions}"
-                        SelectedItem="{Binding SelectedCard.SelectedCondition}"
-                        TextColor="White"
-                        FontSize="17"
-                        HorizontalOptions="FillAndExpand"
-                        BackgroundColor="Transparent" 
-        />
+                                Title="{Binding ChooseCondition}"
+                                TitleColor="#FFFFFF"
+                                ItemsSource="{Binding SelectedCard.Conditions}"
+                                SelectedItem="{Binding SelectedCard.selectedCondition}"
+                                TextColor="White"
+                                FontSize="17"
+                                HorizontalOptions="FillAndExpand"
+                                BackgroundColor="Transparent"/>
                         </Border>
+
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+
                             <!-- 1ST Edition Toggle -->
                             <Border Grid.Column="0"
                             StrokeThickness="1"
                           BackgroundColor="#1B3B48"
-                            StrokeShape="RoundRectangle 20" Stroke="White">
-                                <HorizontalStackLayout Padding="15">
+                            StrokeShape="RoundRectangle 20" Stroke="White" IsVisible="{Binding SelectedCard.IsEditionVisibility}">
+                                <HorizontalStackLayout Padding="15"  >
                                     <Switch IsToggled="{Binding SelectedCard.IsFirstEdition}"
                                     OnColor="#007AFF"/>
-                                    <Label Text="1ST Edition"
+                                    <Label Text="{Binding Edition}"
                                    TextColor="White"
                                    VerticalOptions="Center"
-                                   Margin="10,0,0,0"/>
+                                   Margin="10,0,0,0" />
                                 </HorizontalStackLayout>
                             </Border>
 
-                            <!-- Reverse Toggle -->
                             <Border Grid.Column="1"
                             StrokeThickness="1"
                            BackgroundColor="#1B3B48"
-                            StrokeShape="RoundRectangle 20" Stroke="White">
+                            StrokeShape="RoundRectangle 20" Stroke="White" IsVisible="{Binding SelectedCard.IsReverseVisibility}">
                                 <HorizontalStackLayout Padding="15">
                                     <Switch IsToggled="{Binding SelectedCard.IsReverse}"
-                                    OnColor="#007AFF" />
-                                    <Label Text="Reverse"
-                                   TextColor="white"
-                                   VerticalOptions="Center"
-                                   Margin="10,0,0,0"/>
+                                            OnColor="#007AFF"/>
+                                    <Label Text="{Binding Reverse}"
+                                           TextColor="White"
+                                           VerticalOptions="Center"
+                                           Margin="10,0,0,0"/>
                                 </HorizontalStackLayout>
                             </Border>
+                            <Border Grid.Column="0"
+                             StrokeThickness="1"
+                             BackgroundColor="#1B3B48"
+                             StrokeShape="RoundRectangle 20" Stroke="White" IsVisible="{Binding SelectedCard.IsFoilVisibility}">
+                                <HorizontalStackLayout Padding="15">
+                                    <Switch IsToggled="{Binding SelectedCard.IsFoil}"
+                                   OnColor="#007AFF"  />
+                                    <Label Text="Foil"
+                                    TextColor="white"
+                                    VerticalOptions="Center"
+                                    Margin="10,0,0,0"  />
+                                </HorizontalStackLayout>
+                            </Border>
+
                         </Grid>
-
-
-
+                        
                     </VerticalStackLayout>
-                    <Grid Grid.Row="2"
-                  ColumnDefinitions="*,*"
-                  ColumnSpacing="15"
-                  Margin="0,0,0,20">
 
-                        <!-- Cash Price -->
-                        <Border Grid.Column="0"
-                        StrokeThickness="1"
-                    BackgroundColor="#1B3B48"
-                        StrokeShape="RoundRectangle 10" Stroke="White">
-                            <VerticalStackLayout Padding="15">
-                                <Label Text="Cash"
-                                TextColor="White"
-                               FontSize="14"/>
-                                <Label Text="{Binding SelectedCard.buyList, StringFormat='{0:F2} EUR'}"
-                               TextColor="White"
-                               FontSize="18"
-                               FontAttributes="Bold"/>
-                            </VerticalStackLayout>
-                        </Border>
-
-                        <!-- Site Credit Price -->
-                        <Border Grid.Column="1"
+                    <Grid ColumnDefinitions="*,*"
+                          ColumnSpacing="15"
+                          Margin="0,0,0,20">
+                       <Border Grid.Column="0"
                         StrokeThickness="1"
                         BackgroundColor="#1B3B48"
                         StrokeShape="RoundRectangle 10" Stroke="White">
-                            <VerticalStackLayout Padding="15">
-                                <Label Text="Site credit "
+                            <VerticalStackLayout Padding="15" IsVisible="{Binding SelectedCard.IsCash}">
+                                <Label Text="{Binding Cash}"
+                                TextColor="White"
+                               FontSize="14"/>
+                                <Label Text="{Binding SelectedCard.buyList, StringFormat='{0:F2} EUR'}"
+                                       TextColor="White"
+                                       FontSize="18"
+                                       FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border Grid.Column="1"
+                        StrokeThickness="1"
+                        BackgroundColor="#1B3B48"
+                        StrokeShape="RoundRectangle 10" Stroke="White" IsVisible="{Binding SelectedCard.IsSiteCredit}">
+                            <VerticalStackLayout Padding="15" >
+                                <Label Text="{Binding Credit}"
                                TextColor="White"
                                FontSize="14"/>
                                 <Label Text="{Binding SelectedCard.siteCredit, StringFormat='{0:F2} EUR'}"
-                               TextColor="White"
-                               FontSize="18"
-                               FontAttributes="Bold"/>
+                                       TextColor="White"
+                                       FontSize="18"
+                                       FontAttributes="Bold"/>
                             </VerticalStackLayout>
                         </Border>
+                        
+                        <Border 
+                           Grid.ColumnSpan="2"
+                           StrokeThickness="1"
+                           BackgroundColor="#1B3B48"
+                           StrokeShape="RoundRectangle 20" Stroke="White" IsVisible="{Binding SelectedCard.IsNoticeVisible1}">
+                            <HorizontalStackLayout Padding="15"  >
+                                <Label Text="Notice: You can add the card to the shopping cart, we will make an evaluation and send you a message."
+                                              TextColor="White"
+                                              VerticalOptions="Center"
+                                              Margin="10,0,0,0" />
+                            </HorizontalStackLayout>
+                        </Border>
+                        <Border 
+                              Grid.ColumnSpan="2"
+                                 StrokeThickness="1"
+                                 BackgroundColor="#1B3B48"
+                                 StrokeShape="RoundRectangle 20" Stroke="White" IsVisible="{Binding SelectedCard.IsNoticeVisible2}">
+                            <HorizontalStackLayout Padding="15"  >
+                                <Label Text="Notice: We buy this card in bulk (low value cards)."
+                                TextColor="White"
+                                VerticalOptions="Center"
+                                Margin="10,0,0,0" />
+                            </HorizontalStackLayout>
+                        </Border>
+
                     </Grid>
-                    <Border Grid.Row="3"
-        StrokeThickness="1"
-        BackgroundColor="#1B3B48"
-        StrokeShape="RoundRectangle 5"
-        Margin="0,10,0,0" 
-        Stroke="White">
+
+                    <Border StrokeThickness="1"
+                            BackgroundColor="#1B3B48"
+                            StrokeShape="RoundRectangle 5"
+                            Margin="0,10,0,0" 
+                            Stroke="White">
                         <Grid ColumnDefinitions="Auto,*,Auto,Auto"
-          Padding="15">
-                            <!-- Label for Quantity -->
-                            <Label Text="Quantity"
-               TextColor="White"
-               VerticalOptions="Center"
-               Grid.Column="0"/>
+                              Padding="15">
+                            <Label Text="{Binding QuantityLang}"
+                                   TextColor="White"
+                                   VerticalOptions="Center"
+                                   Grid.Column="0"/>
 
-
-                            <Label x:Name="Counttxt" Text="{Binding SelectedCard.Quantity}"
-               TextColor="White"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               Grid.Column="1"/>
+                            <Label x:Name="Counttxt" 
+                                   Text="{Binding SelectedCard.Quantity}"
+                                   TextColor="White"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   Grid.Column="1"/>
 
                             <ImageButton Source="minus_1.png"   
-                            HeightRequest="25"
-                     WidthRequest="25"
-                                     BorderColor="White"
-                     BackgroundColor="Transparent"
-                     VerticalOptions="Center"
-                     Grid.Column="2"
-                     Clicked="OnDecreaseQuantityClicked"/>
-
+                                        HeightRequest="25"
+                                        WidthRequest="25"
+                                        BorderColor="White"
+                                        BackgroundColor="Transparent"
+                                        VerticalOptions="Center"
+                                        Grid.Column="2"
+                                        Clicked="OnDecreaseQuantityClicked"/>
 
                             <ImageButton Source="plus_1.png" 
-                                HeightRequest="25"
-                     WidthRequest="25"
-                            BackgroundColor="Transparent"              
-                    
-                     VerticalOptions="Center"
-                     Grid.Column="3"
-                     Clicked="OnIncreaseQuantityClicked"/>
+                                        HeightRequest="25"
+                                        WidthRequest="25"
+                                        BackgroundColor="Transparent"              
+                                        VerticalOptions="Center"
+                                        Grid.Column="3"
+                                        Clicked="OnIncreaseQuantityClicked"/>
                         </Grid>
                     </Border>
-                    <Button Grid.Row="4" x:Name="BtnText"
-                Text="Add to my list"
-                TextColor="White"
-                BackgroundColor="Transparent"
-                BorderColor="#00FF9D"
-                BorderWidth="1"
-                CornerRadius="5"
-                Margin="0,10,0,20"
-                HeightRequest="50"
-                ContentLayout="Left,10"
-                Clicked="OnAddToMyListClicked">
+
+                    <Button x:Name="BtnText"
+                             Text="{Binding ActionButtonText}"
+                            TextColor="White"
+                            BackgroundColor="Transparent"
+                            BorderColor="#00FF9D"
+                            BorderWidth="1"
+                            CornerRadius="5"
+                            Margin="0,10,0,20"
+                            HeightRequest="50"
+                            ContentLayout="Left,10"
+                            Clicked="OnAddToMyListClicked">
                         <Button.ImageSource>
                             <FontImageSource Glyph="✓"
-                        Color="#00FF9D"
-                        Size="18"/>
+                                           Color="#00FF9D"
+                                           Size="18"/>
                         </Button.ImageSource>
                     </Button>
                 </VerticalStackLayout>

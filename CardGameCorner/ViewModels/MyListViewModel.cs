@@ -18,7 +18,8 @@ using static Microsoft.Maui.ApplicationModel.Permissions;
 
 
 
-namespace CardGameCorner.ViewModels {
+namespace CardGameCorner.ViewModels
+{
     public partial class MyListViewModel : ObservableObject
     {
         // Observable collection to hold card items
@@ -32,11 +33,47 @@ namespace CardGameCorner.ViewModels {
         [ObservableProperty]
         private string loginRequiredMessage;
 
+        private bool isOperationInProgress;
+
         [ObservableProperty]
         private string loginText;
 
         [ObservableProperty]
         private string continueText;
+
+        [ObservableProperty]
+        private string placeOrder;
+
+
+        [ObservableProperty]
+        private string cashTitle;
+
+        [ObservableProperty]
+        private string creditTitle;
+
+        [ObservableProperty]
+        private string quantityTitle;
+
+        [ObservableProperty]
+        private string pEdit;
+
+        [ObservableProperty]
+        private string pDelete;
+
+        [ObservableProperty]
+        private string deleteTitle;
+
+        [ObservableProperty]
+        private string deleteMsg;
+
+        [ObservableProperty]
+        private string yesMsg;
+
+        [ObservableProperty]
+        private string listEmptyTitle;
+
+        [ObservableProperty]
+        private string listEmptyMsg;
 
         private readonly IScanCardService scanCardService;
         private ICommand _navigateToCardDetailCommand;
@@ -78,13 +115,12 @@ namespace CardGameCorner.ViewModels {
         {
             UpdateLocalizedStrings();
 
-            // Subscribe to language change events
             GlobalSettings.PropertyChanged += OnGlobalSettingsPropertyChanged;
 
             CardItems = new ObservableCollection<ProductListViewModel>();
             NavigateToCardDetailCommand = new Command<ProductListViewModel>(NavigateToCardDetail);
             DeleteCardCommand = new Command<ProductListViewModel>(DeleteCard);
-            getlist(); // Get the card data asynchronously
+            getlist();
         }
 
         private void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -105,11 +141,34 @@ namespace CardGameCorner.ViewModels {
                 LoginRequiredMessage = AppResources.LoginRequiredMessage;
                 LoginText = AppResources.Login;
                 ContinueText = AppResources.Continue;
+                PlaceOrder = AppResources.PlaceOrder;
 
+                PEdit = AppResources.Edit;
+                PDelete = AppResources.Delete;
+                DeleteTitle = AppResources.DeleteTitle;
+                DeleteMsg = AppResources.DeleteMsg;
+                YesMsg = AppResources.YesMsg;
+                ListEmptyTitle = AppResources.LoginRequiredTitle;
+                ListEmptyMsg = AppResources.LoginRequiredMessage;
+                CashTitle = AppResources.Cash;
+                QuantityTitle = AppResources.Quantity;
+                CreditTitle = AppResources.Site_credit;
+
+                OnPropertyChanged(nameof(PlaceOrder));
                 OnPropertyChanged(nameof(LoginRequiredTitle));
                 OnPropertyChanged(nameof(LoginRequiredMessage));
-                //OnPropertyChanged(nameof(ContinueText));
-                //OnPropertyChanged(nameof(LoginText));
+
+
+                OnPropertyChanged(nameof(CashTitle));
+                OnPropertyChanged(nameof(QuantityTitle));
+                OnPropertyChanged(nameof(CreditTitle));
+                OnPropertyChanged(nameof(PEdit));
+                OnPropertyChanged(nameof(PDelete));
+                OnPropertyChanged(nameof(DeleteTitle));
+                OnPropertyChanged(nameof(DeleteMsg));
+                OnPropertyChanged(nameof(YesMsg));
+                OnPropertyChanged(nameof(ListEmptyTitle));
+                OnPropertyChanged(nameof(ListEmptyMsg));
             });
         }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -122,46 +181,56 @@ namespace CardGameCorner.ViewModels {
         // Method to handle navigation to card details
         private async void NavigateToCardDetail(ProductListViewModel selectedCard)
         {
-            var details = new List<CardDetailViewModel>();
+            if (isOperationInProgress) return;
 
-            if (selectedCard == null) return;
-            
-            // Create a new instance of CardDetailViewModel and populate it with data from selectedCard
-            var cardDetailViewModel = new CardDetailViewModel()
+            try
             {
-                Id=selectedCard.Id ?? 0,
-                Name = selectedCard.Model,
-                Rarity = selectedCard.Rarity,
-                Category = selectedCard.Category,
-                ImageUrl = selectedCard.Image,
-                buyList = selectedCard.Buylist ?? 0,
-                siteCredit = selectedCard.Sitecredit ?? 0,
-               IsFirstEdition = selectedCard.IsFirstEdition ?? false,
-                //IsReverse = selectedCard.IsReverse,
-                Game = selectedCard.Game,
-                 Languages = selectedCard.Languages,
-                Conditions = selectedCard.Conditions,
-                SelectedLanguage = selectedCard.Language,
-                selectedCondition = selectedCard.Condition,
-              //  Buylist = selectedCard.Buylist?? 0,
-                Quantity = selectedCard.Quantity ?? 0,
-            };
-            details.Add(cardDetailViewModel);
-            // Pass the ViewModel instance as a navigation parameter
-            //        var navigationParameter = new Dictionary<string, object>
-            //{
-            //    { "CardDetailViewModel", cardDetailViewModel }
-            //};
+                isOperationInProgress = true;
 
-            //   await Shell.Current.GoToAsync(nameof(CardDetailPage), navigationParameter);
+                if (selectedCard == null) return;
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    // UI updates or navigation
+                });
 
-            // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
+                // Rest of your existing NavigateToCardDetail code...
+                var details = await Task.Run(() =>
+                {
+                    return new List<CardDetailViewModel>
+                {
+                    new CardDetailViewModel
+                    {
+                        Id = selectedCard.Id ?? 0,
+                        Name = selectedCard.Model,
+                        Rarity = selectedCard.Rarity,
+                        Category = selectedCard.Category,
+                        ImageUrl = selectedCard.Image,
+                        buyList = selectedCard.Buylist ?? 0,
+                        siteCredit = selectedCard.Sitecredit ?? 0,
+                        IsFirstEdition = selectedCard.IsFirstEdition ?? false,
+                        IsReverse = selectedCard.IsReverse ?? false,
+                        Game = selectedCard.Game,
+                        Languages = selectedCard.Languages,
+                        Conditions = selectedCard.Conditions,
+                        SelectedLanguage = selectedCard.Language,
+                        selectedCondition = selectedCard.Condition,
+                        Quantity = selectedCard.Quantity ?? 0,
+                        IsEditMode = true
+                    }
+                };
+                });
 
-            var detailsJson = JsonConvert.SerializeObject(details);  // Ensure you have 'Newtonsoft.Json' or other serializer for this
-
-
-            // Navigate using GoToAsync with the serialized data as a query parameter
-            await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
+                var detailsJson = JsonConvert.SerializeObject(details);
+                await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error navigating to card detail: {e.Message}");
+            }
+            finally
+            {
+                isOperationInProgress = false;
+            }
         }
 
         public async Task getlist()
@@ -169,24 +238,17 @@ namespace CardGameCorner.ViewModels {
             try
             {
                 // Validate user is logged in
-                if (!App.IsUserLoggedIn)
-                {
-                    throw new Exception("User is not logged in.");
-                }
+                //if (!App.IsUserLoggedIn)
+                //{
+                //    throw new Exception("User is not logged in.");
+                //}
 
                 // Retrieve JWT token
-                var jwtToken = await SecureStorage.GetAsync("jwt_token");
-                if (string.IsNullOrEmpty(jwtToken))
-                {
-                    throw new Exception("JWT token is missing in SecureStorage.");
-                }
-
-                // Decode username from token
-                var username = DecodeJwtAndGetUsername(jwtToken);
 
                 // Get items from database
                 var myListService = new SQLiteService();
-                var items = await myListService.GetAllItemsAsync(username) ?? new List<ProductList>();
+                // var items = await myListService.GetAllItemsAsync(username) ?? new List<ProductList>();
+                var items = await myListService.GetAllItemsAsync() ?? new List<ProductList>();
 
                 // Ensure CardItems is initialized
                 if (CardItems == null)
@@ -195,9 +257,18 @@ namespace CardGameCorner.ViewModels {
                 }
                 CardItems.Clear();
 
+
+
                 // Map items to CardItems
                 foreach (var item in items)
                 {
+                    var languageFlag = item.Language?.ToLower() switch
+                    {
+                        "italiano" => "italianlngimage.png",
+                        "english" => "gb.png",
+                        _ => "gb.png" // Default image for unsupported or null values
+                    };
+
                     var card = new ProductListViewModel
                     {
                         Id = item.Id ?? 0,
@@ -211,20 +282,20 @@ namespace CardGameCorner.ViewModels {
                         IsFirstEdition = item.IsFirstEdition ?? false,
                         IsReverse = item.IsReverse ?? false,
                         Game = item.Game ?? string.Empty,
-                        UserName = item.Username ?? string.Empty,
+                     //   UserName = item.Username ?? string.Empty,
                         Language = item.Language ?? string.Empty,
                         Condition = item.Condition ?? string.Empty,
                         Buylist = item.Buylist ?? 0,
                         Quantity = item.Quantity ?? 0,
-                        Languageflag = "italianlngimage.png",
-                      
-                                        Languages = !string.IsNullOrEmpty(item.Languagejsonlst)
+                        Languageflag = languageFlag,
+
+                        Languages = !string.IsNullOrEmpty(item.Languagejsonlst)
                     ? new HashSet<string>(JsonConvert.DeserializeObject<List<string>>(item.Languagejsonlst)).ToList()
                     : new List<string>(),
 
                         Conditions = !string.IsNullOrEmpty(item.Conditionjsonlst)
-    ? new HashSet<string>(JsonConvert.DeserializeObject<List<string>>(item.Conditionjsonlst)).ToList()
-    : new List<string>(),
+                        ? new HashSet<string>(JsonConvert.DeserializeObject<List<string>>(item.Conditionjsonlst)).ToList()
+                        : new List<string>(),
                     };
 
                     CardItems.Add(card);
@@ -236,55 +307,7 @@ namespace CardGameCorner.ViewModels {
             }
         }
 
-        //public async Task<List<ProductListViewModel>> getlist()
-        //{
-        //    var fetchedList = new List<ProductListViewModel>();
-        //    try
-        //    {
-        //        var myListService = new SQLiteService();
-        //        var items = await myListService.GetAllItemsAsync();
 
-        //        if (items != null)
-        //        {
-        //            CardItems.Clear();
-        //            foreach (var item in items)
-        //            {
-        //                var card = new ProductListViewModel
-        //                {
-        //                    Id = item.Id ?? 0,
-        //                    Model = item.Model,
-        //                    Rarity = item.Rarity,
-        //                    Category = item.Category,
-        //                    Image = item.Image,
-        //                    Sitecredit = item.Sitecredit ?? 0,
-        //                    IsFirstEdition = item.IsFirstEdition,
-        //                    IsReverse = item.IsReverse,
-        //                    Game = item.Game,
-        //                    Language = item.Language,
-        //                    Condition = item.Condition,
-        //                    Buylist = item.Buylist ?? 0,
-        //                    Quantity = item.Quantity ?? 0,
-        //                    Languageflag = "italianlng.svg",
-        //                    Languages = !string.IsNullOrEmpty(item.Languagejsonlst)
-        //                        ? JsonConvert.DeserializeObject<List<string>>(item.Languagejsonlst)
-        //                        : null,
-        //                    Conditions = !string.IsNullOrEmpty(item.Conditionjsonlst)
-        //                        ? JsonConvert.DeserializeObject<List<string>>(item.Conditionjsonlst)
-        //                        : null
-        //                };
-
-        //                CardItems.Add(card);
-        //                fetchedList.Add(card);
-        //            }
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine($"Error fetching card list: {e.Message}");
-        //    }
-
-        //    return fetchedList;
-        //}
 
         public async Task LoadDataAsync()
         {
@@ -293,45 +316,45 @@ namespace CardGameCorner.ViewModels {
 
         private async void DeleteCard(ProductListViewModel selectedCard)
         {
-            if (selectedCard != null)
+            if (isOperationInProgress) return;
+
+            try
             {
-                // Show a confirmation dialog
-                bool isConfirmed = await Application.Current.MainPage.DisplayAlert(
-                    "Confirm Delete", // Title of the alert
-                    "Are you sure you want to delete this card?", // Message
-                    "Yes", // Confirmation button
-                    "No" // Cancel button
-                );
+                isOperationInProgress = true;
 
-                if (isConfirmed)
+                if (selectedCard != null)
                 {
-                    var myListService = new SQLiteService();
-                    var product = selectedCard.MapToProductList();
+                    bool isConfirmed = await Application.Current.MainPage.DisplayAlert(
+                        DeleteTitle,
+                       DeleteMsg,
+                        YesMsg,
+                        "No"
+                    );
 
-                    // Call your SQLite service to delete the item
-                    await myListService.DeleteItemAsync(product);
-
-                    // Refresh the list or perform necessary actions after deletion
-                    await getlist();
-
-                    if (CardItems.Count == 0)
+                    if (isConfirmed)
                     {
-                        await Application.Current.MainPage.DisplayAlert(
-                            "Card List Empty",
-                            "Your card list is empty.",
-                            "OK"
-                        );
+                        var myListService = new SQLiteService();
+                        var product = selectedCard.MapToProductList();
+                        await myListService.DeleteItemAsync(product);
+                        await getlist();
 
-                        await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
+                        if (CardItems.Count == 0)
+                        {
+                            await Application.Current.MainPage.DisplayAlert(
+                                ListEmptyTitle,
+                               ListEmptyMsg,
+                                "OK"
+                            );
 
-                        await Shell.Current.GoToAsync("//SearchPage");
+                            await Shell.Current.Navigation.PopToRootAsync();
+                            await Shell.Current.GoToAsync("//SearchPage");
+                        }
                     }
-
-                    
-
-
-
                 }
+            }
+            finally
+            {
+                isOperationInProgress = false;
             }
         }
 

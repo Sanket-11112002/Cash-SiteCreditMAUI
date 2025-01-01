@@ -12,49 +12,73 @@ public partial class CardDetailPage : ContentPage
 {
     private readonly ISecureStorage secureStorage;
 
-        private string _details;
+    private string _details;
+    public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
 
-        public string Details
+    public string Details
+    {
+        get => _details;
+        set
         {
-            get => _details;
-            set
+            _details = Uri.UnescapeDataString(value);
+            var viewModelList = JsonConvert.DeserializeObject<List<CardDetailViewModel>>(_details);
+            Console.WriteLine($"Serialized and deserialized successfully: {viewModelList != null}");
+
+            if (viewModelList != null)
             {
-                _details = Uri.UnescapeDataString(value);
-                var viewModelList = JsonConvert.DeserializeObject<List<CardDetailViewModel>>(_details);
-                  
+                var game = GlobalSettings.SelectedGame;
 
-                if (viewModelList != null)
+                foreach (var item in viewModelList)
                 {
-
-                    // Check for conditions and update UI
-                    foreach (var item in viewModelList)
+                    if (item.LanguageConditionsMap != null)
                     {
-                    item.Languages = item.Languages?.Distinct().ToList();
-                    item.Conditions = item.Conditions?.Distinct().ToList();
-                    if (item.Id != 0)
-                        {
-                            BtnText.Text = "Update to my list";
-                            break;
-                        }
+                        // Populate distinct conditions and languages
+                        item.Languages = item.LanguageConditionsMap.Keys.ToList();
+                        item.Conditions = item.LanguageConditionsMap.Values
+                         .SelectMany(conditions => conditions) // Flatten nested lists
+                         .Distinct() // Ensure unique values
+                         .ToList();
+
+                    }
+                    else
+                    {
+                        item.Languages = item.languages.Distinct().ToList();
+                        item.Conditions = item.conditions.Distinct().ToList();
+
                     }
 
-                    // Bind the ViewModel as required
-                    BindingContext = new CardDetailViewModel
-                    {
+                    // Set visibility properties
+                    item.IsEditionVisibility = game == "pokemon" || game == "yugioh";
+                    item.IsReverseVisibility = game == "pokemon";
+                    item.IsFoilVisibility = game == "magic";
 
-                        Cards = new ObservableCollection<CardDetailViewModel>(viewModelList),
-                        SelectedCard = viewModelList.FirstOrDefault()
-                    };
+                    item.InitializeEditMode(item.Id != 0);
                 }
+
+                // Bind ViewModel to the page
+                //BindingContext = new CardDetailViewModel
+                //{
+                //    Cards = new ObservableCollection<CardDetailViewModel>(viewModelList),
+                //    SelectedCard = viewModelList.FirstOrDefault()
+                //};
+                var viewModel = new CardDetailViewModel
+                {
+                    Cards = new ObservableCollection<CardDetailViewModel>(viewModelList),
+                    SelectedCard = viewModelList.FirstOrDefault()
+                };
+
+                // Initialize edit mode for the container view model as well
+                viewModel.InitializeEditMode(viewModel.SelectedCard?.Id != 0);
+
+                BindingContext = viewModel;
+
+                InitializeComponent();
             }
         }
+    }
 
-        public CardDetailPage()
-        {
-            InitializeComponent();
-        }
-       
-        
+
+
     //public CardDetailPage()
     //{
 
@@ -105,78 +129,128 @@ public partial class CardDetailPage : ContentPage
     //    }
 
     //}
+    //protected override async void OnAppearing()
+    //{
+    //    base.OnAppearing();
+
+    //    try
+    //    {
+    //        // Simulate reloading data (you can replace this with your actual data-fetching logic)
+    //        if (!string.IsNullOrEmpty(Details))
+    //        {
+    //            // Deserialize details again to refresh the ViewModel
+    //            var viewModelList = JsonConvert.DeserializeObject<List<CardDetailViewModel>>(Details);
+
+    //            if (viewModelList != null)
+    //            {
+    //                var game = GlobalSettings.SelectedGame;
+
+    //                foreach (var item in viewModelList)
+    //                {
+    //                    // Repopulate distinct conditions and languages
+    //                    item.Languages = item.LanguageConditionsMap.Keys.ToList();
+    //                    item.Conditions = item.LanguageConditionsMap.Values
+    //                        .SelectMany(conditions => conditions) // Flatten nested lists
+    //                        .Distinct() // Ensure unique values
+    //                        .ToList();
+
+    //                    // Reset visibility properties
+    //                    item.IsEditionVisibility = game == "pokemon" || game == "yugioh";
+    //                    item.IsReverseVisibility = game == "pokemon";
+    //                    item.IsFoilVisibility = game == "magic";
+    //                }
+
+    //                // Update the BindingContext to refresh the UI
+    //                BindingContext = new CardDetailViewModel
+    //                {
+    //                    Cards = new ObservableCollection<CardDetailViewModel>(viewModelList),
+    //                    SelectedCard = viewModelList.FirstOrDefault()
+    //                };
+    //            }
+
+    //            InitializeComponent();
+
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        // Handle exceptions gracefully and optionally display an error
+    //        await DisplayAlert("Error", $"Failed to reload data: {ex.Message}", "OK");
+    //    }
+    //}
+
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
-        
-    }
 
+    }
 
     private async void OnAddToMyListClicked(object sender, EventArgs e)
     {
         try
         {
-            if (!App.IsUserLoggedIn)
-            {
-                var _alertService = new AlertService();
+            //if (!App.IsUserLoggedIn)
+            //{
+            //    var _alertService = new AlertService();
 
-                var _navigationService = new NavigationService(_alertService, secureStorage);
-                //bool result = await _alertService.ShowConfirmationAsync(
-                // "Login Required",
-                // "You need to log in to add card to list. Would you like to log in?",
-                // "Login",
-                // "Continue");
+            //    var _navigationService = new NavigationService(_alertService, secureStorage);
+            //    //bool result = await _alertService.ShowConfirmationAsync(
+            //    // "Login Required",
+            //    // "You need to log in to add card to list. Would you like to log in?",
+            //    // "Login",
+            //    // "Continue");
 
-                bool result = await _alertService.ShowConfirmationAsync(
-                  ((CardDetailViewModel)BindingContext).LoginRequiredTitle,
-                  ((CardDetailViewModel)BindingContext).LoginRequiredMessage,
-                  ((CardDetailViewModel)BindingContext).LoginText,
-                  ((CardDetailViewModel)BindingContext).ContinueText);
+            //    bool result = await _alertService.ShowConfirmationAsync(
+            //      ((CardDetailViewModel)BindingContext).LoginRequiredTitle,
+            //      ((CardDetailViewModel)BindingContext).LoginRequiredMessage,
+            //      ((CardDetailViewModel)BindingContext).LoginText,
+            //      ((CardDetailViewModel)BindingContext).ContinueText);
 
-                if (result)
-                {
-                    // User chose to login
-                    await _navigationService.NavigateToLoginAsync();
-                }
-                else
-                {
-                    string detailsJson = await SecureStorage.GetAsync("CardDetailsObject");
-                    var details = JsonConvert.DeserializeObject<CardDetailViewModel>(detailsJson);
+            //    if (result)
+            //    {
+            //        // User chose to login
+            //        await _navigationService.NavigateToLoginAsync();
+            //    }
+            //    else
+            //    {
+            //        string detailsJson = await SecureStorage.GetAsync("CardDetailsObject");
+            //        var details = JsonConvert.DeserializeObject<CardDetailViewModel>(detailsJson);
 
 
-                    var detaillst = new List<CardDetailViewModel>();
-                    detaillst.Add(details);
-                    // User chose to continue without login
-                     // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(detaillst));
-                    return;
-                }
-            }
-            else
-            {
-                // User is logged in
+            //        var detaillst = new List<CardDetailViewModel>();
+            //        detaillst.Add(details);
+            //        // User chose to continue without login
+            //        // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(detaillst));
+            //        return;
+            //    }
+            //}
+            //else
+            //{
+
                 if (BindingContext is CardDetailViewModel viewModel)
                 {
                     // Retrieve JWT token from secure storage
-                    var jwtToken = await SecureStorage.GetAsync("jwt_token");
-                    if (string.IsNullOrEmpty(jwtToken))
-                    {
-                        // await DisplayAlert("Error", "Failed to retrieve authentication token.", "OK");
-                        await DisplayAlert(
-                           viewModel.ErrorRetrieveTokenTitle,
-                           viewModel.ErrorRetrieveTokenMessage,
-                           "OK");
-                        return;
-                    }
+                    //var jwtToken = await SecureStorage.GetAsync("jwt_token");
+                    //if (string.IsNullOrEmpty(jwtToken))
+                    //{
+                    //    // await DisplayAlert("Error", "Failed to retrieve authentication token.", "OK");
+                    //    await DisplayAlert(
+                    //       viewModel.ErrorRetrieveTokenTitle,
+                    //       viewModel.ErrorRetrieveTokenMessage,
+                    //       "OK");
+                    //    return;
+                    //}
 
                     // Decode and extract username from the token
-                    var username = DecodeJwtAndGetUsername(jwtToken);
+                    //var username = DecodeJwtAndGetUsername(jwtToken);
 
                     var selectedCard = viewModel.SelectedCard;
 
                     var product = new ProductList
                     {
                         Id = selectedCard.Id,
+                        ProductId = selectedCard.ProductId,
                         Game = selectedCard.Game,
                         Model = selectedCard.Name,
                         Image = selectedCard.ImageUrl,
@@ -189,9 +263,12 @@ public partial class CardDetailPage : ContentPage
                         Condition = selectedCard.selectedCondition,
                         Languagejsonlst = JsonConvert.SerializeObject(selectedCard.Languages),
                         Conditionjsonlst = JsonConvert.SerializeObject(selectedCard.Conditions),
-                        Username = DecodeJwtAndGetUsername(await SecureStorage.GetAsync("jwt_token")),
+                       // Username = DecodeJwtAndGetUsername(await SecureStorage.GetAsync("jwt_token")),
                         IsFirstEdition = selectedCard.IsFirstEdition,
-                        IsReverse = selectedCard.IsReverse
+                        IsReverse = selectedCard.IsReverse,
+                        IsFoil = selectedCard.IsFoil,
+                        Evalution = selectedCard.Evalution
+
                     };
 
                     var productListService = new SQLiteService();
@@ -199,12 +276,12 @@ public partial class CardDetailPage : ContentPage
                     // Add the product to the database
                     await productListService.AddItemToListAsync(product);
 
-                    if (viewModel != null && viewModel.Id != 0)
+                    if (viewModel.IsEditMode)
                     {
                         //await DisplayAlert("Success", "Product Updated to your list!", "OK");
                         await DisplayAlert(
                              viewModel.SuccessAddedToListTitle,
-                             viewModel.SuccessAddedToListMessage,
+                             viewModel.SuccessUpdateToListMessage,
                              "OK");
                     }
                     else
@@ -217,9 +294,9 @@ public partial class CardDetailPage : ContentPage
                     }
                     viewModel.ExecuteDone();
 
-                    await Shell.Current.Navigation.PopToRootAsync(); 
+                    await Shell.Current.Navigation.PopToRootAsync();
 
-                  
+
                 }
                 else
                 {
@@ -229,7 +306,7 @@ public partial class CardDetailPage : ContentPage
                          "Failed to retrieve product details.",
                          "OK");
                 }
-            }
+          //  }
         }
         catch (Exception ex)
         {
@@ -240,6 +317,19 @@ public partial class CardDetailPage : ContentPage
               $"Failed to add product: {ex.Message}",
               "OK");
         }
+    }
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        Console.WriteLine("CardDetailPage appeared");
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+
+        // Navigate to the SearchPage
+       // Shell.Current.GoToAsync($"//{Shell.Current.CurrentItem.CurrentItem.Route}");
     }
 
 
@@ -285,7 +375,7 @@ public partial class CardDetailPage : ContentPage
         if (BindingContext is CardDetailViewModel viewModel)
         {
             viewModel.SelectedCard.Quantity++; // Increment the quantity
-           // SemanticScreenReader.Announce(Counttxt.Text);
+                                               // SemanticScreenReader.Announce(Counttxt.Text);
         }
     }
 
@@ -293,7 +383,7 @@ public partial class CardDetailPage : ContentPage
     {
         if (BindingContext is CardDetailViewModel viewModel)
         {
-            if (viewModel.Quantity > 1)
+            if (viewModel.SelectedCard.Quantity > 1)
             {
                 viewModel.SelectedCard.Quantity--; // Decrement the quantity, ensuring it doesn't go below 1
             }
@@ -324,7 +414,31 @@ public partial class CardDetailPage : ContentPage
             }
         }
     }
-   
+    //public void OnLanguageChanged(object sender, EventArgs e)
+    //{
+    //    if (BindingContext is CardDetailViewModel viewModel)
+    //    {
+    //        viewModel.UpdatePrices();
+    //    }
 
-    
+    //}
+
+    //public void OnConditionChanged(object sender, EventArgs e)
+    //{
+    //    if (BindingContext is CardDetailViewModel viewModel)
+    //    {
+    //        viewModel.UpdatePrices();
+    //    }
+
+    //}
+
+
+    //public void OnFoilToggled(object sender, ToggledEventArgs e)
+    //{
+    //    if (BindingContext is CardDetailViewModel viewModel)
+    //    {
+    //        viewModel.UpdatePrices();
+    //    }
+    //}
+
 }

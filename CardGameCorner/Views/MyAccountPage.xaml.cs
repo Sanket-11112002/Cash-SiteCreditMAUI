@@ -292,79 +292,96 @@ namespace CardGameCorner.Views;
 
 public partial class MyAccountPage : ContentPage
 {
-    private readonly ToolbarItem _editButton;
-    private readonly ToolbarItem _backButton;
-    private readonly ToolbarItem _doneButton;
+    private ToolbarItem _editButton;
+    private ToolbarItem _backButton;
+    private ToolbarItem _doneButton;
     private readonly MyAccountViewModel _viewModel;
     private readonly IAlertService _alertService;
     private readonly INavigationService _navigationService;
     private readonly IMyAccountService _myAccountService;
     private readonly ISecureStorage _secureStorage;
 
-    public MyAccountPage( MyAccountViewModel viewModel, IAlertService alertService, INavigationService navigationService,IMyAccountService myAccountService,ISecureStorage secureStorage)
+    public MyAccountPage(MyAccountViewModel viewModel, IAlertService alertService, INavigationService navigationService,
+                         IMyAccountService myAccountService, ISecureStorage secureStorage)
     {
         _alertService = alertService;
         _navigationService = navigationService;
         _myAccountService = myAccountService;
         _secureStorage = secureStorage;
 
-        InitializeComponent();
-        BindingContext = _viewModel = viewModel;
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
 
-        // Toolbar setup with localized text from ViewModel
+        InitializeComponent();
+        // Initialize toolbar items with initial text
+        InitializeToolbarItems();
+
+        // Subscribe to property changes
+        viewModel.PropertyChanged += ViewModel_PropertyChanged;
+
+       // InitializeComponent();
+    }
+
+    private void InitializeToolbarItems()
+    {
+        // Create toolbar items with initial text from ViewModel
         _editButton = new ToolbarItem
         {
-            Text = viewModel.EditButtonText,
-            Command = viewModel.EditCommand
+            Text = _viewModel.EditButtonText,
+            Command = _viewModel.EditCommand
         };
+
         _backButton = new ToolbarItem
         {
-            Text = viewModel.BackButtonText,
-            Command = viewModel.BackCommand
+            Text = _viewModel.BackButtonText,
+            Command = _viewModel.BackCommand
         };
+
         _doneButton = new ToolbarItem
         {
-            Text = viewModel.DoneButtonText,
-            Command = viewModel.DoneCommand
+            Text = _viewModel.DoneButtonText,
+            Command = _viewModel.DoneCommand
         };
 
         // Add initial edit button
         ToolbarItems.Add(_editButton);
-        viewModel.PropertyChanged += ViewModel_PropertyChanged;
     }
 
     private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(MyAccountViewModel.IsEditMode))
+        if (e.PropertyName == nameof(MyAccountViewModel.IsEditMode) ||
+            e.PropertyName == nameof(MyAccountViewModel.EditButtonText) ||
+            e.PropertyName == nameof(MyAccountViewModel.BackButtonText) ||
+            e.PropertyName == nameof(MyAccountViewModel.DoneButtonText))
         {
-            var viewModel = (MyAccountViewModel)BindingContext;
-            ToolbarItems.Clear();
-            if (viewModel.IsEditMode)
+            MainThread.BeginInvokeOnMainThread(() =>
             {
-                // Update button text when switching to edit mode
-                _backButton.Text = viewModel.BackButtonText;
-                _doneButton.Text = viewModel.DoneButtonText;
+                // Update toolbar items with current ViewModel text
+                _editButton.Text = _viewModel.EditButtonText;
+                _backButton.Text = _viewModel.BackButtonText;
+                _doneButton.Text = _viewModel.DoneButtonText;
 
-                ToolbarItems.Add(_backButton);
-                ToolbarItems.Add(_doneButton);
-            }
-            else
-            {
-                // Update edit button text when exiting edit mode
-                _editButton.Text = viewModel.EditButtonText;
-                ToolbarItems.Add(_editButton);
-            }
+                ToolbarItems.Clear();
+                if (_viewModel.IsEditMode)
+                {
+                    ToolbarItems.Add(_backButton);
+                    ToolbarItems.Add(_doneButton);
+                }
+                else
+                {
+                    ToolbarItems.Add(_editButton);
+                }
+            });
         }
     }
 
     protected async override void OnAppearing()
     {
         base.OnAppearing();
-
         // Check if user is logged in
         if (!App.IsUserLoggedIn)
         {
-            BindingContext = null;
+            _viewModel.UserProfile = null;
             bool result = await _alertService.ShowConfirmationAsync(
                 _viewModel.LoginRequiredTitle,
                 _viewModel.LoginRequiredMessage,
@@ -387,10 +404,10 @@ public partial class MyAccountPage : ContentPage
         else
         {
             // Ensure the ViewModel is properly initialized with user details
-            var data=await _viewModel.InitializeAsync();
+            var data = await _viewModel.InitializeAsync();
             _viewModel.UserProfile = data;
-            InitializeComponent();
-            BindingContext = _viewModel;
+           // InitializeComponent();
+            //BindingContext = _viewModel;
         }
     }
 }

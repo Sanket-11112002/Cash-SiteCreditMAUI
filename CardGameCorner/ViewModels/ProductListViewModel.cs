@@ -21,11 +21,13 @@ public class ProductListViewModel
     public string? Condition { get; set; }
     public bool? IsFirstEdition { get; set; }
     public bool? IsReverse { get; set; }
+    public bool? IsFoil { get; set; }
     public string? Languageflag { get; set; }
-
+    public int? ProductId { get; set; }
     // Deserialize JSON strings
     public List<string>? Languages { get; set; }
     public List<string>? Conditions { get; set; }
+    public bool? Evalution { get; set; }
 
     // Map back to ProductList
     public ProductList MapToProductList()
@@ -50,6 +52,8 @@ public class ProductListViewModel
             Condition = this.Condition,
             IsFirstEdition = this.IsFirstEdition,
             IsReverse = this.IsReverse,
+            ProductId = this.ProductId,
+            Evalution = this.Evalution,
         };
     }
 }

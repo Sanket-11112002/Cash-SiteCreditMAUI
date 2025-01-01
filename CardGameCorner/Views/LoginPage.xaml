@@ -6,27 +6,27 @@
     <ScrollView>
         <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
             <!-- Logo Image -->
-                <Image Source="Resources/Images/splashscreenlogo.png"
+            <Image Source="Resources/Images/splashscreenlogo.png"
                    HeightRequest="100"
                    HorizontalOptions="Center"/>
 
-                <VerticalStackLayout Spacing="5">
-                    <Entry Text="{Binding Username}"
+            <VerticalStackLayout Spacing="5">
+                <Entry Text="{Binding Username}"
                         Placeholder="{Binding UsernamePlaceholder}"
                        PlaceholderColor="LightGray"
                        TextColor="White"
                        BackgroundColor="#2A4B5D"
                        Keyboard="Email"/>
 
-                    <Entry Text="{Binding Password}"
+                <Entry Text="{Binding Password}"
                        Placeholder="{Binding PasswordPlaceholder}"
                        PlaceholderColor="LightGray"
                        TextColor="White"
                        BackgroundColor="#2A4B5D"
                        IsPassword="True" />
-                </VerticalStackLayout>
+            </VerticalStackLayout>
 
-                <!-- Login Button -->
+            <!-- Login Button -->
             <Button Text="{Binding LoginButtonText}"
                     Command="{Binding LoginCommand}"
                     IsEnabled="{Binding !IsBusy}"
@@ -39,23 +39,17 @@
             <!-- Social Login Section -->
             <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
                 <!-- Facebook Login Button -->
-                <Button Text="Login with Facebook"
-                    Command="{Binding FacebookLoginCommand}"
-                    BackgroundColor="#1877F2"
-                    TextColor="White"
-                    WidthRequest="200"
-                    HeightRequest="50" />
+                <Button x:Name="FacebookSignInButton"
+                     Text="Login with Facebook"
+                     Clicked="OnFacebookSignInClicked" />
 
                 <!-- Google Login Button -->
-                <Button Text="Login with Google"
-                    Command="{Binding GoogleLoginCommand}"
-                    BackgroundColor="#DB4437"
-                    TextColor="White"
-                    WidthRequest="200"
-                    HeightRequest="50"/>
+                <Button x:Name="GoogleSignInButton"
+                Text="Sign in with Google"
+                Clicked="OnGoogleSignInClicked" />
+
             </HorizontalStackLayout>
 
-           
             <Button Text="{Binding SignUpButtonText}"
                     Command="{Binding NavigateToRegistrationCommand}"
                     BackgroundColor="#3B92A0"
@@ -64,25 +58,24 @@
                     WidthRequest="200"     
                     HeightRequest="50"/>
 
-           
             <Button Text="{Binding ForgotPasswordText}"
                     Command="{Binding ToggleForgotPasswordCommand}"
                     HorizontalOptions="Center"
                     TextColor="LightGray"
                     BackgroundColor="Transparent"/>
 
-              <Frame  IsVisible="{Binding ShowForgotPassword}"
+            <Frame  IsVisible="{Binding ShowForgotPassword}"
                    BackgroundColor="White"
                    Padding="20"
                    HasShadow="True"
                    CornerRadius="10"
                    HorizontalOptions="Center"
                    VerticalOptions="Center">
-                        <VerticalStackLayout Spacing="15">
-                         <Label Text="{Binding ForgotPasswordEmailLabel}"
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="{Binding ForgotPasswordEmailLabel}"
                            TextColor="#1B3B48"/>
-                           
-                            <Entry Text="{Binding ForgotPasswordEmail}"
+
+                    <Entry Text="{Binding ForgotPasswordEmail}"
                            Placeholder="{Binding Email}"
                            PlaceholderColor="Gray"
                            TextColor="#1B3B48"
@@ -92,11 +85,11 @@
                             Command="{Binding ForgotPasswordCommand}"
                             BackgroundColor="#3B92A0"
                             TextColor="White"/>
-                        </VerticalStackLayout>
-                    </Frame>
+                </VerticalStackLayout>
+            </Frame>
 
-                    <!-- Activity Indicator -->
-                    <ActivityIndicator IsRunning="{Binding IsBusy}"
+            <!-- Activity Indicator -->
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
                                IsVisible="{Binding IsBusy}"
                                HorizontalOptions="Center"
                                Color="White"/>

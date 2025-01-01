@@ -6,7 +6,9 @@
     <StackLayout Padding="20" VerticalOptions="Start">
         <Label Text="Settings" FontSize="24" FontAttributes="Bold" />
 
-        --><!-- Language Picker --><!--
+        -->
+<!-- Language Picker -->
+<!--
         <Label Text="Language" FontSize="Medium"/>
         <Picker Title="Select Language"
                 x:Name="LanguagePicker"
@@ -18,8 +20,9 @@
             </Picker.Items>
         </Picker>
 
-        --><!-- Game Picker -->
-        <!--<Label Text="Game" FontSize="Medium" />
+        -->
+<!-- Game Picker -->
+<!--<Label Text="Game" FontSize="Medium" />
         <Picker Title="Select Game" 
                 x:Name="GamePicker"
                 SelectedItem="{Binding SelectedGame}"
@@ -30,7 +33,8 @@
                 <x:String>magic</x:String>
                 <x:String>yugioh</x:String>
             </Picker.Items>
-        </Picker>--><!--
+        </Picker>-->
+<!--
 
         <Picker Title="Select Game"
         x:Name="GamePicker"
@@ -40,7 +44,9 @@
         SelectedIndexChanged="OnGamePickerSelectedIndexChanged">
         </Picker>
 
-        --><!-- Close Button --><!--
+        -->
+<!-- Close Button -->
+<!--
         <Button Text="Close" 
                 Clicked="OnCloseClicked"
                 VerticalOptions="End" />
@@ -130,6 +136,18 @@
                     HorizontalOptions="Fill"
                     BorderColor="#2C5F73"
                     BorderWidth="1"/>
+
+            <Button x:Name="MyOrdersButton"
+                    Text="My Orders"
+                    Clicked="MyOrdersButton_Clicked"
+                    BackgroundColor="#4A8BA8"
+                    TextColor="White"
+                    CornerRadius="8"
+                    FontSize="16"
+                    Padding="16,12"
+                    HorizontalOptions="Fill"
+                    Margin="0,20,0,0"
+                    IsVisible="False"/>
 
             <Button x:Name="LogoutButton" 
                     Text="{Binding Logout}" 

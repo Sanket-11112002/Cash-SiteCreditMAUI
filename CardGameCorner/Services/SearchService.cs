@@ -1,4 +1,5 @@
 ﻿using CardGameCorner.Models;
+using CardGameCorner.Services;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -10,7 +11,7 @@ public class SearchService
 {
     private readonly HttpClient _httpClient;
     private const int DefaultPageSize = 20;
-
+    public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
     public SearchService()
     {
         _httpClient = new HttpClient();
@@ -23,7 +24,7 @@ public class SearchService
         var requestBody = new
         {
             q = query?.Trim() ?? "", // Trim any whitespace and handle null
-            game = "magic",
+            game = GlobalSettings.SelectedGame,
             edition = "",
             rarity = "",
             color = "",
@@ -34,7 +35,7 @@ public class SearchService
             pageSize = DefaultPageSize,
             sort = 5,
             isBuyList = true,
-            onlyHotBuyList = true,
+            onlyHotBuyList = false,
             onlyAvailable = false
         };
 

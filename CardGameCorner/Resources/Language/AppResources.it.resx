@@ -139,7 +139,7 @@
     <value>Carica immagine</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>E-mail</value>
+    <value>E-mail </value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Nome</value>
@@ -292,7 +292,7 @@
     <value>La password non può essere vuota</value>
   </data>
   <data name="PasswordPlaceholder" xml:space="preserve">
-    <value>Password</value>
+    <value>Password </value>
   </data>
   <data name="PasswordResetSuccessMessage" xml:space="preserve">
     <value>Un link per reimpostare la password è stato inviato alla tua email</value>
@@ -353,5 +353,155 @@
   </data>
   <data name="successmsg" xml:space="preserve">
     <value>Carta aggiunta alla tua collezione!</value>
+  </data>
+  <data name="DataLoadErrorMessage" xml:space="preserve">
+    <value>Caricamento dati non riuscito:</value>
+  </data>
+  <data name="EmptyListMessage" xml:space="preserve">
+    <value>La tua lista è vuota. Aggiungi elementi per visualizzarli.</value>
+  </data>
+  <data name="EmptyListTitle" xml:space="preserve">
+    <value>Informazione</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Nome utente</value>
+  </data>
+  <data name="ValidEmail" xml:space="preserve">
+    <value>Formato email non valido. Si prega di inserire un indirizzo email valido.</value>
+  </data>
+  <data name="DuplicateUserNameMessage" xml:space="preserve">
+    <value>Esiste già un utente con questa email.</value>
+  </data>
+  <data name="EmailRequiredMessage" xml:space="preserve">
+    <value>Il campo E-mail è obbligatorio.</value>
+  </data>
+  <data name="GenericErrorMessage" xml:space="preserve">
+    <value>Si è verificato un errore imprevisto.</value>
+  </data>
+  <data name="PasswordRequiredMessage" xml:space="preserve">
+    <value>Il campo Password è obbligatorio.</value>
+  </data>
+  <data name="RegistrationFailedMessage" xml:space="preserve">
+    <value>La registrazione non è riuscita. Per favore riprova.</value>
+  </data>
+  <data name="Please fill the Required fields" xml:space="preserve">
+    <value>Si prega di compilare i campi obbligatori</value>
+  </data>
+  <data name="FillRequiredFieldsMessage" xml:space="preserve">
+    <value>Si prega di compilare i campi obbligatori</value>
+  </data>
+  <data name="PasswordRequiresDigitMessage" xml:space="preserve">
+    <value>La password deve contenere almeno una cifra ('0'-'9').</value>
+  </data>
+  <data name="PasswordRequiresLowerMessage" xml:space="preserve">
+    <value>La password deve contenere almeno una lettera minuscola ('a'-'z').</value>
+  </data>
+  <data name="PasswordRequiresNonAlphanumericMessage" xml:space="preserve">
+    <value>La password deve contenere almeno un carattere non alfanumerico.</value>
+  </data>
+  <data name="PasswordRequiresUniqueCharsMessage" xml:space="preserve">
+    <value>La password deve utilizzare almeno 1 carattere diverso.</value>
+  </data>
+  <data name="PasswordRequiresUpperMessage" xml:space="preserve">
+    <value>La password deve contenere almeno una lettera maiuscola ('A'-'Z').</value>
+  </data>
+  <data name="PasswordTooShortMessage" xml:space="preserve">
+    <value>La password deve essere lunga almeno 7 caratteri.</value>
+  </data>
+  <data name="RPlaceholder" xml:space="preserve">
+    <value>Password *</value>
+  </data>
+  <data name="UserPassEmpty" xml:space="preserve">
+    <value>Nome utente e Password non possono essere vuoti</value>
+  </data>
+  <data name="Enable internet connection" xml:space="preserve">
+    <value>Per favore, abilita la connessione a Internet.</value>
+  </data>
+  <data name="Internet connection restored" xml:space="preserve">
+    <value>La connessione a Internet è stata ripristinata.</value>
+  </data>
+  <data name="Internet Restored" xml:space="preserve">
+    <value>Internet Ripristinata</value>
+  </data>
+  <data name="No Internet" xml:space="preserve">
+    <value>Nessuna Connessione Internet</value>
+  </data>
+  <data name="ClickHere" xml:space="preserve">
+    <value>Ritireremo il tuo pacco. Clicca qui!</value>
+  </data>
+  <data name="contacted" xml:space="preserve">
+    <value>Vuoi essere contattato in caso di:</value>
+  </data>
+  <data name="GetPaid" xml:space="preserve">
+    <value>Scegli come vuoi essere pagato</value>
+  </data>
+  <data name="IBNCode" xml:space="preserve">
+    <value>Inserisci il codice IBAN del tuo Conto Corrente</value>
+  </data>
+  <data name="PaypalEmail" xml:space="preserve">
+    <value>Inserisci l'indirizzo E-Mail del tuo conto PayPal</value>
+  </data>
+  <data name="PIBNCode" xml:space="preserve">
+    <value>Inserisci il codice IBAN</value>
+  </data>
+  <data name="PlaceOrder" xml:space="preserve">
+    <value>Effettua l'ordine</value>
+  </data>
+  <data name="PPaypalEmail" xml:space="preserve">
+    <value>Inserisci l'e-mail di PayPal</value>
+  </data>
+  <data name="PStaffMsg" xml:space="preserve">
+    <value>Scrivi qui il tuo messaggio...</value>
+  </data>
+  <data name="StaffMsg" xml:space="preserve">
+    <value>Inserisci eventuali messaggi per lo staff:</value>
+  </data>
+  <data name="Error_GameNotSelected" xml:space="preserve">
+    <value>Seleziona un gioco</value>
+  </data>
+  <data name="Error_LoginRequired" xml:space="preserve">
+    <value>Effettua prima il login</value>
+  </data>
+  <data name="Error_NoCardsFound" xml:space="preserve">
+    <value>Nessuna carta trovata per il gioco: </value>
+  </data>
+  <data name="Error_OrderFailed" xml:space="preserve">
+    <value>Impossibile completare l'ordine. Riprova.</value>
+  </data>
+  <data name="Success_OrderPlaced" xml:space="preserve">
+    <value> Ordine effettuato con successo!</value>
+  </data>
+  <data name="UpdateList" xml:space="preserve">
+    <value>Aggiorna elenco</value>
+  </data>
+  <data name="ProductUpdated" xml:space="preserve">
+    <value>Prodotto aggiornato alla tua lista!</value>
+  </data>
+  <data name="notFoundProduct" xml:space="preserve">
+    <value>Nessun prodotto trovato.</value>
+  </data>
+  <data name="REmail" xml:space="preserve">
+    <value>E-mail *</value>
+  </data>
+  <data name="tryAgain" xml:space="preserve">
+    <value>Per favore riprova!</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Eliminare</value>
+  </data>
+  <data name="DeleteMsg" xml:space="preserve">
+    <value>Sei sicuro di voler eliminare questa carta?</value>
+  </data>
+  <data name="DeleteTitle" xml:space="preserve">
+    <value>Conferma eliminazione</value>
+  </data>
+  <data name="ListEmptyMsg" xml:space="preserve">
+    <value>L'elenco delle tue carte è vuoto.</value>
+  </data>
+  <data name="ListEmptyTitle" xml:space="preserve">
+    <value>Elenco carte vuoto</value>
+  </data>
+  <data name="YesMsg" xml:space="preserve">
+    <value>SÌ</value>
   </data>
 </root>

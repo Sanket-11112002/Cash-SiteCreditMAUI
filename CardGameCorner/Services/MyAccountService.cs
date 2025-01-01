@@ -152,8 +152,9 @@ namespace CardGameCorner.Services
             try
             {
                 var json = JsonSerializer.Serialize(profile);
+                Console.WriteLine("Payload: " + json);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await _httpClient.PutAsync("myAccount", content);
+                var response = await _httpClient.PostAsync("myaccount/update", content);
 
                 return response.IsSuccessStatusCode;
             }

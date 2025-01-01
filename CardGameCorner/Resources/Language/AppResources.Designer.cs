@@ -169,11 +169,29 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to We will pick your package. Click Here!.
+        /// </summary>
+        internal static string ClickHere {
+            get {
+                return ResourceManager.GetString("ClickHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Company.
         /// </summary>
         internal static string Company {
             get {
                 return ResourceManager.GetString("Company", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to contacted in case of:.
+        /// </summary>
+        internal static string Contacted {
+            get {
+                return ResourceManager.GetString("Contacted", resourceCulture);
             }
         }
         
@@ -196,11 +214,56 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to load data:.
+        /// </summary>
+        internal static string DataLoadErrorMessage {
+            get {
+                return ResourceManager.GetString("DataLoadErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this card?.
+        /// </summary>
+        internal static string DeleteMsg {
+            get {
+                return ResourceManager.GetString("DeleteMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Delete.
+        /// </summary>
+        internal static string DeleteTitle {
+            get {
+                return ResourceManager.GetString("DeleteTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Done.
         /// </summary>
         internal static string Done {
             get {
                 return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A user with this Email already exists..
+        /// </summary>
+        internal static string DuplicateUserNameMessage {
+            get {
+                return ResourceManager.GetString("DuplicateUserNameMessage", resourceCulture);
             }
         }
         
@@ -223,7 +286,7 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email.
+        ///   Looks up a localized string similar to Email .
         /// </summary>
         internal static string Email {
             get {
@@ -237,6 +300,78 @@ namespace CardGameCorner.Resources.Language {
         internal static string EmailEmptyError {
             get {
                 return ResourceManager.GetString("EmailEmptyError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Email field is required..
+        /// </summary>
+        internal static string EmailRequiredMessage {
+            get {
+                return ResourceManager.GetString("EmailRequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your list is empty. Add items to see them here..
+        /// </summary>
+        internal static string EmptyListMessage {
+            get {
+                return ResourceManager.GetString("EmptyListMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        internal static string EmptyListTitle {
+            get {
+                return ResourceManager.GetString("EmptyListTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enable internet connection.
+        /// </summary>
+        internal static string Enable_internet_connection {
+            get {
+                return ResourceManager.GetString("Enable internet connection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a game.
+        /// </summary>
+        internal static string Error_GameNotSelected {
+            get {
+                return ResourceManager.GetString("Error_GameNotSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please login first.
+        /// </summary>
+        internal static string Error_LoginRequired {
+            get {
+                return ResourceManager.GetString("Error_LoginRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No cards found for game: .
+        /// </summary>
+        internal static string Error_NoCardsFound {
+            get {
+                return ResourceManager.GetString("Error_NoCardsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to place order. Please try again..
+        /// </summary>
+        internal static string Error_OrderFailed {
+            get {
+                return ResourceManager.GetString("Error_OrderFailed", resourceCulture);
             }
         }
         
@@ -304,6 +439,15 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please fill the Required fields.
+        /// </summary>
+        internal static string FillRequiredFieldsMessage {
+            get {
+                return ResourceManager.GetString("FillRequiredFieldsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fiscal Code.
         /// </summary>
         internal static string Fiscal_Code {
@@ -349,11 +493,56 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GenericErrorMessage.
+        /// </summary>
+        internal static string GenericErrorMessage {
+            get {
+                return ResourceManager.GetString("GenericErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose how you want to get paid.
+        /// </summary>
+        internal static string GetPaid {
+            get {
+                return ResourceManager.GetString("GetPaid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         internal static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert the IBAN code for the bank transfer.
+        /// </summary>
+        internal static string IBNCode {
+            get {
+                return ResourceManager.GetString("IBNCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internet connection has been restored.
+        /// </summary>
+        internal static string Internet_connection_restored {
+            get {
+                return ResourceManager.GetString("Internet connection restored", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internet Restored.
+        /// </summary>
+        internal static string Internet_Restored {
+            get {
+                return ResourceManager.GetString("Internet Restored", resourceCulture);
             }
         }
         
@@ -381,6 +570,24 @@ namespace CardGameCorner.Resources.Language {
         internal static string Last_Name {
             get {
                 return ResourceManager.GetString("Last Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your card list is empty..
+        /// </summary>
+        internal static string ListEmptyMsg {
+            get {
+                return ResourceManager.GetString("ListEmptyMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card List Empty.
+        /// </summary>
+        internal static string ListEmptyTitle {
+            get {
+                return ResourceManager.GetString("ListEmptyTitle", resourceCulture);
             }
         }
         
@@ -493,11 +700,29 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Internet.
+        /// </summary>
+        internal static string No_Internet {
+            get {
+                return ResourceManager.GetString("No Internet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No results found. Try a different search term..
         /// </summary>
         internal static string NoResultsFound {
             get {
                 return ResourceManager.GetString("NoResultsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No products found..
+        /// </summary>
+        internal static string notFoundProduct {
+            get {
+                return ResourceManager.GetString("notFoundProduct", resourceCulture);
             }
         }
         
@@ -520,11 +745,65 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password.
+        ///   Looks up a localized string similar to Password .
         /// </summary>
         internal static string PasswordPlaceholder {
             get {
                 return ResourceManager.GetString("PasswordPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Password field is required..
+        /// </summary>
+        internal static string PasswordRequiredMessage {
+            get {
+                return ResourceManager.GetString("PasswordRequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passwords must contain at least one digit (&apos;0&apos;-&apos;9&apos;)..
+        /// </summary>
+        internal static string PasswordRequiresDigitMessage {
+            get {
+                return ResourceManager.GetString("PasswordRequiresDigitMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passwords must contain at least one lowercase letter (&apos;a&apos;-&apos;z&apos;)..
+        /// </summary>
+        internal static string PasswordRequiresLowerMessage {
+            get {
+                return ResourceManager.GetString("PasswordRequiresLowerMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passwords must contain at least one non-alphanumeric character..
+        /// </summary>
+        internal static string PasswordRequiresNonAlphanumericMessage {
+            get {
+                return ResourceManager.GetString("PasswordRequiresNonAlphanumericMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passwords must use at least 1 different character..
+        /// </summary>
+        internal static string PasswordRequiresUniqueCharsMessage {
+            get {
+                return ResourceManager.GetString("PasswordRequiresUniqueCharsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passwords must contain at least one uppercase letter (&apos;A&apos;-&apos;Z&apos;)..
+        /// </summary>
+        internal static string PasswordRequiresUpperMessage {
+            get {
+                return ResourceManager.GetString("PasswordRequiresUpperMessage", resourceCulture);
             }
         }
         
@@ -538,11 +817,56 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Passwords must be at least 7 characters long..
+        /// </summary>
+        internal static string PasswordTooShortMessage {
+            get {
+                return ResourceManager.GetString("PasswordTooShortMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert the E-mail address for your PayPal account:.
+        /// </summary>
+        internal static string PaypalEmail {
+            get {
+                return ResourceManager.GetString("PaypalEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone.
         /// </summary>
         internal static string Phone {
             get {
                 return ResourceManager.GetString("Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter IBAN code.
+        /// </summary>
+        internal static string PIBNCode {
+            get {
+                return ResourceManager.GetString("PIBNCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Place Order.
+        /// </summary>
+        internal static string PlaceOrder {
+            get {
+                return ResourceManager.GetString("PlaceOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter PayPal email.
+        /// </summary>
+        internal static string PPaypalEmail {
+            get {
+                return ResourceManager.GetString("PPaypalEmail", resourceCulture);
             }
         }
         
@@ -556,11 +880,29 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Product updated to your list!.
+        /// </summary>
+        internal static string ProductUpdated {
+            get {
+                return ResourceManager.GetString("ProductUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Province.
         /// </summary>
         internal static string Province {
             get {
                 return ResourceManager.GetString("Province", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write your message here....
+        /// </summary>
+        internal static string PStaffMsg {
+            get {
+                return ResourceManager.GetString("PStaffMsg", resourceCulture);
             }
         }
         
@@ -583,11 +925,38 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registration failed. Please try again..
+        /// </summary>
+        internal static string RegistrationFailedMessage {
+            get {
+                return ResourceManager.GetString("RegistrationFailedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email *.
+        /// </summary>
+        internal static string REmail {
+            get {
+                return ResourceManager.GetString("REmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reverse.
         /// </summary>
         internal static string Reverse {
             get {
                 return ResourceManager.GetString("Reverse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password *.
+        /// </summary>
+        internal static string RPlaceholder {
+            get {
+                return ResourceManager.GetString("RPlaceholder", resourceCulture);
             }
         }
         
@@ -664,6 +1033,15 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter any messages for the staff.
+        /// </summary>
+        internal static string StaffMsg {
+            get {
+                return ResourceManager.GetString("StaffMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
         internal static string Submit {
@@ -682,7 +1060,16 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to  Order placed successfully!.
+        /// </summary>
+        internal static string Success_OrderPlaced {
+            get {
+                return ResourceManager.GetString("Success_OrderPlaced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Add to List!.
         /// </summary>
         internal static string SuccessAddedToList {
             get {
@@ -709,11 +1096,38 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please Try Again!.
+        /// </summary>
+        internal static string tryAgain {
+            get {
+                return ResourceManager.GetString("tryAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update List.
+        /// </summary>
+        internal static string UpdateList {
+            get {
+                return ResourceManager.GetString("UpdateList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upload Image.
         /// </summary>
         internal static string Upload_Image {
             get {
                 return ResourceManager.GetString("Upload Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Name.
+        /// </summary>
+        internal static string UserName {
+            get {
+                return ResourceManager.GetString("UserName", resourceCulture);
             }
         }
         
@@ -732,6 +1146,24 @@ namespace CardGameCorner.Resources.Language {
         internal static string UsernamePlaceholder {
             get {
                 return ResourceManager.GetString("UsernamePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username and Password cannot be empty.
+        /// </summary>
+        internal static string UserPassEmpty {
+            get {
+                return ResourceManager.GetString("UserPassEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid email format. Please enter a valid email address..
+        /// </summary>
+        internal static string ValidEmail {
+            get {
+                return ResourceManager.GetString("ValidEmail", resourceCulture);
             }
         }
         
@@ -759,6 +1191,15 @@ namespace CardGameCorner.Resources.Language {
         internal static string Yes__Add_to_my_list {
             get {
                 return ResourceManager.GetString("Yes! Add to my list", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        internal static string YesMsg {
+            get {
+                return ResourceManager.GetString("YesMsg", resourceCulture);
             }
         }
         

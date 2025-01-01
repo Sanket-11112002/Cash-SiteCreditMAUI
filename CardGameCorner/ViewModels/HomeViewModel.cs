@@ -196,6 +196,7 @@ namespace CardGameCorner.ViewModels
             _globalSettings.SelectedGame = game.GameCode;
 
             await _secureStorage.SetAsync("LastSelectedGame", _globalSettings.SelectedGame);
+
             await _navigationService.NavigateToHomeAsync();
 
         }

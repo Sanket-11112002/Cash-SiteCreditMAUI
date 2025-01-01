@@ -2,7 +2,6 @@
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 
-
 namespace CardGameCorner.Views;
 
 public partial class CardComparisonPage : ContentPage
@@ -30,9 +29,9 @@ public partial class CardComparisonPage : ContentPage
         BindingContext = ComparisonData;
 
         scannedimage.Source = ComparisonData.ScannedImage;
-      //searchimage.Source = ComparisonData.SearchResultImage;
-       //earchimage1.Source = ComparisonData.SearchResultImage;
-      //searchimage2.Source = ComparisonData.SearchResultImage;
+        //searchimage.Source = ComparisonData.SearchResultImage;
+        //earchimage1.Source = ComparisonData.SearchResultImage;
+        //searchimage2.Source = ComparisonData.SearchResultImage;
 
     }
 
@@ -47,7 +46,7 @@ public partial class CardComparisonPage : ContentPage
         //    scannedimage = null;        
         //}
     }
-    
+
 
     private async void Retry(object sender, EventArgs e)
     {
@@ -71,19 +70,17 @@ public partial class CardComparisonPage : ContentPage
 
     //    }
     //}
-//   protected override async  void OnDisappearing()
-//{
-//    base.OnDisappearing();
+    //   protected override async  void OnDisappearing()
+    //{
+    //    base.OnDisappearing();
 
-//        //if (BindingContext is CardComparisonViewModel viewModel)
-//        //{
-//        //    // Clear the ScannedImage when the page disappears (if that's the intention)
-//        //    viewModel.ScannedImage = null;
-//        //}
-//        await Shell.Current.GoToAsync($"/{nameof(SearchPage)}", true);
-//    }
-
-
+    //        //if (BindingContext is CardComparisonViewModel viewModel)
+    //        //{
+    //        //    // Clear the ScannedImage when the page disappears (if that's the intention)
+    //        //    viewModel.ScannedImage = null;
+    //        //}
+    //        await Shell.Current.GoToAsync($"/{nameof(SearchPage)}", true);
+    //    }
 
 
 }

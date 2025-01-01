@@ -4,11 +4,11 @@
              x:Class="CardGameCorner.Views.RegistrationPage"
              xmlns:viewmodel="clr-namespace:CardGameCorner.ViewModels"
              Title="{Binding PTitle}">
- 
+
     <ContentPage.BindingContext>
         <viewmodel:RegistrationViewModel />
     </ContentPage.BindingContext>
-    
+
     <ScrollView>
         <StackLayout Padding="30" Spacing="15">
 
@@ -106,16 +106,17 @@
 
             <!-- Language Picker -->
             <Picker Title="{Binding PLanguage}" 
-                    SelectedItem="{Binding Language}"
-                    TextColor="White"
-                    BackgroundColor="#2A4B5D">
+        SelectedItem="{Binding Language}" 
+        TextColor="White"
+        BackgroundColor="#2A4B5D">
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
-                        <x:String>en</x:String>
-                        <x:String>it</x:String>
+                        <x:String>English</x:String>
+                        <x:String>Italian</x:String>
                     </x:Array>
                 </Picker.ItemsSource>
             </Picker>
+
 
             <!-- Submit Button -->
             <Button Text="{Binding PSubmit}" 

@@ -20,7 +20,7 @@ public class Banner
 public class Data
 {
     public List<Result> Results { get; set; }
-   
+
 }
 
 
@@ -38,7 +38,7 @@ public class Result
 }
 
 
-public class Url 
+public class Url
 {
     public string raw { get; set; }
 }

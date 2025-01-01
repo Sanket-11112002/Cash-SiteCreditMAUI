@@ -49,11 +49,13 @@
 
                 <!-- Frame Container -->
                 <Frame Grid.Row="0" Grid.Column="1" BorderColor="#FF4444" CornerRadius="10" HasShadow="True">
-                  
-                    <CarouselView HeightRequest="280" WidthRequest="160">
+
+                    <!--<CarouselView HeightRequest="280" WidthRequest="160">
                         <CarouselView.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
-                                <!-- Add your static image URLs or file paths here -->
+                                -->
+                    <!-- Add your static image URLs or file paths here -->
+                    <!--
                                 <x:String>Resources/Images/pokemon_card.png</x:String>
                                 <x:String>Resources/Images/pokemon_card.png</x:String>
                                 <x:String>Resources/Images/pokemon_card.png</x:String>
@@ -69,7 +71,7 @@
                                 </Grid>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
-                    </CarouselView>
+                    </CarouselView>-->
                 </Frame>
 
 
@@ -153,5 +155,5 @@
         </Grid>
 
     </ScrollView>
- 
+
 </ContentPage>

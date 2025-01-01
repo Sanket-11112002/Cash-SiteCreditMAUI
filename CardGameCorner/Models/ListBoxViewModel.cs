@@ -21,7 +21,7 @@ namespace CardGameCorner.Models
     public class Option
     {
         [JsonConverter(typeof(StringOrIntConverter))]
-        public string Value { get; set; } // Now always deserialized as a string
+        public int Value { get; set; } // Now always deserialized as a string
         public string Name { get; set; }
     }
     public class Listbox
@@ -34,13 +34,13 @@ namespace CardGameCorner.Models
     }
     public class LanguageModal
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Language { get; set; }
     }
-    
+
     public class ConditionModal
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Condition { get; set; }
     }
     public class ExpansionModal
@@ -75,24 +75,27 @@ namespace CardGameCorner.Models
     }
 
 
-    public class StringOrIntConverter : JsonConverter<string>
+    public class StringOrIntConverter : JsonConverter<int>
     {
-        public override string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override int Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType == JsonTokenType.String)
             {
-                return reader.GetString();
+                if (int.TryParse(reader.GetString(), out int result))
+                {
+                    return result;
+                }
+                return 0; // Fallback value for invalid strings
             }
-            else if (reader.TokenType == JsonTokenType.Number)
+            if (reader.TokenType == JsonTokenType.Number)
             {
-                return reader.GetInt32().ToString(); // Convert number to string
+                return reader.GetInt32();
             }
-            throw new JsonException($"Unexpected token parsing {typeToConvert}. Expected String or Number, got {reader.TokenType}.");
+            return 0; // Fallback value for unexpected token types
         }
-
-        public override void Write(Utf8JsonWriter writer, string value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, int value, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(value);
+            writer.WriteStringValue(value.ToString());
         }
     }
 

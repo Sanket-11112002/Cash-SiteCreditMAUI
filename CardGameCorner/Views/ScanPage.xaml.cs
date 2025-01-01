@@ -333,7 +333,7 @@ namespace CardGameCorner.Views
                     using (var originalStream = await photo.OpenReadAsync())
                     {
                         // Correct image orientation
-                       var correctedStream = await CorrectImageOrientationAsync(originalStream);
+                        var correctedStream = await CorrectImageOrientationAsync(originalStream);
 
                         var compressedImageStream = await viewModel.CompressImageAsync(correctedStream, 100 * 1024);
 
@@ -358,13 +358,15 @@ namespace CardGameCorner.Views
                             {
                                 var cardRequest = new CardSearchRequest
                                 {
-                                    Title = "Angel of Mercy",
-                                    Set = "IMA",
-                                    Game = "magic",
-                                    Lang = "en",
-                                    Foil = 0,
+                                    Title = apiResponse.Result.Title,
+                                    Set = apiResponse.Result.Set,
+                                    Game = GlobalSettings.SelectedGame,
+                                    Lang = apiResponse.Result.Lang,
+                                    Foil = apiResponse.Result.Foil,
                                     FirstEdition = 0
                                 };
+
+
 
                                 var data = await viewModel.SearchCardAsync(cardRequest, ImageSource.FromStream(() => new MemoryStream(displayStream.ToArray())));
 
@@ -456,7 +458,7 @@ namespace CardGameCorner.Views
                 if (result != null)
                 {
                     using var originalStream = await result.OpenReadAsync();
-                 
+
                     var compressedImageStream = await viewModel.CompressImageAsync(originalStream, 100 * 1024);
 
                     if (compressedImageStream != null)
@@ -478,13 +480,15 @@ namespace CardGameCorner.Views
 
                         if (apiResponse != null)
                         {
+
+
                             var cardRequest = new CardSearchRequest
                             {
-                                Title = "Angel of Mercy",
-                                Set = "IMA",
-                                Game = "magic",
-                                Lang = "en",
-                                Foil = 0,
+                                Title = apiResponse.Result.Title,
+                                Set = apiResponse.Result.Set,
+                                Game = GlobalSettings.SelectedGame,
+                                Lang = apiResponse.Result.Lang,
+                                Foil = apiResponse.Result.Foil,
                                 FirstEdition = 0
                             };
 

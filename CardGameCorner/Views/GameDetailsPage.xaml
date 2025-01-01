@@ -10,35 +10,35 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-        <!-- Add the converter -->
-        <conv:StringToImageSourceConverter x:Key="StringToImageSourceConverter"/>
+            <!-- Add the converter -->
+            <conv:StringToImageSourceConverter x:Key="StringToImageSourceConverter"/>
         </ResourceDictionary>
 
         <DataTemplate x:Key="ImageTemplate">
             <Image Source="{Binding .}" Aspect="AspectFit" />
         </DataTemplate>
-        
-        <DataTemplate x:Key="CardTemplate">
-    <Frame BorderColor="Gray" CornerRadius="0" Padding="0" Margin="10" BackgroundColor="#1B3B48">
-        <Frame.GestureRecognizers>
-            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:GameDetailsViewModel}}, Path=OpenProductUrlCommand}" CommandParameter="{Binding ProductUrl}" />
-        </Frame.GestureRecognizers>
-        <StackLayout Spacing="5">
-            <!-- Image in Card -->
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
 
-                <Image Source="{Binding Image}" 
+        <DataTemplate x:Key="CardTemplate">
+            <Frame BorderColor="Gray" CornerRadius="0" Padding="0" Margin="10" BackgroundColor="#1B3B48">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:GameDetailsViewModel}}, Path=OpenProductUrlCommand}" CommandParameter="{Binding ProductUrl}" />
+                </Frame.GestureRecognizers>
+                <StackLayout Spacing="5">
+                    <!-- Image in Card -->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Image Source="{Binding Image}" 
                        Aspect="AspectFit" 
                        HeightRequest="100" 
                        WidthRequest="100" 
                        HorizontalOptions="Center" 
                        VerticalOptions="Center" 
                        Grid.Row="0" Margin="5"/>
-                
-                <Label Text="{Binding Label}" 
+
+                        <Label Text="{Binding Label}" 
                        TextColor="White" 
                        FontAttributes="Bold" 
                        FontSize="8" 
@@ -49,30 +49,30 @@
                        Grid.Row="0" 
                        Margin="0" 
                        Padding="5">
-                    <Label.Triggers>
-                        <!-- Trigger to hide the Label if the text is null or empty -->
-                        <DataTrigger TargetType="Label" Binding="{Binding Label}" Value="{x:Static sys:String.Empty}">
-                            <Setter Property="IsVisible" Value="False" />
-                        </DataTrigger>
-                    </Label.Triggers>
-                </Label>
-            </Grid>
-            
-            <!-- Note -->
-            <Label Text="{Binding Note}" Padding="2"
+                            <Label.Triggers>
+                                <!-- Trigger to hide the Label if the text is null or empty -->
+                                <DataTrigger TargetType="Label" Binding="{Binding Label}" Value="{x:Static sys:String.Empty}">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </Grid>
+
+                    <!-- Note -->
+                    <Label Text="{Binding Note}" Padding="2"
                      TextColor="White" FontSize="7"
                      HorizontalTextAlignment="Start" Margin="0"
                      VerticalTextAlignment="Start"
                      HorizontalOptions="FillAndExpand" HeightRequest="25"/>
-            
-            <!-- Price Range -->
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="5" Margin="0">
-                <Label Text="{Binding MinPrice, StringFormat='{0} €'}" FontAttributes="Bold" FontSize="10" TextColor="LightGray" Margin="0,10,0,0" TextDecorations="Strikethrough" />
-                <Label Text="{Binding MaxPrice, StringFormat='{0} €'}" FontAttributes="Bold" FontSize="10" TextColor="LightBlue" Margin="0,10,0,0" />
-            </StackLayout>
-        </StackLayout>
-    </Frame>
-</DataTemplate>
+
+                    <!-- Price Range -->
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="5" Margin="0">
+                        <Label Text="{Binding MinPrice, StringFormat='{0} €'}" FontAttributes="Bold" FontSize="10" TextColor="LightGray" Margin="0,10,0,0" TextDecorations="Strikethrough" />
+                        <Label Text="{Binding MaxPrice, StringFormat='{0} €'}" FontAttributes="Bold" FontSize="10" TextColor="LightBlue" Margin="0,10,0,0" />
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </DataTemplate>
 
 
         <!-- Button Styles -->
@@ -129,7 +129,7 @@
                             VerticalOptions="Center" 
                             HorizontalOptions="End" 
                             Margin="10,0,0,0"
-                            Clicked="OnNextClicked"/>       
+                            Clicked="OnNextClicked"/>
                 </Grid>
 
                 <AbsoluteLayout HorizontalOptions="FillAndExpand" HeightRequest="100">
@@ -137,13 +137,13 @@
                     <Label Text="{Binding BestDeals}" TextColor="White" FontSize="24" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.5, 0.5, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional" />
                 </AbsoluteLayout>
                 <CollectionView ItemsSource="{Binding Cards}" ItemTemplate="{StaticResource CardTemplate}">
-                        <CollectionView.ItemsLayout>
-                            <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10" HorizontalItemSpacing="10" />
-                        </CollectionView.ItemsLayout>
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10" HorizontalItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
                 </CollectionView>
             </VerticalStackLayout>
         </ScrollView>
-        
+
         <Grid x:Name="loaderOverlay"
               IsVisible="False"
               BackgroundColor="#801B3B48"
@@ -151,7 +151,7 @@
               Grid.RowSpan="2"
               AbsoluteLayout.LayoutBounds="0,0,1,1"
               AbsoluteLayout.LayoutFlags="All">
-            
+
             <!-- Centered Loader -->
             <ActivityIndicator 
                 x:Name="loadingIndicator"

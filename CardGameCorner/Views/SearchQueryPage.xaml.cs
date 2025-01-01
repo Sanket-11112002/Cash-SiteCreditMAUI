@@ -1,11 +1,11 @@
 using System.Text.Json;
 using CardGameCorner.Models;
 using CardGameCorner.ViewModels;
-
-
 using CardGameCorner.Services;
 using Microsoft.Maui.Controls;
 using Newtonsoft.Json;
+using Microsoft.VisualStudio.Utilities;
+using Microsoft.Maui.Storage;
 
 
 namespace CardGameCorner.Views;
@@ -14,30 +14,52 @@ public partial class SearchQueryPage : ContentPage
 {
     private readonly IScanCardService _service;
     public SearchQueryPage()
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
 
-	}
+    }
 
- 
+    protected override async void OnAppearing()
+    {
+        var cards = new SearchViewModel();
+
+        InitializeComponent();
+    }
+
+    private void OnSearchButtonPressed(object sender, EventArgs e)
+    {
+        // Access the ViewModel
+        var viewModel = BindingContext as SearchViewModel;
+        if (viewModel == null)
+            return;
+
+        // Execute the SearchCommand if available
+        if (viewModel.SearchCommand.CanExecute(null))
+        {
+            viewModel.SearchCommand.Execute(null);
+        }
+    }
     private async void OnUploadButtonClicked(object sender, EventArgs e)
     {
         // Show loading overlay
         SetLoadingState(true);
+        var response = new ListBoxService();
+        var conditinlst = await response.GetConditionsAsync();
+        var lnglst = await response.GetLanguagesAsync();
 
         try
         {
             var viewModel = BindingContext as SearchViewModel;
             if (viewModel == null)
-        {
-            await DisplayAlert("Error", "ViewModel is not set.", "OK");
-            SetLoadingState(false);
-            return;
-        }
+            {
+                await DisplayAlert("Error", "ViewModel is not set.", "OK");
+                SetLoadingState(false);
+                return;
+            }
             var imageButton = sender as ImageButton;
             if (imageButton == null)
             {
-               
+
                 await DisplayAlert("Error", "The ImageButton is null.", "OK");
                 return;
             }
@@ -73,7 +95,7 @@ public partial class SearchQueryPage : ContentPage
 
             var compressedImageStream = await viewModel.CompressImageAsync(new MemoryStream(imageBytes), 100 * 1024);
 
-           
+
             var uploadStream = new MemoryStream();
             compressedImageStream.Position = 0;
             await compressedImageStream.CopyToAsync(uploadStream);
@@ -82,85 +104,105 @@ public partial class SearchQueryPage : ContentPage
             // Upload the image
             //var apiResponse = await viewModel.UploadImageAsync(uploadStream);
 
-            
-                //Console.WriteLine($"Upload successful: {apiResponse}");
 
-                var cardRequest = new CardSearchRequest
+            //Console.WriteLine($"Upload successful: {apiResponse}");
+
+            var cardRequest = new CardSearchRequest
+            {
+                Title = selectedCard.Model,
+                Set = selectedCard.SetCode,
+                Game = selectedCard.Game,
+                Lang = "en",
+                Foil = 0,
+                FirstEdition = 0
+            };
+
+            // Search for the card based on the uploaded image
+            CardComparisonViewModel data = await viewModel.SearchCardAsync(cardRequest, ImageSource.FromStream(() => new MemoryStream(uploadStream.ToArray())));
+
+            if (data != null && data.responseContent.Products != null)
+            {
+                var detailslst = new List<CardDetailViewModel>();
+                foreach (var product in data.responseContent.Products)
                 {
-                    Title = selectedCard.Model,
-                    Set = selectedCard.SetCode,
-                    Game = selectedCard.Game, 
-                    Lang = "en", 
-                    Foil = 0, 
-                    FirstEdition = 0 
-                };
-
-                // Search for the card based on the uploaded image
-                CardComparisonViewModel data = await viewModel.SearchCardAsync(cardRequest, ImageSource.FromStream(() => new MemoryStream(uploadStream.ToArray())));
-
-                if (data != null && data.responseContent.Products != null)
-                {
-                    var detailslst=new List<CardDetailViewModel>();
-                    foreach (var product in data.responseContent.Products)
-                    {
-                        // Deserialize the Variants JSON string into a list of ProductVariant1 objects
-                        var variants = product.Variants;
+                    // Deserialize the Variants JSON string into a list of ProductVariant1 objects
+                    var variants = product.Variants;
 
                     if (variants != null)
                     {
+
+                        var languageConditionsMap = variants
+                      .GroupBy(v => v.Language) // Group variants by Language
+                      .ToDictionary(
+                          group => group.Key,                     // Language as key
+                          group => group.Select(v => v.Condition) // Select Conditions for each language
+                                       .Distinct()               // Get distinct conditions
+                                       .ToList()                 // Convert to List
+                      );
                         var distinctLanguages = variants.Select(v => v.Language).Distinct().ToList();
                         var distinctConditions = variants.Select(v => v.Condition).Distinct().ToList();
 
-                           Console.WriteLine("Languages:");
-                            foreach (var lang in distinctLanguages)
-                            {
-                                Console.WriteLine(lang);
-                            }
+                        Console.WriteLine("Languages:");
+                        foreach (var lang in distinctLanguages)
+                        {
+                            Console.WriteLine(lang);
+                        }
 
-                            Console.WriteLine("Conditions:");
-                            foreach (var condition in distinctConditions)
-                            {
-                                Console.WriteLine(condition);
-                            }
+                        Console.WriteLine("Conditions:");
+                        foreach (var condition in distinctConditions)
+                        {
+                            Console.WriteLine(condition);
+                        }
 
-                            var details = new CardDetailViewModel()
-                            {
-                                Languages = distinctLanguages,
-                                Conditions = distinctConditions,
-                                Name = product.Model,
-                                Rarity = product.Rarity,
-                                Category = product.Category,
-                                ImageUrl = "https://www.cardgamecorner.com"+product.Image,
-                                game = product.Game
-                            };
+                        var details = new CardDetailViewModel()
+                        {
+                            // id= int.Parse(product.Id),
+                            Languages = distinctLanguages,
+                            Conditions = distinctConditions,
+                            Name = product.Model,
+                            Rarity = product.Rarity,
+                            Category = product.Category,
+                            ImageUrl = "https://www.cardgamecorner.com" + product.Image,
+                            game = product.Game,
+                            LanguageConditionsMap = languageConditionsMap,
+                            //IsFirstEdition=product.Variants.Any(v => !string.IsNullOrEmpty(v.FirstEdition)), // Check if any variant is marked as FirstEdition
+                            SelectedLanguage = lnglst.Where(item => item.Id == product.Language).Select(item => item.Language).FirstOrDefault(),
+                            selectedCondition = conditinlst.Where(item => item.Id == product.Condition).Select(item => item.Condition).FirstOrDefault(),
+                            varinats = variants.ToList()
+
+
+                        };
                         detailslst.Add(details);
 
 
                         // Navigate to the CardDetailsPage for each product
 
-                        }
-                  
-                        else
-                        {
-                            Console.WriteLine("No variants found for product.");
-                        }
                     }
+
+                    else
+                    {
+                        Console.WriteLine("No variants found for product.");
+                    }
+                }
+
+
+
                 // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(detailslst));
                 // Serialize the details list to a string
-                    var detailsJson = JsonConvert.SerializeObject(detailslst);  // Ensure you have 'Newtonsoft.Json' or other serializer for this
+                var detailsJson = JsonConvert.SerializeObject(detailslst);  // Ensure you have 'Newtonsoft.Json' or other serializer for this
 
-                
-                    // Navigate using GoToAsync with the serialized data as a query parameter
-                    await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
+
+                // Navigate using GoToAsync with the serialized data as a query parameter
+                await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
 
                 //  await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailslst)}");
-              //  viewModel.OnUploadButtonClicked(detailslst);
+                //  viewModel.OnUploadButtonClicked(detailslst);
             }
             else
-                {
-                    await DisplayAlert("Error", "No products found.", "OK");
-                }
-            
+            {
+                await DisplayAlert("Error", "No products found.", "OK");
+            }
+
         }
         catch (Exception ex)
         {
@@ -209,7 +251,7 @@ public partial class SearchQueryPage : ContentPage
 
     private void OnFavoriteButtonClicked(object sender, EventArgs e)
     {
-         DisplayAlert("Cardd", "favouritee", "OK");
-       
+        DisplayAlert("Card", "favouritee", "OK");
+
     }
 }

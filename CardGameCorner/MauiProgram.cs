@@ -31,6 +31,8 @@ namespace CardGameCorner
             builder.Services.AddSingleton<IScanCardService, ScanCardService>();
             builder.Services.AddSingleton<SQLiteService>();
             // Register pages and viewmodels
+            builder.Services.AddTransient<MyOrdersPage>();
+            builder.Services.AddTransient<MyOrdersViewModel>();
             builder.Services.AddSingleton<IGameService, GameService>();
             builder.Services.AddSingleton<HomeViewModel>();
             builder.Services.AddTransient<LoginViewModel>();

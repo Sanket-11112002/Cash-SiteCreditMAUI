@@ -28,11 +28,8 @@ public partial class SettingsSlidePage : ContentPage, INotifyPropertyChanged
 
         BindingContext = _viewModel;
 
-        // Set initial selected items
         LanguagePicker.SelectedItem = _globalSettings.SelectedLanguage;
-        // Find the game that matches the stored game code
-        //GamePicker.SelectedItem = _globalSettings.SelectedGame;
-
+        
         // Load games when the page is created
         LoadGamesAsync();
     }
@@ -64,12 +61,6 @@ public partial class SettingsSlidePage : ContentPage, INotifyPropertyChanged
         }
     }
 
-    //private async void OnCloseClicked(object sender, EventArgs e)
-    //{
-    //    await Shell.Current.Navigation.PopModalAsync();
-    //}
-
-
     protected override void OnAppearing()
     {
         base.OnAppearing();
@@ -78,10 +69,12 @@ public partial class SettingsSlidePage : ContentPage, INotifyPropertyChanged
         if (App.IsUserLoggedIn)
         {
             LogoutButton.IsVisible = true;
+            MyOrdersButton.IsVisible = true;
         }
         else
         {
             LogoutButton.IsVisible = false;
+            MyOrdersButton.IsVisible = false;
         }
 
         // Hide the settings toolbar item when this page appears
@@ -106,7 +99,7 @@ public partial class SettingsSlidePage : ContentPage, INotifyPropertyChanged
             await _secureStorage.SetAsync("LastSelectedLang", _globalSettings.SelectedLanguage);
         }
 
-       
+
 
         // Restore the settings toolbar item when this page disappears
         if (Shell.Current is AppShell appShell)
@@ -119,20 +112,20 @@ public partial class SettingsSlidePage : ContentPage, INotifyPropertyChanged
     private async void OnCloseClicked(object sender, EventArgs e)
     {
         // Use Shell navigation to go back
+        await MainThread.InvokeOnMainThreadAsync(() =>
+        {
+            GlobalSettingsService.Current.OnLanguageChanged();
+        });
+
+        // Force refresh of the page before navigating back
         await Shell.Current.GoToAsync("..");
+        // If the issue persists, you can try forcing a page refresh like this:
+
     }
-    //private async void LogoutButton_Clicked(object sender, EventArgs e)
-    //{
-    //    bool confirm = await _alertService.ShowConfirmationAsync(
-    //        "Logout",
-    //        "Are you sure you want to log out?");
-
-    //    if (confirm)
-    //    {
-    //        await _navigationService.LogoutAsync();
-    //    }
-    //}
-
+    private async void MyOrdersButton_Clicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(MyOrdersPage));
+    }
     private async void LogoutButton_Clicked(object sender, EventArgs e)
     {
         bool confirm = await _alertService.ShowConfirmationAsync(

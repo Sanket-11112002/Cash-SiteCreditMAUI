@@ -11,8 +11,6 @@
         <vm:SearchViewModel />
     </ContentPage.BindingContext>
 
-   
-
     <Grid Padding="10">
         <ScrollView>
             <VerticalStackLayout Spacing="20" VerticalOptions="Start">
@@ -23,14 +21,14 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <SearchBar Grid.Column="0" 
-                               Text="{Binding SearchQuery}" 
-                               Placeholder="{Binding SearchText}" 
+                    <SearchBar Grid.Column="0"
+                               Text="{Binding SearchQuery}"
+                               Placeholder="{Binding SearchText}"
                                BackgroundColor="#2A3947" 
                                TextColor="White" 
                                PlaceholderColor="Gray"
                                Margin="0,0,0,10"
-                               />
+                               SearchButtonPressed="OnSearchButtonPressed"/>
 
                     <Button Grid.Column="1" 
                             Text="{Binding SearchText}" 
@@ -48,7 +46,7 @@
                 </VerticalStackLayout>
 
                 <!-- No Results Message -->
-                <Label Text="No results found. Try a different search term."
+                <Label Text="{Binding NotFound}"
                        IsVisible="{Binding NoResultsFound}" 
                        TextColor="Gray"
                        HorizontalOptions="Center" />
@@ -61,23 +59,22 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame BorderColor="Gray" CornerRadius="8" Padding="0" Margin="10" BackgroundColor="#1B3B48">
+                            <Frame BorderColor="Gray" CornerRadius="8" Padding="0" Margin="10" BackgroundColor="#1B3B48"
+                                    IsEnabled="{Binding Source={RelativeSource AncestorType={x:Type vm:SearchViewModel}}, Path=IsInteractionEnabled}">
                                 <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SearchViewModel}}, Path=OpenProductUrlCommand}" 
-                                                          CommandParameter="{Binding ProductUrl}" />
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SearchViewModel}}, Path=CardSelectedCommand}"
+                             CommandParameter="{Binding .}" />
                                 </Frame.GestureRecognizers>
                                 <StackLayout Spacing="5">
                                     <!-- Image Section -->
                                     <Grid>
-                                        <ImageButton Source="{Binding Image}" 
-                                                     CommandParameter="{Binding .}" 
-                                                     Aspect="AspectFit" 
-                                                     HeightRequest="120" 
-                                                     WidthRequest="120" 
-                                                     HorizontalOptions="Center" 
-                                                     VerticalOptions="Center" 
-                                                     Margin="5" 
-                                                     Clicked="OnUploadButtonClicked"/>
+                                        <Image Source="{Binding Image}" 
+                                           Aspect="AspectFit" 
+                                           HeightRequest="120" 
+                                           WidthRequest="120" 
+                                           HorizontalOptions="Center" 
+                                           VerticalOptions="Center" 
+                                           Margin="5"/>
                                     </Grid>
 
                                     <!-- Favorite Button -->
@@ -136,7 +133,7 @@
                 </CollectionView>
             </VerticalStackLayout>
         </ScrollView>
-        
+
 
         <!-- Loading Indicator -->
         <Grid IsVisible="{Binding IsLoading}" BackgroundColor="#801B3B48">

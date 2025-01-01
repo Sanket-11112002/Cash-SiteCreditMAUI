@@ -10,7 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace CardGameCorner.ViewModels
 {
-    public partial class ScannedCardDetailsViewModel: ObservableObject
+    public partial class ScannedCardDetailsViewModel : ObservableObject
     {
         [ObservableProperty]
         public ScannedCardDetails responseContent;
@@ -22,7 +22,7 @@ namespace CardGameCorner.ViewModels
         {
             // Initialize default values
 
-          
+
         }
     }
 }

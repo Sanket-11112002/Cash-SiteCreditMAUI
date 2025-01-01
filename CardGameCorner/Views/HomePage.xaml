@@ -21,7 +21,7 @@
            FontSize="24"
            HorizontalOptions="Center"
            VerticalOptions="Center" />-->
-        
+
         <!-- Title label -->
         <Label Text="CARD GAME CORNER"
                FontSize="30"
@@ -30,7 +30,7 @@
                HorizontalOptions="Center"
                VerticalOptions="Start"
                Grid.Row="0" />
-        
+
         <!-- Content -->
         <Grid Grid.Row="1" Padding="10">
             <CollectionView ItemsSource="{Binding Games}"
@@ -70,7 +70,7 @@
                                        VerticalOptions="Start"
                                        Margin="10" />
 
-                                    <!--<Label Grid.Row="1"
+                                <!--<Label Grid.Row="1"
                                        Text="{Binding DisplayName}"
                                        HorizontalTextAlignment="Center"
                                        Padding="10"

@@ -54,6 +54,7 @@ namespace CardGameCorner.ViewModels
         {
             // Initialize with current language
             UpdateLocalizedStrings();
+            Language = GlobalSettingsService.Current.SelectedLanguage;
 
             // Subscribe to language change events
             GlobalSettings.PropertyChanged += OnGlobalSettingsPropertyChanged;

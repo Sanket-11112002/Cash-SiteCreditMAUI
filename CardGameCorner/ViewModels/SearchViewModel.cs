@@ -263,6 +263,10 @@ using CardGameCorner.Resources.Language;
 using SkiaSharp;
 using System.Globalization;
 using System.Resources;
+using ISecureStorage = CardGameCorner.Services.ISecureStorage;
+using System.Diagnostics;
+using Newtonsoft.Json;
+using CardGameCorner.Views;
 
 namespace CardGameCorner.ViewModels
 {
@@ -277,8 +281,20 @@ namespace CardGameCorner.ViewModels
         private bool _noResultsFound;
         private CancellationTokenSource _searchCancellationTokenSource;
         private readonly IScanCardService _scanCardService;
+        private readonly ISecureStorage secureStorage;
 
         public ObservableCollection<Product> Products { get; private set; }
+
+        private string _homeBestDealsImage;
+        public string HomeBestDealsImage
+        {
+            get => _homeBestDealsImage;
+            set
+            {
+                _homeBestDealsImage = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool IsLoading
         {
@@ -320,6 +336,19 @@ namespace CardGameCorner.ViewModels
             }
         }
 
+        private bool _isInteractionEnabled = true;
+        public bool IsInteractionEnabled
+        {
+            get => _isInteractionEnabled;
+            set
+            {
+                _isInteractionEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand CardSelectedCommand { get; }
+
         public string SearchQuery
         {
             get => _searchQuery;
@@ -347,6 +376,14 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private string scanText;
 
+        [ObservableProperty]
+        private string notFound;
+
+        [ObservableProperty]
+        private string notFoundProduct;
+
+        [ObservableProperty]
+        private string tryAgain;
 
         public ICommand ToggleFavoriteCommand { get; }
         public ICommand OnUploadButtonClickedCommand { get; }
@@ -365,9 +402,11 @@ namespace CardGameCorner.ViewModels
             OpenProductUrlCommand = new Command<string>(async (url) => await OpenProductUrl(url));
             SearchCommand = new Command(async () => await LoadDataAsync(SearchQuery));
             ToggleFavoriteCommand = new Command<Product>(ToggleFavorite);
-            //OnUploadButtonClickedCommand = new Command<CardDetailViewModel>(OnUploadButtonClick);
-            // Load initial data
-            MainThread.BeginInvokeOnMainThread(async () =>
+            CardSelectedCommand = new Command<Product>(async (product) => await OnCardSelected(product));
+        
+        //OnUploadButtonClickedCommand = new Command<CardDetailViewModel>(OnUploadButtonClick);
+        // Load initial data
+        MainThread.BeginInvokeOnMainThread(async () =>
             {
                 await LoadDataAsync(string.Empty);
             });
@@ -375,13 +414,289 @@ namespace CardGameCorner.ViewModels
 
         }
 
+        //private async Task OnCardSelected(Product selectedCard)
+        //{
+        //    if (!IsInteractionEnabled) return;
+
+        //    IsInteractionEnabled = false;
+        //    IsLoading = true;
+
+        //    try
+        //    {
+        //        if (selectedCard == null)
+        //        {
+        //            await Application.Current.MainPage.DisplayAlert("Error", "Selected card object is not found.", "OK");
+        //            return;
+        //        }
+
+        //        string imageUrl = selectedCard.Image;
+        //        if (string.IsNullOrEmpty(imageUrl))
+        //        {
+        //            await Application.Current.MainPage.DisplayAlert("Error", "No image URL available.", "OK");
+        //            return;
+        //        }
+
+        //        var imageBytes = await DownloadImageAsync(imageUrl);
+        //        if (imageBytes == null || imageBytes.Length == 0)
+        //        {
+        //            await Application.Current.MainPage.DisplayAlert("Error", "Failed to download image.", "OK");
+        //            return;
+        //        }
+
+        //        var compressedImageStream = await CompressImageAsync(new MemoryStream(imageBytes), 100 * 1024);
+        //        var uploadStream = new MemoryStream();
+        //        compressedImageStream.Position = 0;
+        //        await compressedImageStream.CopyToAsync(uploadStream);
+        //        uploadStream.Position = 0;
+
+        //        var cardRequest = new CardSearchRequest
+        //        {
+        //            Title = selectedCard.Model,
+        //            Set = selectedCard.SetCode,
+        //            Game = selectedCard.Game,
+        //            Lang = "en",
+        //            Foil = 0,
+        //            FirstEdition = 0
+        //        };
+
+        //        CardComparisonViewModel data = await SearchCardAsync(cardRequest, ImageSource.FromStream(() => new MemoryStream(uploadStream.ToArray())));
+
+        //        if (data != null && data.responseContent.Products != null)
+        //        {
+        //            var detailslst = await ProcessCardDetails(data.responseContent.Products);
+        //            var detailsJson = JsonConvert.SerializeObject(detailslst);
+        //            await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
+        //        }
+        //        else
+        //        {
+        //            await Application.Current.MainPage.DisplayAlert("Error", "No products found.", "OK");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await Application.Current.MainPage.DisplayAlert("Error", $"Failed to process card: {ex.Message}", "OK");
+        //    }
+        //    finally
+        //    {
+        //        IsLoading = false;
+        //        IsInteractionEnabled = true;
+        //    }
+        //}
+
+        //private async Task<byte[]> DownloadImageAsync(string imageUrl)
+        //{
+        //    try
+        //    {
+        //        using (var client = new HttpClient())
+        //        {
+        //            var response = await client.GetAsync(imageUrl);
+        //            if (response.IsSuccessStatusCode)
+        //            {
+        //                return await response.Content.ReadAsByteArrayAsync();
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"Error downloading image: {ex.Message}");
+        //    }
+        //    return null;
+        //}
+
+        private async Task OnCardSelected(Product selectedCard)
+        {
+            if (!IsInteractionEnabled) return;
+            IsInteractionEnabled = false;
+            IsLoading = true;
+            try
+            {
+                if (selectedCard == null)
+                {
+                    await Application.Current.MainPage.DisplayAlert(ErrorMessage, "Selected card object is not found.", "OK");
+                    return;
+                }
+                string imageUrl = selectedCard.Image;
+                if (string.IsNullOrEmpty(imageUrl))
+                {
+                    await Application.Current.MainPage.DisplayAlert(ErrorMessage, NotFound, "OK");
+                    return;
+                }
+                var imageBytes = await DownloadImageAsync(imageUrl);
+                if (imageBytes == null || imageBytes.Length == 0)
+                {
+                    await Application.Current.MainPage.DisplayAlert(ErrorMessage, TryAgain, "OK");
+                    return;
+                }
+                var compressedImageStream = await CompressImageAsync(new MemoryStream(imageBytes), 100 * 1024);
+                var uploadStream = new MemoryStream();
+                compressedImageStream.Position = 0;
+                await compressedImageStream.CopyToAsync(uploadStream);
+                uploadStream.Position = 0;
+                var cardRequest = new CardSearchRequest
+                {
+                    Title = selectedCard.Model,
+                    Set = selectedCard.SetCode,
+                    Game = selectedCard.Game,
+                    Lang = "en",
+                    Foil = 0,
+                    FirstEdition = 0
+                };
+                CardComparisonViewModel data = await SearchCardAsync(cardRequest, ImageSource.FromStream(() => new MemoryStream(uploadStream.ToArray())));
+                if (data != null && data.responseContent.Products != null)
+                {
+                    var detailslst = await ProcessCardDetails(data.responseContent.Products);
+                    var detailsJson = JsonConvert.SerializeObject(detailslst);
+                    await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert(ErrorMessage, NotFoundProduct, "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert(ErrorMessage, $"Failed to process card: {ex.Message}", "OK");
+            }
+            finally
+            {
+                IsLoading = false;
+                IsInteractionEnabled = true;
+            }
+        }
+
+        private async Task<byte[]> DownloadImageAsync(string imageUrl)
+        {
+            if (string.IsNullOrEmpty(imageUrl))
+            {
+                Console.WriteLine("Error: Image URL is null or empty");
+                return null;
+            }
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.Timeout = TimeSpan.FromSeconds(30);
+                    client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0");
+
+                    using (var response = await client.GetAsync(imageUrl, HttpCompletionOption.ResponseHeadersRead))
+                    {
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            Console.WriteLine($"Error: Failed to download image. Status code: {response.StatusCode}");
+                            return null;
+                        }
+
+                        using (var ms = new MemoryStream())
+                        {
+                            await response.Content.CopyToAsync(ms);
+                            var imageBytes = ms.ToArray();
+                            if (imageBytes.Length == 0)
+                            {
+                                Console.WriteLine("Error: Downloaded image is empty");
+                                return null;
+                            }
+                            return imageBytes;
+                        }
+                    }
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Network error downloading image: {ex.Message}");
+                return null;
+            }
+            catch (TaskCanceledException ex)
+            {
+                Console.WriteLine($"Download timeout: {ex.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error downloading image: {ex.Message}");
+                return null;
+            }
+        }
+
+        private async Task<List<CardDetailViewModel>> ProcessCardDetails(List<Product1> products)
+        {
+            var detailslst = new List<CardDetailViewModel>();
+            var response = new ListBoxService();
+            var conditinlst = await response.GetConditionsAsync();
+            var lnglst = await response.GetLanguagesAsync();
+
+            foreach (var product in products)
+            {
+                var variants = product.Variants;
+                if (variants != null)
+                {
+                    var languageConditionsMap = variants
+                        .GroupBy(v => v.Language)
+                        .ToDictionary(
+                            group => group.Key,
+                            group => group.Select(v => v.Condition)
+                                .Distinct()
+                                .ToList()
+                        );
+
+                    var distinctLanguages = variants.Select(v => v.Language).Distinct().ToList();
+                    var distinctConditions = variants.Select(v => v.Condition).Distinct().ToList();
+
+                    var details = new CardDetailViewModel()
+                    {
+                        Languages = distinctLanguages,
+                        Conditions = distinctConditions,
+                        Name = product.Model,
+                        Rarity = product.Rarity,
+                        Category = product.Category,
+                        ImageUrl = "https://www.cardgamecorner.com" + product.Image,
+                        game = product.Game,
+                        LanguageConditionsMap = languageConditionsMap,
+                        SelectedLanguage = lnglst.Where(item => item.Id == product.Language)
+                            .Select(item => item.Language).FirstOrDefault(),
+                        selectedCondition = conditinlst.Where(item => item.Id == product.Condition)
+                            .Select(item => item.Condition).FirstOrDefault(),
+                        varinats = variants.ToList()
+                    };
+                    detailslst.Add(details);
+                }
+            }
+            return detailslst;
+        }
+        public async Task LoadBannerImage(string gameCode)
+        {
+            try
+            {
+                var selectedgamecode = GlobalSettings.SelectedGame;
+                var service = new GameService(secureStorage);
+                var games = await service.GetGamesAsync();
+
+                var selectedgame = games.FirstOrDefault(item => item.GameCode == selectedgamecode);
+                if (selectedgame != null)
+                {
+                    Debug.WriteLine($"Home Best Deals Image for {gameCode}: {selectedgame.HomeBestDealsImage}");
+                    HomeBestDealsImage = selectedgame.HomeBestDealsImage;
+                    // Force property change notification
+                    OnPropertyChanged(nameof(HomeBestDealsImage));
+                }
+                else
+                {
+                    Debug.WriteLine($"No game found with game code: {gameCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading banner image: {ex.Message}");
+            }
+        }
+
         public void OnUploadButtonClicked(List<CardDetailViewModel> list)
         {
-            
+
         }
 
 
-             private void ToggleFavorite(Product product)
+        private void ToggleFavorite(Product product)
         {
             if (product == null) return;
 
@@ -413,11 +728,10 @@ namespace CardGameCorner.ViewModels
             }
         }
 
-        private void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        public void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(GlobalSettings.SelectedLanguage))
             {
-                // Update localized strings when language changes
                 UpdateLocalizedStrings();
             }
         }
@@ -427,14 +741,21 @@ namespace CardGameCorner.ViewModels
             // Ensure these are called on the main thread
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                SearchText = AppResources.Search; // Localized string for "Search"
-                ScanText = AppResources.Scan_with_camera; // Localized string for "Scan with camera"
+                SearchText = AppResources.Search;
+                ScanText = AppResources.Scan_with_camera;
                 ErrorMessage = AppResources.ErrorMessage;
+                NotFound = AppResources.NoResultsFound;
+                NotFoundProduct = AppResources.notFoundProduct;
+                TryAgain = AppResources.tryAgain;
 
                 // Trigger property changed events to update UI
                 OnPropertyChanged(nameof(SearchText));
                 OnPropertyChanged(nameof(ScanText));
                 OnPropertyChanged(nameof(ErrorMessage));
+                OnPropertyChanged(nameof(NotFound));
+                OnPropertyChanged(nameof(NotFoundProduct));
+                OnPropertyChanged(nameof(TryAgain));
+
             });
         }
 
@@ -479,7 +800,7 @@ namespace CardGameCorner.ViewModels
             }
         }
 
-        private  void UpdateProducts(List<Product> products, bool isSearching)
+        private void UpdateProducts(List<Product> products, bool isSearching)
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
@@ -501,7 +822,7 @@ namespace CardGameCorner.ViewModels
                     }
                     Products.Add(product);
                 }
-                 LoadFavorites();
+                LoadFavorites();
 
                 NoResultsFound = false;
             });
@@ -545,7 +866,7 @@ namespace CardGameCorner.ViewModels
         {
             try
             {
-              
+
                 using var skiaImage = SKBitmap.Decode(inputStream);
                 if (skiaImage == null)
                     throw new Exception("Failed to decode the input image.");
@@ -763,7 +1084,7 @@ namespace CardGameCorner.ViewModels
         }
         public async Task<ApiResponse_Card> UploadImageAsync(Stream imageStream)
         {
-            
+
             var ApiResponse_Card = await _scanCardService.UploadImageAsync(imageStream);
 
             return ApiResponse_Card;
@@ -782,8 +1103,8 @@ namespace CardGameCorner.ViewModels
 
         private async Task LoadFavorites()
         {
-          
-          
+
+
             var favoriteProducts = FavouriteService.GetFavorites();
 
             // Set the IsFavorite property for each product based on stored favorites

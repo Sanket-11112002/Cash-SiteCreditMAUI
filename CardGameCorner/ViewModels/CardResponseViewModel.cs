@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CardGameCorner.ViewModels
 {
-    
+
 
     public class ProductVariant1
     {
@@ -17,11 +17,14 @@ namespace CardGameCorner.ViewModels
         public string Condition { get; set; }
         public string Foil { get; set; }
         public string Language { get; set; }
-        public double Price { get; set; }
-        public double BuyList { get; set; }
+        public decimal Price { get; set; }
+        //  public int Price { get; set; }
+        public decimal BuyList { get; set; }
+        //   public int BuyList { get; set; }
         public int BuyListLock { get; set; }
         public bool NoBuyList { get; set; }
         public int Quantity { get; set; }
+        public bool Evaluation { get; set; }
     }
 
     public class Product1
@@ -71,7 +74,7 @@ namespace CardGameCorner.ViewModels
         public int Total { get; set; }
     }
 
-   
+
 
 
     public class ProductVariantConverter : JsonConverter<List<ProductVariant1>>

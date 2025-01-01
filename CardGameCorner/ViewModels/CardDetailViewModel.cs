@@ -1,11 +1,9 @@
-﻿
-using CardGameCorner.Models;
+﻿using CardGameCorner.Models;
 using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
 using CardGameCorner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Newtonsoft.Json;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -13,7 +11,7 @@ using System.Windows.Input;
 
 namespace CardGameCorner.ViewModels
 {
-    public partial class CardDetailViewModel : ObservableObject,INotifyPropertyChanged
+    public partial class CardDetailViewModel : ObservableObject, INotifyPropertyChanged
     {
         private readonly IScanCardService _service;
         private CardModel _card;
@@ -58,12 +56,10 @@ namespace CardGameCorner.ViewModels
         public List<string> languages;
 
         [ObservableProperty]
-        public List<string> conditions; 
+        public List<string> conditions;
 
         //[ObservableProperty]
         //public string selectedLanguage;  
-
-
 
         //[ObservableProperty]
         //public string selectedCondition;
@@ -76,7 +72,7 @@ namespace CardGameCorner.ViewModels
 
         [ObservableProperty]
         public string done;
-        
+
         [ObservableProperty]
         public string chooseLang;
 
@@ -85,6 +81,9 @@ namespace CardGameCorner.ViewModels
 
         [ObservableProperty]
         public string edition;
+
+        //[ObservableProperty]
+        //public string ProductId;
 
         [ObservableProperty]
         public string reverse;
@@ -113,7 +112,7 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         public string loginText;
 
-    
+
         [ObservableProperty]
         public string continueText;
         public string sku;
@@ -128,28 +127,40 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         public string successAddedToListTitle;
 
+        public List<ProductVariant1> varinats;
+
+
         private string _selectedLanguage;
+        private int _productId;
         private string _selectedCondition;
         private bool _isFoil;
         private bool _isFirstEdition;
         private bool _isReverse;
         private decimal _buylist;
         private decimal _siteCredit;
+        private bool _isEditionVisibility;
+        private bool _isReverseVisibility;
+        private bool _isFoilVisibility;
+        private bool _evalution;
+        //  private bool _isReverse;
 
         // The selected language
         [ObservableProperty]
         public string successAddedToListMessage;
 
         [ObservableProperty]
+        public string successUpdateToListMessage;
+
+        [ObservableProperty]
         public string errorAddProductTitle;
-        private ObservableCollection<CardDetailViewModel> ?_cards;
+        private ObservableCollection<CardDetailViewModel>? _cards;
         private CardDetailViewModel _selectedCard;
 
         public ObservableCollection<CardDetailViewModel> Cards
         {
             get => _cards;
             set => SetProperty(ref _cards, value);
-            
+
         }
 
         public CardDetailViewModel SelectedCard
@@ -165,6 +176,19 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private string gameImageUrl;
 
+        //[ObservableProperty]
+        //public Dictionary<string, List<string>> LanguageConditionsMap;
+
+        //private Dictionary<string, List<string>> _languageConditionsMap;
+        [JsonProperty("languageConditionsMap")]
+        public Dictionary<string, List<string>> LanguageConditionsMap { get; set; }
+
+        [ObservableProperty]
+        private bool isEditMode;
+
+        [ObservableProperty]
+        private string actionButtonText;
+
         public CardDetailViewModel()
         {
             UpdateLocalizedStrings();
@@ -176,23 +200,48 @@ namespace CardGameCorner.ViewModels
             var scanserivc = new ScanCardService();
             _service = scanserivc;
 
-            
-            Languages = new List<string> { "Italiano", "English" };
+            //Languages = new List<string> { "Italiano", "English" };
             Conditions = new List<string>(); // Initially empty
             // Initialize commands
             //   AddToListCommand = new Command(ExecuteAddToList);
             GoBackCommand = new Command(ExecuteGoBack);
             DoneCommand = new Command(ExecuteDone);
-
-            
-            // Initialize the list of languages (this could come from a service or API)
-           
-            SelectedLanguage = "Choose Lanugage";
+            // SelectedLanguage = "Choose Lanugage";
             InitializeLocalizedErrorMessages();
+
+            // Set default action button text
+            ActionButtonText = AppResources.AddToList;
         }
+        public void InitializeEditMode(bool isEditing)
+        {
+            IsEditMode = isEditing;
+            ActionButtonText = isEditing ? AppResources.UpdateList : AppResources.AddToList;
+        }
+        //public void RefreshDetails(string detailsJson)
+        //{
+        //    var viewModelList = JsonConvert.DeserializeObject<List<CardDetailViewModel>>(detailsJson);
+        //    if (viewModelList != null)
+        //    {
+        //        foreach (var item in viewModelList)
+        //        {
+        //            item.Languages = item.LanguageConditionsMap.Keys.ToList();
+        //            item.Conditions = item.LanguageConditionsMap.Values
+        //                .SelectMany(conditions => conditions)
+        //                .Distinct()
+        //                .ToList();
+        //        }
+        //        Cards = new ObservableCollection<CardDetailViewModel>(viewModelList);
+        //        SelectedCard = Cards.FirstOrDefault();
+
+        //    }
+        //}
+
+        // This method updates the conditions based on the selected language
+
 
         private void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+
             if (e.PropertyName == nameof(GlobalSettings.SelectedLanguage))
             {
                 // Update localized strings when language changes
@@ -234,11 +283,12 @@ namespace CardGameCorner.ViewModels
             ErrorRetrieveTokenMessage = AppResources.ErrorRetrieveToken;
             SuccessAddedToListTitle = AppResources.Success;
             SuccessAddedToListMessage = AppResources.ProductAddedToList;
+            SuccessUpdateToListMessage = AppResources.ProductUpdated;
             ErrorAddProductTitle = AppResources.ErrorAddProduct;
             ErrorRetrieveProductTitle = AppResources.ErrorRetrieveProduct;
         }
 
-        private void UpdateLocalizedStrings()
+        public void UpdateLocalizedStrings()
         {
             // Ensure these are called on the main thread
             MainThread.BeginInvokeOnMainThread(() =>
@@ -253,6 +303,7 @@ namespace CardGameCorner.ViewModels
                 Credit = AppResources.Site_credit;
                 QuantityLang = AppResources.Quantity;
                 AddToList = AppResources.AddToList;
+                ActionButtonText = IsEditMode ? AppResources.UpdateList : AppResources.AddToList;
                 CardDetails = AppResources.Card_Details;
 
 
@@ -267,6 +318,7 @@ namespace CardGameCorner.ViewModels
                 OnPropertyChanged(nameof(Credit));
                 OnPropertyChanged(nameof(QuantityLang));
                 OnPropertyChanged(nameof(AddToList));
+                OnPropertyChanged(nameof(ActionButtonText));
                 OnPropertyChanged(nameof(CardDetails));
                 OnPropertyChanged(nameof(LoginRequiredTitle));
                 OnPropertyChanged(nameof(LoginRequiredMessage));
@@ -277,14 +329,65 @@ namespace CardGameCorner.ViewModels
                 OnPropertyChanged(nameof(ErrorRetrieveTokenMessage));
                 OnPropertyChanged(nameof(SuccessAddedToListTitle));
                 OnPropertyChanged(nameof(SuccessAddedToListMessage));
+                OnPropertyChanged(nameof(SuccessUpdateToListMessage));
                 OnPropertyChanged(nameof(ErrorAddProductTitle));
                 OnPropertyChanged(nameof(ErrorRetrieveProductTitle));
                 // Initialize the list of languages (this could come from a service or API)
-                SelectedLanguage = "Choose Lanugage";
+                // SelectedLanguage = "Choose Lanugage";
             });
         }
 
-       
+        public bool IsEditionVisibility
+        {
+            get => _isEditionVisibility;
+            set
+            {
+                if (_isEditionVisibility != value)
+                {
+                    _isEditionVisibility = value;
+                    OnPropertyChanged(nameof(IsEditionVisibility));
+                }
+            }
+        }
+
+        public int ProductId
+        {
+            get => _productId;
+            set
+            {
+                if (_productId != value)
+                {
+                    _productId = value;
+                    OnPropertyChanged(nameof(IsEditionVisibility));
+                }
+            }
+        }
+
+        public bool IsReverseVisibility
+        {
+            get => _isReverseVisibility;
+            set
+            {
+                if (_isReverseVisibility != value)
+                {
+                    _isReverseVisibility = value;
+                    OnPropertyChanged(nameof(IsReverseVisibility));
+                }
+            }
+        }
+
+        public bool IsFoilVisibility
+        {
+            get => _isFoilVisibility;
+            set
+            {
+                if (_isFoilVisibility != value)
+                {
+                    _isFoilVisibility = value;
+                    OnPropertyChanged(nameof(IsFoilVisibility));
+                }
+            }
+        }
         public string SelectedLanguage
         {
             get => _selectedLanguage;
@@ -294,9 +397,10 @@ namespace CardGameCorner.ViewModels
                 {
                     _selectedLanguage = value;
 
-                    UpdateConditions();
+                    // UpdateConditions();
                     // Update the conditions when language changes
                     OnPropertyChanged();
+                    UpdatePrices();
                 }
             }
         }
@@ -311,9 +415,11 @@ namespace CardGameCorner.ViewModels
                 {
                     _selectedCondition = value;
 
-                   // UpdateConditions();
-                    FetchPricesAsync();
+                    // UpdateConditions();
+                    // FetchPricesAsync();
+                    //  UpdatePrices(SelectedLanguage, selectedCondition, IsFoil);
                     OnPropertyChanged();
+                    UpdatePrices();
                 }
             }
         }
@@ -326,7 +432,7 @@ namespace CardGameCorner.ViewModels
                 if (_buylist != value)
                 {
                     _buylist = value;
-                  //  UpdateConditions(); // Update the conditions when language changes
+                    //  UpdateConditions(); // Update the conditions when language changes
                     OnPropertyChanged();
                 }
             }
@@ -340,26 +446,64 @@ namespace CardGameCorner.ViewModels
                 {
                     _siteCredit = value;
                     //  UpdateConditions();
-                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(siteCredit));
+                }
+            }
+        }
+        private bool _isSiteCredit;
+        private bool _isCash;
+        public bool IsSiteCredit
+        {
+            get => _isSiteCredit;
+            set
+            {
+                if (_isSiteCredit != value)
+                {
+                    _isSiteCredit = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
+        public bool IsCash
+        {
+            get => _isCash;
+            set
+            {
+                if (_isCash != value)
+                {
+                    _isCash = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool Evalution
+        {
+            get => _evalution;
+            set
+            {
+                if (_evalution != value)
+                {
+                    _evalution = value;
+                    //  UpdateConditions();
+                    OnPropertyChanged(nameof(Evalution));
+                }
+            }
+        }
         public void UpdateConditions()
         {
-            //if (SelectedLanguage == "Italiano")
-            //{
-            //    Conditions = new List<string> { "NM", "HP" };
-            //}
-            //else if (SelectedLanguage == "English")
-            //{
-            //    Conditions = new List<string> { "NM" };
-            //}
-            //else
-            //{
-            //    Conditions = new List<string>(); // Default empty list if language is not selected
-            //}
-            //OnPropertyChanged(nameof(Conditions)); // Notify UI that Conditions has been updated
+            if (!string.IsNullOrEmpty(SelectedLanguage) && LanguageConditionsMap.ContainsKey(SelectedLanguage))
+            {
+                Conditions = LanguageConditionsMap[SelectedLanguage];
+                selectedCondition = Conditions.FirstOrDefault(); // Set the first condition as default
+            }
+            else
+            {
+                //Conditions = new List<string>(); // Clear conditions if no language is selected
+                // selectedCondition = null;
+            }
+            // OnPropertyChanged(nameof(Conditions));
         }
 
         public bool IsFirstEdition
@@ -371,7 +515,7 @@ namespace CardGameCorner.ViewModels
                 {
                     _isFirstEdition = value;
                     OnPropertyChanged();
-                    FetchPricesAsync(); 
+                    FetchPricesAsync();
                 }
             }
         }
@@ -399,12 +543,40 @@ namespace CardGameCorner.ViewModels
                 {
                     _isFoil = value;
                     OnPropertyChanged();
-                    FetchPricesAsync(); // Call the API when Foil toggle is changed
+                    UpdatePrices();
                 }
             }
-            
+
+        }
+        private bool _isNoticeVisible1;
+        private bool _isNoticeVisible2;
+        private string _noticeMessage;
+
+        public bool IsNoticeVisible1
+        {
+            get => _isNoticeVisible1;
+            set
+            {
+                if (_isNoticeVisible1 != value)
+                {
+                    _isNoticeVisible1 = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
+        public bool IsNoticeVisible2
+        {
+            get => _isNoticeVisible2;
+            set
+            {
+                if (_isNoticeVisible2 != value)
+                {
+                    _isNoticeVisible2 = value;
+                    OnPropertyChanged(nameof(IsNoticeVisible2));
+                }
+            }
+        }
         public ICommand GoBackCommand
         {
             get => _goBackCommand;
@@ -425,7 +597,7 @@ namespace CardGameCorner.ViewModels
         {
             //  await Application.Current.MainPage.Navigation.PopAsync();
             //  await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
-              //await Shell.Current.GoToAsync(nameof(SearchQueryPage));
+            //await Shell.Current.GoToAsync(nameof(SearchQueryPage));
             await Shell.Current.GoToAsync("..", true);
             // await Shell.Current.Navigation.PopAsync();
 
@@ -437,8 +609,8 @@ namespace CardGameCorner.ViewModels
             {
                 // Reset navigation stack to ScanPage
                 await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
-               // await Shell.Current.GoToAsync("//MyListPage");
-               // await Shell.Current.GoToAsync(nameof(CardDetailPage));// Navigate to ScanPage tab
+                                                                 // await Shell.Current.GoToAsync("//MyListPage");
+                                                                 // await Shell.Current.GoToAsync(nameof(CardDetailPage));// Navigate to ScanPage tab
             }
             catch (Exception ex)
             {
@@ -470,7 +642,7 @@ namespace CardGameCorner.ViewModels
                     _quantity = value;
                     OnPropertyChanged();
                     // Refresh command can execute state when quantity changes
-                   // (AddToListCommand as Command)?.ChangeCanExecute();
+                    // (AddToListCommand as Command)?.ChangeCanExecute();
                 }
             }
         }
@@ -490,89 +662,89 @@ namespace CardGameCorner.ViewModels
 
         private async Task FetchPricesAsync()
         {
-            var newvariable = new ScanCardService();
-           // _service = newvariable;
-            var cardetailrequest = new cardDetailRequest();
+            // var newvariable = new ScanCardService();
+            // // _service = newvariable;
+            // var cardetailrequest = new cardDetailRequest();
 
-            var response = new ListBoxService();
+            // var response = new ListBoxService();
 
-        
 
-            // Fetch Language List
-            var lnglst = await response.GetLanguagesAsync();
-            if (lnglst == null || !lnglst.Any())
-            {
-                Console.WriteLine("Language list is null or empty.");
-                return;
-            }
 
-            // Fetch Condition List
-            var conditinlst = await response.GetConditionsAsync();
-            if (conditinlst == null || !conditinlst.Any())
-            {
-                Console.WriteLine("Condition list is null or empty.");
-                return;
-            }
+            // // Fetch Language List
+            // var lnglst = await response.GetLanguagesAsync();
+            // if (lnglst == null || !lnglst.Any())
+            // {
+            //     Console.WriteLine("Language list is null or empty.");
+            //     return;
+            // }
 
-            // Find Language ID
-            var selectedLangId = lnglst
-                .Where(item => item.Language == SelectedLanguage)
-                .Select(item => item.Id)
-                .FirstOrDefault();
+            // // Fetch Condition List
+            // var conditinlst = await response.GetConditionsAsync();
+            // if (conditinlst == null || !conditinlst.Any())
+            // {
+            //     Console.WriteLine("Condition list is null or empty.");
+            //     return;
+            // }
 
-            // Find Condition ID
-            var selectedconditinId = conditinlst
-                .Where(item => item.Condition == selectedCondition)
-                .Select(item => item.Id)
-                .FirstOrDefault();
+            // // Find Language ID
+            // var selectedLangId = lnglst
+            //     .Where(item => item.Language == SelectedLanguage)
+            //     .Select(item => item.Id).FirstOrDefault();
+            // // Find Condition ID
+            // var selectedconditinId = conditinlst
+            //     .Where(item => item.Condition == selectedCondition)
+            //     .Select(item => item.Id)
+            //     .FirstOrDefault();
 
-            cardetailrequest.condition = int.TryParse(selectedconditinId, out int conditionId) ? conditionId : 0;
-            cardetailrequest.language = int.TryParse(selectedLangId, out int langId) ? langId : 0;
-            cardetailrequest.IsFirstEdition = IsFirstEdition;
-            cardetailrequest.idCategory = idCategory;
-            cardetailrequest.idMetaproduct = idMetaProductId;
-            cardetailrequest.IsFoil = "50";
-            cardetailrequest.sku = "MEW0199";
-            //cardetailrequest.condition = 1362;
-            //cardetailrequest.language = 71;
-            //cardetailrequest.IsFirstEdition = false;
-            //cardetailrequest.idCategory = 3534;
-            //cardetailrequest.idMetaproduct = 421085;
-            //cardetailrequest.IsFoil = "50";
-            //cardetailrequest.sku = "MEW0199";
+            // //cardetailrequest.condition = int.TryParse(selectedconditinId, out int conditionId) ? conditionId : 0;
+            // cardetailrequest.condition = selectedconditinId;
+            //// cardetailrequest.language = int.TryParse(selectedLangId, out int langId) ? langId : 0;
+            // cardetailrequest.language = selectedLangId;
+            // cardetailrequest.IsFirstEdition = IsFirstEdition;
+            // cardetailrequest.idCategory = idCategory;
+            // cardetailrequest.idMetaproduct = idMetaProductId;
+            // cardetailrequest.IsFoil = "50";
+            // cardetailrequest.sku = Id;
+            // //cardetailrequest.condition = 1362;
+            // //cardetailrequest.language = 71;
+            // //cardetailrequest.IsFirstEdition = false;
+            // //cardetailrequest.idCategory = 3534;
+            // //cardetailrequest.idMetaproduct = 421085;
+            // //cardetailrequest.IsFoil = "50";
+            // //cardetailrequest.sku = "MEW0199";
 
-            // Debugging: Print the request object to validate values
-            Console.WriteLine($"Request: {System.Text.Json.JsonSerializer.Serialize(cardetailrequest)}");
+            // // Debugging: Print the request object to validate values
+            // Console.WriteLine($"Request: {System.Text.Json.JsonSerializer.Serialize(cardetailrequest)}");
 
-          
 
-            var result = await newvariable.FetchBuyListPriceAsync(cardetailrequest);
-            if (result != null)
-            {
-                Console.WriteLine("Result: " + result);
 
-                buyList = 89;
-                siteCredit = result.SiteCredit;
+            // var result = await newvariable.FetchBuyListPriceAsync(cardetailrequest);
+            // if (result != null)
+            // {
+            //     Console.WriteLine("Result: " + result);
 
-                if (result.evaluation==true)
-                {
-                    await Application.Current.MainPage.DisplayAlert("",
-                      "You can add the card to the shopping cart, we will make an evaluation and send you a message", "OK");
-                }
-                else if(result.evaluation=false && result.buylist == 0)
-                {
-                    await Application.Current.MainPage.DisplayAlert("",
-                     "We buy this Card in Bulk (low value cards)", "OK");
-                }
-                else
-                {
+            //     buyList = 89;
+            //     siteCredit = result.SiteCredit;
 
-                }
-            }
-            else
-            {
-                Console.WriteLine("No result returned from FetchBuyListPriceAsync.");
-            }
+            //     if (result.evaluation==true)
+            //     {
+            //         await Application.Current.MainPage.DisplayAlert("",
+            //           "You can add the card to the shopping cart, we will make an evaluation and send you a message", "OK");
+            //     }
+            //     else if(result.evaluation=false && result.buylist == 0)
+            //     {
+            //         await Application.Current.MainPage.DisplayAlert("",
+            //          "We buy this Card in Bulk (low value cards)", "OK");
+            //     }
+            //     else
+            //     {
+
+            //     }
+            // }
+            // else
+            // {
+            //     Console.WriteLine("No result returned from FetchBuyListPriceAsync.");
+            // }
         }
 
         // Implementing INotifyPropertyChanged
@@ -601,9 +773,112 @@ namespace CardGameCorner.ViewModels
 
 
             // Navigate using GoToAsync with the serialized data as a query parameter
-              await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
+            await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
 
         }
+
+        public ProductVariant1 GetFilteredProduct(string language, string condition, bool isFoil)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(language))
+                    throw new ArgumentNullException(nameof(language), "Language cannot be null or empty.");
+
+                if (string.IsNullOrWhiteSpace(condition))
+                    throw new ArgumentNullException(nameof(condition), "Condition cannot be null or empty.");
+
+                if (varinats == null || !varinats.Any())
+                    throw new InvalidOperationException("The product variants list is null or empty.");
+
+                return varinats.FirstOrDefault(p =>
+                    p.Language.Equals(language, StringComparison.OrdinalIgnoreCase) &&
+                    p.Condition.Equals(condition, StringComparison.OrdinalIgnoreCase) &&
+                    (isFoil ? !string.IsNullOrEmpty(p.Foil) : string.IsNullOrEmpty(p.Foil))
+                );
+            }
+            catch (ArgumentNullException ex)
+            {
+                Console.WriteLine($"Argument error: {ex.Message}");
+                // You can log the exception or rethrow it if needed
+                throw;
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine($"Operation error: {ex.Message}");
+                // You can log the exception or return a default value
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected error: {ex.Message}");
+                // Log or rethrow the exception depending on your requirements
+                throw;
+            }
+        }
+
+        public void UpdatePrices()
+        {
+            if (string.IsNullOrEmpty(SelectedLanguage) || string.IsNullOrEmpty(selectedCondition))
+            {
+                Console.WriteLine("Language or Condition not selected.");
+                return;
+            }
+
+            var filteredProduct = GetFilteredProduct(SelectedLanguage, selectedCondition, IsFoil);
+
+            if (filteredProduct != null)
+            {
+                if (filteredProduct.BuyList == 0)
+                {
+                    if (filteredProduct.Evaluation)
+                    {
+                        IsNoticeVisible1 = true;
+                        IsNoticeVisible2 = false;
+                        IsSiteCredit = false;
+                        IsCash = false;
+                        ProductId = filteredProduct.IdProduct;
+                    }
+                    else
+                    {
+                        IsNoticeVisible2 = true;
+                        IsNoticeVisible1 = false;
+                        IsSiteCredit = false;
+                        IsCash = false;
+                        ProductId = filteredProduct.IdProduct;
+                    }
+                }
+                else
+                {
+                    if (filteredProduct.Evaluation)
+                    {
+                        siteCredit = filteredProduct.Price;
+                        buyList = filteredProduct.BuyList;
+                        IsSiteCredit = false;
+                        IsCash = false;
+                        IsNoticeVisible2 = false;
+                        IsNoticeVisible1 = false;
+                        ProductId = filteredProduct.IdProduct;
+                    }
+                    else
+                    {
+
+                    }
+                }
+
+            }
+            else
+            {
+                siteCredit = 0;
+                buyList = 0;
+                IsSiteCredit = true;
+                IsCash = true;
+                IsNoticeVisible2 = false;
+                IsNoticeVisible1 = false;
+
+            }
+        }
+
+
 
 
     }

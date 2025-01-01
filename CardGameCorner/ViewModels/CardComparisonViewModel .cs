@@ -68,6 +68,12 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private string gameImageUrl;
 
+        [ObservableProperty]
+        private int language;
+
+        [ObservableProperty]
+        private int condition;
+
 
         //public CardComparisonViewModel()
         //{
@@ -141,7 +147,7 @@ namespace CardGameCorner.ViewModels
             // Ensure these are called on the main thread
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                YourPicture = AppResources.Your_Picture; 
+                YourPicture = AppResources.Your_Picture;
                 SearchResult = AppResources.Search_Result;
                 CardComfiredMsg = AppResources.Is_this_Your_Card_;
                 YesAddList = AppResources.Yes__Add_to_my_list;
@@ -221,6 +227,9 @@ namespace CardGameCorner.ViewModels
 
                     // Assuming you want the first image if there are multiple images
                     searchResultImage = "https://www.cardgamecorner.com" + product.Image;
+                    language = product.Language;
+                    Condition = product.Condition;
+
 
                     // You can add additional handling here if you want to show more than one product's information
                     // Example: you could store each product's data in a list or display them differently.
@@ -297,7 +306,7 @@ namespace CardGameCorner.ViewModels
 
 
         //                await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
-                           
+
 
 
 
@@ -321,88 +330,184 @@ namespace CardGameCorner.ViewModels
         //    }
         //}
 
+        //[RelayCommand]
+        //private async Task ConfirmCard()
+        //{
+        //    try
+        //    {
+        //        var detaillst = new List<CardDetailViewModel>();
+        //        // Ensure the responseContent is not null
+        //        if (responseContent?.Products?.Count > 0)
+        //        {
+        //            // Iterate through all products in the list
+        //            foreach (var product in responseContent.Products)
+        //            {
+        //                // Deserialize the Variants JSON string into a list of ProductVariant1 objects
+        //                var variants = product.Variants;
+
+        //                if (variants != null)
+        //                {
+        //                    // Extract distinct languages and conditions
+        //                    var distinctLanguages = variants.Select(v => v.Language).Distinct().ToList();
+        //                    var distinctConditions = variants.Select(v => v.Condition).Distinct().ToList();
+
+        //                    // For testing, log the results to the console
+        //                    Console.WriteLine("Languages:");
+        //                    foreach (var lang in distinctLanguages)
+        //                    {
+        //                        Console.WriteLine(lang);
+        //                    }
+
+        //                    Console.WriteLine("Conditions:");
+        //                    foreach (var condition in distinctConditions)
+        //                    {
+        //                        Console.WriteLine(condition);
+        //                    }
+
+        //                    // Prepare the card details for navigation (for each product)
+        //                    var details = new CardDetailViewModel()
+        //                    {
+        //                        Languages = distinctLanguages,
+        //                       // Conditions = distinctConditions,
+        //                        Conditions = distinctConditions,
+        //                        Name = product.Model, 
+        //                        Rarity = product.Rarity,
+        //                        Category = product.Category,
+        //                        ImageUrl = "https://www.cardgamecorner.com" + product.Image,
+        //                        game = product.Game,
+        //                        idMetaProductId=product.IdMetaproduct,
+        //                        IdCategory=product.IdCategory,
+        //                        IsFoil = product.IsFoil,
+
+
+        //                    };
+        //                    detaillst.Add(details);
+
+
+        //                    string detailsJson = JsonConvert.SerializeObject(detaillst);
+
+        //                    // Store the serialized string in SecureStorage
+        //                    await SecureStorage.SetAsync("CardDetailsObject", detailsJson);
+
+        //                    // Navigate to the CardDetailsPage for each product
+        //                    // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
+
+
+
+        //                    // Navigate using GoToAsync with the serialized data as a query parameter
+        //                    await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
+        //                }
+        //            }
+
+        //            var detailsJsoncarddetails = JsonConvert.SerializeObject(detaillst);  // Ensure you have 'Newtonsoft.Json' or other serializer for this
+
+
+        //            // Navigate using GoToAsync with the serialized data as a query parameter
+        //            await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJsoncarddetails)}");
+        //            // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(detaillst));
+
+
+        //            // Show success confirmation
+        //            await Application.Current.MainPage.DisplayAlert(AppResources.Success,
+        //                AppResources.successmsg,AppResources.OK);
+        //        }
+        //        else
+        //        {
+        //            await Application.Current.MainPage.DisplayAlert("Error",
+        //                "No product data found in the response!", "OK");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Handle errors gracefully
+        //        await Application.Current.MainPage.DisplayAlert("Error",
+        //            $"An error occurred: {ex.Message}", "OK");
+        //    }
+        //}
+
+
         [RelayCommand]
         private async Task ConfirmCard()
         {
             try
             {
+                var response = new ListBoxService();
                 var detaillst = new List<CardDetailViewModel>();
-                // Ensure the responseContent is not null
+                var conditinlst = await response.GetConditionsAsync();
+                var lnglst = await response.GetLanguagesAsync();
+
+                // Ensure responseContent and its Products are not null or empty
                 if (responseContent?.Products?.Count > 0)
                 {
                     // Iterate through all products in the list
                     foreach (var product in responseContent.Products)
                     {
-                        // Deserialize the Variants JSON string into a list of ProductVariant1 objects
                         var variants = product.Variants;
 
                         if (variants != null)
                         {
-                            // Extract distinct languages and conditions
+                            // Map languages to their respective distinct conditions
+                            var languageConditionsMap = variants
+                                .GroupBy(v => v.Language) // Group variants by Language
+                                .ToDictionary(
+                                    group => group.Key,                     // Language as key
+                                    group => group.Select(v => v.Condition) // Select Conditions for each language
+                                                 .Distinct()               // Get distinct conditions
+                                                 .ToList()                 // Convert to List
+                                );
                             var distinctLanguages = variants.Select(v => v.Language).Distinct().ToList();
                             var distinctConditions = variants.Select(v => v.Condition).Distinct().ToList();
 
-                            // For testing, log the results to the console
-                            Console.WriteLine("Languages:");
-                            foreach (var lang in distinctLanguages)
+                            // Log the results to the console for testing
+                            Console.WriteLine("Language-Condition Mapping:");
+                            foreach (var kvp in languageConditionsMap)
                             {
-                                Console.WriteLine(lang);
+                                Console.WriteLine($"Language: {kvp.Key}");
+                                Console.WriteLine("Conditions:");
+                                foreach (var condition in kvp.Value)
+                                {
+                                    Console.WriteLine($"  {condition}");
+                                }
                             }
 
-                            Console.WriteLine("Conditions:");
-                            foreach (var condition in distinctConditions)
-                            {
-                                Console.WriteLine(condition);
-                            }
-
-                            // Prepare the card details for navigation (for each product)
                             var details = new CardDetailViewModel()
                             {
+                                // id= int.Parse(product.Id),
                                 Languages = distinctLanguages,
-                               // Conditions = distinctConditions,
                                 Conditions = distinctConditions,
-                                Name = product.Model, 
+                                Name = product.Model,
                                 Rarity = product.Rarity,
                                 Category = product.Category,
                                 ImageUrl = "https://www.cardgamecorner.com" + product.Image,
                                 game = product.Game,
-                                idMetaProductId=product.IdMetaproduct,
-                                IdCategory=product.IdCategory,
-                                IsFoil = product.IsFoil
+                                LanguageConditionsMap = languageConditionsMap,
+                                //IsFirstEdition=product.Variants.Any(v => !string.IsNullOrEmpty(v.FirstEdition)), // Check if any variant is marked as FirstEdition
+                                SelectedLanguage = lnglst.Where(item => item.Id == product.Language).Select(item => item.Language).FirstOrDefault(),
+                                selectedCondition = conditinlst.Where(item => item.Id == product.Condition).Select(item => item.Condition).FirstOrDefault(),
+                                varinats = variants.ToList()
+
 
                             };
                             detaillst.Add(details);
-
-
-                            string detailsJson = JsonConvert.SerializeObject(detaillst);
-
-                            // Store the serialized string in SecureStorage
-                            await SecureStorage.SetAsync("CardDetailsObject", detailsJson);
-
-                            // Navigate to the CardDetailsPage for each product
-                            // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(details));
-                                    
-
-
-                            // Navigate using GoToAsync with the serialized data as a query parameter
-                            await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
                         }
                     }
 
-                    var detailsJsoncarddetails = JsonConvert.SerializeObject(detaillst);  // Ensure you have 'Newtonsoft.Json' or other serializer for this
+                    // Serialize the details list into JSON
+                    string detailsJson = JsonConvert.SerializeObject(detaillst);
 
+                    // Store the serialized string in SecureStorage
+                    await SecureStorage.SetAsync("CardDetailsObject", detailsJson);
 
-                    // Navigate using GoToAsync with the serialized data as a query parameter
-                    await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJsoncarddetails)}");
-                    // await Application.Current.MainPage.Navigation.PushAsync(new CardDetailPage(detaillst));
-
+                    // Navigate to the CardDetailsPage with the serialized data
+                    await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
 
                     // Show success confirmation
                     await Application.Current.MainPage.DisplayAlert(AppResources.Success,
-                        AppResources.successmsg,AppResources.OK);
+                        AppResources.successmsg, AppResources.OK);
                 }
                 else
                 {
+                    // Handle case where no product data is found
                     await Application.Current.MainPage.DisplayAlert("Error",
                         "No product data found in the response!", "OK");
                 }

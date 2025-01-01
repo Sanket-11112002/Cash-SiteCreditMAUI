@@ -170,6 +170,9 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private string continueText;
 
+        [ObservableProperty]
+        private string userName;
+
         public MyAccountViewModel(IMyAccountService myAccountService, ISecureStorage secureStorage)
         {
             UpdateLocalizedStrings();
@@ -212,17 +215,18 @@ namespace CardGameCorner.ViewModels
             // Ensure these are called on the main thread
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                Email = AppResources.Email; 
-                Name = AppResources.Name; 
+                UserName = AppResources.UserName;
+                Email = AppResources.Email;
+                Name = AppResources.Name;
                 LastName = AppResources.Last_Name;
-                Company = AppResources.Company; 
-                VatNumber = AppResources.VAT_Number; 
+                Company = AppResources.Company;
+                VatNumber = AppResources.VAT_Number;
                 FiscalCode = AppResources.Fiscal_Code;
-                Phone = AppResources.Phone; 
+                Phone = AppResources.Phone;
                 Address = AppResources.Address;
                 Zip = AppResources.ZIP;
-                Province = AppResources.Province; 
-                City = AppResources.City; 
+                Province = AppResources.Province;
+                City = AppResources.City;
                 Country = AppResources.Country;
 
                 EditButtonText = AppResources.Edit;
@@ -234,6 +238,7 @@ namespace CardGameCorner.ViewModels
                 ContinueText = AppResources.Continue;
 
                 // Trigger property changed events to update UI
+                OnPropertyChanged(nameof(UserName));
                 OnPropertyChanged(nameof(Email));
                 OnPropertyChanged(nameof(Name));
                 OnPropertyChanged(nameof(LastName));
@@ -276,8 +281,18 @@ namespace CardGameCorner.ViewModels
         public UserProfile UserProfile
         {
             get => _userProfile;
-            set => SetProperty(ref _userProfile, value);
+
+            set
+            {
+                if (_userProfile != value)
+                {
+                    _userProfile = value;
+                    OnPropertyChanged(nameof(UserProfile));
+                }
+            }
+
         }
+
 
         public async Task<UserProfile> InitializeAsync()
         {
@@ -297,22 +312,7 @@ namespace CardGameCorner.ViewModels
                 // Fetch the user profile
                 UserProfile = await _myAccountService.GetUserProfileAsync();
 
-                // Populate the observable properties with user profile data
-                //if (UserProfile != null)
-                //{
-                //    Email = UserProfile.Email;
-                //    Name = UserProfile.Name;
-                //    LastName = UserProfile.LastName;
-                //    Company = UserProfile.Company;
-                //    VatNumber = UserProfile.VatNumber;
-                //    FiscalCode = UserProfile.FiscalCode;
-                //    Phone = UserProfile.Phone;
-                //    Address = UserProfile.Address;
-                //    Zip = UserProfile.Zip;
-                //    Province = UserProfile.Province;
-                //    City = UserProfile.City;
-                //    Country = UserProfile.Country;
-                //}
+
 
                 return UserProfile;
             }
@@ -339,24 +339,33 @@ namespace CardGameCorner.ViewModels
                     return;
                 }
 
-                // Update UserProfile with current values
-                UserProfile.Email = Email;
-                UserProfile.Name = Name;
-                UserProfile.LastName = LastName;
-                UserProfile.Company = Company;
-                UserProfile.VatNumber = VatNumber;
-                UserProfile.FiscalCode = FiscalCode;
-                UserProfile.Phone = Phone;
-                UserProfile.Address = Address;
-                UserProfile.Zip = Zip;
-                UserProfile.Province = Province;
-                UserProfile.City = City;
-                UserProfile.Country = Country;
+                if (string.IsNullOrWhiteSpace(Email) ||
+                   string.IsNullOrWhiteSpace(Name) ||
+                   string.IsNullOrWhiteSpace(LastName))
+                {
+                    await Shell.Current.DisplayAlert("Validation Error", "Please fill in all required fields", "OK");
+                    return;
+                }
 
                 IsBusy = true;
+
+                // Update UserProfile with current values
+                Console.WriteLine(UserProfile.UserName);
+                Console.WriteLine(UserProfile.City);
+
+                UserProfile.UIc = GlobalSettings.SelectedLanguage switch
+                {
+                    "English" => "en",
+                    "Italian" => "it",
+                    _ => "en" // Default to English if no match
+                };
+
+
                 var result = await _myAccountService.UpdateUserProfileAsync(UserProfile);
                 if (result)
                 {
+                    await InitializeAsync();
+
                     IsEditMode = false;
                     OnPropertyChanged(nameof(IsEditMode));
                     await Shell.Current.DisplayAlert("Success", "Profile updated successfully", "OK");
