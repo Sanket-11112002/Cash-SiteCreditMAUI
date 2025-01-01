@@ -115,7 +115,7 @@
                                            HorizontalTextAlignment="Center" />
                                     <Label Text="{Binding Quantity}" 
                                            FontSize="12" 
-                                           TextColor="White" 
+                                           TextColor="Yellow" 
                                            HorizontalTextAlignment="Center" />
 
                                     <Button Text="{Binding BindingContext.PEdit, Source={x:Reference MyListPageRoot}}" 
