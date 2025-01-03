@@ -118,7 +118,7 @@
                                 </StackLayout>
 
                                 <!-- Quantity and Actions (Column 4) -->
-                                <StackLayout Grid.Column="4" Grid.Row="0" Orientation="Vertical" HorizontalOptions="End" Spacing="5">
+                                <StackLayout Grid.Column="4" Grid.Row="0" Orientation="Vertical" HorizontalOptions="End" Spacing="2" Margin="1">
                                     <Label Text="{Binding BindingContext.QuantityTitle, Source={x:Reference MyListPageRoot}}"
                                            FontSize="12"
                                            TextColor="LightGreen"

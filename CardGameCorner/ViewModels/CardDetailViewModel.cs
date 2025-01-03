@@ -82,6 +82,12 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         public string edition;
 
+        [ObservableProperty]
+        public string lowValueCardNotice;
+
+        [ObservableProperty]
+        public string sendEvalutionNotice;
+
         //[ObservableProperty]
         //public string ProductId;
 
@@ -305,9 +311,12 @@ namespace CardGameCorner.ViewModels
                 AddToList = AppResources.AddToList;
                 ActionButtonText = IsEditMode ? AppResources.UpdateList : AppResources.AddToList;
                 CardDetails = AppResources.Card_Details;
-
+                LowValueCardNotice = AppResources.BuyBulkNotice;
+                SendEvalutionNotice = AppResources.EvalutionNotice;
 
                 // Trigger property changed events to update UI
+                OnPropertyChanged(nameof(LowValueCardNotice));
+                OnPropertyChanged(nameof(SendEvalutionNotice));
                 OnPropertyChanged(nameof(Back));
                 OnPropertyChanged(nameof(Done));
                 OnPropertyChanged(nameof(ChooseLang));

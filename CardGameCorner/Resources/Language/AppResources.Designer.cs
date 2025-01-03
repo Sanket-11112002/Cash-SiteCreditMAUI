@@ -106,6 +106,15 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notice: We buy this card in bulk (low value cards)..
+        /// </summary>
+        internal static string BuyBulkNotice {
+            get {
+                return ResourceManager.GetString("BuyBulkNotice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         internal static string Cancel {
@@ -453,6 +462,15 @@ namespace CardGameCorner.Resources.Language {
         internal static string ErrorTitle {
             get {
                 return ResourceManager.GetString("ErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notice: You can add the card to the shopping cart, we will make an evaluation and send you a message..
+        /// </summary>
+        internal static string EvalutionNotice {
+            get {
+                return ResourceManager.GetString("EvalutionNotice", resourceCulture);
             }
         }
         

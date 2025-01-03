@@ -205,31 +205,41 @@
                                        FontAttributes="Bold"/>
                             </VerticalStackLayout>
                         </Border>
-                        
+
                         <Border 
-                           Grid.ColumnSpan="2"
-                           StrokeThickness="1"
-                           BackgroundColor="#1B3B48"
-                           StrokeShape="RoundRectangle 20" Stroke="White" IsVisible="{Binding SelectedCard.IsNoticeVisible1}">
-                            <HorizontalStackLayout Padding="15"  >
-                                <Label Text="Notice: You can add the card to the shopping cart, we will make an evaluation and send you a message."
-                                              TextColor="White"
-                                              VerticalOptions="Center"
-                                              Margin="10,0,0,0" />
-                            </HorizontalStackLayout>
+                                Grid.ColumnSpan="2"
+                                StrokeThickness="1"
+                                BackgroundColor="#1B3B48"
+                                StrokeShape="RoundRectangle 20" 
+                                Stroke="White" 
+                                IsVisible="{Binding SelectedCard.IsNoticeVisible1}">
+                            <VerticalStackLayout Padding="15">
+                                <Label Text="{Binding SendEvalutionNotice}"
+                                       TextColor="White"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="FillAndExpand"
+                                       Margin="10,0,0,0"
+                                       LineBreakMode="WordWrap" />
+                            </VerticalStackLayout>
                         </Border>
+
                         <Border 
-                              Grid.ColumnSpan="2"
-                                 StrokeThickness="1"
-                                 BackgroundColor="#1B3B48"
-                                 StrokeShape="RoundRectangle 20" Stroke="White" IsVisible="{Binding SelectedCard.IsNoticeVisible2}">
-                            <HorizontalStackLayout Padding="15"  >
-                                <Label Text="Notice: We buy this card in bulk (low value cards)."
-                                TextColor="White"
-                                VerticalOptions="Center"
-                                Margin="10,0,0,0" />
-                            </HorizontalStackLayout>
+                                        Grid.ColumnSpan="2"
+                                        StrokeThickness="1"
+                                        BackgroundColor="#1B3B48"
+                                        StrokeShape="RoundRectangle 20"
+                                        Stroke="White"
+                                        IsVisible="{Binding SelectedCard.IsNoticeVisible2}">
+                            <VerticalStackLayout Padding="15">
+                                <Label Text="{Binding LowValueCardNotice}"
+                                       TextColor="White"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="FillAndExpand"
+                                       Margin="10,0,0,0"
+                                       LineBreakMode="WordWrap" />
+                            </VerticalStackLayout>
                         </Border>
+
 
                     </Grid>
 

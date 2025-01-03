@@ -1,5 +1,4 @@
-﻿
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using CardGameCorner.Models;
@@ -394,7 +393,7 @@ namespace CardGameCorner.ViewModels
                 // Reinitialize dropdowns when language changes
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
-                    await Task.Delay(100); // Small delay to prevent immediate dropdown opening
+                    await Task.Delay(100); 
                     InitializeDropdowns();
                 });
             }

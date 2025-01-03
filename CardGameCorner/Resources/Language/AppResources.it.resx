@@ -522,4 +522,10 @@
   <data name="CardNotFound" xml:space="preserve">
     <value>Carta non trovata</value>
   </data>
+  <data name="BuyBulkNotice" xml:space="preserve">
+    <value>Avviso: acquistiamo questa carta in grandi quantità (carte di basso valore).</value>
+  </data>
+  <data name="EvalutionNotice" xml:space="preserve">
+    <value>Avviso: Puoi aggiungere la carta al carrello, faremo una valutazione e ti invieremo un messaggio.</value>
+  </data>
 </root>

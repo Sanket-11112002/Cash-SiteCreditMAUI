@@ -24,7 +24,13 @@ namespace CardGameCorner.Services
             SelectedGame = _globalSettings.SelectedGame;
             try
             {
-                string url = "https://api.magiccorner.it/api/mclistboxes/pokemon/en";
+                string language = SelectedLanguage == "English" ? "en" : SelectedLanguage == "Italian" ? "it" : "en";
+                string game = SelectedGame;
+
+                // Construct the URL with selected language and game
+                string url = $"https://api.magiccorner.it/api/mclistboxes/{game}/{language}";
+
+                //string url = "https://api.magiccorner.it/api/mclistboxes/pokemon/en";
 
                 using var httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "0d1bb073-9dfb-4c6d-a1c0-1e8f7d5d8e9f");
@@ -76,7 +82,13 @@ namespace CardGameCorner.Services
             SelectedLanguage = _globalSettings.SelectedLanguage;
             SelectedGame = _globalSettings.SelectedGame;
 
-            string url = "https://api.magiccorner.it/api/mclistboxes/pokemon/en";
+            string language = SelectedLanguage == "English" ? "en" : SelectedLanguage == "Italian" ? "it" : "en";
+            string game = SelectedGame;
+
+            // Construct the URL with selected language and game
+            string url = $"https://api.magiccorner.it/api/mclistboxes/{game}/{language}";
+
+            //string url = "https://api.magiccorner.it/api/mclistboxes/pokemon/en";
 
 
             using var httpClient = new HttpClient();
