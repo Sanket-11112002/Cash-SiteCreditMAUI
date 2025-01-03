@@ -1,108 +1,4 @@
-﻿//using System.Collections.ObjectModel;
-//using System.ComponentModel;
-
-//namespace CardGameCorner.ViewModels
-//{
-//    public class PlaceOrderViewModel : INotifyPropertyChanged
-//    {
-//        public event PropertyChangedEventHandler PropertyChanged;
-
-//        private string _selectedContactInfo;
-//        public string SelectedContactInfo
-//        {
-//            get => _selectedContactInfo;
-//            set
-//            {
-//                _selectedContactInfo = value;
-//                OnPropertyChanged(nameof(SelectedContactInfo));
-//            }
-//        }
-
-//        private string _selectedPaymentOption;
-//        public string SelectedPaymentOption
-//        {
-//            get => _selectedPaymentOption;
-//            set
-//            {
-//                _selectedPaymentOption = value;
-//                OnPropertyChanged(nameof(SelectedPaymentOption));
-//                UpdateConditionalFields();
-//            }
-//        }
-
-//        private string _ibanCode;
-//        public string IBANCode
-//        {
-//            get => _ibanCode;
-//            set
-//            {
-//                _ibanCode = value;
-//                OnPropertyChanged(nameof(IBANCode));
-//            }
-//        }
-
-//        private string _paypalEmail;
-//        public string PayPalEmail
-//        {
-//            get => _paypalEmail;
-//            set
-//            {
-//                _paypalEmail = value;
-//                OnPropertyChanged(nameof(PayPalEmail));
-//            }
-//        }
-
-//        public ObservableCollection<string> ContactInfo { get; set; }
-//        public ObservableCollection<string> PaymentMethod { get; set; }
-
-//        private bool _showIBANField;
-//        public bool ShowIBANField
-//        {
-//            get => _showIBANField;
-//            set
-//            {
-//                _showIBANField = value;
-//                OnPropertyChanged(nameof(ShowIBANField));
-//            }
-//        }
-
-//        private bool _showPayPalField;
-//        public bool ShowPayPalField
-//        {
-//            get => _showPayPalField;
-//            set
-//            {
-//                _showPayPalField = value;
-//                OnPropertyChanged(nameof(ShowPayPalField));
-//            }
-//        }
-
-//        public PlaceOrderViewModel()
-//        {
-//            // Static dropdown values
-//            ContactInfo = new ObservableCollection<string> { "Yes, Please Contact me", "Do not contact me" };
-//            PaymentMethod = new ObservableCollection<string> { "Credit for purchase on the website", "Cash (wire transfer)", "Paypal Money Transfer" };
-
-//            // Default values
-//            SelectedContactInfo = ContactInfo[0];
-//            SelectedPaymentOption = PaymentMethod[0];
-//            UpdateConditionalFields();
-//        }
-
-//        private void UpdateConditionalFields()
-//        {
-//            ShowIBANField = SelectedPaymentOption == "Cash (wire transfer)";
-//            ShowPayPalField = SelectedPaymentOption == "Paypal Money Transfer";
-//        }
-
-//        protected virtual void OnPropertyChanged(string propertyName)
-//        {
-//            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-//        }
-//    }
-//}
-
-
+﻿
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -123,6 +19,9 @@ namespace CardGameCorner.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
         public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
+
+        private bool _isInitializing = false;
+        private bool _suppressPropertyChange = false;
 
         [ObservableProperty]
         private string contactedl;
@@ -188,8 +87,11 @@ namespace CardGameCorner.ViewModels
             get => _selectedContactInfo;
             set
             {
-                _selectedContactInfo = value;
-                OnPropertyChanged(nameof(SelectedContactInfo));
+                if (!_isInitializing) // Only update if not initializing
+                {
+                    _selectedContactInfo = value;
+                    OnPropertyChanged(nameof(SelectedContactInfo));
+                }
             }
         }
 
@@ -199,9 +101,12 @@ namespace CardGameCorner.ViewModels
             get => _selectedPaymentOption;
             set
             {
-                _selectedPaymentOption = value;
-                OnPropertyChanged(nameof(SelectedPaymentOption));
-                UpdateConditionalFields();
+                if (!_isInitializing) // Only update if not initializing
+                {
+                    _selectedPaymentOption = value;
+                    OnPropertyChanged(nameof(SelectedPaymentOption));
+                    UpdateConditionalFields();
+                }
             }
         }
 
@@ -277,7 +182,7 @@ namespace CardGameCorner.ViewModels
             ContactInfo = new ObservableCollection<string>();
             PaymentMethod = new ObservableCollection<string>();
 
-            InitializeDropdowns();
+           // InitializeDropdowns();
         }
 
         private async Task ExecutePlaceOrder()
@@ -474,6 +379,7 @@ namespace CardGameCorner.ViewModels
         //        return null;
         //    }
         //}
+
         private string PadBase64String(string base64)
         {
             return base64.PadRight(base64.Length + (4 - base64.Length % 4) % 4, '=');
@@ -485,6 +391,12 @@ namespace CardGameCorner.ViewModels
             {
                 // Update localized strings when language changes
                 UpdateLocalizedStrings();
+                // Reinitialize dropdowns when language changes
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await Task.Delay(100); // Small delay to prevent immediate dropdown opening
+                    InitializeDropdowns();
+                });
             }
         }
 
@@ -530,36 +442,67 @@ namespace CardGameCorner.ViewModels
                 OnPropertyChanged(nameof(Error_OrderFailed));
             });
         }
-        private async void InitializeDropdowns()
+        public async void InitializeDropdowns()
         {
-            // Fetch API values
-            var listboxes = await _listboxService.GetPlaceOrderDetailsAsync(); // Assuming it returns ListBox data
-
-            var contactType = listboxes?.FirstOrDefault(lb => lb.Filter == "contactType");
-            var paymentType = listboxes?.FirstOrDefault(lb => lb.Filter == "paymentType");
-
-            // Populate ContactInfo
-            if (contactType?.Options != null)
+            try
             {
-                foreach (var option in contactType.Options)
-                {
-                    ContactInfo.Add(option.Name);
-                }
-                SelectedContactInfo = ContactInfo.FirstOrDefault();
-            }
+                _isInitializing = true; // Set flag before initialization
 
-            // Populate PaymentMethod
-            if (paymentType?.Options != null)
+                // Clear existing items
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    ContactInfo.Clear();
+                    PaymentMethod.Clear();
+                });
+
+                // Fetch API values
+                var listboxes = await _listboxService.GetPlaceOrderDetailsAsync();
+
+                var contactType = listboxes?.FirstOrDefault(lb => lb.Filter == "contactType");
+                var paymentType = listboxes?.FirstOrDefault(lb => lb.Filter == "paymentType");
+
+                // Populate ContactInfo
+                if (contactType?.Options != null)
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        foreach (var option in contactType.Options)
+                        {
+                            if (!ContactInfo.Contains(option.Name))
+                            {
+                                ContactInfo.Add(option.Name);
+                            }
+                        }
+                        _selectedContactInfo = ContactInfo.FirstOrDefault(); // Directly set the backing field
+                        OnPropertyChanged(nameof(SelectedContactInfo));
+                    });
+                }
+
+                // Populate PaymentMethod
+                if (paymentType?.Options != null)
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        foreach (var option in paymentType.Options)
+                        {
+                            if (!PaymentMethod.Contains(option.Name))
+                            {
+                                PaymentMethod.Add(option.Name);
+                            }
+                        }
+                        _selectedPaymentOption = PaymentMethod.FirstOrDefault(); // Directly set the backing field
+                        OnPropertyChanged(nameof(SelectedPaymentOption));
+                    });
+                }
+
+                UpdateConditionalFields();
+            }
+            finally
             {
-                foreach (var option in paymentType.Options)
-                {
-                    PaymentMethod.Add(option.Name);
-                }
-                SelectedPaymentOption = PaymentMethod.FirstOrDefault();
+                _isInitializing = false; // Reset flag after initialization
             }
-
-            UpdateConditionalFields();
         }
+
 
         private void UpdateConditionalFields()
         {

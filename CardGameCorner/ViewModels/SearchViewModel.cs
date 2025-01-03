@@ -283,6 +283,8 @@ namespace CardGameCorner.ViewModels
         private readonly IScanCardService _scanCardService;
         private readonly ISecureStorage secureStorage;
 
+
+
         public ObservableCollection<Product> Products { get; private set; }
 
         private string _homeBestDealsImage;
@@ -384,6 +386,9 @@ namespace CardGameCorner.ViewModels
 
         [ObservableProperty]
         private string tryAgain;
+
+        [ObservableProperty]
+        private string internettryAgain;
 
         public ICommand ToggleFavoriteCommand { get; }
         public ICommand OnUploadButtonClickedCommand { get; }
@@ -743,15 +748,17 @@ namespace CardGameCorner.ViewModels
             {
                 SearchText = AppResources.Search;
                 ScanText = AppResources.Scan_with_camera;
-                ErrorMessage = AppResources.ErrorMessage;
+                ErrorMessage = AppResources.ErrorTitle;
                 NotFound = AppResources.NoResultsFound;
                 NotFoundProduct = AppResources.notFoundProduct;
                 TryAgain = AppResources.tryAgain;
+                InternettryAgain = AppResources.ErrorMessage;
 
                 // Trigger property changed events to update UI
                 OnPropertyChanged(nameof(SearchText));
                 OnPropertyChanged(nameof(ScanText));
                 OnPropertyChanged(nameof(ErrorMessage));
+                OnPropertyChanged(nameof(InternettryAgain));
                 OnPropertyChanged(nameof(NotFound));
                 OnPropertyChanged(nameof(NotFoundProduct));
                 OnPropertyChanged(nameof(TryAgain));

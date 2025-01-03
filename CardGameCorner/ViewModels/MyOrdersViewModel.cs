@@ -21,6 +21,13 @@ public partial class MyOrdersViewModel : ObservableObject
     [ObservableProperty]
     private string errorMessage;
 
+
+    [ObservableProperty]
+    private bool showEmptyMessage;
+
+    [ObservableProperty]
+    private string emptyMessage = "You do not have any orders!";
+
     public bool HasError => !string.IsNullOrEmpty(ErrorMessage);
     public bool HasOrders => Orders?.Count > 0;
 
@@ -37,6 +44,7 @@ public partial class MyOrdersViewModel : ObservableObject
         {
             IsLoading = true;
             ErrorMessage = string.Empty;
+            ShowEmptyMessage = false;
 
             var token = await _secureStorage.GetAsync("jwt_token");
             if (string.IsNullOrEmpty(token))
@@ -47,15 +55,24 @@ public partial class MyOrdersViewModel : ObservableObject
 
             var client = _httpClientFactory.CreateClient();
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-
             var response = await client.GetAsync("https://api.magiccorner.it/api/mcBuylistMyOrders");
+
             if (response.IsSuccessStatusCode)
             {
                 var ordersList = await response.Content.ReadFromJsonAsync<List<OrderModel>>();
                 Orders.Clear();
-                foreach (var order in ordersList)
+
+                if (ordersList != null && ordersList.Any())
                 {
-                    Orders.Add(order);
+                    foreach (var order in ordersList)
+                    {
+                        Orders.Add(order);
+                    }
+                    ShowEmptyMessage = false;
+                }
+                else
+                {
+                    ShowEmptyMessage = true;
                 }
             }
             else

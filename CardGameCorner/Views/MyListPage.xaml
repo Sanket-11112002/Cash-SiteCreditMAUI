@@ -10,24 +10,35 @@
 
     <ScrollView>
         <VerticalStackLayout>
-            <Label Text="No items available."
-           HorizontalOptions="Center"
-           VerticalOptions="Center"
-           IsVisible="{Binding listvisibility}" />
 
-            <ListView ItemsSource="{Binding CardItems}" HasUnevenRows="True">
+            <VerticalStackLayout IsVisible="{Binding ShowEmptyMessage}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Margin="0,50,0,0">
+                <Label Text="{Binding EmptyListMessage}"
+                   TextColor="White"
+                       HorizontalOptions="Center"
+                       Margin="30,0,30,0"
+                       VerticalOptions="Center"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   />
+            </VerticalStackLayout>
+
+            <ListView ItemsSource="{Binding CardItems}" HasUnevenRows="True"
+                        IsVisible="{Binding CardItems.Count, Converter={StaticResource InverseBoolConverter}}">
 
                 <!-- EmptyView for empty ListView -->
 
                 <ListView.ItemTemplate IsVisible="{Binding listvisibilitycards}">
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Padding="16" ColumnDefinitions="*, *, *, *,*" 
+                            <Grid Padding="16" ColumnDefinitions="*, *, *, *,*"
                                   RowDefinitions="Auto, Auto" 
                                   BackgroundColor="#22313F" ColumnSpacing="10">
 
                                 <!-- Image (Column 0) -->
-                                <Image Source="{Binding Image}" 
+                                <Image Source="{Binding Image}"
                                        HeightRequest="100" 
                                        WidthRequest="70" 
                                        Aspect="AspectFit" 
@@ -52,7 +63,7 @@
                                         <Image x:Name="Lngflag" 
                                                HeightRequest="20" 
                                                WidthRequest="40"
-                                               Margin="10,0,0,0" 
+                                               Margin="3,0,0,0" 
                                                Source="{Binding Languageflag}"/>
 
                                         <!-- Condition -->
@@ -84,7 +95,7 @@
                                 </StackLayout>
 
                                 <!-- Cash and Credit (Column 4) -->
-                                <StackLayout Grid.Column="3" Grid.Row="0" Orientation="Vertical" Spacing="5">
+                                <StackLayout Grid.Column="3" Grid.Row="0" Orientation="Vertical" Spacing="2">
                                     <Label Text="{Binding BindingContext.CashTitle, Source={x:Reference MyListPageRoot}}" 
                                                FontSize="12" 
                                                TextColor="LightGreen" 
@@ -112,10 +123,10 @@
                                            FontSize="12"
                                            TextColor="LightGreen"
                                            FontAttributes="Bold"
-                                           HorizontalTextAlignment="Center" />
+                                           HorizontalTextAlignment="Center"/>
                                     <Label Text="{Binding Quantity}" 
                                            FontSize="12" 
-                                           TextColor="Yellow" 
+                                           TextColor="White" 
                                            HorizontalTextAlignment="Center" />
 
                                     <Button Text="{Binding BindingContext.PEdit, Source={x:Reference MyListPageRoot}}" 
@@ -151,7 +162,8 @@
                     Margin="20,30,20,20"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
-                    Clicked="PlaceOrder_Clicked" />
+                    Clicked="PlaceOrder_Clicked" 
+                    IsVisible="{Binding CardItems.Count, Converter={StaticResource InverseBoolConverter}}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

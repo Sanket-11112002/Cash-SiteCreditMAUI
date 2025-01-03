@@ -75,6 +75,12 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private string listEmptyMsg;
 
+        [ObservableProperty]
+        private string emptyListMessage;  // New property for empty list message
+
+        [ObservableProperty]
+        private bool showEmptyMessage;
+
         private readonly IScanCardService scanCardService;
         private ICommand _navigateToCardDetailCommand;
         private ICommand _deleteCardCommand;
@@ -149,16 +155,18 @@ namespace CardGameCorner.ViewModels
                 DeleteMsg = AppResources.DeleteMsg;
                 YesMsg = AppResources.YesMsg;
                 ListEmptyTitle = AppResources.LoginRequiredTitle;
-                ListEmptyMsg = AppResources.LoginRequiredMessage;
+                ListEmptyMsg = AppResources.EmptyListMessage;
                 CashTitle = AppResources.Cash;
                 QuantityTitle = AppResources.Quantity;
                 CreditTitle = AppResources.Site_credit;
+
+                EmptyListMessage = AppResources.EmptyListMessage;
 
                 OnPropertyChanged(nameof(PlaceOrder));
                 OnPropertyChanged(nameof(LoginRequiredTitle));
                 OnPropertyChanged(nameof(LoginRequiredMessage));
 
-
+                OnPropertyChanged(nameof(EmptyListMessage));
                 OnPropertyChanged(nameof(CashTitle));
                 OnPropertyChanged(nameof(QuantityTitle));
                 OnPropertyChanged(nameof(CreditTitle));
@@ -299,7 +307,9 @@ namespace CardGameCorner.ViewModels
                     };
 
                     CardItems.Add(card);
+
                 }
+                ShowEmptyMessage = CardItems.Count == 0;
             }
             catch (Exception e)
             {
@@ -340,11 +350,7 @@ namespace CardGameCorner.ViewModels
 
                         if (CardItems.Count == 0)
                         {
-                            await Application.Current.MainPage.DisplayAlert(
-                                ListEmptyTitle,
-                               ListEmptyMsg,
-                                "OK"
-                            );
+                            ShowEmptyMessage = true;
 
                             await Shell.Current.Navigation.PopToRootAsync();
                             await Shell.Current.GoToAsync("//SearchPage");

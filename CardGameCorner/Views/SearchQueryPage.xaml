@@ -41,8 +41,8 @@
 
                 <!-- Error Message -->
                 <VerticalStackLayout IsVisible="{Binding HasError}" HorizontalOptions="Center" Spacing="10">
-                    <Label Text="{Binding ErrorMessage}" TextColor="Red" HorizontalOptions="Center" />
-                    <Button Text="Retry" Command="{Binding RefreshCommand}" HorizontalOptions="Center" />
+                    <Label Text="{Binding InternettryAgain}" TextColor="Red" HorizontalOptions="Center" />
+                    <!--<Button Text="Retry" Command="{Binding RefreshCommand}" HorizontalOptions="Center" />-->
                 </VerticalStackLayout>
 
                 <!-- No Results Message -->

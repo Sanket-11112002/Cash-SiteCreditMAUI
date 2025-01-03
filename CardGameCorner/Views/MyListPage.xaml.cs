@@ -213,9 +213,9 @@ namespace CardGameCorner.Views
 
                 if (_viewModel.CardItems == null || !_viewModel.CardItems.Any())
                 {
-                    await _alertService.ShowAlertAsync(
-                     AppResources.EmptyListTitle,
-                     AppResources.EmptyListMessage);
+                    //await _alertService.ShowAlertAsync(
+                    // AppResources.EmptyListTitle,
+                    // AppResources.EmptyListMessage);
 
                     _viewModel.listvisibility = true;
                     _viewModel.listvisibilitycards = false;

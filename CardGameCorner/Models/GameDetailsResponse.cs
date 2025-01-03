@@ -29,6 +29,7 @@ public class Result
 {
     public Image image { get; set; }
     public Model model { get; set; }
+    public Modelen modelen { get; set; }
     public Novita novita { get; set; }
     public Maxprice maxprice { get; set; }
     public Minprice minprice { get; set; }
@@ -52,7 +53,10 @@ public class Model
 {
     public string snippet { get; set; }
 }
-
+public class Modelen
+{
+    public string snippet { get; set; }
+}
 public class Novita
 {
     public string raw { get; set; }

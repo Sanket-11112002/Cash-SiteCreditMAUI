@@ -15,29 +15,42 @@
 
     <Grid RowDefinitions="Auto,Auto,*">
         <Label Grid.Row="0"
-               Text="My Orders"
-               TextColor="White"
-               FontSize="22"
-               FontAttributes="Bold"
-               Margin="20,10"
-               HorizontalOptions="Start"/>
+           Text="My Orders"
+           TextColor="White"
+           FontSize="22"
+           FontAttributes="Bold"
+           Margin="20,10"
+           HorizontalOptions="Start"/>
 
         <Label Grid.Row="1" 
-               Text="{Binding ErrorMessage}"
-               IsVisible="{Binding HasError}"
-               TextColor="Red"
-               Margin="20,10"
-               HorizontalOptions="Center"/>
+           Text="{Binding ErrorMessage}"
+           IsVisible="{Binding HasError}"
+           TextColor="Red"
+           Margin="20,10"
+           HorizontalOptions="Center"/>
 
         <ScrollView Grid.Row="2">
-            <CollectionView ItemsSource="{Binding Orders}"
+            <Grid>
+                <!-- Empty Message -->
+                <VerticalStackLayout IsVisible="{Binding ShowEmptyMessage}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center">
+                    <Label Text="{Binding EmptyMessage}"
+                       TextColor="White"
+                       FontSize="16"
+                       HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <CollectionView ItemsSource="{Binding Orders}"
+                          IsVisible="{Binding HasOrders}"
                           Margin="0,10,0,0">
-                <CollectionView.EmptyView>
+                    <CollectionView.EmptyView>
                     <VerticalStackLayout HorizontalOptions="Center" 
-                                       VerticalOptions="Center">
-                        <Label Text="No orders found"
-                               TextColor="White"
-                               HorizontalOptions="Center"/>
+                           VerticalOptions="Center">
+                        <Label Text="You do not have any orders!"
+                   TextColor="White"
+                   FontSize="16"
+                   HorizontalOptions="Center"/>
                     </VerticalStackLayout>
                 </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
@@ -161,6 +174,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            </Grid>
         </ScrollView>
 
         <ActivityIndicator Grid.RowSpan="3"

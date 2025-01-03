@@ -79,6 +79,15 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to load games. Please try again..
+        /// </summary>
+        internal static string APIErrorMessage {
+            get {
+                return ResourceManager.GetString("APIErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
         internal static string Back {
@@ -129,6 +138,15 @@ namespace CardGameCorner.Resources.Language {
         internal static string Card_Details {
             get {
                 return ResourceManager.GetString("Card Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card Not Found.
+        /// </summary>
+        internal static string CardNotFound {
+            get {
+                return ResourceManager.GetString("CardNotFound", resourceCulture);
             }
         }
         
@@ -300,6 +318,15 @@ namespace CardGameCorner.Resources.Language {
         internal static string EmailEmptyError {
             get {
                 return ResourceManager.GetString("EmailEmptyError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password reset request failed: Failed to send reset link..
+        /// </summary>
+        internal static string EmailFailed {
+            get {
+                return ResourceManager.GetString("EmailFailed", resourceCulture);
             }
         }
         
@@ -597,6 +624,15 @@ namespace CardGameCorner.Resources.Language {
         internal static string Login {
             get {
                 return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login failed: Invalid credentials.
+        /// </summary>
+        internal static string Login_failed {
+            get {
+                return ResourceManager.GetString("Login failed", resourceCulture);
             }
         }
         
@@ -1096,6 +1132,15 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profile updated successfully.
+        /// </summary>
+        internal static string SuccessUpdate {
+            get {
+                return ResourceManager.GetString("SuccessUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please Try Again!.
         /// </summary>
         internal static string tryAgain {
@@ -1209,6 +1254,15 @@ namespace CardGameCorner.Resources.Language {
         internal static string Your_Picture {
             get {
                 return ResourceManager.GetString("Your Picture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to z.
+        /// </summary>
+        internal static string z {
+            get {
+                return ResourceManager.GetString("z", resourceCulture);
             }
         }
         

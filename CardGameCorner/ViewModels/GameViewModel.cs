@@ -133,7 +133,9 @@ namespace CardGameCorner.ViewModels
                     var cards = gameDetails.Data.Results.Select(result => new Card
                     {
                         Image = ImageSource.FromUri(new Uri($"https://www.cardgamecorner.com{result.image.raw}")),
-                        Note = result.model.snippet,
+                        Note = uiCode == "it"
+                            ? result.model.snippet
+                            : result.modelen.snippet,
                         Label = result.novita.raw,
                         MaxPrice = decimal.Parse(result.maxprice.raw.ToString("N2")),
                         MinPrice = decimal.Parse(result.minprice.raw.ToString("N2")),

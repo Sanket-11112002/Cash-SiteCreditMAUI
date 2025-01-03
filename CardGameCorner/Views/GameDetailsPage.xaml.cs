@@ -65,7 +65,12 @@ namespace CardGameCorner.Views
             {
                 if (!_isLoading)
                 {
-                    UiCode = "en";
+                    // UiCode = GlobalSettings.SelectedLanguage;
+                    UiCode = GlobalSettings.SelectedLanguage.Equals("English", StringComparison.OrdinalIgnoreCase)
+                                 ? "en"
+                                 : "it"; 
+
+
                     // Show loader overlay
                     loaderOverlay.IsVisible = true;
                     loadingIndicator.IsRunning = true;

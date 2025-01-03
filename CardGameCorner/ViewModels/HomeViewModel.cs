@@ -129,8 +129,7 @@ namespace CardGameCorner.ViewModels
         public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
 
         [ObservableProperty]
-        private string welcomeMessage;
-
+        private string errorMsg;
 
         public HomeViewModel(IGameService gameService, ISecureStorage secureStorage, INavigationService navigationService)
         {
@@ -152,10 +151,8 @@ namespace CardGameCorner.ViewModels
         }
         private void UpdateLocalizedStrings()
         {
-            WelcomeMessage = AppResources.WelcomeMessage;
+            ErrorMsg = AppResources.APIErrorMessage;
         }
-
-
 
         [RelayCommand]
         private async Task LoadGamesAsync()
@@ -176,7 +173,8 @@ namespace CardGameCorner.ViewModels
 
             catch (Exception ex)
             {
-                ErrorMessage = "Failed to load games. Please try again.";
+              //  ErrorMessage = "Failed to load games. Please try again."; 
+                ErrorMessage = ErrorMsg;
                 Debug.WriteLine($"Error: {ex.Message}");
             }
             finally
@@ -198,7 +196,6 @@ namespace CardGameCorner.ViewModels
             await _secureStorage.SetAsync("LastSelectedGame", _globalSettings.SelectedGame);
 
             await _navigationService.NavigateToHomeAsync();
-
         }
     }
 }

@@ -139,12 +139,10 @@ namespace CardGameCorner
         {
             try
             {
-                // Try to get the last selected game from secure storage
                 string lastSelectedGame = await GetLastSelectedGameAsync();
                 string lastSelectedlang = await GetLastSelectedLangAsync();
                 string jwtTokenUser = await UserLoginCheck();
 
-                // Check if the token is expired
                 if (!string.IsNullOrEmpty(jwtTokenUser) && !IsTokenExpired(jwtTokenUser))
                 {
                     App.IsUserLoggedIn = true;
@@ -154,37 +152,31 @@ namespace CardGameCorner
                     App.IsUserLoggedIn = false;
                     jwtTokenUser = string.Empty;
                 }
-                
+
                 GlobalSettings.SelectedGame = lastSelectedGame;
                 GlobalSettings.SelectedLanguage = lastSelectedlang;
+
                 try
                 {
-                    if (!string.IsNullOrEmpty(lastSelectedGame))
+                    if (string.IsNullOrEmpty(lastSelectedGame))
                     {
-                        Console.WriteLine("Navigating to GameDetailsPage");
-                        await Shell.Current.GoToAsync("//GameDetailsPage", true);
+                        await Shell.Current.GoToAsync("//HomePage", true);
                     }
                     else
                     {
-                        await GoToAsync("//HomePage");
+                        await Shell.Current.GoToAsync("//GameDetailsPage", true);
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error during navigation: {ex.Message}");
+                    await Shell.Current.GoToAsync("//HomePage", true);
                 }
-                //if (!string.IsNullOrEmpty(lastSelectedGame))
-                //{
-                //    await GoToAsync("GameDetailsPage");
-                //}
-
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Navigation error: {ex}");
-                var settingsViewModel = _serviceProvider.GetService<SettingsViewModel>();
-                var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage, _alertService, _navigationService);
-                await Shell.Current.Navigation.PushModalAsync(settingsPage);
+                await Shell.Current.GoToAsync("//HomePage", true);
             }
         }
 

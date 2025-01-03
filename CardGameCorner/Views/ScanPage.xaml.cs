@@ -302,6 +302,7 @@
 
 using System.Text.Json;
 using CardGameCorner.Models;
+using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 using SkiaSharp;
@@ -333,9 +334,9 @@ namespace CardGameCorner.Views
                     using (var originalStream = await photo.OpenReadAsync())
                     {
                         // Correct image orientation
-                        var correctedStream = await CorrectImageOrientationAsync(originalStream);
+                      //  var correctedStream = await CorrectImageOrientationAsync(originalStream);
 
-                        var compressedImageStream = await viewModel.CompressImageAsync(correctedStream, 100 * 1024);
+                        var compressedImageStream = await viewModel.CompressImageAsync(originalStream, 100 * 1024);
 
                         if (compressedImageStream != null)
                         {
@@ -376,17 +377,17 @@ namespace CardGameCorner.Views
                                 }
                                 else
                                 {
-                                    await DisplayAlert("Error", "Card Not Found", "OK");
+                                    await DisplayAlert(AppResources.ErrorTitle, AppResources.CardNotFound, "OK");
                                 }
                             }
                             else
                             {
-                                await DisplayAlert("Error", "Card Not Found", "OK");
+                                await DisplayAlert(AppResources.ErrorTitle, AppResources.CardNotFound, "OK");
                             }
                         }
                         else
                         {
-                            await DisplayAlert("Error", "Failed to process image", "OK");
+                            await DisplayAlert(AppResources.ErrorTitle, AppResources.CardNotFound, "OK");
                         }
                     }
                 }
@@ -500,17 +501,17 @@ namespace CardGameCorner.Views
                             }
                             else
                             {
-                                await DisplayAlert("Error", "Card Not Found", "OK");
+                                await DisplayAlert(AppResources.ErrorTitle, AppResources.CardNotFound, "OK");
                             }
                         }
                         else
                         {
-                            await DisplayAlert("Error", "Card Not Found", "OK");
+                            await DisplayAlert(AppResources.ErrorTitle, AppResources.CardNotFound, "OK");
                         }
                     }
                     else
                     {
-                        await DisplayAlert("Error", "Failed to process image", "OK");
+                        await DisplayAlert(AppResources.ErrorTitle, AppResources.CardNotFound, "OK");
                     }
                 }
                 else

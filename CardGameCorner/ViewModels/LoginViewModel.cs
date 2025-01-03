@@ -353,6 +353,13 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private string email;
 
+        [ObservableProperty]
+        private string loginFailed;
+
+        [ObservableProperty]
+        private string emailFailed;
+
+
         public LoginViewModel(IAuthService authService, ISecureStorage secureStorage, IServiceProvider serviceProvider)
         {
             _authService = authService;
@@ -393,12 +400,15 @@ namespace CardGameCorner.ViewModels
                 ForgotPasswordEmailLabel = AppResources.ForgotPasswordEmailLabel;
                 SendResetLinkText = AppResources.SendResetLink;
                 Email = AppResources.Email;
+                LoginFailed = AppResources.Login_failed;
+                EmailFailed = AppResources.EmailFailed;
 
                 UsernameEmptyErrorMessage = AppResources.UsernameEmptyError;
                 UserPassEmpty = AppResources.UserPassEmpty;
                 PasswordEmptyErrorMessage = AppResources.PasswordEmptyError;
                 EmailEmptyErrorMessage = AppResources.EmailEmptyError;
 
+                OnPropertyChanged(nameof(EmailFailed));
                 OnPropertyChanged(nameof(UsernamePlaceholder));
                 OnPropertyChanged(nameof(PasswordPlaceholder));
                 OnPropertyChanged(nameof(LoginButtonText));
@@ -411,6 +421,7 @@ namespace CardGameCorner.ViewModels
                 OnPropertyChanged(nameof(PasswordEmptyErrorMessage));
                 OnPropertyChanged(nameof(EmailEmptyErrorMessage));
                 OnPropertyChanged(nameof(Email));
+                OnPropertyChanged(nameof(LoginFailed));
             });
         }
 
@@ -601,7 +612,7 @@ namespace CardGameCorner.ViewModels
                     {
                         await Application.Current.MainPage.DisplayAlert(
                             AppResources.ErrorTitle,
-                            "Login failed",
+                           LoginFailed,
                             AppResources.OK);
                     }
 
@@ -634,7 +645,7 @@ namespace CardGameCorner.ViewModels
                     Trace.WriteLine($"Exception during login: {ex.Message}");
                     await Application.Current.MainPage.DisplayAlert(
                         AppResources.ErrorTitle,
-                        ex.Message,
+                        LoginFailed,
                         AppResources.OK);
                 }
                 finally
@@ -684,7 +695,7 @@ namespace CardGameCorner.ViewModels
             {
                 await Application.Current.MainPage.DisplayAlert(
                 AppResources.ErrorTitle,
-                ex.Message,
+                EmailFailed,
                 AppResources.OK);
             }
             finally

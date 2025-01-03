@@ -358,7 +358,7 @@
     <value>Caricamento dati non riuscito:</value>
   </data>
   <data name="EmptyListMessage" xml:space="preserve">
-    <value>La tua lista è vuota. Aggiungi elementi per visualizzarli.</value>
+    <value>             La tua lista è vuota.                                                                                Aggiungi elementi per visualizzarli.</value>
   </data>
   <data name="EmptyListTitle" xml:space="preserve">
     <value>Informazione</value>
@@ -429,7 +429,7 @@
   <data name="ClickHere" xml:space="preserve">
     <value>Ritireremo il tuo pacco. Clicca qui!</value>
   </data>
-  <data name="contacted" xml:space="preserve">
+  <data name="Contacted" xml:space="preserve">
     <value>Vuoi essere contattato in caso di:</value>
   </data>
   <data name="GetPaid" xml:space="preserve">
@@ -503,5 +503,23 @@
   </data>
   <data name="YesMsg" xml:space="preserve">
     <value>SÌ</value>
+  </data>
+  <data name="APIErrorMessage" xml:space="preserve">
+    <value>Impossibile caricare i giochi. Per favore riprova.</value>
+  </data>
+  <data name="Login failed" xml:space="preserve">
+    <value>Accesso non riuscito: credenziali non valide</value>
+  </data>
+  <data name="SuccessUpdate" xml:space="preserve">
+    <value>Profilo aggiornato con successo</value>
+  </data>
+  <data name="EmailFailed" xml:space="preserve">
+    <value>Richiesta di reimpostazione della password non riuscita: impossibile inviare il collegamento di reimpostazione.</value>
+  </data>
+  <data name="z" xml:space="preserve">
+    <value>z</value>
+  </data>
+  <data name="CardNotFound" xml:space="preserve">
+    <value>Carta non trovata</value>
   </data>
 </root>

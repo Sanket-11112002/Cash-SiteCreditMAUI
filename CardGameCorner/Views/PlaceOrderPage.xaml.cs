@@ -5,6 +5,7 @@ namespace CardGameCorner.Views;
 public partial class PlaceOrderPage : ContentPage
 {
     private PlaceOrderViewModel _viewModel;
+    
     public PlaceOrderPage()
     {
         InitializeComponent();
@@ -12,8 +13,9 @@ public partial class PlaceOrderPage : ContentPage
         BindingContext = _viewModel;
     }
 
-    private async void PlaceOrderClick(object sender, EventArgs e)
+    protected override void OnAppearing()
     {
-        await DisplayAlert("Order", "Your order has been placed!", "OK");
+        base.OnAppearing();
+        _viewModel.InitializeDropdowns();
     }
 }

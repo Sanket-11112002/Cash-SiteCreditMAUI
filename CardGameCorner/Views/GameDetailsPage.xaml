@@ -5,7 +5,6 @@
              xmlns:local="clr-namespace:CardGameCorner.ViewModels"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:conv="clr-namespace:CardGameCorner.Resources.Converters"
-            
              BackgroundColor="#1B3B48">
 
     <ContentPage.Resources>
@@ -31,9 +30,9 @@
                         </Grid.RowDefinitions>
 
                         <Image Source="{Binding Image}" 
-                       Aspect="AspectFit" 
-                       HeightRequest="100" 
-                       WidthRequest="100" 
+                       Aspect="AspectFit"
+                       HeightRequest="100"
+                       WidthRequest="100"
                        HorizontalOptions="Center" 
                        VerticalOptions="Center" 
                        Grid.Row="0" Margin="5"/>
@@ -121,14 +120,18 @@
                             Style="{StaticResource NavigationButtonStyle}" 
                             VerticalOptions="Center" 
                             HorizontalOptions="Start" 
-                            Margin="0,0,10,0"
+                            Margin="15,0,0,0"
+                            WidthRequest="50"
+                            HeightRequest="50"
                             Clicked="OnPreviousClicked"/>
 
                     <Button ImageSource="next.png" 
                             Style="{StaticResource NavigationButtonStyle}" 
                             VerticalOptions="Center" 
                             HorizontalOptions="End" 
-                            Margin="10,0,0,0"
+                            Margin="0,0,15,0"
+                            WidthRequest="50"
+                            HeightRequest="50"
                             Clicked="OnNextClicked"/>
                 </Grid>
 

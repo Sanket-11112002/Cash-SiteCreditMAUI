@@ -8,7 +8,7 @@
 
     <Shell.ToolbarItems>
         <ToolbarItem x:Name="SettingsToolbarItem"
-                 IconImageSource="setting.png" 
+                 IconImageSource="sett.svg" 
                  Text="{Binding SettingsToolbarItemText, Mode=OneWay}"
                  Clicked="OnSettingsClicked" />
     </Shell.ToolbarItems>

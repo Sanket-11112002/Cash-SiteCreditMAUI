@@ -173,6 +173,12 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private string userName;
 
+        [ObservableProperty]
+        private string success;
+
+        [ObservableProperty]
+        private string successUpdate;
+
         public MyAccountViewModel(IMyAccountService myAccountService, ISecureStorage secureStorage)
         {
             UpdateLocalizedStrings();
@@ -228,6 +234,8 @@ namespace CardGameCorner.ViewModels
                 Province = AppResources.Province;
                 City = AppResources.City;
                 Country = AppResources.Country;
+                Success = AppResources.Success;
+                SuccessUpdate = AppResources.SuccessUpdate;
 
                 EditButtonText = AppResources.Edit;
                 BackButtonText = AppResources.Back;
@@ -238,6 +246,8 @@ namespace CardGameCorner.ViewModels
                 ContinueText = AppResources.Continue;
 
                 // Trigger property changed events to update UI
+                OnPropertyChanged(nameof(Success));
+                OnPropertyChanged(nameof(SuccessUpdate));
                 OnPropertyChanged(nameof(UserName));
                 OnPropertyChanged(nameof(Email));
                 OnPropertyChanged(nameof(Name));
@@ -368,7 +378,7 @@ namespace CardGameCorner.ViewModels
 
                     IsEditMode = false;
                     OnPropertyChanged(nameof(IsEditMode));
-                    await Shell.Current.DisplayAlert("Success", "Profile updated successfully", "OK");
+                    await Shell.Current.DisplayAlert(Success, SuccessUpdate, "OK");
                 }
                 else
                 {

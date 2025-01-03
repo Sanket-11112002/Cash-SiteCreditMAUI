@@ -131,7 +131,8 @@
                        BackgroundColor="#2C5A70"
                        TextColor="White"
                        PlaceholderColor="LightGray"
-                       Margin="5" />
+                       Margin="5" 
+                       Keyboard="Numeric"/>
 
                     <!-- Address -->
                     <Label Grid.Row="8" Grid.Column="0" Text="{Binding Address}" 
