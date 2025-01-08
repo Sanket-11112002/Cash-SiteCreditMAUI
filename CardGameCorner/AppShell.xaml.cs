@@ -38,7 +38,8 @@ namespace CardGameCorner
             // Handle settings toolbar visibility
             if (targetRoute != null)
             {
-                if (targetRoute.Contains("CardDetailPage", StringComparison.OrdinalIgnoreCase))
+                if (targetRoute.Contains("CardDetailPage", StringComparison.OrdinalIgnoreCase) ||
+                    targetRoute.Contains("PlaceOrderPage", StringComparison.OrdinalIgnoreCase))
                 {
                     HideSettingsToolbarItem();
                 }
@@ -152,8 +153,10 @@ namespace CardGameCorner
                     App.IsUserLoggedIn = false;
                     jwtTokenUser = string.Empty;
                 }
-
-                GlobalSettings.SelectedGame = lastSelectedGame;
+                if (!string.IsNullOrEmpty(lastSelectedGame))
+                {
+                    GlobalSettings.SelectedGame = lastSelectedGame;
+                }
                 GlobalSettings.SelectedLanguage = lastSelectedlang;
 
                 try
@@ -334,6 +337,6 @@ namespace CardGameCorner
         {
             base.OnNavigating(args);
             // Your custom navigation logic here
-        }
+        }        
     }
 }

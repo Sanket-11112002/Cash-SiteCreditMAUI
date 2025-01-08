@@ -138,7 +138,9 @@
             BackgroundColor="Black"
             Opacity="0.5"
             IsVisible="{Binding IsLoading}"
-            ZIndex="100">
+            ZIndex="100"
+            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+            AbsoluteLayout.LayoutFlags="All">
             <ActivityIndicator
                 IsRunning="{Binding IsLoading}" 
                 Color="White"

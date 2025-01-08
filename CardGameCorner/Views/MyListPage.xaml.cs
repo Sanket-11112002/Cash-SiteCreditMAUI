@@ -270,12 +270,12 @@ namespace CardGameCorner.Views
                     // User chose to login
                     await _navigationService.NavigateToLoginAsync();
                 }
-                else
-                {
-                    // User chose to continue without login
-                    // Navigate to home page instead of staying on the current page
-                    await _navigationService.NavigateToHomeAsync();
-                }
+                //else
+                //{
+                //    // User chose to continue without login
+                //    // Navigate to home page instead of staying on the current page
+                //    await _navigationService.NavigateToHomeAsync();
+                //}
             }
             else
             {

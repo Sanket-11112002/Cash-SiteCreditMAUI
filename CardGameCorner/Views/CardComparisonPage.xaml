@@ -2,25 +2,25 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.CardComparisonPage"
-             Title="{Binding CardComaprision}"
-             BackgroundColor="#1A2634">
+             Title="{Binding CardComaprision}">
 
     <ScrollView>
         <Grid RowDefinitions="Auto,*,Auto"
-         Padding="20">
+         Padding="20" 
+         RowSpacing="15">
 
             <!-- Logo -->
             <Image Grid.Row="0"
               Source="{Binding GameImageUrl}"
-              HeightRequest="90"
-              HorizontalOptions="Center"
-              Margin="0,10,0,20"/>
+              HeightRequest="75"
+              HorizontalOptions="Center"/>
 
             <!-- Main Content -->
-            <Grid Grid.Row="1" 
-             RowDefinitions="*,Auto,Auto"
-             ColumnDefinitions="*,*"
-             ColumnSpacing="15">
+            <Grid Grid.Row="1"
+                  RowDefinitions="Auto,Auto"
+                  ColumnDefinitions="*,*"
+                  ColumnSpacing="30"
+                  RowSpacing="10">
 
                 <!-- Card Images -->
                 <!--<Frame Grid.Row="0" 
@@ -39,17 +39,54 @@
                         <TapGestureRecognizer Command="{Binding CaptureImageCommand}"/>
                     </Frame.GestureRecognizers>
                 </Frame>-->
-                <Frame Grid.Row="0" Grid.Column="0"  BorderColor="#FF4444">
-                    <Image x:Name="scannedimage" Aspect="AspectFit"  HeightRequest="300" WidthRequest="300" />
-                </Frame>
+                <!--<Frame Grid.Row="0" Grid.Column="0" BorderColor="#FF4444"  HeightRequest="275" WidthRequest="180">
+                    <Image x:Name="scannedimage" Aspect="AspectFit"   HeightRequest="230" WidthRequest="200" />
+                </Frame>-->
 
                 <!--<Frame Grid.Row="0" Grid.Column="1"  BorderColor="#FF4444">
                     <Image x:Name="searchimage" Aspect="AspectFit"  HeightRequest="300" WidthRequest="300" />
                 </Frame>-->
 
-                <!-- Frame Container -->
-                <Frame Grid.Row="0" Grid.Column="1" BorderColor="#FF4444" CornerRadius="10" HasShadow="True">
+                <Frame Grid.Row="0" 
+                       Grid.Column="0" 
+                       BorderColor="#FF4444"  
+                       HeightRequest="275" 
+                       MinimumHeightRequest="200"
+                       WidthRequest="180"
+                       Padding="5"
+                       Margin="0"
+                       BackgroundColor="Transparent"
+                       IsClippedToBounds="True">
+                    <Image x:Name="scannedimage" 
+                           Aspect="AspectFit"   
+                           HeightRequest="270" 
+                           WidthRequest="175"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+                </Frame>
 
+                <Frame Grid.Row="0" 
+                       Grid.Column="1" 
+                       BorderColor="Green" 
+                       HeightRequest="275"
+                       MinimumHeightRequest="200"
+                       WidthRequest="180" 
+                       CornerRadius="10" 
+                       HasShadow="True"
+                       Padding="5"
+                       Margin="0"
+                       IsClippedToBounds="True">
+                    <Image x:Name="searchresultimage" 
+                           Aspect="AspectFit"  
+                           HeightRequest="270" 
+                           WidthRequest="175"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+                
+
+                <!-- Frame Container -->
+                <!--<Frame Grid.Row="0" Grid.Column="1" BorderColor="Green" HeightRequest="275" WidthRequest="180" CornerRadius="10" HasShadow="True">
+                    <Image x:Name="searchresultimage" Aspect="AspectFit"  HeightRequest="230" WidthRequest="200" />-->
                     <!--<CarouselView HeightRequest="280" WidthRequest="160">
                         <CarouselView.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
@@ -88,7 +125,7 @@
                 </Frame>-->
 
                 <!-- Labels -->
-                <Label Grid.Row="1" 
+                <!--<Label Grid.Row="1" 
                   Grid.Column="0"
                   Text="{Binding YourPicture}"
                   TextColor="White"
@@ -100,57 +137,92 @@
                   Text="{Binding SearchResult}"
                   TextColor="White"
                   HorizontalOptions="Center"
-                  Margin="0,10,0,0"/>
+                  Margin="0,10,0,0"/>-->
 
+                <!-- Labels -->
+                <Label Grid.Row="1" 
+                       Grid.Column="0"
+                       Text="{Binding YourPicture}"
+                       TextColor="White"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       LineBreakMode="WordWrap"
+                       MaxLines="2"/>
+
+                <Label Grid.Row="1" 
+                       Grid.Column="1"
+                       Text="{Binding SearchResult}"
+                       TextColor="White"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       LineBreakMode="WordWrap"
+                       MaxLines="2"/>
             </Grid>
+
+       
 
             <!-- Card Details -->
             <Frame Grid.Row="2"
-              BackgroundColor="#2A3644"
-              CornerRadius="15"
-              Padding="20"
-              Margin="0,20,0,0">
-                <StackLayout Spacing="10">
+                   BackgroundColor="#2A3644"
+                   CornerRadius="15"
+                   Padding="15"
+                   Margin="0,10,0,0">
+                <VerticalStackLayout Spacing="10">
                     <Label Text="{Binding CardName}"
-                      TextColor="White"
-                      FontSize="20"
-                      HorizontalOptions="Center"/>
+                           TextColor="White"
+                           FontSize="20"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           LineBreakMode="WordWrap"/>
 
                     <Label Text="{Binding CardRarity}"
-                      TextColor="LightGray"
-                      FontSize="16"
-                      HorizontalOptions="Center"/>
+                           TextColor="LightGray"
+                           FontSize="16"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           LineBreakMode="WordWrap"/>
 
                     <Label Text="{Binding CardSet}"
-                      TextColor="LightGray"
-                      FontSize="16"
-                      HorizontalOptions="Center"/>
+                           TextColor="LightGray"
+                           FontSize="16"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           LineBreakMode="WordWrap"/>
 
                     <Label Text="{Binding CardComfiredMsg}"
-                      TextColor="White"
-                      FontSize="18"
-                      HorizontalOptions="Center"
-                      Margin="0,10,0,10"/>
+                           TextColor="White"
+                           FontSize="18"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           LineBreakMode="WordWrap"
+                           Margin="0,5,0,5"/>
 
                     <Grid ColumnDefinitions="*,*" 
-                     ColumnSpacing="20">
+                          ColumnSpacing="15"
+                          Margin="0,5,0,0">
                         <Button Grid.Column="0"
-                           Text="{Binding YesAddList}"
-                           BackgroundColor="#44FF44"
-                           TextColor="White"
-                           CornerRadius="25"
-                           HeightRequest="50"
-                           Command="{Binding ConfirmCardCommand}"/>
+                                Text="{Binding YesAddList}"
+                                BackgroundColor="#2D9C2A"
+                                TextColor="White"
+                                CornerRadius="25"
+                                HeightRequest="50"
+                                MinimumHeightRequest="40"
+                                Command="{Binding ConfirmCardCommand}"
+                                LineBreakMode="WordWrap"
+                                Padding="10,0"/>
 
                         <Button Grid.Column="1"
-                           Text="{Binding NoTryAgain}"
-                           BackgroundColor="#FF4444"
-                           TextColor="White"
-                           CornerRadius="25"
-                           HeightRequest="50"
-                           Clicked="Retry"/>
+                                Text="{Binding NoTryAgain}"
+                                BackgroundColor="#FF4444"
+                                TextColor="White"
+                                CornerRadius="25"
+                                HeightRequest="50"
+                                MinimumHeightRequest="40"
+                                Clicked="Retry"
+                                LineBreakMode="WordWrap"
+                                Padding="10,0"/>
                     </Grid>
-                </StackLayout>
+                </VerticalStackLayout>
             </Frame>
         </Grid>
 

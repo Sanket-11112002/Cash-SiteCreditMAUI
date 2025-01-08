@@ -173,45 +173,167 @@ namespace CardGameCorner.ViewModels
         {
             try
             {
-                using var skiaImage = SKBitmap.Decode(inputStream);
-                if (skiaImage == null)
+                // Create a copy of the input stream to prevent disposal issues
+                var memoryStream = new MemoryStream();
+                await inputStream.CopyToAsync(memoryStream);
+                memoryStream.Position = 0;
+
+                // Read EXIF orientation
+                int orientation = 1; // Default orientation
+                try
+                {
+                    // Create a separate stream for EXIF reading
+                    var exifStream = new MemoryStream(memoryStream.ToArray());
+                    using (var codec = SKCodec.Create(exifStream))
+                    {
+                        if (codec != null)
+                        {
+                            orientation = GetExifOrientation(codec);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Failed to read EXIF: {ex.Message}");
+                }
+
+                // Decode the image
+                using var originalBitmap = SKBitmap.Decode(memoryStream);
+                if (originalBitmap == null)
                     throw new Exception("Failed to decode the input image.");
 
+                // Apply rotation based on EXIF orientation
+                using var rotatedBitmap = ApplyExifOrientation(originalBitmap, orientation);
+
                 // Determine max width based on device capabilities
-                var width = Math.Min(800, skiaImage.Width);
-                var height = (int)((float)skiaImage.Height * width / skiaImage.Width);
+                var width = Math.Min(800, rotatedBitmap.Width);
+                var height = (int)((float)rotatedBitmap.Height * width / rotatedBitmap.Width);
 
-                var resizedImage = skiaImage.Resize(new SKImageInfo(width, height), SKFilterQuality.Medium);
-
+                // Resize the image
+                using var resizedImage = rotatedBitmap.Resize(new SKImageInfo(width, height), SKFilterQuality.High);
                 if (resizedImage == null)
                     throw new Exception("Failed to resize the image.");
 
+                // Compress with quality adjustment
                 var quality = 85;
-                MemoryStream compressedStream;
+                MemoryStream finalCompressedStream = null;
+
                 do
                 {
-                    compressedStream = new MemoryStream();
+                    using var tempStream = new MemoryStream();
                     using (var skImage = SKImage.FromBitmap(resizedImage))
+                    using (var data = skImage.Encode(SKEncodedImageFormat.Jpeg, quality))
                     {
-                        var skData = skImage.Encode(SKEncodedImageFormat.Jpeg, quality);
-                        skData.SaveTo(compressedStream);
+                        data.SaveTo(tempStream);
                     }
 
-                    if (compressedStream.Length <= maxSize)
+                    if (tempStream.Length <= maxSize)
+                    {
+                        // We found a good compression level, save this stream
+                        finalCompressedStream = new MemoryStream();
+                        tempStream.Position = 0;
+                        await tempStream.CopyToAsync(finalCompressedStream);
                         break;
+                    }
 
                     quality -= 5;
-                    compressedStream.Dispose();
                 } while (quality > 10);
 
-                compressedStream.Position = 0;
-                return compressedStream;
+                // Clean up the input memory stream
+                memoryStream.Dispose();
+
+                if (finalCompressedStream != null)
+                {
+                    finalCompressedStream.Position = 0;
+                    return finalCompressedStream;
+                }
+
+                throw new Exception("Failed to compress image to desired size");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Image compression failed: {ex.Message}");
                 return null;
             }
+        }
+
+        private int GetExifOrientation(SKCodec codec)
+        {
+            try
+            {
+                var orientation = codec.EncodedOrigin;
+                switch (orientation)
+                {
+                    case SKEncodedOrigin.TopLeft: return 1;
+                    case SKEncodedOrigin.TopRight: return 2;
+                    case SKEncodedOrigin.BottomRight: return 3;
+                    case SKEncodedOrigin.BottomLeft: return 4;
+                    case SKEncodedOrigin.LeftTop: return 5;
+                    case SKEncodedOrigin.RightTop: return 6;
+                    case SKEncodedOrigin.RightBottom: return 7;
+                    case SKEncodedOrigin.LeftBottom: return 8;
+                    default: return 1;
+                }
+            }
+            catch
+            {
+                return 1;
+            }
+        }
+
+        private SKBitmap ApplyExifOrientation(SKBitmap original, int orientation)
+        {
+            if (orientation == 1)
+                return original;
+
+            // Create new bitmap with correct dimensions
+            SKImageInfo info = original.Info;
+
+            // Adjust dimensions for rotation
+            if (orientation > 4)
+            {
+                info = new SKImageInfo(info.Height, info.Width, info.ColorType, info.AlphaType);
+            }
+
+            var rotated = new SKBitmap(info);
+
+            using (var surface = new SKCanvas(rotated))
+            {
+                surface.Clear();
+
+                switch (orientation)
+                {
+                    case 2: // flip horizontal
+                        surface.Scale(-1, 1, info.Width / 2f, 0);
+                        break;
+                    case 3: // 180° rotation
+                        surface.RotateDegrees(180, info.Width / 2f, info.Height / 2f);
+                        break;
+                    case 4: // flip vertical
+                        surface.Scale(1, -1, 0, info.Height / 2f);
+                        break;
+                    case 5: // flip vertical + 90° rotation
+                        surface.RotateDegrees(90);
+                        surface.Scale(1, -1, 0, 0);
+                        break;
+                    case 6: // 90° rotation
+                        surface.RotateDegrees(90);
+                        surface.Translate(0, -original.Height);
+                        break;
+                    case 7: // flip horizontal + 90° rotation
+                        surface.RotateDegrees(90);
+                        surface.Scale(-1, 1, info.Width / 2f, 0);
+                        break;
+                    case 8: // 270° rotation
+                        surface.RotateDegrees(270);
+                        surface.Translate(-original.Width, 0);
+                        break;
+                }
+
+                surface.DrawBitmap(original, 0, 0);
+            }
+
+            return rotated;
         }
 
         public async Task<CardComparisonViewModel> SearchCardAsync(CardSearchRequest cardSearch, ImageSource imageSource)

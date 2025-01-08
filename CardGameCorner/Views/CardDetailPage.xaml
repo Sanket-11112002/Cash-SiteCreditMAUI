@@ -19,9 +19,8 @@
 
         <Image Grid.Row="0"
                Source="{Binding GameImageUrl}"
-               HeightRequest="90"
-               HorizontalOptions="Center"
-               Margin="0,0,0,0"/>
+               HeightRequest="75"
+               HorizontalOptions="Center"/>
 
         <Grid Grid.Row="0" Padding="5,5" ColumnDefinitions="Auto,*,Auto">
 
@@ -132,7 +131,7 @@
                             StrokeThickness="1"
                           BackgroundColor="#1B3B48"
                             StrokeShape="RoundRectangle 20" Stroke="White" IsVisible="{Binding SelectedCard.IsEditionVisibility}">
-                                <HorizontalStackLayout Padding="15"  >
+                                <HorizontalStackLayout Padding="15">
                                     <Switch IsToggled="{Binding SelectedCard.IsFirstEdition}"
                                     OnColor="#007AFF"/>
                                     <Label Text="{Binding Edition}"

@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Android.Views;
 
 namespace CardGameCorner
 {
@@ -8,7 +9,8 @@ namespace CardGameCorner
           MainLauncher = true,
           ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize,
           ScreenOrientation = ScreenOrientation.Portrait)] // Force portrait mode
-public class MainActivity : MauiAppCompatActivity
-{
-}
+    public class MainActivity : MauiAppCompatActivity
+    {
+       
+    }
 }

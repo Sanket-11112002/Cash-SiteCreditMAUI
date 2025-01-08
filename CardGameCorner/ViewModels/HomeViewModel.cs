@@ -116,6 +116,7 @@ namespace CardGameCorner.ViewModels
         private readonly ISecureStorage _secureStorage;
         private readonly INavigationService _navigationService;
         private readonly GlobalSettingsService _globalSettings;
+        private readonly App _app;
 
         [ObservableProperty]
         private bool isLoading;
@@ -131,7 +132,7 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private string errorMsg;
 
-        public HomeViewModel(IGameService gameService, ISecureStorage secureStorage, INavigationService navigationService)
+        public HomeViewModel(IGameService gameService, ISecureStorage secureStorage, INavigationService navigationService, App app)
         {
             UpdateLocalizedStrings();
 
@@ -147,6 +148,7 @@ namespace CardGameCorner.ViewModels
             _gameService = gameService;
             _secureStorage = secureStorage;
             _navigationService = navigationService;
+            _app = app;
             Games = new ObservableCollection<Game>();
         }
         private void UpdateLocalizedStrings()
@@ -194,6 +196,8 @@ namespace CardGameCorner.ViewModels
             _globalSettings.SelectedGame = game.GameCode;
 
             await _secureStorage.SetAsync("LastSelectedGame", _globalSettings.SelectedGame);
+
+            _app.RestartAppForNewSession();
 
             await _navigationService.NavigateToHomeAsync();
         }

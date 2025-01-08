@@ -329,12 +329,14 @@ namespace CardGameCorner.Views
                 viewModel.IsLoading = true;
 
                 var photo = await MediaPicker.CapturePhotoAsync();
+
+
                 if (photo != null)
                 {
                     using (var originalStream = await photo.OpenReadAsync())
                     {
                         // Correct image orientation
-                      //  var correctedStream = await CorrectImageOrientationAsync(originalStream);
+                         // var correctedStream = await CorrectImageOrientationAsync(originalStream);
 
                         var compressedImageStream = await viewModel.CompressImageAsync(originalStream, 100 * 1024);
 
@@ -367,8 +369,8 @@ namespace CardGameCorner.Views
                                     //FirstEdition = 0
 
                                     Title = "Angel of Mercy",
-                                    Set = "magic",
-                                    Game = "IMA",
+                                    Game = "magic",
+                                    Set = "IMA",
                                     Lang = "en",
                                     Foil = 0,
                                     FirstEdition = 0
@@ -414,18 +416,17 @@ namespace CardGameCorner.Views
             }
         }
 
+
         private async Task<Stream> CorrectImageOrientationAsync(Stream inputStream)
         {
             try
             {
-                // Decode the input stream into a SkiaSharp bitmap
                 using var skBitmap = SKBitmap.Decode(inputStream);
 
                 // Create a new surface with rotated dimensions (swap width and height)
                 using var surface = SKSurface.Create(new SKImageInfo(skBitmap.Height, skBitmap.Width));
                 var canvas = surface.Canvas;
 
-                // Rotate the image by 90 degrees
                 canvas.RotateDegrees(90, skBitmap.Height / 2f, skBitmap.Height / 2f);
 
                 // Draw the original image onto the canvas at the rotated position

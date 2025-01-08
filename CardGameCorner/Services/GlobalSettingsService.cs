@@ -69,7 +69,7 @@ namespace CardGameCorner.Services
         private void OnGameChanged()
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedGame)));
-            Shell.Current.GoToAsync("//GameDetailsPage");
+            //Shell.Current.GoToAsync("//GameDetailsPage");
         }
 
         // INotifyPropertyChanged Implementation

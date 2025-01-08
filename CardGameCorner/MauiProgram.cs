@@ -39,6 +39,7 @@ namespace CardGameCorner
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<HomePage>();
             builder.Services.AddSingleton<AppShell>();
+            builder.Services.AddSingleton<App>();
             builder.Services.AddTransient<RegistrationPage>();
             builder.Services.AddTransient<CardComparisonPage>();
             builder.Services.AddTransient<MyListPage>();

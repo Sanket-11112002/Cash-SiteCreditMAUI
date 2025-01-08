@@ -278,6 +278,7 @@ namespace CardGameCorner.Services
                 throw new Exception($"Card search failed: {response.StatusCode}. {responseContent}");
             }
         }
+
         //    public async Task<List<CardSearchResponseViewModel>> SearchCardAsync(CardSearchRequest cardRequest)
         //    {
         //        // Hardcoded response JSON
