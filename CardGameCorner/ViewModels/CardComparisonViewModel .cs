@@ -1,9 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text.Json;
-using System.Windows.Input;
-using CardGameCorner.Models;
 using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
 using CardGameCorner.Views;
@@ -74,6 +70,20 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private int condition;
 
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                if (SetProperty(ref _isLoading, value))
+                {
+                    OnPropertyChanged(nameof(IsNotLoading));
+                }
+            }
+        }
+        public bool IsNotLoading => !IsLoading;
+
 
         //public CardComparisonViewModel()
         //{
@@ -114,7 +124,6 @@ namespace CardGameCorner.ViewModels
         {
             if (e.PropertyName == nameof(GlobalSettings.SelectedLanguage))
             {
-                // Update localized strings when language changes
                 UpdateLocalizedStrings();
               //  UpdateGameImage();
             }
@@ -217,7 +226,6 @@ namespace CardGameCorner.ViewModels
             // Iterate through all products in the response
             if (responseContent?.Products != null && responseContent.Products.Count > 0)
             {
-                // This example assumes you want to process all products.
                 foreach (var product in responseContent.Products)
                 {
                     // Set card information based on the first product (you can adjust this as needed)
@@ -230,9 +238,6 @@ namespace CardGameCorner.ViewModels
                     language = product.Language;
                     Condition = product.Condition;
 
-
-                    // You can add additional handling here if you want to show more than one product's information
-                    // Example: you could store each product's data in a list or display them differently.
                 }
             }
         }
@@ -429,8 +434,10 @@ namespace CardGameCorner.ViewModels
         [RelayCommand]
         private async Task ConfirmCard()
         {
+            if (IsLoading) return;
             try
             {
+                IsLoading = true;
                 var response = new ListBoxService();
                 var detaillst = new List<CardDetailViewModel>();
                 var conditinlst = await response.GetConditionsAsync();
@@ -518,9 +525,11 @@ namespace CardGameCorner.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Error",
                     $"An error occurred: {ex.Message}", "OK");
             }
+            finally
+            {
+                IsLoading = false;
+            }
         }
-
-
 
         //private async Task ProcessCapturedImage(Stream imageStream)
         //{

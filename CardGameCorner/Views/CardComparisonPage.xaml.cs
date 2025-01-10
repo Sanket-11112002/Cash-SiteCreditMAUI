@@ -51,7 +51,8 @@ public partial class CardComparisonPage : ContentPage
     private async void Retry(object sender, EventArgs e)
     {
         // Navigate to ScanPage
-        await Navigation.PushAsync(new ScanPage());
+        //  await Navigation.PushAsync(new ScanPage());
+        await Shell.Current.Navigation.PopToRootAsync();
     }
 
     //protected override async void OnAppearing()

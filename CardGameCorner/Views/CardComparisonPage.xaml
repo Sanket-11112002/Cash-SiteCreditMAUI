@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.CardComparisonPage"
              Title="{Binding CardComaprision}">
-
+    <Grid>
     <ScrollView>
         <Grid RowDefinitions="Auto,*,Auto"
          Padding="20" 
@@ -46,71 +46,50 @@
                 <!--<Frame Grid.Row="0" Grid.Column="1"  BorderColor="#FF4444">
                     <Image x:Name="searchimage" Aspect="AspectFit"  HeightRequest="300" WidthRequest="300" />
                 </Frame>-->
-
-                <Frame Grid.Row="0" 
-                       Grid.Column="0" 
-                       BorderColor="#FF4444"  
-                       HeightRequest="275" 
-                       MinimumHeightRequest="200"
-                       WidthRequest="180"
-                       Padding="5"
-                       Margin="0"
-                       BackgroundColor="WhiteSmoke"
-                       IsClippedToBounds="True">
-                    <Image x:Name="scannedimage" 
-                           Aspect="AspectFit"   
-                           HeightRequest="270" 
-                           WidthRequest="175"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"/>
-                </Frame>
-
-                <Frame Grid.Row="0" 
-                       Grid.Column="1" 
-                       BorderColor="Green" 
-                       HeightRequest="275"
-                       MinimumHeightRequest="200"
-                       WidthRequest="180" 
-                       CornerRadius="10" 
-                       HasShadow="True"
-                       Padding="5"
-                       Margin="0"
-                       BackgroundColor="WhiteSmoke"
-                       IsClippedToBounds="True">
-                    <Image x:Name="searchresultimage" 
-                           Aspect="AspectFit" 
-                           HeightRequest="270" 
-                           WidthRequest="175"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"/>
                 
+                <Border Grid.Row="0" 
+                        Grid.Column="0"
+                        Stroke="Red"
+                        StrokeThickness="1.5">
+                    <Frame HeightRequest="275" 
+                           MinimumHeightRequest="200"
+                           WidthRequest="180"
+                           Padding="5"
+                           Margin="0"
+                           BackgroundColor="WhiteSmoke"
+                           IsClippedToBounds="True"
+                           BorderColor="Transparent">
+                        <Image x:Name="scannedimage" 
+                               Aspect="AspectFit"   
+                               HeightRequest="270" 
+                               WidthRequest="160"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"/> 
+                    </Frame>
+                </Border>
 
-                <!-- Frame Container -->
-                <!--<Frame Grid.Row="0" Grid.Column="1" BorderColor="Green" HeightRequest="275" WidthRequest="180" CornerRadius="10" HasShadow="True">
-                    <Image x:Name="searchresultimage" Aspect="AspectFit"  HeightRequest="230" WidthRequest="200" />-->
-                    <!--<CarouselView HeightRequest="280" WidthRequest="160">
-                        <CarouselView.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                -->
-                    <!-- Add your static image URLs or file paths here -->
-                    <!--
-                                <x:String>Resources/Images/pokemon_card.png</x:String>
-                                <x:String>Resources/Images/pokemon_card.png</x:String>
-                                <x:String>Resources/Images/pokemon_card.png</x:String>
-                            </x:Array>
-                        </CarouselView.ItemsSource>
-                        <CarouselView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Image Source="{Binding}" 
-                                   Aspect="AspectFit" 
-                                   HeightRequest="220" 
-                                   WidthRequest="300"/>
-                                </Grid>
-                            </DataTemplate>
-                        </CarouselView.ItemTemplate>
-                    </CarouselView>-->
-                </Frame>
+                <Border Grid.Row="0" 
+                        Grid.Column="1"
+                        Stroke="Green"
+                        StrokeThickness="1.5">
+                    <Frame HeightRequest="275"
+                           MinimumHeightRequest="200"
+                           WidthRequest="180" 
+                           CornerRadius="10" 
+                           HasShadow="True"
+                           Padding="5"
+                           Margin="0"
+                           BackgroundColor="WhiteSmoke"
+                           IsClippedToBounds="True"
+                           BorderColor="Transparent">
+                        <Image x:Name="searchresultimage" 
+                                       Aspect="AspectFit" 
+                                       HeightRequest="270" 
+                                       WidthRequest="160"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"/>
+                    </Frame>
+                </Border>
 
 
 
@@ -223,8 +202,24 @@
                     </Grid>
                 </VerticalStackLayout>
             </Frame>
+
+         
         </Grid>
 
     </ScrollView>
 
+        <Grid x:Name="loadingOverlay"
+                IsVisible="{Binding IsLoading}"
+                InputTransparent="False"
+                BackgroundColor="#801B3B48"
+                Grid.RowSpan="2"
+                ZIndex="999">
+
+            <ActivityIndicator Color="White"
+                               IsRunning="{Binding IsLoading}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Scale="1.5"/>
+        </Grid>
+    </Grid>
 </ContentPage>

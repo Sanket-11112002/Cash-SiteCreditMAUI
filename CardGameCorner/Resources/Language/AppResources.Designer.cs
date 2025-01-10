@@ -664,7 +664,7 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You need to log in to access this page. Would you like to log in?.
+        ///   Looks up a localized string similar to You need to login to access this page. Would you like to login?.
         /// </summary>
         internal static string LoginRequiredMessage {
             get {
