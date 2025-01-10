@@ -16,6 +16,7 @@ public partial class SettingsSlidePage : ContentPage, INotifyPropertyChanged
     private readonly ISecureStorage _secureStorage;
     private readonly IAlertService _alertService;
     private readonly INavigationService _navigationService;
+    private string LastSelectedGame;
     public SettingsSlidePage(SettingsViewModel viewModel, ISecureStorage secureStorage, IAlertService alertService, INavigationService navigationService)
     {
         InitializeComponent();
@@ -40,6 +41,7 @@ public partial class SettingsSlidePage : ContentPage, INotifyPropertyChanged
 
         if (!string.IsNullOrEmpty(_globalSettings.SelectedGame))
         {
+            LastSelectedGame = _globalSettings.SelectedGame;
             // Find the game that matches the stored game code
             GamePicker.SelectedItem = _viewModel.Games.FirstOrDefault(g => g.GameCode == _globalSettings.SelectedGame);
         }
@@ -92,6 +94,10 @@ public partial class SettingsSlidePage : ContentPage, INotifyPropertyChanged
         if (!string.IsNullOrEmpty(_globalSettings.SelectedGame))
         {
             await _secureStorage.SetAsync("LastSelectedGame", _globalSettings.SelectedGame);
+            if (LastSelectedGame != _globalSettings.SelectedGame)
+            {
+                Shell.Current.GoToAsync("//GameDetailsPage");
+            }
         }
 
         if (!string.IsNullOrEmpty(_globalSettings.SelectedLanguage))
@@ -125,6 +131,7 @@ public partial class SettingsSlidePage : ContentPage, INotifyPropertyChanged
     private async void MyOrdersButton_Clicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(MyOrdersPage));
+        //await Shell.Current.GoToAsync("//MyOrdersPage");
     }
     private async void LogoutButton_Clicked(object sender, EventArgs e)
     {

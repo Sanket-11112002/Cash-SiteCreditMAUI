@@ -1,3 +1,4 @@
+using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 using System.Diagnostics;
@@ -145,6 +146,18 @@ namespace CardGameCorner.Views
                 carouselView.Position++;
             }
         }
+        protected override bool OnBackButtonPressed()
+        {
 
+            Task<bool> answer = DisplayAlert(AppResources.Exit, AppResources.ExitApp, AppResources.YesMsg, "No");
+            answer.ContinueWith(task =>
+            {
+                if (task.Result)
+                {
+                    Application.Current.Quit();
+                }
+            });
+            return true;
+        }
     }
 }

@@ -6,40 +6,54 @@
              x:Class="CardGameCorner.Views.HomePage"
              x:DataType="vm:HomeViewModel">
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,Auto,Auto" 
+          HorizontalOptions="Center"
+          VerticalOptions="Center"
+          Margin="0">
+
         <!-- Header with logo at the top -->
-        <Grid Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+        <Grid Row="0" 
+              HorizontalOptions="Center" 
+              VerticalOptions="Center"
+              Padding="0">
             <Image Source="Resources/Images/splashscreenlogo.png"
-                   HeightRequest="70" 
+                   HeightRequest="80" 
                    HorizontalOptions="Center"
-                   VerticalOptions="Start"
-                   Margin="40" />
+                   VerticalOptions="Center"
+                   Margin="0" />
 
         </Grid>
+        <!-- Header with logo at the top -->
+        <Grid Row="1" 
+              HorizontalOptions="Center" 
+              VerticalOptions="Center"
+              Padding="0">
 
-        <!--<Label Text="{Binding WelcomeMessage}" 
-           FontSize="24"
-           HorizontalOptions="Center"
-           VerticalOptions="Center" />-->
 
-        <!-- Title label -->
-        <Label Text="CARD GAME CORNER"
+            <!-- Title label -->
+            <Label Text="CARD GAME CORNER"
                FontSize="30"
                FontAttributes="Bold"
                TextColor="White"  
                HorizontalOptions="Center"
-               VerticalOptions="Start"
-               Grid.Row="0" />
+               VerticalOptions="Center" />
+        </Grid>
+
 
         <!-- Content -->
-        <Grid Grid.Row="1" Padding="10">
+        <Grid Grid.Row="2" 
+              Padding="10"
+              HorizontalOptions="Fill"
+              VerticalOptions="Fill">
             <CollectionView ItemsSource="{Binding Games}"
-                            SelectionMode="None">
+                          SelectionMode="None"
+                          HorizontalOptions="Fill"
+                          VerticalOptions="Fill">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical"
-                                     Span="2"
-                                     VerticalItemSpacing="10"
-                                     HorizontalItemSpacing="10" />
+                                   Span="2"
+                                   VerticalItemSpacing="10"
+                                   HorizontalItemSpacing="10" />
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.ItemTemplate>
@@ -48,20 +62,22 @@
                                CornerRadius="10"
                                IsClippedToBounds="True"
                                Margin="5"
-                               BackgroundColor="White">
-                            <!-- Card background color -->
+                               BackgroundColor="White"
+                               HorizontalOptions="Fill">
 
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=GameSelectedCommand}"
-                                                      CommandParameter="{Binding .}" />
+                                                    CommandParameter="{Binding .}" />
                             </Frame.GestureRecognizers>
 
-                            <Grid RowDefinitions="*, Auto">
+                            <Grid RowDefinitions="*, Auto" 
+                                  HorizontalOptions="Fill">
                                 <Image Grid.Row="0"
                                        Source="{Binding BackgroundImage}"
                                        Aspect="AspectFill"
                                        HeightRequest="160"
-                                       BackgroundColor="LightGray" />
+                                       BackgroundColor="LightGray"
+                                       HorizontalOptions="Fill" />
 
                                 <Image Grid.Row="0"
                                        Source="{Binding LogoImage}"
@@ -69,14 +85,6 @@
                                        HorizontalOptions="Center"
                                        VerticalOptions="Start"
                                        Margin="10" />
-
-                                <!--<Label Grid.Row="1"
-                                       Text="{Binding DisplayName}"
-                                       HorizontalTextAlignment="Center"
-                                       Padding="10"
-                                       FontAttributes="Bold"
-                                       TextColor="Black" />-->
-                                <!-- Display name text color for contrast -->
                             </Grid>
                         </Frame>
                     </DataTemplate>

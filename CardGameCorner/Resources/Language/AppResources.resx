@@ -196,7 +196,7 @@
     <value>No results found. Try a different search term.</value>
   </data>
   <data name="Card Comparision" xml:space="preserve">
-    <value>Card Comparision</value>
+    <value>Card Comparison</value>
   </data>
   <data name="Is this Your Card?" xml:space="preserve">
     <value>Is this Your Card?</value>
@@ -205,13 +205,13 @@
     <value>No! I will try again</value>
   </data>
   <data name="Search Result" xml:space="preserve">
-    <value>Search Result</value>
+    <value>SEARCH RESULT</value>
   </data>
   <data name="Yes! Add to my list" xml:space="preserve">
     <value>Yes! Add to my list</value>
   </data>
   <data name="Your Picture" xml:space="preserve">
-    <value>Your Picture</value>
+    <value>YOUR PICTURE</value>
   </data>
   <data name="AddToList" xml:space="preserve">
     <value>Add to my list</value>
@@ -516,8 +516,8 @@
   <data name="EmailFailed" xml:space="preserve">
     <value>Password reset request failed: Failed to send reset link.</value>
   </data>
-  <data name="z" xml:space="preserve">
-    <value>z</value>
+  <data name="Scan Again" xml:space="preserve">
+    <value>Scan Card</value>
   </data>
   <data name="CardNotFound" xml:space="preserve">
     <value>Card Not Found</value>
@@ -527,5 +527,8 @@
   </data>
   <data name="EvalutionNotice" xml:space="preserve">
     <value>Notice: You can add the card to the shopping cart, we will make an evaluation and send you a message.</value>
+  </data>
+  <data name="ExitApp" xml:space="preserve">
+    <value>Do you want to exit?</value>
   </data>
 </root>

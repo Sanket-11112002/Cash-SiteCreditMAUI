@@ -314,52 +314,50 @@ namespace CardGameCorner.Views
         private readonly IScanCardService _scanCardService;
         public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
 
+        private string LastSelectedGame;
+        private bool IsToolbarNavigation = false;
         public ScanPage()
         {
             InitializeComponent();
             _scanCardService = new ScanCardService();
             BindingContext = new ScanCardViewModel(_scanCardService);
+            LastSelectedGame = GlobalSettings.SelectedGame;
         }
 
-        private async void OnCaptureButtonClicked(object sender, EventArgs e)
+        private async Task CapturePhotoAsync()
         {
+            var viewModel = BindingContext as ScanCardViewModel;
+            if (viewModel == null) return;
+
             try
             {
-                var viewModel = BindingContext as ScanCardViewModel;
                 viewModel.IsLoading = true;
-
                 var photo = await MediaPicker.CapturePhotoAsync();
-
 
                 if (photo != null)
                 {
-                    using (var originalStream = await photo.OpenReadAsync())
+                    using var originalStream = await photo.OpenReadAsync();
+                    var compressedImageStream = await viewModel.CompressImageAsync(originalStream, 100 * 1024);
+
+                    if (compressedImageStream != null)
                     {
-                        // Correct image orientation
-                         // var correctedStream = await CorrectImageOrientationAsync(originalStream);
+                        var displayStream = new MemoryStream();
+                        compressedImageStream.Position = 0;
+                        await compressedImageStream.CopyToAsync(displayStream);
+                        displayStream.Position = 0;
 
-                        var compressedImageStream = await viewModel.CompressImageAsync(originalStream, 100 * 1024);
+                        capturedImage.Source = ImageSource.FromStream(() => displayStream);
+                        capturedImage.IsVisible = true;
 
-                        if (compressedImageStream != null)
+                        var uploadStream = new MemoryStream();
+                        compressedImageStream.Position = 0;
+                        await compressedImageStream.CopyToAsync(uploadStream);
+                        uploadStream.Position = 0;
+
+                        var apiResponse = await viewModel.UploadImageAsync(uploadStream);
+                        if (apiResponse != null)
                         {
-                            var displayStream = new MemoryStream();
-                            compressedImageStream.Position = 0;
-                            await compressedImageStream.CopyToAsync(displayStream);
-                            displayStream.Position = 0;
-
-                            // Display the compressed image in the Image control
-                            capturedImage.Source = ImageSource.FromStream(() => displayStream);
-                            capturedImage.IsVisible = true;
-
-                            var uploadStream = new MemoryStream();
-                            compressedImageStream.Position = 0;
-                            await compressedImageStream.CopyToAsync(uploadStream);
-                            uploadStream.Position = 0;
-
-                            var apiResponse = await viewModel.UploadImageAsync(uploadStream);
-                            if (apiResponse != null)
-                            {
-                                var cardRequest = new CardSearchRequest
+                            var cardRequest = new CardSearchRequest
                                 {
                                     //Title = apiResponse.Result.Title,
                                     //Set = apiResponse.Result.Set,
@@ -377,16 +375,12 @@ namespace CardGameCorner.Views
 
                                 };
 
-                                var data = await viewModel.SearchCardAsync(cardRequest, ImageSource.FromStream(() => new MemoryStream(displayStream.ToArray())));
+                            var data = await viewModel.SearchCardAsync(cardRequest,
+                      ImageSource.FromStream(() => new MemoryStream(displayStream.ToArray())));
 
-                                if (data != null)
-                                {
-                                    await Navigation.PushAsync(new CardComparisonPage(data));
-                                }
-                                else
-                                {
-                                    await DisplayAlert(AppResources.ErrorTitle, AppResources.CardNotFound, "OK");
-                                }
+                            if (data != null)
+                            {
+                                await Navigation.PushAsync(new CardComparisonPage(data));
                             }
                             else
                             {
@@ -398,10 +392,10 @@ namespace CardGameCorner.Views
                             await DisplayAlert(AppResources.ErrorTitle, AppResources.CardNotFound, "OK");
                         }
                     }
-                }
-                else
-                {
-                    Console.WriteLine("No image captured.");
+                    else
+                    {
+                        await DisplayAlert(AppResources.ErrorTitle, AppResources.CardNotFound, "OK");
+                    }
                 }
             }
             catch (Exception ex)
@@ -411,43 +405,12 @@ namespace CardGameCorner.Views
             }
             finally
             {
-                var viewModel = BindingContext as ScanCardViewModel;
                 viewModel.IsLoading = false;
             }
         }
-
-
-        private async Task<Stream> CorrectImageOrientationAsync(Stream inputStream)
+        private async void OnCaptureButtonClicked(object sender, EventArgs e)
         {
-            try
-            {
-                using var skBitmap = SKBitmap.Decode(inputStream);
-
-                // Create a new surface with rotated dimensions (swap width and height)
-                using var surface = SKSurface.Create(new SKImageInfo(skBitmap.Height, skBitmap.Width));
-                var canvas = surface.Canvas;
-
-                canvas.RotateDegrees(90, skBitmap.Height / 2f, skBitmap.Height / 2f);
-
-                // Draw the original image onto the canvas at the rotated position
-                canvas.DrawBitmap(skBitmap, 0, 0);
-
-                // Encode the rotated bitmap back to a stream
-                using var rotatedImage = surface.Snapshot();
-                using var rotatedData = rotatedImage.Encode(SKEncodedImageFormat.Jpeg, 100);
-
-                var resultStream = new MemoryStream();
-                rotatedData.SaveTo(resultStream);
-                resultStream.Position = 0;
-
-                return resultStream;
-            }
-            catch
-            {
-                // If an error occurs, return the original stream
-                inputStream.Position = 0;
-                return inputStream;
-            }
+            await CapturePhotoAsync();
         }
 
         private async void OnUploadButtonClicked(object sender, EventArgs e)
@@ -537,13 +500,55 @@ namespace CardGameCorner.Views
             }
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
             // Reset image and visibility when returning to the page
             capturedImage.Source = null;
             capturedImage.IsVisible = false;
+
+            // Automatically trigger photo capture
+            //if(LastSelectedGame == GlobalSettings.SelectedGame)
+            //{
+            //    await CapturePhotoAsync();
+            //}
+           
+        }
+
+        //protected override void OnDisappearing()
+        //{
+        //    base.OnDisappearing();
+        //    LastSelectedGame = GlobalSettings.SelectedGame;
+        //}
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            LastSelectedGame = GlobalSettings.SelectedGame;
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                // Clear the Shell navigation stack
+                if (Shell.Current != null)
+                {
+                    await Shell.Current.Navigation.PopToRootAsync(false);
+                }
+            });
+
+            
+        }
+        protected override bool OnBackButtonPressed()
+        {
+
+            Task<bool> answer = DisplayAlert(AppResources.Exit, AppResources.ExitApp, AppResources.YesMsg, "No");
+            answer.ContinueWith(task =>
+            {
+                if (task.Result)
+                {
+                    Application.Current.Quit();
+                }
+            });
+            return true;
         }
     }
 }

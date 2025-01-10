@@ -2,151 +2,80 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="CardGameCorner.Views.ScanPage">
+    <Grid RowDefinitions="*, Auto"
+          Padding="16,0,16,16"
+          IsEnabled="{Binding IsNotLoading}">
 
-    <!--<ScrollView>
-        <VerticalStackLayout Padding="10" Spacing="20">
-            -->
-    <!-- Camera View for Scanning -->
-    <!--<toolkit:CameraView 
-                x:Name="cameraView"
-                MediaCaptured="OnMediaCaptured"
-                HeightRequest="500"
-                WidthRequest="500"
-                HorizontalOptions="Center"
-                BackgroundColor="Black"
-                IsVisible="False" />-->
+        <!-- Main Content - Card Display Area -->
+        <Grid Grid.Row="0">
+            <Frame BackgroundColor="#2A3947"
+                   BorderColor="Transparent"
+                   CornerRadius="16"
+                   Padding="0"
+                   Margin="0,20,0,20"
+                   IsClippedToBounds="True"
+                   VerticalOptions="Center"
+                   HeightRequest="450"
+                   WidthRequest="300">
 
-    <!-- Capture Button -->
-    <!--
-            <Button Text="Capture"
-                    Clicked="OnCaptureButtonClicked"
-                    BackgroundColor="#FF6347"
-                    TextColor="White"
-                    FontSize="20"
-                    WidthRequest="200"
-                    HeightRequest="50"
-                    HorizontalOptions="Center" />
-
-             -->
-    <!--Upload Button-->
-    <!-- 
-            <Button Text="Upload"
-                    Clicked="OnUploadButtonClicked"
-                    BackgroundColor="#4CAF50"
-                    TextColor="White"
-                    FontSize="20"
-                    WidthRequest="200"
-                    HeightRequest="50"
-                    HorizontalOptions="Center"
-                    IsEnabled="true"
-                    x:Name="uploadButton" />
-
-            -->
-    <!-- Captured Image -->
-    <!--
-            <Image x:Name="capturedImage"
-                   HeightRequest="300"
-                   Aspect="AspectFit"
-                   IsVisible="False"
-                   SemanticProperties.Description="Captured image will appear here" />
-        </VerticalStackLayout>
-    </ScrollView>-->
-    <Grid>
-        <ScrollView>
-            <VerticalStackLayout Spacing="20"
-                          Padding="20"
-                          VerticalOptions="Start">
-                <!-- Logo -->
-                <Image Source="splashscreenlogo.png"
-                 HeightRequest="100"
-                 HorizontalOptions="Center"
-                 WidthRequest="100"
-                 Aspect="AspectFit"/>
-
-                <!-- Banner -->
-                <Image Source="banner.jpg"
-                 Aspect="AspectFit"
-                 Margin="0,0,0,10"/>
-
+                <!-- Card Image -->
                 <Image x:Name="capturedImage"
-                   HeightRequest="500"
-                   WidthRequest="400"
-                   Aspect="AspectFit"
-                   IsVisible="False"
-                   SemanticProperties.Description="Captured image will appear here" />
+                       Aspect="AspectFit"
+                       IsVisible="False"
+                       SemanticProperties.Description="Captured image will appear here"
+                       BackgroundColor="Transparent"/>
+            </Frame>
+        </Grid>
 
-                <!-- Grid for Buttons -->
-                <Grid 
-                ColumnSpacing="20"
-                Margin="0,0,0,20">
+        <!-- Capture Button Section -->
+        <Grid Grid.Row="1" 
+              Margin="0,0,0,24"
+              VerticalOptions="End">
 
-                    <!-- Search Button -->
-                    <Frame 
-                     BackgroundColor="#2A3947"
-                     BorderColor="White"
-                     CornerRadius="10"
-                     HeightRequest="120"
-                     Margin="0">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnCaptureButtonClicked" />
-                        </Frame.GestureRecognizers>
-                        <Grid RowDefinitions="*,Auto"
-                        RowSpacing="10">
-                            <Image Source="camera.png"
-                             HeightRequest="40"
-                             VerticalOptions="End"
-                             HorizontalOptions="Center"/>
-                            <Label Text="{Binding CaptureImage}"
-                             TextColor="White"
-                             HorizontalOptions="Center"
-                             VerticalOptions="Start"
-                             Grid.Row="1"/>
-                        </Grid>
-                    </Frame>
+            <VerticalStackLayout Spacing="12" 
+                               HorizontalOptions="Center">
+                <!-- Capture Button Container -->
+                <Frame BackgroundColor="#2A3947"
+                       Padding="16"
+                       CornerRadius="40"
+                       HasShadow="False"
+                       BorderColor="Transparent"
+                       HorizontalOptions="Center">
 
-                    <!-- Scan Button -->
-                    <!--<Frame 
-                       BackgroundColor="#2A3947"
-                       BorderColor="White"
-                       CornerRadius="10"
-                       HeightRequest="120"
-                       Margin="0">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnUploadButtonClicked" />
-                        </Frame.GestureRecognizers>
-                        <Grid RowDefinitions="*,Auto"
-          RowSpacing="10">
-                            <ImageButton Source="uploadicon.png"
-                     HeightRequest="40"
-                     BackgroundColor="Transparent"
-                     HorizontalOptions="Center"
-                     VerticalOptions="Center" 
-                     Clicked="OnUploadButtonClicked"/>
-                            <Label Text="{Binding UploadImage}"
-               TextColor="White"
-               HorizontalOptions="Center"
-               VerticalOptions="Start"
-               Grid.Row="1"/>
-                        </Grid>
-                    </Frame>-->
+                    <!-- Circular Capture Button -->
+                    <Button HeightRequest="56"
+                           WidthRequest="56"
+                           CornerRadius="28"
+                           Padding="0"
+                           BackgroundColor="#FF4444"
+                           BorderColor="White"
+                           BorderWidth="2"
+                           Clicked="OnCaptureButtonClicked"
+                           HorizontalOptions="Center"/>
+                </Frame>
 
-                </Grid>
+                <!-- Capture Text -->
+                <Label Text="{Binding CaptureImage}"
+                       TextColor="White"
+                       FontSize="16"
+                       HorizontalOptions="Center"
+                       Margin="0,4,0,0"/>
             </VerticalStackLayout>
-        </ScrollView>
+        </Grid>
 
-        <Grid 
-            BackgroundColor="Black"
-            Opacity="0.5"
-            IsVisible="{Binding IsLoading}"
-            ZIndex="100"
-            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
-            AbsoluteLayout.LayoutFlags="All">
-            <ActivityIndicator
-                IsRunning="{Binding IsLoading}" 
-                Color="White"
-                HorizontalOptions="Center" 
-                VerticalOptions="Center" 
-                Scale="2"/>
+        <!-- Loading Overlay -->
+        <Grid x:Name="loadingOverlay"
+              IsVisible="{Binding IsLoading}"
+              InputTransparent="False"
+              BackgroundColor="#801B3B48"
+              Grid.RowSpan="2"
+              ZIndex="999">
+
+            <ActivityIndicator Color="White"
+                             IsRunning="{Binding IsLoading}"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center"
+                             Scale="1.5"/>
         </Grid>
     </Grid>
 </ContentPage>

@@ -4,6 +4,7 @@ using System.Windows.Input;
 using CardGameCorner.Models;
 using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
+using CardGameCorner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -286,7 +287,9 @@ namespace CardGameCorner.ViewModels
                         "OK"
                     );
 
-                    await Shell.Current.GoToAsync("//MyListPage");
+                    // await Shell.Current.GoToAsync("//MyListPage");
+                   // await Shell.Current.GoToAsync("//MyOrdersPage");
+                    await Shell.Current.GoToAsync(nameof(MyOrdersPage));
                 }
                 else
                 {

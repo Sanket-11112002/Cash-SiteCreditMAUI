@@ -196,7 +196,7 @@
     <value>Nessun risultato trovato. Prova un altro termine di ricerca.</value>
   </data>
   <data name="Card Comparision" xml:space="preserve">
-    <value>Confronto di carte</value>
+    <value>Confronto delle carte</value>
   </data>
   <data name="Is this Your Card?" xml:space="preserve">
     <value>Questa è la tua carta?</value>
@@ -205,13 +205,13 @@
     <value>NO! Ci proverò di nuovo</value>
   </data>
   <data name="Search Result" xml:space="preserve">
-    <value>Risultato della ricerca</value>
+    <value>RISULTATO DELLA RICERCA</value>
   </data>
   <data name="Yes! Add to my list" xml:space="preserve">
     <value>SÌ! Aggiungi alla mia lista</value>
   </data>
   <data name="Your Picture" xml:space="preserve">
-    <value>La tua immagine</value>
+    <value>LA TUA IMMAGINE</value>
   </data>
   <data name="AddToList" xml:space="preserve">
     <value>Aggiungi alla mia lista</value>
@@ -516,8 +516,8 @@
   <data name="EmailFailed" xml:space="preserve">
     <value>Richiesta di reimpostazione della password non riuscita: impossibile inviare il collegamento di reimpostazione.</value>
   </data>
-  <data name="z" xml:space="preserve">
-    <value>z</value>
+  <data name="Scan Again" xml:space="preserve">
+    <value>Scansiona la carta</value>
   </data>
   <data name="CardNotFound" xml:space="preserve">
     <value>Carta non trovata</value>
@@ -527,5 +527,8 @@
   </data>
   <data name="EvalutionNotice" xml:space="preserve">
     <value>Avviso: Puoi aggiungere la carta al carrello, faremo una valutazione e ti invieremo un messaggio.</value>
+  </data>
+  <data name="ExitApp" xml:space="preserve">
+    <value>Vuoi uscire?</value>
   </data>
 </root>

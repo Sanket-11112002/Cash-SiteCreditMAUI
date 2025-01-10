@@ -284,6 +284,7 @@
 //    }
 //}
 
+using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 using System.ComponentModel;
@@ -409,5 +410,19 @@ public partial class MyAccountPage : ContentPage
            // InitializeComponent();
             //BindingContext = _viewModel;
         }
+    }
+
+    protected override bool OnBackButtonPressed()
+    {
+
+        Task<bool> answer = DisplayAlert(AppResources.Exit, AppResources.ExitApp, AppResources.YesMsg, "No");
+        answer.ContinueWith(task =>
+        {
+            if (task.Result)
+            {
+                Application.Current.Quit();
+            }
+        });
+        return true;
     }
 }

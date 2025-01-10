@@ -234,7 +234,19 @@ namespace CardGameCorner.Views
             }
             // }
         }
+        protected override bool OnBackButtonPressed()
+        {
 
+            Task<bool> answer = DisplayAlert(AppResources.Exit, AppResources.ExitApp, AppResources.YesMsg, "No");
+            answer.ContinueWith(task =>
+            {
+                if (task.Result)
+                {
+                    Application.Current.Quit();
+                }
+            });
+            return true;
+        }
         private async Task LogoutAsync()
         {
             bool confirm = await _alertService.ShowConfirmationAsync(

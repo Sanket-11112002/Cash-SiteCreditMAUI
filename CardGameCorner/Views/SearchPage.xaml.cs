@@ -1,3 +1,4 @@
+using CardGameCorner.Resources.Language;
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
 using CommunityToolkit.Maui.Camera;
@@ -92,4 +93,18 @@ public partial class SearchPage : ContentPage
     //        });
     //    }
     //}
+
+    protected override bool OnBackButtonPressed()
+    {
+
+        Task<bool> answer = DisplayAlert(AppResources.Exit,AppResources.ExitApp, AppResources.YesMsg, "No");
+        answer.ContinueWith(task =>
+        {
+            if (task.Result)
+            {
+                Application.Current.Quit();
+            }
+        });
+        return true;
+    }
 }

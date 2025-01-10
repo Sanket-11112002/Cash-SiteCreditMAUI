@@ -116,7 +116,7 @@ namespace CardGameCorner.ViewModels
             {
                 // Update localized strings when language changes
                 UpdateLocalizedStrings();
-                UpdateGameImage();
+              //  UpdateGameImage();
             }
         }
 

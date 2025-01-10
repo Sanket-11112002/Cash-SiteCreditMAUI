@@ -24,7 +24,7 @@
                     <SearchBar Grid.Column="0"
                                Text="{Binding SearchQuery}"
                                Placeholder="{Binding SearchText}"
-                               BackgroundColor="#2A3947" 
+                               BackgroundColor="#2A3947"
                                TextColor="White" 
                                PlaceholderColor="Gray"
                                Margin="0,0,0,10"
@@ -79,16 +79,16 @@
 
                                     <!-- Favorite Button -->
                                     <ImageButton 
-                        Source="{Binding FavoriteIcon}" 
-                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SearchViewModel}}, Path=ToggleFavoriteCommand}" 
+                                            Source="{Binding FavoriteIcon}" 
+                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SearchViewModel}}, Path=ToggleFavoriteCommand}" 
                                 
-                        CommandParameter="{Binding .}" 
-                        HorizontalOptions="End" 
-                        VerticalOptions="Start" 
-                        Margin="5"
-                        HeightRequest="20" 
-                        WidthRequest="20" 
-                        BackgroundColor="Transparent" />
+                                            CommandParameter="{Binding .}" 
+                                            HorizontalOptions="End" 
+                                            VerticalOptions="Start" 
+                                            Margin="5"
+                                            HeightRequest="20" 
+                                            WidthRequest="20" 
+                                            BackgroundColor="Transparent" />
 
                                     <!-- Rarity Label -->
                                     <Label Text="{Binding Rarity}" 

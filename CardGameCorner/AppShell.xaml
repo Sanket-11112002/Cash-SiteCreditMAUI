@@ -29,7 +29,7 @@
 
         <ShellContent
         Title="{Binding ScanTabTitle, Mode=OneWay}"
-        Icon="bxqrscan.png"
+        Icon="pcamera.png"
         ContentTemplate="{DataTemplate views:ScanPage }"
         Route="ScanPage" />
 
@@ -68,6 +68,8 @@
     <ShellContent Title="SearchQueryPage" ContentTemplate="{DataTemplate views:SearchQueryPage}" />
 
     <ShellContent Route="PlaceOrderPage" ContentTemplate="{DataTemplate views:PlaceOrderPage}" />
+
+    <ShellContent Route="MyOrdersPage" ContentTemplate="{DataTemplate views:MyOrdersPage}" />
 
 </Shell>
 

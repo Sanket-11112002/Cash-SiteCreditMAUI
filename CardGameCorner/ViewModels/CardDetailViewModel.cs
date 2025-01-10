@@ -598,28 +598,16 @@ namespace CardGameCorner.ViewModels
             set => SetProperty(ref _doneCommand, value);
         }
 
-        //public async void ExecuteGoBack()
-        //{
-        //    await Application.Current.MainPage.Navigation.PopAsync();
-        //}
         public async void ExecuteGoBack()
         {
-            //  await Application.Current.MainPage.Navigation.PopAsync();
-            //  await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
-            //await Shell.Current.GoToAsync(nameof(SearchQueryPage));
             await Shell.Current.GoToAsync("..", true);
-            // await Shell.Current.Navigation.PopAsync();
-
         }
 
         public async void ExecuteDone()
         {
             try
             {
-                // Reset navigation stack to ScanPage
-                await Shell.Current.Navigation.PopToRootAsync(); // Clears the stack
-                                                                 // await Shell.Current.GoToAsync("//MyListPage");
-                                                                 // await Shell.Current.GoToAsync(nameof(CardDetailPage));// Navigate to ScanPage tab
+                await Shell.Current.Navigation.PopToRootAsync();                                             
             }
             catch (Exception ex)
             {
@@ -886,10 +874,5 @@ namespace CardGameCorner.ViewModels
 
             }
         }
-
-
-
-
     }
-
 }

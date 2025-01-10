@@ -55,7 +55,7 @@
                        WidthRequest="180"
                        Padding="5"
                        Margin="0"
-                       BackgroundColor="Transparent"
+                       BackgroundColor="WhiteSmoke"
                        IsClippedToBounds="True">
                     <Image x:Name="scannedimage" 
                            Aspect="AspectFit"   
@@ -75,9 +75,10 @@
                        HasShadow="True"
                        Padding="5"
                        Margin="0"
+                       BackgroundColor="WhiteSmoke"
                        IsClippedToBounds="True">
                     <Image x:Name="searchresultimage" 
-                           Aspect="AspectFit"  
+                           Aspect="AspectFit" 
                            HeightRequest="270" 
                            WidthRequest="175"
                            VerticalOptions="Center"
@@ -158,8 +159,6 @@
                        LineBreakMode="WordWrap"
                        MaxLines="2"/>
             </Grid>
-
-       
 
             <!-- Card Details -->
             <Frame Grid.Row="2"

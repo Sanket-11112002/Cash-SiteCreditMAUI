@@ -85,10 +85,12 @@
 		<None Remove="Resources\Images\bxqrscan.svg" />
 		<None Remove="Resources\Images\bxsearchalt.svg" />
 		<None Remove="Resources\Images\bxuser.svg" />
+		<None Remove="Resources\Images\camera.png" />
 		<None Remove="Resources\Images\img1.png" />
 		<None Remove="Resources\Images\italianlngimage.png" />
 		<None Remove="Resources\Images\left.png" />
 		<None Remove="Resources\Images\next.png" />
+		<None Remove="Resources\Images\pcamera.png" />
 		<None Remove="Resources\Images\pokemon_card.jpg" />
 		<None Remove="Resources\Images\Setting.png" />
 		<None Remove="Resources\Images\splashscreenlogo.png" />

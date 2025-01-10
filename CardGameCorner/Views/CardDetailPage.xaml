@@ -21,28 +21,6 @@
                Source="{Binding GameImageUrl}"
                HeightRequest="75"
                HorizontalOptions="Center"/>
-
-        <Grid Grid.Row="0" Padding="5,5" ColumnDefinitions="Auto,*,Auto">
-
-            <!--<Button Grid.Column="0"
-                    Text="{Binding Back}"
-                    TextColor="White"
-                    BackgroundColor="Transparent"
-                    FontSize="16"
-                    Padding="0"
-                    Margin="0"
-                    Command="{Binding GoBackCommand}"/>
-
-            <Button Grid.Column="2"
-                    Text="{Binding Done}"
-                    TextColor="White"
-                    BackgroundColor="Transparent"
-                    FontSize="16"
-                    Padding="0"
-                    Margin="0"
-                    Command="{Binding DoneCommand}"/>-->
-        </Grid>
-
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Spacing="20" Padding="20">
                 <CarouselView ItemsSource="{Binding Cards}"
@@ -209,7 +187,7 @@
                                 Grid.ColumnSpan="2"
                                 StrokeThickness="1"
                                 BackgroundColor="#1B3B48"
-                                StrokeShape="RoundRectangle 20" 
+                                StrokeShape="RoundRectangle 10" 
                                 Stroke="White" 
                                 IsVisible="{Binding SelectedCard.IsNoticeVisible1}">
                             <VerticalStackLayout Padding="15">
@@ -226,7 +204,7 @@
                                         Grid.ColumnSpan="2"
                                         StrokeThickness="1"
                                         BackgroundColor="#1B3B48"
-                                        StrokeShape="RoundRectangle 20"
+                                        StrokeShape="RoundRectangle 10"
                                         Stroke="White"
                                         IsVisible="{Binding SelectedCard.IsNoticeVisible2}">
                             <VerticalStackLayout Padding="15">

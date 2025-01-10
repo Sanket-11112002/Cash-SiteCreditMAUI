@@ -133,7 +133,7 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Card Comparision.
+        ///   Looks up a localized string similar to Card Comparison.
         /// </summary>
         internal static string Card_Comparision {
             get {
@@ -480,6 +480,15 @@ namespace CardGameCorner.Resources.Language {
         internal static string Exit {
             get {
                 return ResourceManager.GetString("Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to exit?.
+        /// </summary>
+        internal static string ExitApp {
+            get {
+                return ResourceManager.GetString("ExitApp", resourceCulture);
             }
         }
         
@@ -1024,6 +1033,15 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scan Card.
+        /// </summary>
+        internal static string Scan_Again {
+            get {
+                return ResourceManager.GetString("Scan Again", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scan with camera.
         /// </summary>
         internal static string Scan_with_camera {
@@ -1042,7 +1060,7 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search Result.
+        ///   Looks up a localized string similar to SEARCH RESULT.
         /// </summary>
         internal static string Search_Result {
             get {
@@ -1267,20 +1285,11 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your Picture.
+        ///   Looks up a localized string similar to YOUR PICTURE.
         /// </summary>
         internal static string Your_Picture {
             get {
                 return ResourceManager.GetString("Your Picture", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to z.
-        /// </summary>
-        internal static string z {
-            get {
-                return ResourceManager.GetString("z", resourceCulture);
             }
         }
         

@@ -75,8 +75,21 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private ImageSource capturedImage;
 
-        [ObservableProperty]
-        private bool isLoading;
+
+        private bool _isLoading;
+
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsNotLoading));
+            }
+        }
+
+        public bool IsNotLoading => !IsLoading;
 
         public GlobalSettingsService GlobalSettings => GlobalSettingsService.Current;
 
@@ -105,7 +118,7 @@ namespace CardGameCorner.ViewModels
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                CaptureImage = AppResources.Capture_Image;
+                CaptureImage = AppResources.Scan_Again;
                 UploadImage = AppResources.Upload_Image;
 
                 OnPropertyChanged(nameof(CaptureImage));
@@ -340,6 +353,7 @@ namespace CardGameCorner.ViewModels
         {
             try
             {
+                IsLoading = true;
                 var cardSearchResponseList = await _scanCardService.SearchCardAsync(cardSearch);
 
                 if (cardSearchResponseList != null && cardSearchResponseList.Any())
@@ -356,7 +370,7 @@ namespace CardGameCorner.ViewModels
                             var comparisonData = new CardComparisonViewModel();
                             comparisonData.Initialize(cardSearchResponseViewModel, imageSource);
 
-                            IsLoading = false;
+                           
                             return comparisonData;
                         }
                     }
@@ -383,8 +397,17 @@ namespace CardGameCorner.ViewModels
 
         public async Task<ApiResponse_Card> UploadImageAsync(Stream imageStream)
         {
-            var apiResponseCard = await _scanCardService.UploadImageAsync(imageStream);
-            return apiResponseCard;
+            //var apiResponseCard = await _scanCardService.UploadImageAsync(imageStream);
+            //return apiResponseCard;
+            try
+            {
+                IsLoading = true;
+                return await _scanCardService.UploadImageAsync(imageStream);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
     }
 }

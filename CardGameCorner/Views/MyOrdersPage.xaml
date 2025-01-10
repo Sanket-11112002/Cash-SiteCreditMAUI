@@ -2,25 +2,26 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.MyOrdersPage"
-             BackgroundColor="#1B3B48">
+             BackgroundColor="#1B3B48"
+             Title="My Orders">
 
-    <ContentPage.NavigationPage.TitleView>
+    <!--<ContentPage.NavigationPage.TitleView>
         <Label Text="My Orders" 
                TextColor="White"
                FontSize="22"
                FontAttributes="Bold"
                HorizontalOptions="Start"
                VerticalOptions="Center"/>
-    </ContentPage.NavigationPage.TitleView>
+    </ContentPage.NavigationPage.TitleView>-->
 
     <Grid RowDefinitions="Auto,Auto,*">
-        <Label Grid.Row="0"
+        <!--<Label Grid.Row="0"
            Text="My Orders"
            TextColor="White"
            FontSize="22"
            FontAttributes="Bold"
            Margin="20,10"
-           HorizontalOptions="Start"/>
+           HorizontalOptions="Start"/>-->
 
         <Label Grid.Row="1" 
            Text="{Binding ErrorMessage}"
