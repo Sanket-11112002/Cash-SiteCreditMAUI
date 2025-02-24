@@ -72,6 +72,9 @@ namespace CardGameCorner
             // Register GlobalSettingsService as a singleton
             builder.Services.AddSingleton(GlobalSettingsService.Current);
 
+            builder.Services.AddSingleton<IOrderService, OrderService>();
+            builder.Services.AddTransient<OrderDetailViewModel>();
+            builder.Services.AddTransient<OrderDetailPage>();
 
             // Register HttpClient
             builder.Services.AddHttpClient();

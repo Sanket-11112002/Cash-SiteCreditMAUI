@@ -193,10 +193,10 @@ public partial class SearchQueryPage : ContentPage
 
 
                 // Navigate using GoToAsync with the serialized data as a query parameter
-                await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
+               // await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailsJson)}");
 
                 //  await Shell.Current.GoToAsync($"{nameof(CardDetailPage)}?details={Uri.EscapeDataString(detailslst)}");
-                //  viewModel.OnUploadButtonClicked(detailslst);
+                  viewModel.OnUploadButtonClicked(detailslst);
             }
             else
             {

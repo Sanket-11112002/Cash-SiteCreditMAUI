@@ -19,7 +19,19 @@ namespace CardGameCorner.Services
             _alertService = alertService;
             _secureStorage = secureStorage;
         }
-
+       
+        public async Task NavigateToAsync(string route, IDictionary<string, object> parameters = null)
+        {
+                if (parameters != null)
+                {
+                    await Shell.Current.GoToAsync(route, parameters);
+                }
+                else
+                {
+                    await Shell.Current.GoToAsync(route);
+                }
+        }
+        
         public async Task NavigateToLoginAsync()
         {
 

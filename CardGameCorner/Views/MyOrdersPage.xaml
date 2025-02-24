@@ -4,25 +4,9 @@
              x:Class="CardGameCorner.Views.MyOrdersPage"
              BackgroundColor="#1B3B48"
              Title="My Orders">
-
-    <!--<ContentPage.NavigationPage.TitleView>
-        <Label Text="My Orders" 
-               TextColor="White"
-               FontSize="22"
-               FontAttributes="Bold"
-               HorizontalOptions="Start"
-               VerticalOptions="Center"/>
-    </ContentPage.NavigationPage.TitleView>-->
-
+    
     <Grid RowDefinitions="Auto,Auto,*">
-        <!--<Label Grid.Row="0"
-           Text="My Orders"
-           TextColor="White"
-           FontSize="22"
-           FontAttributes="Bold"
-           Margin="20,10"
-           HorizontalOptions="Start"/>-->
-
+      
         <Label Grid.Row="1" 
            Text="{Binding ErrorMessage}"
            IsVisible="{Binding HasError}"
@@ -58,11 +42,16 @@
                     <DataTemplate>
                         <Frame Margin="16,8"
                                Padding="16"
-                               BorderColor="#4A8BA8"
-                               BackgroundColor="#FFFFFF"
+                               BorderColor="White"
+                               BackgroundColor="#2C5A70"
                                HasShadow="True"
                                CornerRadius="8">
-                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OrderTappedCommand}"
+                        CommandParameter="{Binding OrderId}"/>
+                                </Frame.GestureRecognizers>
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
                                   RowSpacing="8"
                                   ColumnDefinitions="Auto,*">
 
@@ -70,46 +59,46 @@
                                 <Label Grid.Row="0" 
                                        Grid.Column="0"
                                        Text="Order ID: "
-                                       TextColor="#1B3B48"
+                                       TextColor="White"
                                        FontSize="14"
                                        FontAttributes="Bold"/>
                                 <Label Grid.Row="0" 
                                        Grid.Column="1"
                                        Text="{Binding OrderId}"
-                                       TextColor="#1B3B48"
+                                        TextColor="White"
                                        FontSize="14"/>
 
                                 <!-- Date -->
                                 <Label Grid.Row="1" 
                                        Grid.Column="0"
                                        Text="Date: "
-                                       TextColor="#1B3B48"
+                                       TextColor="White"
                                        FontSize="14"
                                        FontAttributes="Bold"/>
                                 <Label Grid.Row="1" 
                                        Grid.Column="1"
                                        Text="{Binding OrderDate, StringFormat='{0:dd/MM/yyyy HH:mm}'}"
-                                       TextColor="#1B3B48"
+                                       TextColor="White"
                                        FontSize="14"/>
 
                                 <!-- Game -->
                                 <Label Grid.Row="2" 
                                        Grid.Column="0"
                                        Text="Game: "
-                                       TextColor="#1B3B48"
+                                       TextColor="White"
                                        FontSize="14"
                                        FontAttributes="Bold"/>
                                 <Label Grid.Row="2" 
                                        Grid.Column="1"
                                        Text="{Binding Game}"
-                                       TextColor="#1B3B48"
+                                        TextColor="White"
                                        FontSize="14"/>
 
                                 <!-- Status -->
                                 <Label Grid.Row="3" 
                                        Grid.Column="0"
                                        Text="Status: "
-                                       TextColor="#1B3B48"
+                                       TextColor="White"
                                        FontSize="14"
                                        FontAttributes="Bold"/>
                                 <Label Grid.Row="3" 
@@ -123,54 +112,66 @@
                                 <Label Grid.Row="4" 
                                        Grid.Column="0"
                                        Text="Payment: "
-                                       TextColor="#1B3B48"
+                                       TextColor="White"
                                        FontSize="14"
                                        FontAttributes="Bold"/>
                                 <Label Grid.Row="4" 
                                        Grid.Column="1"
                                        Text="{Binding Payment}"
-                                       TextColor="#1B3B48"
+                                      TextColor="White"
                                        FontSize="14"/>
 
                                 <!-- Payment Account -->
                                 <Label Grid.Row="5" 
                                        Grid.Column="0"
-                                       Text="Account: "
-                                       TextColor="#1B3B48"
+                                       Text="Payment Account: "
+                                       TextColor="White"
                                        FontSize="14"
                                        FontAttributes="Bold"/>
                                 <Label Grid.Row="5" 
                                        Grid.Column="1"
                                        Text="{Binding PaymentAccount}"
-                                       TextColor="#1B3B48"
+                                       TextColor="White"
                                        FontSize="14"/>
 
                                 <!-- Contact -->
                                 <Label Grid.Row="6" 
                                        Grid.Column="0"
                                        Text="Contact: "
-                                       TextColor="#1B3B48"
+                                       TextColor="White"
                                        FontSize="14"
                                        FontAttributes="Bold"/>
                                 <Label Grid.Row="6" 
                                        Grid.Column="1"
                                        Text="{Binding Contact}"
-                                       TextColor="#1B3B48"
+                                        TextColor="White"
                                        FontSize="14"/>
 
                                 <!-- Pickup -->
                                 <Label Grid.Row="7" 
                                        Grid.Column="0"
                                        Text="Pickup: "
-                                       TextColor="#1B3B48"
+                                        TextColor="White"
                                        FontSize="14"
                                        FontAttributes="Bold"/>
                                 <Label Grid.Row="7" 
                                        Grid.Column="1"
                                        Text="{Binding Pickup, StringFormat='{0}'}"
-                                       TextColor="#1B3B48"
+                                      TextColor="White"
                                        FontSize="14"/>
-                            </Grid>
+                                
+                                    <Label Grid.Row="8"
+                                        Grid.Column="0"
+                                        Text="Pickup Cost: "
+                                        TextColor="White"
+                                        FontSize="14"
+                                        FontAttributes="Bold"/>
+                                    <Label Grid.Row="8"
+                                        Grid.Column="1"
+                                        Text="{Binding PickupCost, StringFormat='{0}'}"
+                                        TextColor="White"
+                                        FontSize="14"/>
+                                </Grid>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

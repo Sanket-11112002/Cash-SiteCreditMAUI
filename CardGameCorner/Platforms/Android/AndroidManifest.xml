@@ -10,6 +10,7 @@
 		<!-- Declare that your app uses the IMAGE_CAPTURE intent -->
 		<intent>
 			<action android:name="android.media.action.IMAGE_CAPTURE" />
+			
 		</intent>
 	</queries>
 	<uses-sdk />

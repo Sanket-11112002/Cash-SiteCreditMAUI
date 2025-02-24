@@ -80,23 +80,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Remove="Resources\Images\bxhomealt.svg" />
-		<None Remove="Resources\Images\bxlistul.svg" />
-		<None Remove="Resources\Images\bxqrscan.svg" />
-		<None Remove="Resources\Images\bxsearchalt.svg" />
-		<None Remove="Resources\Images\bxuser.svg" />
-		<None Remove="Resources\Images\camera.png" />
-		<None Remove="Resources\Images\img1.png" />
-		<None Remove="Resources\Images\italianlngimage.png" />
-		<None Remove="Resources\Images\left.png" />
-		<None Remove="Resources\Images\next.png" />
-		<None Remove="Resources\Images\pcamera.png" />
-		<None Remove="Resources\Images\pokemon_card.jpg" />
-		<None Remove="Resources\Images\Setting.png" />
-		<None Remove="Resources\Images\splashscreenlogo.png" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="8.0.0" />
 		<PackageReference Include="CommunityToolkit.Maui.Camera" Version="1.0.5" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
@@ -158,6 +141,9 @@
 		</MauiXaml>
 		<MauiXaml Update="Views\MyOrdersPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\OrderDetailPage.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\PlaceOrderPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>

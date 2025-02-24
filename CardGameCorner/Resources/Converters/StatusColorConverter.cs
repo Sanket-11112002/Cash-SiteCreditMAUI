@@ -10,14 +10,14 @@ namespace CardGameCorner.Resources.Converters
             {
                 return status.ToLower() switch
                 {
-                    "rejected" => Color.FromArgb("#FF4444"),  // Bright red
+                    "rejected" => Color.FromArgb("#FF0000"),  // Pure red
                     "canceled" => Color.FromArgb("#FF9933"),  // Bright orange
-                    "completed" => Color.FromArgb("#44BB44"), // Bright green
+                    "completed" => Color.FromArgb("#008000"),  // Pure green
                     "pending" => Color.FromArgb("#3399FF"),   // Bright blue
-                    _ => Color.FromArgb("#888888")           // Medium gray
+                    _ => Color.FromArgb("#008000")           // Medium gray
                 };
             }
-            return Color.FromArgb("#888888");
+            return Color.FromArgb("#008000");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -76,7 +76,40 @@ namespace CardGameCorner.Services
             }
         }
 
+     
+        public async Task<ListBoxViewModel?> GetFilterListBoxDataAsync()
+        {
+            SelectedLanguage = _globalSettings.SelectedLanguage;
+            SelectedGame = _globalSettings.SelectedGame;
 
+            try
+            {
+                string language = SelectedLanguage == "English" ? "en" : SelectedLanguage == "Italian" ? "it" : "en";
+                string game = SelectedGame;
+
+                // Construct the URL
+                string url = $"https://api.magiccorner.it/api/mclistboxes/{game}/{language}";
+
+                using var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "0d1bb073-9dfb-4c6d-a1c0-1e8f7d5d8e9f");
+
+                var response = await httpClient.GetStringAsync(url);
+                Console.WriteLine(response);
+
+                // Deserialize the API response
+                var apiResponse = JsonSerializer.Deserialize<ListBoxViewModel>(response, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+                return apiResponse; // Return full object
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error in GetFullListBoxDataAsync: {e.Message}");
+                return null;
+            }
+        }
         public async Task<List<ConditionModal>> GetConditionsAsync()
         {
             SelectedLanguage = _globalSettings.SelectedLanguage;

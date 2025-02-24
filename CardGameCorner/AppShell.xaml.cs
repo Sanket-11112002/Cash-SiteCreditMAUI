@@ -245,6 +245,7 @@ namespace CardGameCorner
             Routing.RegisterRoute(nameof(SearchQueryPage), typeof(SearchQueryPage));
             Routing.RegisterRoute(nameof(PlaceOrderPage), typeof(PlaceOrderPage));
             Routing.RegisterRoute(nameof(MyOrdersPage), typeof(MyOrdersPage));
+            Routing.RegisterRoute(nameof(OrderDetailPage), typeof(OrderDetailPage));
         }
 
         protected override void OnNavigatedTo(NavigatedToEventArgs args)
@@ -305,7 +306,7 @@ namespace CardGameCorner
             if (_settingsToolbarItemVisible)
             {
                 // Remove the toolbar item
-                ToolbarItems.Remove(SettingsToolbarItem);
+                // ToolbarItems.Remove(SettingsToolbarItem);
                 _settingsToolbarItemVisible = false;
             }
         }
@@ -316,7 +317,7 @@ namespace CardGameCorner
             if (!_settingsToolbarItemVisible)
             {
                 // Add the toolbar item back
-                ToolbarItems.Add(SettingsToolbarItem);
+                // ToolbarItems.Add(SettingsToolbarItem);
                 _settingsToolbarItemVisible = true;
             }
         }
@@ -326,17 +327,25 @@ namespace CardGameCorner
         //    await GoToAsync(nameof(SettingsSlidePage));
         //}
 
+        private async void OnOrdersClicked(object sender, EventArgs e)
+        {
+            Shell.Current.FlyoutIsPresented = false;
+            await Shell.Current.GoToAsync(nameof(MyOrdersPage));
+           
+        }
         private async void OnSettingsClicked(object sender, EventArgs e)
         {
+            Shell.Current.FlyoutIsPresented = false;
             var settingsViewModel = _serviceProvider.GetService<SettingsViewModel>();
             var settingsPage = new SettingsSlidePage(settingsViewModel, _secureStorage, _alertService, _navigationService);
             // var settingsPage = new SettingsSlidePage(settingsViewModel);
             await Shell.Current.Navigation.PushModalAsync(settingsPage);
+           
         }
         protected override void OnNavigating(ShellNavigatingEventArgs args)
         {
             base.OnNavigating(args);
             // Your custom navigation logic here
-        }        
+        }
     }
 }

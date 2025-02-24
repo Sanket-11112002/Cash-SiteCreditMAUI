@@ -20,6 +20,7 @@ namespace CardGameCorner.ViewModels
         public decimal Price { get; set; }
         //  public int Price { get; set; }
         public decimal BuyList { get; set; }
+        public decimal Credit { get; set; }
         //   public int BuyList { get; set; }
         public int BuyListLock { get; set; }
         public bool NoBuyList { get; set; }

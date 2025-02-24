@@ -2,16 +2,56 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:views="clr-namespace:CardGameCorner.Views;assembly=CardGameCorner"
        x:Class="CardGameCorner.AppShell"
-       Shell.FlyoutBehavior="Disabled"
+       Shell.FlyoutBehavior="Flyout"
        BackgroundColor="#1B3B48"
        Title="{Binding HomeTabTitle, Mode=OneWay}">
 
-    <Shell.ToolbarItems>
+    <!--<Shell.ToolbarItems>
         <ToolbarItem x:Name="SettingsToolbarItem"
                  IconImageSource="sett.svg" 
                  Text="{Binding SettingsToolbarItemText, Mode=OneWay}"
                  Clicked="OnSettingsClicked" />
-    </Shell.ToolbarItems>
+    </Shell.ToolbarItems>-->
+
+    <Shell.FlyoutHeader>
+        <Grid RowSpacing="10" Padding="10" BackgroundColor="#1B3B48">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0"
+                 Text="App Menu"
+                 FontSize="24"
+                 BackgroundColor="#1B3B48"
+                 FontAttributes="Bold"
+                 TextColor="White"
+                 HorizontalOptions="Center"
+                 VerticalOptions="CenterAndExpand"
+                 Padding="10"
+                 Margin="20"
+                 HorizontalTextAlignment="Center"
+                 VerticalTextAlignment="Center"/>
+
+
+            <Button Grid.Row="1"
+                  Text="{Binding SettingsToolbarItemText, Mode=OneWay}"
+                  ImageSource="sett1.png"
+                  BackgroundColor="#4A8BA8"
+                   FontSize="20"
+                  TextColor="White"
+                  Clicked="OnSettingsClicked"/>
+
+            <Button Grid.Row="2"
+                  Text="My Orders"
+                  ImageSource="info.png"
+                   BackgroundColor="#4A8BA8"
+                       FontSize="20"
+                  TextColor="White"
+                  Clicked="OnOrdersClicked"/>
+        </Grid>
+    </Shell.FlyoutHeader>
 
     <TabBar>
 
@@ -47,17 +87,8 @@
 
     </TabBar>
 
+
     <!--<ShellContent ContentTemplate="{DataTemplate views:LoginPage}" Route="login" />
-
-    <ShellContent Route="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
-
-    <ShellContent Route="HomePage" ContentTemplate="{DataTemplate views:HomePage}" />
-
-    <ShellContent Route="CardDetailPage" ContentTemplate="{DataTemplate views:CardDetailPage}" />
-
-    <ShellContent Route="SearchQueryPage" ContentTemplate="{DataTemplate views:SearchQueryPage}" />-->
-
-    <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" Route="login" />
 
     <ShellContent Title="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
 
@@ -69,7 +100,7 @@
 
     <ShellContent Route="PlaceOrderPage" ContentTemplate="{DataTemplate views:PlaceOrderPage}" />
 
-    <ShellContent Route="MyOrdersPage" ContentTemplate="{DataTemplate views:MyOrdersPage}" />
+    <ShellContent Route="MyOrdersPage" ContentTemplate="{DataTemplate views:MyOrdersPage}" />-->
 
 </Shell>
 

@@ -9,152 +9,153 @@
     </ContentPage.BindingContext>
 
     <ScrollView>
-        <VerticalStackLayout>
-
+        <VerticalStackLayout Spacing="10" Padding="10">
+            <!-- Empty Message -->
             <VerticalStackLayout IsVisible="{Binding ShowEmptyMessage}"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"
-                           Margin="0,50,0,0">
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   Margin="0,50,0,0">
                 <Label Text="{Binding EmptyListMessage}"
-                   TextColor="White"
+                       TextColor="White"
                        HorizontalOptions="Center"
                        Margin="30,0,30,0"
                        VerticalOptions="Center"
-                   FontSize="20"
-                   FontAttributes="Bold"
-                   />
+                       FontSize="20"
+                       FontAttributes="Bold" />
             </VerticalStackLayout>
 
-            <ListView ItemsSource="{Binding CardItems}" HasUnevenRows="True"
-                        IsVisible="{Binding CardItems.Count, Converter={StaticResource InverseBoolConverter}}">
-
-                <!-- EmptyView for empty ListView -->
-
-                <ListView.ItemTemplate IsVisible="{Binding listvisibilitycards}">
+            <!-- Card Items using BindableLayout -->
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding CardItems}" Spacing="10">
+                <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <Grid Padding="16" ColumnDefinitions="*, *, *, *,*"
-                                  RowDefinitions="Auto, Auto" 
-                                  BackgroundColor="#22313F" ColumnSpacing="10">
+                        <Grid Padding="16" ColumnDefinitions="*, *, *, *, *"
+                              RowDefinitions="Auto, Auto" 
+                              BackgroundColor="#22313F"
+                              ColumnSpacing="10">
+                            <!-- Column 0: Card Image -->
+                            <Image Source="{Binding Image}"
+                                   HeightRequest="100" 
+                                   WidthRequest="70" 
+                                   Aspect="AspectFit" 
+                                   Grid.Column="0" 
+                                   Grid.RowSpan="2" />
 
-                                <!-- Image (Column 0) -->
-                                <Image Source="{Binding Image}"
-                                       HeightRequest="100" 
-                                       WidthRequest="70" 
-                                       Aspect="AspectFit" 
-                                       Grid.Column="0" 
-                                       Grid.RowSpan="2" />
+                            <!-- Column 1: Model and Category -->
+                            <StackLayout Grid.Column="1" Orientation="Vertical" Spacing="5" HeightRequest="100">
+                                <Label Text="{Binding Model}" 
+                                       FontSize="14" 
+                                       FontAttributes="Bold" 
+                                       TextColor="White"
+                                       MaxLines="2"
+                                       LineBreakMode="TailTruncation" />
 
-                                <!-- Name and Model (Column 1) -->
-                                <StackLayout Grid.Column="1" Grid.Row="0" Grid.RowSpan="1" Orientation="Vertical" Spacing="5">
-                                    <Label Text="{Binding Model}" 
-                                           FontSize="14" 
-                                           FontAttributes="Bold" 
-                                           TextColor="White" />
-                                    <Label Text="{Binding Category}" 
-                                           FontSize="14" 
-                                           TextColor="#cccccc" />
+                                <Label Text="{Binding Category}" 
+                                       FontSize="14" 
+                                       TextColor="#cccccc"
+                                       MaxLines="2"
+                                       LineBreakMode="TailTruncation" />
+                            </StackLayout>
+
+                            <!-- Column 2: Language, Condition, Edition, and Rarity -->
+                            <StackLayout Grid.Column="2" HeightRequest="100" Orientation="Vertical" HorizontalOptions="Center" Spacing="5" Grid.RowSpan="2">
+                                <!-- Language and Condition -->
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Image x:Name="Lngflag" 
+                                           HeightRequest="20" 
+                                           WidthRequest="40"
+                                           Margin="3,0,0,0" 
+                                           Source="{Binding Languageflag}"/>
+                                    <Frame BackgroundColor="LightGreen"
+                                           Padding="0"
+                                           CornerRadius="3"
+                                           HasShadow="False">
+                                        <Label Text="{Binding Condition}" 
+                                               TextColor="White" 
+                                               FontSize="10" 
+                                               HeightRequest="10" 
+                                               WidthRequest="30"
+                                               HorizontalTextAlignment="Center" />
+                                    </Frame>
                                 </StackLayout>
 
-                                <!-- Combined Language, Condition, Edition, and Rarity (Column 2) -->
-                                <StackLayout Grid.Column="2" Grid.RowSpan="2" Orientation="Vertical" HorizontalOptions="Center" Spacing="5">
-                                    <!-- Language and Condition Section -->
-                                    <StackLayout Orientation="Horizontal"  HorizontalOptions="Center">
-                                        <Image x:Name="Lngflag" 
-                                               HeightRequest="20" 
-                                               WidthRequest="40"
-                                               Margin="3,0,0,0" 
-                                               Source="{Binding Languageflag}"/>
-
-                                        <!-- Condition -->
-                                        <Frame BackgroundColor="LightGreen" Padding="0,0" CornerRadius="3" HasShadow="False">
-                                            <Label Text="{Binding Condition}" 
-                                                   TextColor="White" 
-                                                   FontSize="10" 
-                                                   HeightRequest="10" 
-                                                   WidthRequest="30"
-                                                   HorizontalTextAlignment="Center" />
-                                        </Frame>
-                                    </StackLayout>
-
-                                    <!-- Edition and Rarity Section -->
-                                    <StackLayout Orientation="Vertical" Spacing="5" HorizontalOptions="Center">
-                                        <!-- Edition -->
-                                        <Label Text="{Binding Edition}"
-                                               FontSize="12" 
-                                               TextColor="#5DADE2" 
-                                               HorizontalTextAlignment="Center" />
-                                        <!-- Rarity -->
-                                        <Frame CornerRadius="2" HasShadow="False"  Padding="2,2"  BackgroundColor="DodgerBlue">
-                                            <Label Text="{Binding Rarity}"
-                                             TextColor="White" 
-                                             FontSize="10" 
-                                             HorizontalTextAlignment="Center" />
-                                        </Frame>
-                                    </StackLayout>
-                                </StackLayout>
-
-                                <!-- Cash and Credit (Column 4) -->
-                                <StackLayout Grid.Column="3" Grid.Row="0" Orientation="Vertical" Spacing="2">
-                                    <Label Text="{Binding BindingContext.CashTitle, Source={x:Reference MyListPageRoot}}" 
-                                               FontSize="12" 
-                                               TextColor="LightGreen" 
-                                               FontAttributes="Bold" 
-                                               HorizontalTextAlignment="Center" />
-                                    <Label Text="{Binding Buylist ,  StringFormat='{0:F2} EUR'}"
-                                                   FontSize="12" 
-                                                   TextColor="White" 
-                                                   HorizontalTextAlignment="Center" />
-
-                                    <Label Text="{Binding BindingContext.CreditTitle, Source={x:Reference MyListPageRoot}}"
-                                               FontSize="12"
-                                               TextColor="LightGreen"
-                                               FontAttributes="Bold"
-                                               HorizontalTextAlignment="Center" />
-                                    <Label Text="{Binding Sitecredit,  StringFormat='{0:F2} EUR'}"
-                                                   FontSize="12" 
-                                                   TextColor="White" 
-                                                   HorizontalTextAlignment="Center" />
-                                </StackLayout>
-
-                                <!-- Quantity and Actions (Column 4) -->
-                                <StackLayout Grid.Column="4" Grid.Row="0" Orientation="Vertical" HorizontalOptions="End" Spacing="2" Margin="1">
-                                    <Label Text="{Binding BindingContext.QuantityTitle, Source={x:Reference MyListPageRoot}}"
-                                           FontSize="12"
-                                           TextColor="LightGreen"
-                                           FontAttributes="Bold"
-                                           HorizontalTextAlignment="Center"/>
-                                    <Label Text="{Binding Quantity}" 
+                                <!-- Edition and Rarity -->
+                                <StackLayout Orientation="Vertical" Spacing="5" HorizontalOptions="Center">
+                                    <Label Text="{Binding Edition}"
                                            FontSize="12" 
-                                           TextColor="White" 
+                                           TextColor="#5DADE2" 
                                            HorizontalTextAlignment="Center" />
-
-                                    <Button Text="{Binding BindingContext.PEdit, Source={x:Reference MyListPageRoot}}" 
-                                            FontSize="12" 
-                                            Command="{Binding BindingContext.NavigateToCardDetailCommand, Source={x:Reference MyListPageRoot}}" 
-                                            CommandParameter="{Binding .}"
-                                            TextColor="White" 
-                                            BackgroundColor="#6C3483" 
-                                            CornerRadius="5"
-                                            Padding="5,2" />
-                                    <Button Text="{Binding BindingContext.PDelete, Source={x:Reference MyListPageRoot}}" 
-                                      FontSize="12" 
-                                      Command="{Binding BindingContext.DeleteCardCommand, Source={x:Reference MyListPageRoot}}" 
-                                      CommandParameter="{Binding .}"
-                                      TextColor="White" 
-                                      BackgroundColor="Red" 
-                                      CornerRadius="5" 
-                                      Padding="5,2" />
+                                    <Frame CornerRadius="2"
+                                           HasShadow="False"
+                                           Padding="2"
+                                           BackgroundColor="DodgerBlue">
+                                        <Label Text="{Binding Rarity}"
+                                               TextColor="White" 
+                                               FontSize="10"
+                                               HorizontalTextAlignment="Center" />
+                                    </Frame>
                                 </StackLayout>
-                            </Grid>
-                        </ViewCell>
+                            </StackLayout>
+
+                            <!-- Column 3: Cash and Credit -->
+                            <StackLayout Grid.Column="3" Orientation="Vertical" Spacing="2" HeightRequest="100">
+                                <Label Text="{Binding BindingContext.CashTitle, Source={x:Reference MyListPageRoot}}"
+                                       FontSize="12" 
+                                       TextColor="LightGreen" 
+                                       FontAttributes="Bold" 
+                                       HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding Buylist, StringFormat='{0:F2} EUR'}"
+                                       FontSize="12" 
+                                       TextColor="White"
+                                       HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding BindingContext.CreditTitle, Source={x:Reference MyListPageRoot}}"
+                                       FontSize="12"
+                                       TextColor="LightGreen"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding Sitecredit, StringFormat='{0:F2} EUR'}"
+                                       FontSize="12" 
+                                       TextColor="White"
+                                       HorizontalTextAlignment="Center" />
+                            </StackLayout>
+
+                            <!-- Column 4: Quantity and Actions -->
+                            <StackLayout Grid.Column="4" Orientation="Vertical" HorizontalOptions="End" Spacing="2" Margin="1">
+                                <Label Text="{Binding BindingContext.QuantityTitle, Source={x:Reference MyListPageRoot}}"
+                                       FontSize="12"
+                                       TextColor="LightGreen"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"/>
+                                <Label Text="{Binding Quantity}"
+                                       FontSize="12"
+                                       TextColor="White"
+                                       HorizontalTextAlignment="Center" />
+                                <Button Text="{Binding BindingContext.PEdit, Source={x:Reference MyListPageRoot}}"
+                                        FontSize="12"
+                                        Command="{Binding BindingContext.NavigateToCardDetailCommand, Source={x:Reference MyListPageRoot}}"
+                                        CommandParameter="{Binding .}"
+                                        TextColor="White"
+                                        BackgroundColor="#6C3483"
+                                        CornerRadius="5"
+                                        Padding="5,2" />
+                                <Button Text="{Binding BindingContext.PDelete, Source={x:Reference MyListPageRoot}}"
+                                        FontSize="12"
+                                        Command="{Binding BindingContext.DeleteCardCommand, Source={x:Reference MyListPageRoot}}"
+                                        CommandParameter="{Binding .}"
+                                        TextColor="White"
+                                        BackgroundColor="Red"
+                                        CornerRadius="5"
+                                        Padding="5,2" />
+                            </StackLayout>
+                        </Grid>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <!-- Place Order Button (will appear after the card items) -->
             <Button Text="{Binding PlaceOrder}"
                     TextColor="White"
                     BackgroundColor="#6C3483"
-                    FontSize="18"       
+                    FontSize="18"
                     HeightRequest="60"
                     WidthRequest="200"
                     CornerRadius="10"
@@ -162,7 +163,7 @@
                     Margin="20,30,20,20"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
-                    Clicked="PlaceOrder_Clicked" 
+                    Clicked="PlaceOrder_Clicked"
                     IsVisible="{Binding CardItems.Count, Converter={StaticResource InverseBoolConverter}}" />
         </VerticalStackLayout>
     </ScrollView>

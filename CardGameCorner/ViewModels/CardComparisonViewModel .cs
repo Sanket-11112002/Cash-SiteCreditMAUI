@@ -7,7 +7,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
 
-
 namespace CardGameCorner.ViewModels
 {
     public partial class CardComparisonViewModel : ObservableObject
@@ -26,10 +25,8 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         private string searchResultImage;
 
-
         [ObservableProperty]
         public ImageSource scannedImage;
-
 
         [ObservableProperty]
         public CardSearchResponseViewModel responseContent;

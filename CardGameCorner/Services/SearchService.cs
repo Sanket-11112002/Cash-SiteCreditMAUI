@@ -1,5 +1,6 @@
 ﻿using CardGameCorner.Models;
 using CardGameCorner.Services;
+using CardGameCorner.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -19,23 +20,27 @@ public class SearchService
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "0d1bb073-9dfb-4c6d-a1c0-1e8f7d5d8e9f");
     }
 
-    public async Task<List<Product>> SearchProductsAsync(string query)
+    // public async Task<List<Product>> SearchProductsAsync(string query)
+    public async Task<List<Product>> SearchProductsAsync(string query, SearchFilters filters = null)
     {
+        // Filters code
+        filters ??= new SearchFilters();
+
         var requestBody = new
         {
             q = query?.Trim() ?? "", // Trim any whitespace and handle null
             game = GlobalSettings.SelectedGame,
-            edition = "",
-            rarity = "",
-            color = "",
-            firstedition = "",
+            edition = filters.Edition ?? "",
+            rarity = filters.Rarity ?? "",
+            color = filters.Colors ?? "",
+            firstedition = filters.FirstEdition ?? "",
             foil = "",
-            language = "",
+            language = filters.Language ?? "",
             page = 1,
             pageSize = DefaultPageSize,
             sort = 5,
             isBuyList = true,
-            onlyHotBuyList = false,
+            onlyHotBuyList = filters.HotList?.Equals("Hot BuyList Only", StringComparison.OrdinalIgnoreCase) == true,
             onlyAvailable = false
         };
 

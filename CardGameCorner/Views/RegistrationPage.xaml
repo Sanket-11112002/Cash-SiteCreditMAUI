@@ -3,140 +3,388 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.RegistrationPage"
              xmlns:viewmodel="clr-namespace:CardGameCorner.ViewModels"
-             Title="{Binding PTitle}">
+             Title="{Binding PTitle}"
+             BackgroundColor="#1B3B48">
 
     <ContentPage.BindingContext>
         <viewmodel:RegistrationViewModel />
     </ContentPage.BindingContext>
 
     <ScrollView>
-        <StackLayout Padding="30" Spacing="15">
+        <VerticalStackLayout Padding="30" Spacing="20">
+            <!-- Social Registration Section -->
+            <VerticalStackLayout Spacing="10">
+                <!-- Facebook Registration Button -->
+                <Frame BorderColor="#3B92A0" 
+                       BackgroundColor="#2A4B5D"
+                       Padding="0"
+                       HasShadow="False"
+                       CornerRadius="5"
+                       HeightRequest="45">
+                    <Button Text="Register with Facebook"
+                            ImageSource="facebook.png"
+                            TextColor="White"
+                            BackgroundColor="Transparent"
+                            BorderWidth="0"/>
+                </Frame>
 
-            <!-- Email Field -->
-            <Entry Placeholder="{Binding PEmail}" 
-                   Text="{Binding Email}" 
-                   PlaceholderColor="LightGray"
-                   TextColor="White"
-                   BackgroundColor="#2A4B5D" />
+                <!-- Google Registration Button -->
+                <Frame BorderColor="#3B92A0"
+                       BackgroundColor="#2A4B5D"
+                       Padding="0"
+                       HasShadow="False"
+                       CornerRadius="5"
+                       HeightRequest="45">
+                    <Button Text="Register with Google"
+                            ImageSource="google.png"
+                            TextColor="White"
+                            BackgroundColor="Transparent"
+                            BorderWidth="0"/>
+                </Frame>
+            </VerticalStackLayout>
 
-            <!-- Password Field -->
-            <Entry Placeholder="{Binding PPassword}" 
-                   Text="{Binding Password}" 
-                   IsPassword="True"
-                   PlaceholderColor="LightGray"
-                   TextColor="White"
-                   BackgroundColor="#2A4B5D" />
+            <!-- Or Separator -->
+            <Grid Margin="0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <BoxView HeightRequest="1" 
+                        BackgroundColor="#3B92A0" 
+                        VerticalOptions="Center"/>
+                <Label Text="OR" 
+                       Grid.Column="1" 
+                       TextColor="#7A9AAD"
+                       Margin="15,0"
+                       VerticalOptions="Center"/>
+                <BoxView Grid.Column="2" 
+                        HeightRequest="1" 
+                        BackgroundColor="#3B92A0" 
+                        VerticalOptions="Center"/>
+            </Grid>
 
-            <!-- Name Field -->
-            <Entry Placeholder="{Binding PName}" 
-                   Text="{Binding Name}" 
-                   PlaceholderColor="LightGray"
-                   TextColor="White"
-                   BackgroundColor="#2A4B5D" />
+            <!-- Registration Fields -->
+            <VerticalStackLayout Spacing="15">
+                <!-- Email Field -->
+                <Frame BorderColor="#3B92A0" 
+                       BackgroundColor="#2A4B5D"
+                       Padding="15,5"
+                       HasShadow="False"
+                       CornerRadius="5">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Image Source="mail.png"
+                               HeightRequest="20"
+                               WidthRequest="20"
+                               Margin="0,0,10,0"/>
+                        <Entry Grid.Column="1"
+                               Placeholder="{Binding PEmail}"
+                               Text="{Binding Email}"
+                               PlaceholderColor="#7A9AAD"
+                               TextColor="White"
+                               BackgroundColor="Transparent"
+                               Keyboard="Email"/>
+                    </Grid>
+                </Frame>
 
-            <!-- Last Name Field -->
-            <Entry Placeholder="{Binding PLastName}" 
-                   Text="{Binding LastName}" 
-                   PlaceholderColor="LightGray"
-                   TextColor="White"
-                   BackgroundColor="#2A4B5D" />
+                <!-- Password Field -->
+                <Frame BorderColor="#3B92A0" 
+                       BackgroundColor="#2A4B5D"
+                       Padding="15,5"
+                       HasShadow="False"
+                       CornerRadius="5">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Image Source="padlock.png"
+                               HeightRequest="20"
+                               WidthRequest="20"
+                               Margin="0,0,10,0"/>
+                        <Entry Grid.Column="1"
+                               Placeholder="{Binding PPassword}"
+                               Text="{Binding Password}"
+                               IsPassword="True"
+                               PlaceholderColor="#7A9AAD"
+                               TextColor="White"
+                               BackgroundColor="Transparent"/>
+                    </Grid>
+                </Frame>
 
-            <!-- Company Field -->
-            <Entry Placeholder="{Binding PCompany}" 
-                   Text="{Binding Company}" 
-                   PlaceholderColor="LightGray"
-                   TextColor="White"
-                   BackgroundColor="#2A4B5D" />
+                <!-- Name Field -->
+                <Frame BorderColor="#3B92A0" 
+                       BackgroundColor="#2A4B5D"
+                       Padding="15,5"
+                       HasShadow="False"
+                       CornerRadius="5">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Image Source="user.png"
+                               HeightRequest="20"
+                               WidthRequest="20"
+                               Margin="0,0,10,0"/>
+                        <Entry Grid.Column="1"
+                               Placeholder="{Binding PName}"
+                               Text="{Binding Name}"
+                               PlaceholderColor="#7A9AAD"
+                               TextColor="White"
+                               BackgroundColor="Transparent"/>
+                    </Grid>
+                </Frame>
 
-            <!-- VAT Number Field -->
-            <Entry Placeholder="{Binding PVatNumber}" 
-                   Text="{Binding VatNumber}" 
-                   PlaceholderColor="LightGray"
-                   TextColor="White"
-                   BackgroundColor="#2A4B5D" />
+                <!-- Last Name Field -->
+                <Frame BorderColor="#3B92A0" 
+                       BackgroundColor="#2A4B5D"
+                       Padding="15,5"
+                       HasShadow="False"
+                       CornerRadius="5">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Image Source="user.png"
+                               HeightRequest="20"
+                               WidthRequest="20"
+                               Margin="0,0,10,0"/>
+                        <Entry Grid.Column="1"
+                               Placeholder="{Binding PLastName}"
+                               Text="{Binding LastName}"
+                               PlaceholderColor="#7A9AAD"
+                               TextColor="White"
+                               BackgroundColor="Transparent"/>
+                    </Grid>
+                </Frame>
 
-            <!-- Fiscal Code Field -->
-            <Entry Placeholder="{Binding PFiscal}" 
-                   Text="{Binding FiscalCode}" 
-                   PlaceholderColor="LightGray"
-                   TextColor="White"
-                   BackgroundColor="#2A4B5D" />
+                <!-- Company Field -->
+                <Frame BorderColor="#3B92A0" 
+                       BackgroundColor="#2A4B5D"
+                       Padding="15,5"
+                       HasShadow="False"
+                       CornerRadius="5">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Image Source="company.png"
+                               HeightRequest="20"
+                               WidthRequest="20"
+                               Margin="0,0,10,0"/>
+                        <Entry Grid.Column="1"
+                               Placeholder="{Binding PCompany}"
+                               Text="{Binding Company}"
+                               PlaceholderColor="#7A9AAD"
+                               TextColor="White"
+                               BackgroundColor="Transparent"/>
+                    </Grid>
+                </Frame>
 
-            <!-- Address Field -->
-            <Entry Placeholder="{Binding PAddress}" 
-                   Text="{Binding Address}" 
-                   PlaceholderColor="LightGray"
-                   TextColor="White"
-                   BackgroundColor="#2A4B5D" />
+                <!-- VAT Number Field -->
+                <Frame BorderColor="#3B92A0" 
+                       BackgroundColor="#2A4B5D"
+                       Padding="15,5"
+                       HasShadow="False"
+                       CornerRadius="5">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Image Source="vat.png"
+                               HeightRequest="20"
+                               WidthRequest="20"
+                               Margin="0,0,10,0"/>
+                        <Entry Grid.Column="1"
+                               Placeholder="{Binding PVatNumber}"
+                               Text="{Binding VatNumber}"
+                               PlaceholderColor="#7A9AAD"
+                               TextColor="White"
+                               BackgroundColor="Transparent"/>
+                    </Grid>
+                </Frame>
 
-            <!-- ZIP Field -->
-            <Entry Placeholder="{Binding PZip}" 
-                   Text="{Binding Zip}" 
-                   PlaceholderColor="LightGray"
-                   TextColor="White"
-                   BackgroundColor="#2A4B5D" />
+                <!-- Fiscal Code Field -->
+                <Frame BorderColor="#3B92A0" 
+                       BackgroundColor="#2A4B5D"
+                       Padding="15,5"
+                       HasShadow="False"
+                       CornerRadius="5">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Image Source="fiscal.png"
+                               HeightRequest="20"
+                               WidthRequest="20"
+                               Margin="0,0,10,0"/>
+                        <Entry Grid.Column="1"
+                               Placeholder="{Binding PFiscal}"
+                               Text="{Binding FiscalCode}"
+                               PlaceholderColor="#7A9AAD"
+                               TextColor="White"
+                               BackgroundColor="Transparent"/>
+                    </Grid>
+                </Frame>
 
-            <!-- Province Field -->
-            <Entry Placeholder="{Binding PProvince}" 
-                   Text="{Binding Province}" 
-                   PlaceholderColor="LightGray"
-                   TextColor="White"
-                   BackgroundColor="#2A4B5D" />
+                <!-- Address Field -->
+                <Frame BorderColor="#3B92A0" 
+                       BackgroundColor="#2A4B5D"
+                       Padding="15,5"
+                       HasShadow="False"
+                       CornerRadius="5">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Image Source="location.png"
+                               HeightRequest="20"
+                               WidthRequest="20"
+                               Margin="0,0,10,0"/>
+                        <Entry Grid.Column="1"
+                               Placeholder="{Binding PAddress}"
+                               Text="{Binding Address}"
+                               PlaceholderColor="#7A9AAD"
+                               TextColor="White"
+                               BackgroundColor="Transparent"/>
+                    </Grid>
+                </Frame>
 
-            <!-- City Field -->
-            <Entry Placeholder="{Binding PCity}" 
-                   Text="{Binding City}" 
-                   PlaceholderColor="LightGray"
-                   TextColor="White"
-                   BackgroundColor="#2A4B5D" />
+                <!-- ZIP Field -->
+                <Frame BorderColor="#3B92A0" 
+                       BackgroundColor="#2A4B5D"
+                       Padding="15,5"
+                       HasShadow="False"
+                       CornerRadius="5">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Image Source="zip.png"
+                               HeightRequest="20"
+                               WidthRequest="20"
+                               Margin="0,0,10,0"/>
+                        <Entry Grid.Column="1"
+                               Placeholder="{Binding PZip}"
+                               Text="{Binding Zip}"
+                               PlaceholderColor="#7A9AAD"
+                               TextColor="White"
+                               BackgroundColor="Transparent"/>
+                    </Grid>
+                </Frame>
 
-            <!-- Country Field -->
-            <Entry Placeholder="{Binding PCountry}" 
-                   Text="{Binding Country}" 
-                   PlaceholderColor="LightGray"
-                   TextColor="White"
-                   BackgroundColor="#2A4B5D" />
+                <!-- Province Field -->
+                <Frame BorderColor="#3B92A0" 
+                       BackgroundColor="#2A4B5D"
+                       Padding="15,5"
+                       HasShadow="False"
+                       CornerRadius="5">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Image Source="province.png"
+                               HeightRequest="20"
+                               WidthRequest="20"
+                               Margin="0,0,10,0"/>
+                        <Entry Grid.Column="1"
+                               Placeholder="{Binding PProvince}"
+                               Text="{Binding Province}"
+                               PlaceholderColor="#7A9AAD"
+                               TextColor="White"
+                               BackgroundColor="Transparent"/>
+                    </Grid>
+                </Frame>
 
-            <!-- Phone Field -->
-            <Entry Placeholder="{Binding PPhone}" 
-                   Text="{Binding Phone}" 
-                   PlaceholderColor="LightGray"
-                   TextColor="White"
-                   BackgroundColor="#2A4B5D" 
-                   Keyboard="Numeric"/>
+                <!-- City Field -->
+                <Frame BorderColor="#3B92A0" 
+                       BackgroundColor="#2A4B5D"
+                       Padding="15,5"
+                       HasShadow="False"
+                       CornerRadius="5">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Image Source="city.png"
+                               HeightRequest="20"
+                               WidthRequest="20"
+                               Margin="0,0,10,0"/>
+                        <Entry Grid.Column="1"
+                               Placeholder="{Binding PCity}"
+                               Text="{Binding City}"
+                               PlaceholderColor="#7A9AAD"
+                               TextColor="White"
+                               BackgroundColor="Transparent"/>
+                    </Grid>
+                </Frame>
 
-            <!-- Language Picker -->
-            <Picker Title="{Binding PLanguage}" 
-        SelectedItem="{Binding Language}" 
-        TextColor="White"
-        BackgroundColor="#2A4B5D">
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>English</x:String>
-                        <x:String>Italian</x:String>
-                    </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
+                <!-- Country Field -->
+                <Frame BorderColor="#3B92A0" 
+                       BackgroundColor="#2A4B5D"
+                       Padding="15,5"
+                       HasShadow="False"
+                       CornerRadius="5">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Image Source="country.png"
+                               HeightRequest="20"
+                               WidthRequest="20"
+                               Margin="0,0,10,0"/>
+                        <Entry Grid.Column="1"
+                               Placeholder="{Binding PCountry}"
+                               Text="{Binding Country}"
+                               PlaceholderColor="#7A9AAD"
+                               TextColor="White"
+                               BackgroundColor="Transparent"/>
+                    </Grid>
+                </Frame>
 
+                <!-- Phone Field -->
+                <Frame BorderColor="#3B92A0" 
+                       BackgroundColor="#2A4B5D"
+                       Padding="15,5"
+                       HasShadow="False"
+                       CornerRadius="5">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Image Source="phone.png"
+                               HeightRequest="20"
+                               WidthRequest="20"
+                               Margin="0,0,10,0"/>
+                        <Entry Grid.Column="1"
+                               Placeholder="{Binding PPhone}"
+                               Text="{Binding Phone}"
+                               PlaceholderColor="#7A9AAD"
+                               TextColor="White"
+                               BackgroundColor="Transparent"
+                               Keyboard="Telephone"/>
+                    </Grid>
+                </Frame>
+
+                <!-- Language Picker -->
+                <Frame BorderColor="#3B92A0" 
+                       BackgroundColor="#2A4B5D"
+                       Padding="15,5"
+                       HasShadow="False"
+                       CornerRadius="5">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Image Source="language.png"
+                               HeightRequest="20"
+                               WidthRequest="20"
+                               Margin="0,0,10,0"/>
+                        <Picker Grid.Column="1"
+                                Title="{Binding PLanguage}"
+                                SelectedItem="{Binding Language}"
+                                TextColor="White"
+                                TitleColor="#7A9AAD"
+                                BackgroundColor="Transparent">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>English</x:String>
+                                    <x:String>Italian</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                    </Grid>
+                </Frame>
+            </VerticalStackLayout>
 
             <!-- Submit Button -->
-            <Button Text="{Binding PSubmit}" 
-                    Command="{Binding SubmitCommand}" 
-                    TextColor="White" 
-                    BackgroundColor="#3B92A0" />
+            <Button Text="{Binding PSubmit}"
+                    Command="{Binding SubmitCommand}"
+                    HorizontalOptions="Fill"
+                    BackgroundColor="#3B92A0"
+                    TextColor="White"
+                    CornerRadius="5"
+                    Margin="0,10"/>
 
             <!-- Cancel Button -->
-            <Button Text="{Binding PCancel}" 
-                    Command="{Binding CancelCommand}" 
-                    TextColor="White" 
-                    BackgroundColor="#556B73" />
+            <Button Text="{Binding PCancel}"
+                    Command="{Binding CancelCommand}"
+                    HorizontalOptions="Fill"
+                    BackgroundColor="#556B73"
+                    TextColor="White"
+                    CornerRadius="5"/>
 
-            <!-- Error Message Label -->
-            <Label Text="{Binding ErrorMessage}" 
-                   TextColor="Red" 
+            <!-- Error Message -->
+            <Label Text="{Binding ErrorMessage}"
+                   TextColor="Red"
                    FontAttributes="Bold"
-                   HorizontalOptions="Center" />
+                   HorizontalOptions="Center"/>
 
-        </StackLayout>
+            <!-- Activity Indicator -->
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                             IsVisible="{Binding IsBusy}"
+                             HorizontalOptions="Center"
+                             Color="#3B92A0"/>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

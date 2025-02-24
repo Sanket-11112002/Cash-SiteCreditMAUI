@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.SearchQueryPage"
              xmlns:vm="clr-namespace:CardGameCorner.ViewModels"
+             xmlns:behaviors="clr-namespace:CardGameCorner.Resources.Converters"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              Title="{Binding SearchText}"
              BackgroundColor="#1B3B48">
@@ -25,7 +26,7 @@
                                Text="{Binding SearchQuery}"
                                Placeholder="{Binding SearchText}"
                                BackgroundColor="#2A3947"
-                               TextColor="White" 
+                               TextColor="White"
                                PlaceholderColor="Gray"
                                Margin="0,0,0,10"
                                SearchButtonPressed="OnSearchButtonPressed"/>
@@ -37,8 +38,139 @@
                             TextColor="White"
                             Margin="10,0,0,10"
                             VerticalOptions="Center"/>
+
+                    <!-- Filter Button -->
+
+                </Grid>
+                <Grid ColumnDefinitions="Auto,Auto">
+
+                    <!-- Filters Button -->
+                    <Button Grid.Column="0"
+                            Text="Filters"
+                            Command="{Binding ToggleFiltersCommand}"
+                            BackgroundColor="#2A3947"
+                            TextColor="White"
+                            WidthRequest="180"
+                            HeightRequest="50"
+                            VerticalOptions="Center">
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button"
+                                         Binding="{Binding IsFiltersVisible}"
+                                         Value="True">   
+                                <Setter Property="BackgroundColor" Value="#4A5967"/>
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                    
+                    <!-- Clear Filters Button -->
+                    <Button Grid.Column="1"
+                             Text="Clear Filters"
+                             Command="{Binding ClearFiltersCommand}"
+                             BackgroundColor="#2A3947"
+                             TextColor="White"
+                             WidthRequest="180"
+                             HeightRequest="50"
+                             Margin="5,0"
+                             VerticalOptions="Center"/>
                 </Grid>
 
+                <VerticalStackLayout IsVisible="{Binding IsFiltersVisible}" 
+                                     Spacing="10" 
+                                     BackgroundColor="#2A3947" 
+                                     Padding="10">
+                    <!-- Edition Filter -->
+                    <Picker Title="Select Edition"
+                            TextColor="White"
+                            TitleColor="Gray"
+                            BackgroundColor="#1B3B48"
+                            ItemsSource="{Binding Editions}"
+                            SelectedItem="{Binding SelectedEdition}"
+                            ItemDisplayBinding="{Binding .}"
+                            Margin="0,5">
+                        <Picker.Behaviors>
+                            <behaviors:PickerPlaceholderBehavior />
+                        </Picker.Behaviors>
+                    </Picker>
+
+                    <!-- Rarity Filter -->
+                    <Picker Title="Select Rarity"
+                            TextColor="White"
+                            TitleColor="Gray"
+                            BackgroundColor="#1B3B48"
+                            ItemsSource="{Binding Rarities}"
+                            SelectedItem="{Binding SelectedRarity}"
+                            ItemDisplayBinding="{Binding .}"
+                            Margin="0,5">
+                        <Picker.Behaviors>
+                            <behaviors:PickerPlaceholderBehavior />
+                        </Picker.Behaviors>
+                    </Picker>
+
+                    <!-- Language Filter -->
+                    <Picker Title="Select Language"
+                            TextColor="White"
+                            TitleColor="Gray"
+                            BackgroundColor="#1B3B48"
+                            ItemsSource="{Binding Languages}"
+                            SelectedItem="{Binding SelectedLanguage}"
+                            ItemDisplayBinding="{Binding .}"
+                            Margin="0,5">
+                        <Picker.Behaviors>
+                            <behaviors:PickerPlaceholderBehavior />
+                        </Picker.Behaviors>
+                    </Picker>
+
+                    <!-- Color Filter (Magic only) -->
+                    <Picker Title="Select Color"
+                            TextColor="White"
+                            TitleColor="Gray"
+                            BackgroundColor="#1B3B48"
+                            ItemsSource="{Binding Colors}"
+                            SelectedItem="{Binding SelectedColor}"
+                            ItemDisplayBinding="{Binding .}"
+                            IsVisible="{Binding IsColorFilterVisible}"
+                            Margin="0,5">
+                        <Picker.Behaviors>
+                            <behaviors:PickerPlaceholderBehavior />
+                        </Picker.Behaviors>
+                    </Picker>
+
+                    <!-- First Edition Filter (Pokemon/Yu-Gi-Oh only) -->
+                    <Picker Title="Select First Edition"
+                            TextColor="White"
+                            TitleColor="Gray"
+                            BackgroundColor="#1B3B48"
+                            ItemsSource="{Binding FirstEditions}"
+                            SelectedItem="{Binding SelectedFirstEdition}"
+                            ItemDisplayBinding="{Binding .}"
+                            IsVisible="{Binding IsFirstEditionFilterVisible}"
+                            Margin="0,5">
+                        <Picker.Behaviors>
+                            <behaviors:PickerPlaceholderBehavior />
+                        </Picker.Behaviors>
+                    </Picker>
+
+                    <!-- Hot BuyList Filter -->
+                    <Picker Title="Select Hot BuyList"
+                            TextColor="White"
+                            TitleColor="Gray"
+                            BackgroundColor="#1B3B48"
+                            ItemsSource="{Binding HotList}"
+                            SelectedItem="{Binding SelectedHotList}"
+                            ItemDisplayBinding="{Binding .}"
+                            Margin="0,5">
+                        <Picker.Behaviors>
+                            <behaviors:PickerPlaceholderBehavior />
+                        </Picker.Behaviors>
+                    </Picker>
+
+                    <!-- Apply Button -->
+                    <Button Text="Apply Filters"
+                            Command="{Binding ApplyFiltersCommand}"
+                            BackgroundColor="#4A5967"
+                            TextColor="White"
+                            Margin="0,10,0,0"/>
+                </VerticalStackLayout>
                 <!-- Error Message -->
                 <VerticalStackLayout IsVisible="{Binding HasError}" HorizontalOptions="Center" Spacing="10">
                     <Label Text="{Binding InternettryAgain}" TextColor="Red" HorizontalOptions="Center" />
@@ -55,11 +187,11 @@
                 <CollectionView ItemsSource="{Binding Products}" 
                                 IsVisible="{Binding NoResultsFound, Converter={StaticResource InverseBoolConverter}}">
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10" HorizontalItemSpacing="10" />
+                        <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="1" HorizontalItemSpacing="1" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame BorderColor="Gray" CornerRadius="8" Padding="0" Margin="10" BackgroundColor="#1B3B48"
+                            <Frame BorderColor="Gray" CornerRadius="8" Padding="0" Margin="5" BackgroundColor="#1B3B48"
                                     IsEnabled="{Binding Source={RelativeSource AncestorType={x:Type vm:SearchViewModel}}, Path=IsInteractionEnabled}">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SearchViewModel}}, Path=CardSelectedCommand}"
@@ -133,7 +265,6 @@
                 </CollectionView>
             </VerticalStackLayout>
         </ScrollView>
-
 
         <!-- Loading Indicator -->
         <Grid IsVisible="{Binding IsLoading}" BackgroundColor="#801B3B48">

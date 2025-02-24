@@ -659,89 +659,89 @@ namespace CardGameCorner.ViewModels
 
         private async Task FetchPricesAsync()
         {
-            // var newvariable = new ScanCardService();
-            // // _service = newvariable;
-            // var cardetailrequest = new cardDetailRequest();
+            var newvariable = new ScanCardService();
+            // _service = newvariable;
+            var cardetailrequest = new cardDetailRequest();
 
-            // var response = new ListBoxService();
-
-
-
-            // // Fetch Language List
-            // var lnglst = await response.GetLanguagesAsync();
-            // if (lnglst == null || !lnglst.Any())
-            // {
-            //     Console.WriteLine("Language list is null or empty.");
-            //     return;
-            // }
-
-            // // Fetch Condition List
-            // var conditinlst = await response.GetConditionsAsync();
-            // if (conditinlst == null || !conditinlst.Any())
-            // {
-            //     Console.WriteLine("Condition list is null or empty.");
-            //     return;
-            // }
-
-            // // Find Language ID
-            // var selectedLangId = lnglst
-            //     .Where(item => item.Language == SelectedLanguage)
-            //     .Select(item => item.Id).FirstOrDefault();
-            // // Find Condition ID
-            // var selectedconditinId = conditinlst
-            //     .Where(item => item.Condition == selectedCondition)
-            //     .Select(item => item.Id)
-            //     .FirstOrDefault();
-
-            // //cardetailrequest.condition = int.TryParse(selectedconditinId, out int conditionId) ? conditionId : 0;
-            // cardetailrequest.condition = selectedconditinId;
-            //// cardetailrequest.language = int.TryParse(selectedLangId, out int langId) ? langId : 0;
-            // cardetailrequest.language = selectedLangId;
-            // cardetailrequest.IsFirstEdition = IsFirstEdition;
-            // cardetailrequest.idCategory = idCategory;
-            // cardetailrequest.idMetaproduct = idMetaProductId;
-            // cardetailrequest.IsFoil = "50";
-            // cardetailrequest.sku = Id;
-            // //cardetailrequest.condition = 1362;
-            // //cardetailrequest.language = 71;
-            // //cardetailrequest.IsFirstEdition = false;
-            // //cardetailrequest.idCategory = 3534;
-            // //cardetailrequest.idMetaproduct = 421085;
-            // //cardetailrequest.IsFoil = "50";
-            // //cardetailrequest.sku = "MEW0199";
-
-            // // Debugging: Print the request object to validate values
-            // Console.WriteLine($"Request: {System.Text.Json.JsonSerializer.Serialize(cardetailrequest)}");
+            var response = new ListBoxService();
 
 
 
-            // var result = await newvariable.FetchBuyListPriceAsync(cardetailrequest);
-            // if (result != null)
-            // {
-            //     Console.WriteLine("Result: " + result);
+            // Fetch Language List
+            var lnglst = await response.GetLanguagesAsync();
+            if (lnglst == null || !lnglst.Any())
+            {
+                Console.WriteLine("Language list is null or empty.");
+                return;
+            }
 
-            //     buyList = 89;
-            //     siteCredit = result.SiteCredit;
+            // Fetch Condition List
+            var conditinlst = await response.GetConditionsAsync();
+            if (conditinlst == null || !conditinlst.Any())
+            {
+                Console.WriteLine("Condition list is null or empty.");
+                return;
+            }
 
-            //     if (result.evaluation==true)
-            //     {
-            //         await Application.Current.MainPage.DisplayAlert("",
-            //           "You can add the card to the shopping cart, we will make an evaluation and send you a message", "OK");
-            //     }
-            //     else if(result.evaluation=false && result.buylist == 0)
-            //     {
-            //         await Application.Current.MainPage.DisplayAlert("",
-            //          "We buy this Card in Bulk (low value cards)", "OK");
-            //     }
-            //     else
-            //     {
+            // Find Language ID
+            var selectedLangId = lnglst
+                .Where(item => item.Language == SelectedLanguage)
+                .Select(item => item.Id).FirstOrDefault();
+            // Find Condition ID
+            var selectedconditinId = conditinlst
+                .Where(item => item.Condition == selectedCondition)
+                .Select(item => item.Id)
+                .FirstOrDefault();
 
-            //     }
-            // }
-            // else
-            // {
-            //     Console.WriteLine("No result returned from FetchBuyListPriceAsync.");
-            // }
+            //cardetailrequest.condition = int.TryParse(selectedconditinId, out int conditionId) ? conditionId : 0;
+            cardetailrequest.condition = selectedconditinId;
+            // cardetailrequest.language = int.TryParse(selectedLangId, out int langId) ? langId : 0;
+            cardetailrequest.language = selectedLangId;
+            cardetailrequest.IsFirstEdition = IsFirstEdition;
+            cardetailrequest.idCategory = idCategory;
+            cardetailrequest.idMetaproduct = idMetaProductId;
+            cardetailrequest.IsFoil = "50";
+            cardetailrequest.sku = "MEW0199";
+            //cardetailrequest.condition = 1362;
+            //cardetailrequest.language = 71;
+            //cardetailrequest.IsFirstEdition = false;
+            //cardetailrequest.idCategory = 3534;
+            //cardetailrequest.idMetaproduct = 421085;
+            //cardetailrequest.IsFoil = "50";
+            //cardetailrequest.sku = "MEW0199";
+
+            // Debugging: Print the request object to validate values
+            Console.WriteLine($"Request: {System.Text.Json.JsonSerializer.Serialize(cardetailrequest)}");
+
+
+
+            var result = await newvariable.FetchBuyListPriceAsync(cardetailrequest);
+            if (result != null)
+            {
+                Console.WriteLine("Result: " + result);
+
+                buyList = result.buylist;
+                siteCredit = result.SiteCredit;
+
+                if (result.evaluation == true)
+                {
+                    await Application.Current.MainPage.DisplayAlert("",
+                      "You can add the card to the shopping cart, we will make an evaluation and send you a message", "OK");
+                }
+                else if (result.evaluation = false && result.buylist == 0)
+                {
+                    await Application.Current.MainPage.DisplayAlert("",
+                     "We buy this Card in Bulk (low value cards)", "OK");
+                }
+                else
+                {
+
+                }
+            }
+            else
+            {
+                Console.WriteLine("No result returned from FetchBuyListPriceAsync.");
+            }
         }
 
         // Implementing INotifyPropertyChanged

@@ -1,14 +1,20 @@
 ﻿using CardGameCorner.Models;
+using CardGameCorner.Services;
+using CardGameCorner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.Http.Json;
+using System.Windows.Input;
 using ISecureStorage = CardGameCorner.Services.ISecureStorage;
 
 namespace CardGameCorner.ViewModels;
 
 public partial class MyOrdersViewModel : ObservableObject
 {
+    private readonly INavigationService _navigationService;
+    public ICommand OrderTappedCommand { get; }
+
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ISecureStorage _secureStorage;
 
@@ -31,11 +37,21 @@ public partial class MyOrdersViewModel : ObservableObject
     public bool HasError => !string.IsNullOrEmpty(ErrorMessage);
     public bool HasOrders => Orders?.Count > 0;
 
-    public MyOrdersViewModel(IHttpClientFactory httpClientFactory, ISecureStorage secureStorage)
+    public MyOrdersViewModel(IHttpClientFactory httpClientFactory, ISecureStorage secureStorage, INavigationService navigationService)
     {
         _httpClientFactory = httpClientFactory;
         _secureStorage = secureStorage;
+        _navigationService = navigationService;
+        OrderTappedCommand = new Command<int>(OnOrderTapped);
         Orders = new ObservableCollection<OrderModel>();
+    }
+
+    private async void OnOrderTapped(int orderId)
+    {
+        if (orderId > 0)
+        {
+            await Shell.Current.GoToAsync($"{nameof(OrderDetailPage)}?orderId={orderId}");
+        }
     }
 
     public async Task LoadOrdersAsync()
