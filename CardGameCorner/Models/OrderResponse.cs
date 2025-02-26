@@ -7,10 +7,19 @@ using System.Threading.Tasks;
 
 namespace CardGameCorner.Models
 {
+    public class OrderListResponse
+    {
+        [JsonProperty("orders")]
+        public List<OrderResponse> Orders { get; set; }
+    }
+
     public class OrderResponse
     {
-        [JsonProperty("orderid")]
+        [JsonProperty("orderId")]
         public int OrderId { get; set; }
+
+        [JsonProperty("game")]
+        public string Game { get; set; }
 
         [JsonProperty("message")]
         public string Message { get; set; }

@@ -63,5 +63,6 @@ namespace CardGameCorner.Services
             // await NavigateToLoginAsync();
             await Shell.Current.GoToAsync("//GameDetailsPage");
         }
+
     }
 }

@@ -130,7 +130,7 @@
     <value>Scansiona</value>
   </data>
   <data name="Best Deals" xml:space="preserve">
-    <value>Le migliori offerte</value>
+    <value>Lista di acquisto calda</value>
   </data>
   <data name="Capture Image" xml:space="preserve">
     <value>Cattura immagine</value>
@@ -384,9 +384,6 @@
   <data name="RegistrationFailedMessage" xml:space="preserve">
     <value>La registrazione non è riuscita. Per favore riprova.</value>
   </data>
-  <data name="Please fill the Required fields" xml:space="preserve">
-    <value>Si prega di compilare i campi obbligatori</value>
-  </data>
   <data name="FillRequiredFieldsMessage" xml:space="preserve">
     <value>Si prega di compilare i campi obbligatori</value>
   </data>
@@ -411,6 +408,9 @@
   <data name="RPlaceholder" xml:space="preserve">
     <value>Password *</value>
   </data>
+  <data name="Contacted" xml:space="preserve">
+    <value>Vuoi essere contattato in caso di:</value>
+  </data>
   <data name="UserPassEmpty" xml:space="preserve">
     <value>Nome utente e Password non possono essere vuoti</value>
   </data>
@@ -428,9 +428,6 @@
   </data>
   <data name="ClickHere" xml:space="preserve">
     <value>Ritireremo il tuo pacco. Clicca qui!</value>
-  </data>
-  <data name="Contacted" xml:space="preserve">
-    <value>Vuoi essere contattato in caso di:</value>
   </data>
   <data name="GetPaid" xml:space="preserve">
     <value>Scegli come vuoi essere pagato</value>
@@ -530,5 +527,8 @@
   </data>
   <data name="ExitApp" xml:space="preserve">
     <value>Vuoi uscire?</value>
+  </data>
+  <data name="Please fill the Required fields" xml:space="preserve">
+    <value>Si prega di compilare i campi obbligatori</value>
   </data>
 </root>

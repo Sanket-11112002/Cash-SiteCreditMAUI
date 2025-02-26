@@ -18,11 +18,11 @@
         </DataTemplate>
 
         <DataTemplate x:Key="CardTemplate">
-            <Frame BorderColor="Gray" CornerRadius="0" Padding="0" Margin="10" BackgroundColor="#1B3B48">
+            <Frame BorderColor="Gray" CornerRadius="0" Padding="0" Margin="5,0,5,0" BackgroundColor="#1B3B48">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:GameDetailsViewModel}}, Path=OpenProductUrlCommand}" CommandParameter="{Binding ProductUrl}" />
                 </Frame.GestureRecognizers>
-                <StackLayout Spacing="5">
+                <StackLayout Spacing="2">
                     <!-- Image in Card -->
                     <Grid>
                         <Grid.RowDefinitions>
@@ -31,13 +31,13 @@
 
                         <Image Source="{Binding Image}" 
                        Aspect="AspectFit"
-                       HeightRequest="100"
-                       WidthRequest="100"
+                       HeightRequest="110"
+                       WidthRequest="110"
                        HorizontalOptions="Center" 
                        VerticalOptions="Center" 
                        Grid.Row="0" Margin="5"/>
 
-                        <Label Text="{Binding Label}" 
+                        <!--<Label Text="{Binding Label}" 
                        TextColor="White" 
                        FontAttributes="Bold" 
                        FontSize="8" 
@@ -49,25 +49,25 @@
                        Margin="0" 
                        Padding="5">
                             <Label.Triggers>
-                                <!-- Trigger to hide the Label if the text is null or empty -->
+                                --><!-- Trigger to hide the Label if the text is null or empty --><!--
                                 <DataTrigger TargetType="Label" Binding="{Binding Label}" Value="{x:Static sys:String.Empty}">
                                     <Setter Property="IsVisible" Value="False" />
                                 </DataTrigger>
                             </Label.Triggers>
-                        </Label>
+                        </Label>-->
                     </Grid>
 
                     <!-- Note -->
                     <Label Text="{Binding Note}" Padding="2"
-                     TextColor="White" FontSize="7"
-                     HorizontalTextAlignment="Start" Margin="0"
-                     VerticalTextAlignment="Start"
+                     TextColor="White" FontSize="14"
+                     HorizontalTextAlignment="Center" Margin="2"
+                     VerticalTextAlignment="Center"
                      HorizontalOptions="FillAndExpand" HeightRequest="25"/>
 
                     <!-- Price Range -->
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="5" Margin="0">
-                        <Label Text="{Binding MinPrice, StringFormat='{0} €'}" FontAttributes="Bold" FontSize="10" TextColor="LightGray" Margin="0,10,0,0" TextDecorations="Strikethrough" />
-                        <Label Text="{Binding MaxPrice, StringFormat='{0} €'}" FontAttributes="Bold" FontSize="10" TextColor="LightBlue" Margin="0,10,0,0" />
+                        <Label Text="{Binding MinPrice, StringFormat='{0} €'}" FontAttributes="Bold" FontSize="15" TextColor="LightGray" Margin="3" TextDecorations="Strikethrough" />
+                        <Label Text="{Binding MaxPrice, StringFormat='{0} €'}" FontAttributes="Bold" FontSize="15" TextColor="LightBlue" Margin="3" />
                     </StackLayout>
                 </StackLayout>
             </Frame>

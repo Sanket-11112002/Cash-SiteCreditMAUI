@@ -28,7 +28,8 @@ namespace CardGameCorner
             _globalSettingsService = globalSettingsService; 
             _gameService = gameService;
 
-            var lastSelectedGame = Task.Run(() => _secureStorage.GetAsync("LastSelectedGame")).Result ?? string.Empty;
+            //var lastSelectedGame = Task.Run(() => _secureStorage.GetAsync("LastSelectedGame")).Result ?? string.Empty;
+            var lastSelectedGame = "";
             var lastSelectedLang = Task.Run(() => _secureStorage.GetAsync("LastSelectedLang")).Result ?? "English";
             _globalSettingsService.SelectedGame = lastSelectedGame;
             _globalSettingsService.SelectedLanguage = lastSelectedLang;
@@ -56,7 +57,6 @@ namespace CardGameCorner
             // Navigate to LoginPage directly to start a new session
             //  await Shell.Current.GoToAsync("login");
         }
-
         protected override void OnStart()
         {
             base.OnStart();

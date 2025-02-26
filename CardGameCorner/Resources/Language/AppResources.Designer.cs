@@ -97,7 +97,7 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Best Deals.
+        ///   Looks up a localized string similar to Hot Buylist.
         /// </summary>
         internal static string Best_Deals {
             get {
@@ -921,6 +921,15 @@ namespace CardGameCorner.Resources.Language {
         internal static string PlaceOrder {
             get {
                 return ResourceManager.GetString("PlaceOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Please_fill_the_Required_fields {
+            get {
+                return ResourceManager.GetString("Please fill the Required fields", resourceCulture);
             }
         }
         

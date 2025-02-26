@@ -5,7 +5,6 @@ using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
 using ISecureStorage = CardGameCorner.Services.ISecureStorage;
-using CommunityToolkit.Maui;
 using CardGameCorner.Models;
 
 namespace CardGameCorner
@@ -80,7 +79,9 @@ namespace CardGameCorner
             builder.Services.AddHttpClient();
 #if DEBUG
             builder.Logging.AddDebug();
+
 #endif
+            builder.Services.AddSingleton<SocialLoginViewModel>();
             return builder.Build();
         }
     }

@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+
 namespace CardGameCorner.ViewModels
 {
     public partial class PlaceOrderViewModel : ObservableObject, INotifyPropertyChanged
@@ -116,8 +117,12 @@ namespace CardGameCorner.ViewModels
             get => _ibanCode;
             set
             {
-                _ibanCode = value;
-                OnPropertyChanged(nameof(IBANCode));
+
+                if (_ibanCode != value)
+                {
+                    _ibanCode = value;
+                    OnPropertyChanged(nameof(IBANCode));
+                }
             }
         }
 
@@ -127,8 +132,11 @@ namespace CardGameCorner.ViewModels
             get => _paypalEmail;
             set
             {
-                _paypalEmail = value;
-                OnPropertyChanged(nameof(PayPalEmail));
+                if (_paypalEmail != value)
+                {
+                    _paypalEmail = value;
+                    OnPropertyChanged(nameof(PayPalEmail));
+                }
             }
         }
 
@@ -164,7 +172,22 @@ namespace CardGameCorner.ViewModels
                 OnPropertyChanged(nameof(StaffMessage));
             }
         }
+        public bool ValidateFields()
+        {
+            if (ShowIBANField && string.IsNullOrWhiteSpace(IBANCode))
+            {
+                Application.Current.MainPage.DisplayAlert("Error", "IBAN Code is required.", "OK");
+                return false;
+            }
 
+            if (ShowPayPalField && string.IsNullOrWhiteSpace(PayPalEmail))
+            {
+                Application.Current.MainPage.DisplayAlert("Error", "PayPal Email is required.", "OK");
+                return false;
+            }
+
+            return true;
+        }
 
         public ObservableCollection<string> ContactInfo { get; set; }
         public ObservableCollection<string> PaymentMethod { get; set; }
@@ -189,6 +212,8 @@ namespace CardGameCorner.ViewModels
         {
             try
             {
+                if (!ValidateFields())
+                    return;
                 IsLoading = true;
 
                 // Get JWT token and verify
@@ -220,21 +245,21 @@ namespace CardGameCorner.ViewModels
                 var allCards = await sqliteService.GetAllItemsAsync();
 
                 // Filter cards by game and username
-                var filteredCards = allCards
-                    .Where(card =>
-                        card.Game?.ToLower() == selectedGame)
-                        // && card.Username == username)
-                    .ToList();
+                //var filteredCards = allCards
+                //    .Where(card =>
+                //        card.Game?.ToLower() == selectedGame)
+                //        // && card.Username == username)
+                //    .ToList();
 
-                if (!filteredCards.Any())
-                {
-                    await Application.Current.MainPage.DisplayAlert(
-                       Error,
-                        $"{Error_NoCardsFound} {selectedGame}",
-                        "OK"
-                    );
-                    return;
-                }
+                //if (!filteredCards.Any())
+                //{
+                //    await Application.Current.MainPage.DisplayAlert(
+                //       Error,
+                //        $"{Error_NoCardsFound} {selectedGame}",
+                //        "OK"
+                //    );
+                //    return;
+                //}
 
                 var orderRequest = new
                 {
@@ -243,9 +268,10 @@ namespace CardGameCorner.ViewModels
                     paymentType = GetApiPaymentTypeValue(SelectedPaymentOption),
                     paymentAccount = ShowPayPalField ? PayPalEmail : IBANCode,
                     message = StaffMsgl,
-                    game = selectedGame,
-                    Cards = filteredCards.Select(card => new
+                   // game = selectedGame,
+                    Cards = allCards.Select(card => new
                     {
+                        game =card.Game,
                         idProduct = card.ProductId,  // Using ProductId instead of Id
                         language = card.Language,
                         condition = card.Condition,
@@ -273,22 +299,23 @@ namespace CardGameCorner.ViewModels
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = JsonConvert.DeserializeObject<OrderResponse>(content);
+                    var result = JsonConvert.DeserializeObject<OrderListResponse>(content);
 
                     // Delete only the ordered cards
-                    foreach (var card in filteredCards)
+                    foreach (var card in allCards)
                     {
                         await sqliteService.DeleteItemAsync(card);
                     }
 
+                    // Construct the success message
+                    var message = string.Join("\n", result.Orders.Select(o => $"{o.OrderId}: {o.Message}"));
+
                     await Application.Current.MainPage.DisplayAlert(
-                        Success,
-                        $"{result.OrderId} {Success_OrderPlaced}",
+                        "Success",
+                        message,
                         "OK"
                     );
 
-                    // await Shell.Current.GoToAsync("//MyListPage");
-                   // await Shell.Current.GoToAsync("//MyOrdersPage");
                     await Shell.Current.GoToAsync(nameof(MyOrdersPage));
                 }
                 else

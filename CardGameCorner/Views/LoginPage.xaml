@@ -23,7 +23,8 @@
                        HeightRequest="45">
                     <Button x:Name="FacebookSignInButton"
                             Text="Sign In with Facebook"
-                            Clicked="OnFacebookSignInClicked"
+                            Command="{Binding AuthenticateCommand}"
+                            CommandParameter="Facebook"
                             ImageSource="facebook.png"
                             TextColor="White"
                             BackgroundColor="Transparent"
@@ -39,7 +40,8 @@
                        HeightRequest="45">
                     <Button x:Name="GoogleSignInButton"
                             Text="Sign In with Google"
-                            Command="{Binding LoginCommand1}"
+                            Command="{Binding AuthenticateCommand}"
+                            CommandParameter="Google"
                             ImageSource="google.png"
                             TextColor="White"
                             BackgroundColor="Transparent"

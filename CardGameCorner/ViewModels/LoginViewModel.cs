@@ -4,11 +4,16 @@ using CardGameCorner.Services;
 using CardGameCorner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Newtonsoft.Json;
+using SocialLoginWithMaui.Messages;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Web;
 using System.Windows.Input;
 using ISecureStorage = CardGameCorner.Services.ISecureStorage;
+
 
 namespace CardGameCorner.ViewModels
 {
@@ -73,6 +78,11 @@ namespace CardGameCorner.ViewModels
             _authService = authService;
             _secureStorage = secureStorage;
             _serviceProvider = serviceProvider;
+
+            WeakReferenceMessenger.Default.Register<ProtocolMessage>(this, (r, m) =>
+            {
+                OnMessageReceived(m.Value);
+            });
 
             UpdateLocalizedStrings();
 
@@ -417,57 +427,144 @@ namespace CardGameCorner.ViewModels
         }
 
 
-        public Command LoginCommand1
-              => new Command(async () =>
-              {
-                  var authUrl = $"{Constantsl.Google.auth_uri}?response_type=code" +
-                  $"&redirect_uri=com.maui.login://" +
-                  $"&client_id={Constantsl.Google.client_id}" +
-                  $"&scope=https://www.googleapis.com/auth/userinfo.email" +
-                  $"&include_granted_scopes=true" +
-                  $"&state=state_parameter_passthrough_value";
+       
+        // login with social media
+            private readonly Dictionary<string, string> authUrls = new Dictionary<string, string>
+            {
+                    { "Google", "https://api.magiccorner.it/api/auth/mobile/Google" },
+                    { "Facebook", "https://api.magiccorner.it/api/auth/mobile/Facebook" }
+            };
+
+            [ObservableProperty]
+            public string? authToken;
+
+            [ObservableProperty]
+            public string? emails;  // Changed from userEmail to emails
 
 
-                  var callbackUrl = "com.maui.login://";
+        [RelayCommand]
+        private async Task OnAuthenticate(string scheme)
+        {
+            try
+            {
+                AuthToken = string.Empty;
+                Email = string.Empty;  // Changed from UserEmail to Email
 
-                  try
-                  {
-                      var response = await WebAuthenticator.AuthenticateAsync(new WebAuthenticatorOptions()
-                      {
-                          Url = new Uri(authUrl),
-                          CallbackUrl = new Uri(callbackUrl)
-                      });
+                if (!authUrls.TryGetValue(scheme, out string? authUrl))
+                {
+                    await App.Current.MainPage.DisplayAlert("Error", $"Authentication URL not configured for {scheme}", "OK");
+                    return;
+                }
 
-                      var codeToken = response.Properties["code"];
+                // Web Authentication flow
+                var callbackUrl = new Uri("mcbuylist://");
 
-                      var parameters = new FormUrlEncodedContent(new[]
-                      {
-                        new KeyValuePair<string,string>("grant_type","authorization_code"),
-                        new KeyValuePair<string,string>("client_id",Constantsl.Google.client_id),
-                        new KeyValuePair<string,string>("redirect_uri",callbackUrl),
-                        new KeyValuePair<string,string>("code",codeToken),
-                  });
+                //var result = await WebAuthenticator.Default.AuthenticateAsync(
+                //   new WebAuthenticatorOptions()
+                //   {
+                //       Url = new Uri(authUrl),
+                //       CallbackUrl = callbackUrl,
+                //       PrefersEphemeralWebBrowserSession = true
+                //   });
+
+                 WebAuthenticatorResult authResult = await WebAuthenticator.Default.AuthenticateAsync(
+                        new WebAuthenticatorOptions()
+                        {
+                            Url = new Uri(authUrl),
+                            CallbackUrl = new Uri("mcbuylist://"),
+                            PrefersEphemeralWebBrowserSession = true
+                        });
+
+                    string accessToken = authResult?.AccessToken;
+
+                    // Do something with the token
+               
+                if (authResult != null)
+                {
+                    OnMessageReceived(authResult.CallbackUri.OriginalString);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed: {ex.Message}");
+                await App.Current.MainPage.DisplayAlert("Alert", $"Failed: {ex.Message}", "OK");
+            }
+        }
+
+        private async void OnMessageReceived(string value)
+        {
+            try
+            {
+                Console.WriteLine($"New message received: {value}");
+
+                Uri uri = new Uri(value);
+                string query = uri.Fragment.TrimStart('#');
+                NameValueCollection queryParameters = HttpUtility.ParseQueryString(query);
+
+                string accessToken = queryParameters["access_token"] ?? string.Empty;
+                string emailValue = queryParameters["email"] ?? string.Empty;
+
+                string decodedEmail = HttpUtility.UrlDecode(emailValue);
+
+                Emails = decodedEmail;
+                AuthToken = accessToken;
+
+                // Store access token securely
+                //await SecureStorage.Default.SetAsync("jwt_token", accessToken);
+                //await SecureStorage.Default.SetAsync("user_email", decodedEmail);
+                await _secureStorage.SetAsync("jwt_token", accessToken);
+
+                // Proceed with post-login process
+                await PostLoginProcedure();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error processing callback: {ex.Message}");
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await App.Current.MainPage.DisplayAlert("Error", $"Failed to process login: {ex.Message}", "OK");
+                });
+            }
+        }
 
 
-                      HttpClient client = new HttpClient();
-                      var accessTokenResponse = await client.PostAsync(Constantsl.Google.token_ur, parameters);
+        private async Task PostLoginProcedure()
+        {
+            if (IsBusy) return;
 
-                      LoginResponse loginResponse;
+            try
+            {
+                IsBusy = true;
 
-                      if (accessTokenResponse.IsSuccessStatusCode)
-                      {
-                          var data = await accessTokenResponse.Content.ReadAsStringAsync();
+                App.IsUserLoggedIn = true;
 
-                          loginResponse = JsonConvert.DeserializeObject<LoginResponse>(data);
-                      }
-                  }
-                  catch (TaskCanceledException e)
-                  {
-                      // Use stopped auth
-                  }
+                // Navigate based on login state
+                var loginAccount = await SecureStorage.GetAsync("Login");
+                switch (loginAccount)
+                {
+                    case "loginmethod":
+                        await Shell.Current.GoToAsync("..");
+                        break;
+                    default:
+                        await Shell.Current.Navigation.PopToRootAsync();
+                        break;
+                }
 
-
-              });
+                await SecureStorage.SetAsync("Login", "");
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine($"Post-login error: {ex.Message}");
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    "An unexpected error occurred. Please try again.",
+                    "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
 
     }
 }

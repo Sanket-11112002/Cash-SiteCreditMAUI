@@ -280,6 +280,7 @@ namespace CardGameCorner.ViewModels
                     var card = new ProductListViewModel
                     {
                         Id = item.Id ?? 0,
+                        ProductId = item.ProductId ?? 0,
                         Model = item.Model ?? string.Empty,
                         ModelEn = item.ModelEn ?? string.Empty,
                         Image = item.Image ?? string.Empty,

@@ -130,7 +130,7 @@
     <value>Scan</value>
   </data>
   <data name="Best Deals" xml:space="preserve">
-    <value>Best Deals</value>
+    <value>Hot Buylist</value>
   </data>
   <data name="Capture Image" xml:space="preserve">
     <value>Capture Image</value>
@@ -530,5 +530,8 @@
   </data>
   <data name="ExitApp" xml:space="preserve">
     <value>Do you want to exit?</value>
+  </data>
+  <data name="Please fill the Required fields" xml:space="preserve">
+    <value />
   </data>
 </root>

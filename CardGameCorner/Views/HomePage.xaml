@@ -8,35 +8,31 @@
 
     <Grid RowDefinitions="Auto,Auto,Auto" 
           HorizontalOptions="Center"
-          VerticalOptions="Center"
-          Margin="0">
+          VerticalOptions="Start">
 
-        <!-- Header with logo at the top -->
-        <Grid Row="0" 
-              HorizontalOptions="Center" 
-              VerticalOptions="Center"
-              Padding="0">
-            <Image Source="Resources/Images/splashscreenlogo.png"
-                   HeightRequest="80" 
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Margin="0" />
-
-        </Grid>
-        <!-- Header with logo at the top -->
         <Grid Row="1" 
               HorizontalOptions="Center" 
-              VerticalOptions="Center"
-              Padding="0">
+              VerticalOptions="Start"
+              Padding="0"
+              Margin="70,50,0,50">
 
+            <!-- Logo -->
+            <Image Source="Resources/Images/splashscreenlogo.png"
+                   HeightRequest="80" 
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center"
+                   Margin="0"
+                   Opacity="0.8"/>
 
-            <!-- Title label -->
+            <!-- Title text (behind the logo) -->
             <Label Text="CARD GAME CORNER"
-               FontSize="30"
-               FontAttributes="Bold"
-               TextColor="White"  
-               HorizontalOptions="Center"
-               VerticalOptions="Center" />
+                   FontSize="30"
+                   Margin="50,0,0,0"
+                   FontAttributes="Bold"
+                   TextColor="White"  
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   BackgroundColor="Transparent"/>
         </Grid>
 
 
@@ -51,16 +47,16 @@
                           VerticalOptions="Fill">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical"
-                                   Span="2"
-                                   VerticalItemSpacing="10"
-                                   HorizontalItemSpacing="10" />
+                                   Span="1"
+                                   VerticalItemSpacing="20"
+                                   HorizontalItemSpacing="20" />
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Game">
                         <Frame Padding="0"
-                               CornerRadius="10"
                                IsClippedToBounds="True"
+                               CornerRadius="10"
                                Margin="5"
                                BackgroundColor="White"
                                HorizontalOptions="Fill">
@@ -70,12 +66,11 @@
                                                     CommandParameter="{Binding .}" />
                             </Frame.GestureRecognizers>
 
-                            <Grid RowDefinitions="*, Auto" 
+                            <Grid RowDefinitions="Auto, Auto" 
                                   HorizontalOptions="Fill">
                                 <Image Grid.Row="0"
-                                       Source="{Binding BackgroundImage}"
+                                       Source="{Binding HomeBestDealsImage}"
                                        Aspect="AspectFill"
-                                       HeightRequest="160"
                                        BackgroundColor="LightGray"
                                        HorizontalOptions="Fill" />
 
@@ -83,8 +78,8 @@
                                        Source="{Binding LogoImage}"
                                        HeightRequest="100"
                                        HorizontalOptions="Center"
-                                       VerticalOptions="Start"
-                                       Margin="10" />
+                                       VerticalOptions="Start" />
+                               
                             </Grid>
                         </Frame>
                     </DataTemplate>
