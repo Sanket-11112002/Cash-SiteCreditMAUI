@@ -597,7 +597,7 @@ namespace CardGameCorner.ViewModels
                     Title = selectedCard.Model,
                     Set = selectedCard.SetCode,
                     Game = selectedCard.Game,
-                    Lang = "en",
+                    Lang = "",
                     Foil = 0,
                     FirstEdition = 0
                 };
@@ -881,6 +881,8 @@ namespace CardGameCorner.ViewModels
             try
             {
                 IsLoading = true;
+                OnPropertyChanged(nameof(IsLoading));
+                await Task.Delay(100);
                 HasError = false;
                 ErrorMessage = string.Empty;
                 NoResultsFound = false; // Reset the no results flag
@@ -949,6 +951,7 @@ namespace CardGameCorner.ViewModels
             finally
             {
                 IsLoading = false;
+                OnPropertyChanged(nameof(IsLoading));
             }
         }
 

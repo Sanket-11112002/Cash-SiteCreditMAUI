@@ -44,10 +44,10 @@
                   Clicked="OnSettingsClicked"/>
 
             <Button Grid.Row="2"
-                  Text="My Orders"
+                  Text="{Binding OrdersToolbar, Mode=OneWay}"
                   ImageSource="info.png"
-                   BackgroundColor="#4A8BA8"
-                       FontSize="20"
+                  BackgroundColor="#4A8BA8"
+                  FontSize="20"
                   TextColor="White"
                   Clicked="OnOrdersClicked"/>
         </Grid>

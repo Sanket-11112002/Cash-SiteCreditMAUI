@@ -71,12 +71,12 @@ public partial class SettingsSlidePage : ContentPage, INotifyPropertyChanged
         if (App.IsUserLoggedIn)
         {
             LogoutButton.IsVisible = true;
-            MyOrdersButton.IsVisible = true;
+           // MyOrdersButton.IsVisible = true;
         }
         else
         {
             LogoutButton.IsVisible = false;
-            MyOrdersButton.IsVisible = false;
+           // MyOrdersButton.IsVisible = false;
         }
 
         // Hide the settings toolbar item when this page appears
