@@ -55,21 +55,21 @@ namespace CardGameCorner.Views
                         {
                             var cardRequest = new CardSearchRequest
                                 {
-                                    //Title = apiResponse.Result.Title,
-                                    //Set = apiResponse.Result.Set,
-                                    //Game = GlobalSettings.SelectedGame,
-                                    //Lang = apiResponse.Result.Lang,
-                                    //Foil = apiResponse.Result.Foil,
-                                    //FirstEdition = 0
+                                Title = apiResponse.Result.Title,
+                                Set = apiResponse.Result.Set,
+                                Game = GlobalSettings.SelectedGame,
+                                Lang = apiResponse.Result.Lang,
+                                Foil = apiResponse.Result.Foil,
+                                FirstEdition = 0
 
-                                    Title = "Angel of Mercy",
-                                    Game = "magic",
-                                    Set = "IMA",
-                                    Lang = "en",
-                                    Foil = 0,
-                                    FirstEdition = 0
+                                //Title = "Angel of Mercy",
+                                //Game = "magic",
+                                //Set = "IMA",
+                                //Lang = "en",
+                                //Foil = 0,
+                                //FirstEdition = 0
 
-                                };
+                            };
 
                             var data = await viewModel.SearchCardAsync(cardRequest,
                       ImageSource.FromStream(() => new MemoryStream(displayStream.ToArray())));

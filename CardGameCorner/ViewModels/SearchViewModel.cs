@@ -597,7 +597,7 @@ namespace CardGameCorner.ViewModels
                     Title = selectedCard.Model,
                     Set = selectedCard.SetCode,
                     Game = selectedCard.Game,
-                    Lang = "en",
+                    Lang = "",
                     Foil = 0,
                     FirstEdition = 0
                 };
@@ -719,10 +719,14 @@ namespace CardGameCorner.ViewModels
             var response = new ListBoxService();
             var conditinlst = await response.GetConditionsAsync();
             var lnglst = await response.GetLanguagesAsync();
-
+           
             foreach (var product in products)
             {
                 var variants = product.Variants;
+             
+               // var priceMap = BuildPriceMap(variants);
+          
+
                 if (variants != null)
                 {
                     var languageConditionsMap = variants
@@ -739,6 +743,7 @@ namespace CardGameCorner.ViewModels
 
                     var details = new CardDetailViewModel()
                     {
+                        ProductId= variants.Select(v => v.IdProduct).FirstOrDefault(),
                         Languages = distinctLanguages,
                         Conditions = distinctConditions,
                         Name = product.Model,
@@ -752,9 +757,12 @@ namespace CardGameCorner.ViewModels
                         SelectedLanguage = variants.Select(v => v.Language).FirstOrDefault(),
                         selectedCondition = variants.Select(v => v.Condition).FirstOrDefault(),
                         IsFirstEdition = variants.Select(v => v.FirstEdition != null ? true : false).FirstOrDefault(),
+                        IsFoil = variants.Select(v => v.Foil != null ? true : false).FirstOrDefault(),
+                        IsReverse = variants.Select(v => v.Foil == "Reverse Holo" ? true : false).FirstOrDefault(),
                         siteCredit= variants.Select(v => v.Credit).FirstOrDefault(),
                         buyList = variants.Select(v => v.BuyList).FirstOrDefault(),
-                        varinats = variants.ToList()
+                        varinats = variants.Distinct().ToList(),
+
                     };
                     detailslst.Add(details);
                 }
@@ -1141,6 +1149,29 @@ namespace CardGameCorner.ViewModels
                 product.IsFavorite = favoriteProducts.Any(f => f.Model == product.Model); // Match by ID or other properties
             }
         }
+
+        public class PriceDetails
+        {
+            public decimal Credit { get; set; }
+            public decimal BuyList { get; set; }
+            public bool Evaluation { get; set; }
+        }
+
+
+        public Dictionary<(string Language, string Condition), PriceDetails> BuildPriceMap(List<ProductVariant1> variants)
+        {
+            return variants.ToDictionary(
+                v => (v.Language, v.Condition),
+                v => new PriceDetails
+                {
+                    Credit = v.Credit,
+                    BuyList = v.BuyList,
+                    Evaluation = v.Evaluation
+                }
+            );
+        }
+
+
     }
 
     // Filters code
@@ -1153,4 +1184,9 @@ namespace CardGameCorner.ViewModels
         public string FirstEdition { get; set; }
         public string HotList { get; set; } = "All"; // Only HotList has default value
     }
+
+
+  
+
+
 }

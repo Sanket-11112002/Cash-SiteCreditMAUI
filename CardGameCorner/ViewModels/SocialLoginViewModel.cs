@@ -48,6 +48,11 @@ namespace CardGameCorner.ViewModels
                     await App.Current.MainPage.DisplayAlert("Error", $"Authentication URL not configured for {scheme}", "OK");
                     return;
                 }
+                if (scheme == "Google")
+                {
+                    await Browser.OpenAsync("https://accounts.google.com/Logout", BrowserLaunchMode.SystemPreferred);
+                    await Task.Delay(1000); // Slight delay to ensure logout is processed
+                }
 
                 // Web Authentication flow
                 var callbackUrl = new Uri("mcbuylist://");

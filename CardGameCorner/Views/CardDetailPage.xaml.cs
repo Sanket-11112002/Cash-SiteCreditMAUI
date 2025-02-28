@@ -26,6 +26,16 @@ public partial class CardDetailPage : ContentPage
 
             if (viewModelList != null)
             {
+                
+                bool hasReverseHolo = viewModelList.Any(item =>
+    item.varinats != null && item.varinats.Any(v => v.Foil?.Equals("Reverse Holo", StringComparison.OrdinalIgnoreCase) == true)
+);
+                bool hasFirstEdition = viewModelList.Any(item =>
+  item.varinats != null && item.varinats.Any(v => v.FirstEdition!=null ? true :false)
+);
+                bool hasFoil = viewModelList.Any(item =>
+  item.varinats != null && item.varinats.Any(v => v.Foil != null ? true : false)
+);
                 var game = GlobalSettings.SelectedGame;
 
                 foreach (var item in viewModelList)
@@ -40,6 +50,8 @@ public partial class CardDetailPage : ContentPage
                          .ToList();
                         item.siteCredit = item.siteCredit;
                         item.buyList = item.buyList;
+                        item.IsFirstEdition = item.IsFirstEdition;
+
                     }
                     else
                     {
@@ -47,12 +59,14 @@ public partial class CardDetailPage : ContentPage
                         item.Conditions = item.conditions.Distinct().ToList();
                         item.siteCredit = item.siteCredit;
                         item.buyList = item.buyList;
+                        item.IsFirstEdition = item.IsFirstEdition;
                     }
 
                     // Set visibility properties
-                    item.IsEditionVisibility = game == "pokemon" || game == "yugioh";
-                    item.IsReverseVisibility = game == "pokemon";
-                    item.IsFoilVisibility = game == "magic";
+                    //item.IsEditionVisibility = game == "pokemon" || game == "yugioh";
+                    item.IsEditionVisibility = game == "yugioh" && hasFirstEdition;
+                    item.IsReverseVisibility = game == "pokemon" && hasReverseHolo;
+                    item.IsFoilVisibility = game == "magic" && hasFoil;
 
                     item.InitializeEditMode(item.Id != 0);
                 }
@@ -68,7 +82,7 @@ public partial class CardDetailPage : ContentPage
 
                 BindingContext = viewModel;
 
-                InitializeComponent();
+                InitializeComponent();  
             }
         }
     }
@@ -90,7 +104,7 @@ public partial class CardDetailPage : ContentPage
 
                     var product = new ProductList
                     {
-                        Id = selectedCard.Id,
+                        Id = selectedCard.Id,   
                         ProductId = selectedCard.ProductId,
                         Game = selectedCard.Game,
                         Model = selectedCard.Name,

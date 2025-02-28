@@ -133,6 +133,7 @@ namespace CardGameCorner.ViewModels
         [ObservableProperty]
         public string successAddedToListTitle;
 
+        [ObservableProperty]
         public List<ProductVariant1> varinats;
 
 
@@ -524,7 +525,8 @@ namespace CardGameCorner.ViewModels
                 {
                     _isFirstEdition = value;
                     OnPropertyChanged();
-                    FetchPricesAsync();
+                    OnPropertyChanged(nameof(IsEditionVisibility));
+                    // FetchPricesAsync();
                 }
             }
         }
@@ -538,7 +540,9 @@ namespace CardGameCorner.ViewModels
                 {
                     _isReverse = value;
                     OnPropertyChanged();
-                    FetchPricesAsync(); // Call the API when Reverse toggle is changed
+                    OnPropertyChanged(nameof(IsReverseVisibility));
+                    UpdatePrices();
+                    //  FetchPricesAsync(); // Call the API when Reverse toggle is changed
                 }
             }
         }
@@ -552,6 +556,7 @@ namespace CardGameCorner.ViewModels
                 {
                     _isFoil = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(IsFoilVisibility));
                     UpdatePrices();
                 }
             }
@@ -657,6 +662,35 @@ namespace CardGameCorner.ViewModels
             }
         }
 
+        private bool _isQuantityVisible;
+        public bool IsQuantityVisible
+        {
+            get => _isQuantityVisible;
+            set
+            {
+                if (_isQuantityVisible != value)
+                {
+                    _isQuantityVisible = value;
+                    OnPropertyChanged(nameof(IsQuantityVisible));
+                }
+            }
+        }
+
+        private bool _isActionButtonVisible;
+        public bool IsActionButtonVisible
+        {
+            get => _isActionButtonVisible;
+            set
+            {
+                if (_isActionButtonVisible != value)
+                {
+                    _isActionButtonVisible = value;
+                    OnPropertyChanged(nameof(IsActionButtonVisible));
+                }
+            }
+        }
+
+
         private async Task FetchPricesAsync()
         {
             var newvariable = new ScanCardService();
@@ -702,7 +736,7 @@ namespace CardGameCorner.ViewModels
             cardetailrequest.idMetaproduct = idMetaProductId;
             cardetailrequest.IsFoil = "50";
             cardetailrequest.sku = "MEW0199";
-            //cardetailrequest.condition = 1362;
+            //cardetailrequest.condition = 1362;    
             //cardetailrequest.language = 71;
             //cardetailrequest.IsFirstEdition = false;
             //cardetailrequest.idCategory = 3534;
@@ -720,8 +754,8 @@ namespace CardGameCorner.ViewModels
             {
                 Console.WriteLine("Result: " + result);
 
-                buyList = result.buylist;
-                siteCredit = result.SiteCredit;
+                //buyList = result.buylist;
+                //siteCredit = result.SiteCredit;
 
                 if (result.evaluation == true)
                 {
@@ -778,6 +812,7 @@ namespace CardGameCorner.ViewModels
         {
             try
             {
+                
                 if (string.IsNullOrWhiteSpace(language))
                     throw new ArgumentNullException(nameof(language), "Language cannot be null or empty.");
 
@@ -786,12 +821,41 @@ namespace CardGameCorner.ViewModels
 
                 if (varinats == null || !varinats.Any())
                     throw new InvalidOperationException("The product variants list is null or empty.");
+                if (game == "pokemon")
+                {
+                                    return varinats.FirstOrDefault(p =>
+                     p.Language.Equals(language, StringComparison.OrdinalIgnoreCase) &&
+                     p.Condition.Equals(condition, StringComparison.OrdinalIgnoreCase) &&
+                     (IsReverse ? p.Foil.Equals("Reverse Holo", StringComparison.OrdinalIgnoreCase) : string.IsNullOrEmpty(p.Foil))
+                 );
+                }
+                else if (game == "yugioh")
+                {
+                                            return varinats.FirstOrDefault(p =>
+                           p.Language.Equals(language, StringComparison.OrdinalIgnoreCase) &&
+                           p.Condition.Equals(condition, StringComparison.OrdinalIgnoreCase) &&
+                          (IsFirstEdition ? !string.IsNullOrEmpty(p.FirstEdition) : string.IsNullOrEmpty(p.FirstEdition)));
 
-                return varinats.FirstOrDefault(p =>
+                }
+                else if (game == "magic")
+                {
+                    return varinats.FirstOrDefault(p =>
+    p.Language.Equals(language, StringComparison.OrdinalIgnoreCase) &&
+    p.Condition.Equals(condition, StringComparison.OrdinalIgnoreCase) &&
+    (IsFoil ? !string.IsNullOrEmpty(p.Foil) : string.IsNullOrEmpty(p.Foil)));
+
+
+                }
+                else
+                {
+                                    return varinats.FirstOrDefault(p =>
                     p.Language.Equals(language, StringComparison.OrdinalIgnoreCase) &&
-                    p.Condition.Equals(condition, StringComparison.OrdinalIgnoreCase) &&
-                    (isFoil ? !string.IsNullOrEmpty(p.Foil) : string.IsNullOrEmpty(p.Foil))
-                );
+                    p.Condition.Equals(condition, StringComparison.OrdinalIgnoreCase)   );
+    
+              
+                }
+                return null;
+
             }
             catch (ArgumentNullException ex)
             {
@@ -813,8 +877,9 @@ namespace CardGameCorner.ViewModels
             }
         }
 
-        public void UpdatePrices()
+        public async void UpdatePrices()
         {
+            await Task.Delay(1000); // Adjust as needed
             if (string.IsNullOrEmpty(SelectedLanguage) || string.IsNullOrEmpty(selectedCondition))
             {
                 Console.WriteLine("Language or Condition not selected.");
@@ -834,43 +899,58 @@ namespace CardGameCorner.ViewModels
                         IsSiteCredit = false;
                         IsCash = false;
                         ProductId = filteredProduct.IdProduct;
+                        IsQuantityVisible = true;
+                        IsActionButtonVisible = true;
                     }
                     else
                     {
-                        IsNoticeVisible2 = true;
                         IsNoticeVisible1 = false;
+                        IsNoticeVisible2 = true;
                         IsSiteCredit = false;
                         IsCash = false;
                         ProductId = filteredProduct.IdProduct;
+                        IsQuantityVisible = false;
+                        IsActionButtonVisible = false;
+
                     }
                 }
                 else
                 {
                     if (filteredProduct.Evaluation)
                     {
-                        siteCredit = filteredProduct.Price;
+                        siteCredit = filteredProduct.Credit;
                         buyList = filteredProduct.BuyList;
                         IsSiteCredit = false;
                         IsCash = false;
                         IsNoticeVisible2 = false;
                         IsNoticeVisible1 = false;
                         ProductId = filteredProduct.IdProduct;
+                        IsQuantityVisible = true;
+                        IsActionButtonVisible = true;
                     }
                     else
                     {
-
+                        siteCredit = filteredProduct.Credit;
+                        buyList = filteredProduct.BuyList;
+                        IsNoticeVisible2 = false;
+                        IsNoticeVisible1 = false;
+                        IsSiteCredit = true;
+                        IsCash = true;
+                        IsQuantityVisible = true;
+                        IsActionButtonVisible = true;
                     }
                 }
-
+                    
             }
             else
             {
-                siteCredit = 0;
-                buyList = 0;
-                IsSiteCredit = true;
-                IsCash = true;
-                IsNoticeVisible2 = false;
-                IsNoticeVisible1 = false;
+                IsNoticeVisible2 = true;
+                //siteCredit = 0;
+                //buyList = 0;
+                //IsSiteCredit = false;
+                //IsCash = false;
+                //IsNoticeVisible2 = false;
+                //IsNoticeVisible1 = true;
 
             }
         }

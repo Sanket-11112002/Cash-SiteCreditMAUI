@@ -432,6 +432,8 @@ namespace CardGameCorner.ViewModels
             private readonly Dictionary<string, string> authUrls = new Dictionary<string, string>
             {
                     { "Google", "https://api.magiccorner.it/api/auth/mobile/Google" },
+     
+
                     { "Facebook", "https://api.magiccorner.it/api/auth/mobile/Facebook" }
             };
 
@@ -440,15 +442,13 @@ namespace CardGameCorner.ViewModels
 
             [ObservableProperty]
             public string? emails;  // Changed from userEmail to emails
-
-
         [RelayCommand]
         private async Task OnAuthenticate(string scheme)
         {
             try
             {
                 AuthToken = string.Empty;
-                Email = string.Empty;  // Changed from UserEmail to Email
+                Email = string.Empty;
 
                 if (!authUrls.TryGetValue(scheme, out string? authUrl))
                 {
@@ -456,29 +456,22 @@ namespace CardGameCorner.ViewModels
                     return;
                 }
 
-                // Web Authentication flow
-                var callbackUrl = new Uri("mcbuylist://");
+                //// Google logout (to clear previous session)
+                //if (scheme == "Google")
+                //{
+                //    await Browser.OpenAsync("https://accounts.google.com/Logout", BrowserLaunchMode.SystemPreferred);
+                //    await Task.Delay(1000); // Wait to ensure logout is processed
+                //}
 
-                //var result = await WebAuthenticator.Default.AuthenticateAsync(
-                //   new WebAuthenticatorOptions()
-                //   {
-                //       Url = new Uri(authUrl),
-                //       CallbackUrl = callbackUrl,
-                //       PrefersEphemeralWebBrowserSession = true
-                //   });
+                // Web authentication flow
+                var authResult = await WebAuthenticator.Default.AuthenticateAsync(
+                    new WebAuthenticatorOptions()
+                    {
+                        Url = new Uri(authUrl),
+                        CallbackUrl = new Uri("mcbuylist://"),
+                        PrefersEphemeralWebBrowserSession = true
+                    });
 
-                 WebAuthenticatorResult authResult = await WebAuthenticator.Default.AuthenticateAsync(
-                        new WebAuthenticatorOptions()
-                        {
-                            Url = new Uri(authUrl),
-                            CallbackUrl = new Uri("mcbuylist://"),
-                            PrefersEphemeralWebBrowserSession = true
-                        });
-
-                    string accessToken = authResult?.AccessToken;
-
-                    // Do something with the token
-               
                 if (authResult != null)
                 {
                     OnMessageReceived(authResult.CallbackUri.OriginalString);
@@ -490,6 +483,7 @@ namespace CardGameCorner.ViewModels
                 await App.Current.MainPage.DisplayAlert("Alert", $"Failed: {ex.Message}", "OK");
             }
         }
+
 
         private async void OnMessageReceived(string value)
         {
