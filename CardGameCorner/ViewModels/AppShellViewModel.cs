@@ -17,6 +17,7 @@ namespace CardGameCorner.ViewModels
         private string _myAccountTabTitle;
         private string _myListTabTitle;
         private string _settingsToolbarItemText;
+        private string _ordersToolbar;
 
 
         public AppShellViewModel(GlobalSettingsService globalSettings)
@@ -64,6 +65,11 @@ namespace CardGameCorner.ViewModels
             set => SetProperty(ref _settingsToolbarItemText, value);
         }
 
+        public string OrdersToolbar
+        {
+            get => _ordersToolbar;
+            set => SetProperty(ref _ordersToolbar, value);
+        }
 
 
         private void OnGlobalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -83,6 +89,7 @@ namespace CardGameCorner.ViewModels
             MyAccountTabTitle = AppResources.MyAccount; // Localized string for "My Account"
             MyListTabTitle = AppResources.MyList; // Localized string for "My List"
             SettingsToolbarItemText = AppResources.Settings; // Localized string for "Settings"
+            OrdersToolbar = AppResources.OrderTitle;
 
             OnPropertyChanged(string.Empty);
         }

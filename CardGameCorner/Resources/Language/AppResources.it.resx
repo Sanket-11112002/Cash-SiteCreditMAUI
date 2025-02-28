@@ -351,6 +351,9 @@
   <data name="Success" xml:space="preserve">
     <value>Successo</value>
   </data>
+  <data name="SuccessAddedToList" xml:space="preserve">
+    <value>Articolo Aggiungi alla lista!</value>
+  </data>
   <data name="successmsg" xml:space="preserve">
     <value>Carta aggiunta alla tua collezione!</value>
   </data>
@@ -530,5 +533,62 @@
   </data>
   <data name="Please fill the Required fields" xml:space="preserve">
     <value>Si prega di compilare i campi obbligatori</value>
+  </data>
+  <data name="OrderTitle" xml:space="preserve">
+    <value>I miei ordini</value>
+  </data>
+  <data name="OrderId" xml:space="preserve">
+    <value>ID dell'ordine</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Stato</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Pagamento</value>
+  </data>
+  <data name="Payment Account" xml:space="preserve">
+    <value>Conto di pagamento</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contatto</value>
+  </data>
+  <data name="Pickup" xml:space="preserve">
+    <value>Raccolta</value>
+  </data>
+  <data name="Pickup Cost" xml:space="preserve">
+    <value>Costo del ritiro</value>
+  </data>
+  <data name="OrderEmpty" xml:space="preserve">
+    <value>Non hai alcun ordine!</value>
+  </data>
+  <data name="OrderDetails" xml:space="preserve">
+    <value>Dettagli dell'ordine</value>
+  </data>
+  <data name="OrderInfo" xml:space="preserve">
+    <value>Informazioni sull'ordine</value>
+  </data>
+  <data name="OrderDate" xml:space="preserve">
+    <value>Data dell'ordine</value>
+  </data>
+  <data name="ShippingDetails" xml:space="preserve">
+    <value>Dettagli di spedizione</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>Nome di battesimo</value>
+  </data>
+  <data name="Evalution" xml:space="preserve">
+    <value>Valutato</value>
+  </data>
+  <data name="AlteredByStaff" xml:space="preserve">
+    <value>Modificato daStaff</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Prezzo</value>
+  </data>
+  <data name="Confirmed" xml:space="preserve">
+    <value>Confermata</value>
   </data>
 </root>

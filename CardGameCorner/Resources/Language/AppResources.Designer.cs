@@ -79,6 +79,15 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AlteredByStaff.
+        /// </summary>
+        internal static string AlteredByStaff {
+            get {
+                return ResourceManager.GetString("AlteredByStaff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to load games. Please try again..
         /// </summary>
         internal static string APIErrorMessage {
@@ -214,6 +223,24 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirmed.
+        /// </summary>
+        internal static string Confirmed {
+            get {
+                return ResourceManager.GetString("Confirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact.
+        /// </summary>
+        internal static string Contact {
+            get {
+                return ResourceManager.GetString("Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to contacted in case of:.
         /// </summary>
         internal static string Contacted {
@@ -246,6 +273,15 @@ namespace CardGameCorner.Resources.Language {
         internal static string DataLoadErrorMessage {
             get {
                 return ResourceManager.GetString("DataLoadErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        internal static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
             }
         }
         
@@ -466,6 +502,15 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Evaluated.
+        /// </summary>
+        internal static string Evalution {
+            get {
+                return ResourceManager.GetString("Evalution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notice: You can add the card to the shopping cart, we will make an evaluation and send you a message..
         /// </summary>
         internal static string EvalutionNotice {
@@ -498,6 +543,15 @@ namespace CardGameCorner.Resources.Language {
         internal static string FillRequiredFieldsMessage {
             get {
                 return ResourceManager.GetString("FillRequiredFieldsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Name.
+        /// </summary>
+        internal static string FirstName {
+            get {
+                return ResourceManager.GetString("FirstName", resourceCulture);
             }
         }
         
@@ -799,6 +853,60 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Order Date.
+        /// </summary>
+        internal static string OrderDate {
+            get {
+                return ResourceManager.GetString("OrderDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order Details.
+        /// </summary>
+        internal static string OrderDetails {
+            get {
+                return ResourceManager.GetString("OrderDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You do not have any orders!.
+        /// </summary>
+        internal static string OrderEmpty {
+            get {
+                return ResourceManager.GetString("OrderEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order ID.
+        /// </summary>
+        internal static string OrderId {
+            get {
+                return ResourceManager.GetString("OrderId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order Information.
+        /// </summary>
+        internal static string OrderInfo {
+            get {
+                return ResourceManager.GetString("OrderInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My Orders.
+        /// </summary>
+        internal static string OrderTitle {
+            get {
+                return ResourceManager.GetString("OrderTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password cannot be empty.
         /// </summary>
         internal static string PasswordEmptyError {
@@ -889,6 +997,24 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        internal static string Payment {
+            get {
+                return ResourceManager.GetString("Payment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Account.
+        /// </summary>
+        internal static string Payment_Account {
+            get {
+                return ResourceManager.GetString("Payment Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insert the E-mail address for your PayPal account:.
         /// </summary>
         internal static string PaypalEmail {
@@ -916,6 +1042,24 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pickup.
+        /// </summary>
+        internal static string Pickup {
+            get {
+                return ResourceManager.GetString("Pickup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pickup Cost.
+        /// </summary>
+        internal static string Pickup_Cost {
+            get {
+                return ResourceManager.GetString("Pickup Cost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Place Order.
         /// </summary>
         internal static string PlaceOrder {
@@ -925,7 +1069,7 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Please fill the Required fields.
         /// </summary>
         internal static string Please_fill_the_Required_fields {
             get {
@@ -939,6 +1083,15 @@ namespace CardGameCorner.Resources.Language {
         internal static string PPaypalEmail {
             get {
                 return ResourceManager.GetString("PPaypalEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        internal static string Price {
+            get {
+                return ResourceManager.GetString("Price", resourceCulture);
             }
         }
         
@@ -1096,6 +1249,15 @@ namespace CardGameCorner.Resources.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shipping Details.
+        /// </summary>
+        internal static string ShippingDetails {
+            get {
+                return ResourceManager.GetString("ShippingDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sign Up.
         /// </summary>
         internal static string SignUp {
@@ -1119,6 +1281,15 @@ namespace CardGameCorner.Resources.Language {
         internal static string StaffMsg {
             get {
                 return ResourceManager.GetString("StaffMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        internal static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
             }
         }
         

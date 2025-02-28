@@ -889,6 +889,8 @@ namespace CardGameCorner.ViewModels
             try
             {
                 IsLoading = true;
+                OnPropertyChanged(nameof(IsLoading));
+                await Task.Delay(100);
                 HasError = false;
                 ErrorMessage = string.Empty;
                 NoResultsFound = false; // Reset the no results flag
@@ -957,6 +959,7 @@ namespace CardGameCorner.ViewModels
             finally
             {
                 IsLoading = false;
+                OnPropertyChanged(nameof(IsLoading));
             }
         }
 

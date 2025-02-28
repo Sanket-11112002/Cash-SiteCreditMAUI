@@ -532,6 +532,63 @@
     <value>Do you want to exit?</value>
   </data>
   <data name="Please fill the Required fields" xml:space="preserve">
-    <value />
+    <value>Please fill the Required fields</value>
+  </data>
+  <data name="OrderTitle" xml:space="preserve">
+    <value>My Orders</value>
+  </data>
+  <data name="OrderId" xml:space="preserve">
+    <value>Order ID</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Payment Account" xml:space="preserve">
+    <value>Payment Account</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Pickup" xml:space="preserve">
+    <value>Pickup</value>
+  </data>
+  <data name="Pickup Cost" xml:space="preserve">
+    <value>Pickup Cost</value>
+  </data>
+  <data name="OrderEmpty" xml:space="preserve">
+    <value>You do not have any orders!</value>
+  </data>
+  <data name="OrderDetails" xml:space="preserve">
+    <value>Order Details</value>
+  </data>
+  <data name="OrderInfo" xml:space="preserve">
+    <value>Order Information</value>
+  </data>
+  <data name="OrderDate" xml:space="preserve">
+    <value>Order Date</value>
+  </data>
+  <data name="ShippingDetails" xml:space="preserve">
+    <value>Shipping Details</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="Evalution" xml:space="preserve">
+    <value>Evaluated</value>
+  </data>
+  <data name="AlteredByStaff" xml:space="preserve">
+    <value>AlteredByStaff</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Confirmed" xml:space="preserve">
+    <value>Confirmed</value>
   </data>
 </root>

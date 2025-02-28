@@ -3,209 +3,279 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardGameCorner.Views.OrderDetailPage"
              BackgroundColor="#1B3B48"
-             Title="Order Details">
+             Title="{Binding OrderDetailTitle}">
 
-    <ScrollView>
-        <VerticalStackLayout Spacing="16" Padding="16">
-            <!-- Order Information -->
-            <Frame BackgroundColor="#2C5A70"
-                   BorderColor="Transparent"
-                   Padding="16"
-                   CornerRadius="8"
-                   HasShadow="False">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="Order Information"
-                           TextColor="White"
-                           FontSize="18"
-                           FontAttributes="Bold"/>
-
-                    <VerticalStackLayout Spacing="4">
-                        <Label Text="{Binding OrderDetail.OrderId, StringFormat='Order ID: {0}'}"
+    <Grid>
+        <!-- Main Content -->
+        <ScrollView>
+            <VerticalStackLayout Spacing="16" Padding="16">
+                <!-- Order Information -->
+                <Frame BackgroundColor="#2C5A70"
+                       BorderColor="Transparent"
+                       Padding="16"
+                       CornerRadius="8"
+                       HasShadow="False">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{Binding OrderInfoTitle}"
                                TextColor="White"
-                               FontSize="14"/>
-                        <Label Text="{Binding OrderDetail.OrderDate, StringFormat='Order Date: {0:d}'}"
-                               TextColor="White"
-                               FontSize="14"/>
-                        <Label Text="{Binding OrderDetail.Status, StringFormat='Status: {0}'}"
-                               TextColor="White"
-                               FontSize="14"/>
-                    </VerticalStackLayout>
-                </VerticalStackLayout>
-            </Frame>
+                               FontSize="18"
+                               FontAttributes="Bold"/>
 
-            <!-- Shipping Details -->
-            <Frame BackgroundColor="#2C5A70"
-                   BorderColor="Transparent"
-                   Padding="16"
-                   CornerRadius="8"
-                   HasShadow="False">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="Shipping Details"
-                           TextColor="White"
-                           FontSize="18"
-                           FontAttributes="Bold"/>
+                        <VerticalStackLayout Spacing="4">
 
-                    <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="8">
-                        <Label Grid.Row="0" Grid.Column="0" Text="First Name:" TextColor="White" FontSize="12"/>
-                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding OrderDetail.Name}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
-
-                        <Label Grid.Row="1" Grid.Column="0" Text="Last Name:" TextColor="White" FontSize="12"/>
-                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding OrderDetail.LastName}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
-
-                        <Label Grid.Row="2" Grid.Column="0" Text="Email:" TextColor="White" FontSize="12"/>
-                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding OrderDetail.Email}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
-
-                        <Label Grid.Row="3" Grid.Column="0" Text="Address:" TextColor="White" FontSize="12"/>
-                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding OrderDetail.Address}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
-
-                        <Label Grid.Row="4" Grid.Column="0" Text="City:" TextColor="White" FontSize="12"/>
-                        <Label Grid.Row="4" Grid.Column="1" Text="{Binding OrderDetail.City}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
-
-                        <Label Grid.Row="5" Grid.Column="0" Text="Province:" TextColor="White" FontSize="12"/>
-                        <Label Grid.Row="5" Grid.Column="1" Text="{Binding OrderDetail.Province}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
-
-                        <Label Grid.Row="6" Grid.Column="0" Text="Fiscal Code:" TextColor="White" FontSize="12"/>
-                        <Label Grid.Row="6" Grid.Column="1" Text="{Binding OrderDetail.FiscalCode}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
-
-                        <Label Grid.Row="7" Grid.Column="0" Text="Zip:" TextColor="White" FontSize="12"/>
-                        <Label Grid.Row="7" Grid.Column="1" Text="{Binding OrderDetail.Zip}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
-
-                        <Label Grid.Row="8" Grid.Column="0" Text="Country:" TextColor="White" FontSize="12"/>
-                        <Label Grid.Row="8" Grid.Column="1" Text="{Binding OrderDetail.Country}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
-
-                        <Label Grid.Row="9" Grid.Column="0" Text="Phone:" TextColor="White" FontSize="12"/>
-                        <Label Grid.Row="9" Grid.Column="1" Text="{Binding OrderDetail.Phone}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
-                    </Grid>
-
-
-                </VerticalStackLayout>
-            </Frame>
-
-            <!-- Cards Collection -->
-            <VerticalStackLayout BindableLayout.ItemsSource="{Binding OrderDetail.Cards}" Spacing="10">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Padding="16" ColumnDefinitions="*, *, *, *, *"
-                              RowDefinitions="Auto, Auto" 
-                              BackgroundColor="#22313F"
-                              ColumnSpacing="10">
-                            <!-- Column 0: Card Image -->
-                            <Image Source="{Binding Image}"
-                                   HeightRequest="100" 
-                                   WidthRequest="70"  
-                                   Aspect="AspectFit" 
-                                   Grid.Column="0" 
-                                   Grid.RowSpan="2" />
-
-                            <!-- Column 1: Model and Condition -->
-                            <StackLayout Grid.Column="1" Orientation="Vertical" Spacing="5" HeightRequest="100">
-                                <Label Text="{Binding Model}" 
-                                       FontSize="12" 
-                                       FontAttributes="Bold" 
+                            <HorizontalStackLayout>
+                                <Label
+                                    Text="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OrderIdField, StringFormat='{0}:'}"
+                                    TextColor="White"
+                                    FontSize="14"
+                                    FontAttributes="Bold"/>
+                                <Label
+                                    Text="{Binding OrderDetail.OrderId, StringFormat=' {0}'}"
+                                    TextColor="White"
+                                    FontSize="14"
+                                     FontAttributes="Bold"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout>
+                                <Label
+                                     Text="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OrderDateField, StringFormat='{0}:'}"
+                                     TextColor="White"
+                                     FontSize="14"
+                                     FontAttributes="Bold"/>
+                                <Label Text="{Binding OrderDetail.OrderDate, StringFormat=' {0:d}'}"
                                        TextColor="White"
-                                       MaxLines="2"
-                                       LineBreakMode="TailTruncation" />
-                                <Label Text="Evaluated:" 
-                                       FontSize="12" 
-                                       TextColor="White" 
-                                       FontAttributes="Bold" 
-                                       HorizontalTextAlignment="Center" 
-                                       MaxLines="1"
-                                       LineBreakMode="TailTruncation" />
-                                <Label Text="{Binding Evaluated}" 
-                                         FontSize="12" 
-                                         TextColor="White"
-                                       HorizontalTextAlignment="Center" />
-                            </StackLayout>
-                            
-                            <!-- Column 2: Language, Condition, Edition, and Rarity -->
-                            <StackLayout Grid.Column="2" HeightRequest="100" Orientation="Vertical" HorizontalOptions="Center" Spacing="5" Grid.RowSpan="2">
-                                <!-- Language and Condition -->
-                                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                                    <Image HeightRequest="20" 
-                                           WidthRequest="40"
-                                           Margin="3,0,0,0" 
-                                           Source="{Binding LanguageFlag}" />
+                                       FontSize="14"
+                                        FontAttributes="Bold"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout>
+                                <Label
+                                     Text="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.StatusField, StringFormat='{0}:'}"
+                                     TextColor="White"
+                                     FontSize="14"
+                                     FontAttributes="Bold"/>
+                                <Label Text="{Binding OrderDetail.Status, StringFormat=' {0}'}"
+                                       TextColor="White"
+                                       FontSize="14"
+                                        FontAttributes="Bold"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
 
-                                    <Frame BackgroundColor="LightGreen"
-                                           Padding="0"
-                                           CornerRadius="3"
-                                           HasShadow="False">
-                                        <Label Text="{Binding Condition}" 
-                                               TextColor="White" 
-                                               FontSize="10" 
-                                               HeightRequest="10" 
-                                               WidthRequest="30"
-                                               HorizontalTextAlignment="Center" />
-                                    </Frame>
+                <!-- Shipping Details -->
+                <Frame BackgroundColor="#2C5A70"
+                       BorderColor="Transparent"
+                       Padding="16"
+                       CornerRadius="8"
+                       HasShadow="False">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{Binding ShippingDetailsTitle}"
+                               TextColor="White"
+                               FontSize="18"
+                               FontAttributes="Bold"/>
+
+                        <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="8">
+                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding FNamefield, StringFormat='{0}:'}" TextColor="White" FontSize="12"/>
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding OrderDetail.Name}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
+
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding LNamefield, StringFormat='{0}:'}" TextColor="White" FontSize="12"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding OrderDetail.LastName}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
+
+                            <Label Grid.Row="2" Grid.Column="0" Text="{Binding Emailfield, StringFormat='{0}:'}" TextColor="White" FontSize="12"/>
+                            <Label Grid.Row="2" Grid.Column="1" Text="{Binding OrderDetail.Email}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
+
+                            <Label Grid.Row="3" Grid.Column="0" Text="{Binding Addressfield, StringFormat='{0}:'}" TextColor="White" FontSize="12"/>
+                            <Label Grid.Row="3" Grid.Column="1" Text="{Binding OrderDetail.Address}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
+
+                            <Label Grid.Row="4" Grid.Column="0" Text="{Binding Cityfield, StringFormat='{0}:'}" TextColor="White" FontSize="12"/>
+                            <Label Grid.Row="4" Grid.Column="1" Text="{Binding OrderDetail.City}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
+
+                            <Label Grid.Row="5" Grid.Column="0" Text="{Binding Provincefield, StringFormat='{0}:'}" TextColor="White" FontSize="12"/>
+                            <Label Grid.Row="5" Grid.Column="1" Text="{Binding OrderDetail.Province}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
+
+                            <Label Grid.Row="6" Grid.Column="0" Text="{Binding Fiscalfield, StringFormat='{0}:'}" TextColor="White" FontSize="12"/>
+                            <Label Grid.Row="6" Grid.Column="1" Text="{Binding OrderDetail.FiscalCode}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
+
+                            <Label Grid.Row="7" Grid.Column="0" Text="{Binding Zipfield, StringFormat='{0}:'}" TextColor="White" FontSize="12"/>
+                            <Label Grid.Row="7" Grid.Column="1" Text="{Binding OrderDetail.Zip}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
+
+                            <Label Grid.Row="8" Grid.Column="0" Text="{Binding Countryfield, StringFormat='{0}:'}" TextColor="White" FontSize="12"/>
+                            <Label Grid.Row="8" Grid.Column="1" Text="{Binding OrderDetail.Country}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
+
+                            <Label Grid.Row="9" Grid.Column="0" Text="{Binding Phonefield, StringFormat='{0}:'}" TextColor="White" FontSize="12"/>
+                            <Label Grid.Row="9" Grid.Column="1" Text="{Binding OrderDetail.Phone}" TextColor="White" FontSize="14" Margin="10,0,0,0"/>
+                        </Grid>
+
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Cards Collection -->
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding OrderDetail.Cards}" Spacing="10">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="16" ColumnDefinitions="*, *, *, *, *"
+                                  RowDefinitions="Auto, Auto" 
+                                  BackgroundColor="#22313F"
+                                  ColumnSpacing="10">
+                                <!-- Column 0: Card Image -->
+                                <Image Source="{Binding Image}"
+                                       HeightRequest="100" 
+                                       WidthRequest="70"  
+                                       Aspect="AspectFit" 
+                                       Grid.Column="0" 
+                                       Grid.RowSpan="2" />
+
+                                <!-- Column 1: Model and Condition -->
+                                <StackLayout Grid.Column="1" Orientation="Vertical" Spacing="5" HeightRequest="100">
+                                    <Label Text="{Binding Model}" 
+                                           FontSize="12" 
+                                           FontAttributes="Bold" 
+                                           TextColor="White"
+                                           MaxLines="2"
+                                           LineBreakMode="TailTruncation" />
+                                    <Label Text="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.Evaluationtitle, StringFormat='{0}:'}" 
+                                           FontSize="12" 
+                                           TextColor="White" 
+                                           FontAttributes="Bold" 
+                                           HorizontalTextAlignment="Center" 
+                                           MaxLines="1"
+                                           LineBreakMode="TailTruncation" />
+                                    <Label Text="{Binding Evaluated}" 
+                                             FontSize="12" 
+                                             TextColor="White"
+                                           HorizontalTextAlignment="Center" />
                                 </StackLayout>
 
-                                <!-- Edition and Rarity -->
-                                <StackLayout Orientation="Vertical" Spacing="7" HorizontalOptions="Center" Margin="0,5,0,0">
-                                    <Label Text="First Edition:" 
+                                <!-- Column 2: Language, Condition, Edition, and Rarity -->
+                                <StackLayout Grid.Column="2" HeightRequest="100" Orientation="Vertical" HorizontalOptions="Center" Spacing="5" Grid.RowSpan="2">
+                                    <!-- Language and Condition -->
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                        <Image HeightRequest="20" 
+                                               WidthRequest="40"
+                                               Margin="3,0,0,0" 
+                                               Source="{Binding LanguageFlag}" />
+
+                                        <Frame BackgroundColor="LightGreen"
+                                               Padding="0"
+                                               CornerRadius="3"
+                                               HasShadow="False">
+                                            <Label Text="{Binding Condition}" 
+                                                   TextColor="White" 
+                                                   FontSize="10" 
+                                                   HeightRequest="10" 
+                                                   WidthRequest="30"
+                                                   HorizontalTextAlignment="Center" />
+                                        </Frame>
+                                    </StackLayout>
+
+                                    <!-- Edition and Rarity -->
+                                    <StackLayout Orientation="Vertical" Spacing="7" HorizontalOptions="Center" Margin="0,5,0,0">
+                                        <Label Text="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.Firsteditiontitle, StringFormat='{0}:'}" 
+                                                 FontSize="12" 
+                                                 TextColor="White" 
+                                                 FontAttributes="Bold" 
+                                                 HorizontalTextAlignment="Center" />
+                                        <Label Text="{Binding FirstEdition}" 
+                                               FontSize="14" 
+                                               TextColor="White" 
+                                               HorizontalTextAlignment="Center" />
+                                    </StackLayout>
+                                </StackLayout>
+
+                                <!-- Column 3: Price -->
+                                <StackLayout Grid.Column="3" Orientation="Vertical" Spacing="6" HeightRequest="100" HorizontalOptions="Center" Margin="14,0,0,0">
+                                    <Label Text="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.Pricetitle}" 
+                                            FontSize="12" 
+                                            TextColor="LightGreen" 
+                                            FontAttributes="Bold" 
+                                            HorizontalTextAlignment="Center" />
+                                    <Label Text="{Binding ConfirmedPrice, StringFormat='€{0:F2}'}" 
+                                            FontSize="14" 
+                                            TextColor="White" 
+                                            HorizontalTextAlignment="Center" />
+                                    <Label Text="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.Alteredbystafftitle, StringFormat='{0}:'}" 
                                              FontSize="12" 
                                              TextColor="White" 
                                              FontAttributes="Bold" 
                                              HorizontalTextAlignment="Center" />
-                                    <Label Text="{Binding FirstEdition}" 
+                                    <Label Text="{Binding AlteredByStaff}" 
+                                           FontSize="12" 
+                                           TextColor="White" 
+                                           HorizontalTextAlignment="Center" />
+                                </StackLayout>
+
+                                <!-- Column 4: Quantity -->
+                                <StackLayout Grid.Column="4" Orientation="Vertical" Spacing="5" HeightRequest="100" HorizontalOptions="End">
+                                    <Label Text="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.Quantitytitle}" 
+                                           FontSize="12" 
+                                           TextColor="LightGreen" 
+                                           FontAttributes="Bold" 
+                                           HorizontalTextAlignment="Center" />
+                                    <Label Text="{Binding Qty}" 
+                                           FontSize="14" 
+                                           TextColor="White" 
+                                           HorizontalTextAlignment="Center" />
+                                    <Label Text="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.Confirmedtitle, StringFormat='{0}:'}" 
+                                           FontSize="11" 
+                                           TextColor="White" 
+                                           FontAttributes="Bold" 
+                                           HorizontalTextAlignment="Center" 
+                                           MaxLines="2"
+                                            LineBreakMode="TailTruncation" />
+                                    <Label Text="{Binding ConfirmedQty}" 
                                            FontSize="14" 
                                            TextColor="White" 
                                            HorizontalTextAlignment="Center" />
                                 </StackLayout>
-                            </StackLayout>
-                            
-                            <!-- Column 3: Price -->
-                            <StackLayout Grid.Column="3" Orientation="Vertical" Spacing="6" HeightRequest="100" HorizontalOptions="Center" Margin="14,0,0,0">
-                                <Label Text="Price" 
-                                        FontSize="12" 
-                                        TextColor="LightGreen" 
-                                        FontAttributes="Bold" 
-                                        HorizontalTextAlignment="Center" />
-                                <Label Text="{Binding ConfirmedPrice, StringFormat='€{0:F2}'}" 
-                                        FontSize="14" 
-                                        TextColor="White" 
-                                        HorizontalTextAlignment="Center" />
-                                <Label Text="AlteredByStaff:" 
-                                         FontSize="12" 
-                                         TextColor="White" 
-                                         FontAttributes="Bold" 
-                                         HorizontalTextAlignment="Center" />
-                                <Label Text="{Binding AlteredByStaff}" 
-                                       FontSize="12" 
-                                       TextColor="White" 
-                                       HorizontalTextAlignment="Center" />
-                            </StackLayout>
-                           
-                            <!-- Column 2: Quantity -->
-                            <StackLayout Grid.Column="4" Orientation="Vertical" Spacing="5" HeightRequest="100" HorizontalOptions="End">
-                                <Label Text="Quantity" 
-                                       FontSize="12" 
-                                       TextColor="LightGreen" 
-                                       FontAttributes="Bold" 
-                                       HorizontalTextAlignment="Center" />
-                                <Label Text="{Binding Qty}" 
-                                       FontSize="14" 
-                                       TextColor="White" 
-                                       HorizontalTextAlignment="Center" />
-                                <Label Text="Confirmed:" 
-                                       FontSize="11" 
-                                       TextColor="White" 
-                                       FontAttributes="Bold" 
-                                       HorizontalTextAlignment="Center" 
-                                       MaxLines="2"
-LineBreakMode="TailTruncation" />
-                                <Label Text="{Binding ConfirmedQty}" 
-                                       FontSize="14" 
-                                       TextColor="White" 
-                                       HorizontalTextAlignment="Center" />
-                            </StackLayout>
 
-                        </Grid>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+
             </VerticalStackLayout>
+        </ScrollView>
 
+        <!-- Loading Overlay --><!--
+        <Grid BackgroundColor="#80000000" IsVisible="{Binding IsLoading}">
+            <Frame BackgroundColor="#2C5A70"
+                   BorderColor="Transparent"
+                   CornerRadius="10"
+                   WidthRequest="120"
+                   HeightRequest="120"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   HasShadow="True">
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                    <ActivityIndicator IsRunning="{Binding IsLoading}" 
+                                       Color="White" 
+                                       HeightRequest="50"
+                                       WidthRequest="50"/>
+                    <Label Text="Loading..." 
+                           TextColor="White" 
+                           FontSize="16" 
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>-->
+        <ActivityIndicator Grid.RowSpan="3"
+                  IsRunning="{Binding IsLoading}"
+                  IsVisible="{Binding IsLoading}"
+                  HorizontalOptions="Center"
+                  VerticalOptions="Center"
+                  Color="White"
+                  Scale="2"/>
 
-        </VerticalStackLayout>
-    </ScrollView>
+        <!-- Error Message -->
+        <Label Text="{Binding ErrorMessage}"
+               TextColor="Red"
+               FontSize="16"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               IsVisible="{Binding HasError}"
+               Margin="20"
+               BackgroundColor="#1B3B48"
+               Padding="10"/>
+    </Grid>
 </ContentPage>

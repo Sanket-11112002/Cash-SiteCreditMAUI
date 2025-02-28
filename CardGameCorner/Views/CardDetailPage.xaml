@@ -31,13 +31,13 @@
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="5,5,5,5">
-                                <Frame BackgroundColor="Transparent" 
-                                       BorderColor="White" 
-                                       CornerRadius="10" 
-                                       HasShadow="True" 
+                                <Frame BackgroundColor="Transparent"
+                                       BorderColor="White"
+                                       CornerRadius="10"
+                                       HasShadow="True"
                                        Padding="10">
-                                    <Image Source="{Binding ImageUrl}" 
-                                           Aspect="AspectFit" 
+                                    <Image Source="{Binding ImageUrl}"
+                                           Aspect="AspectFit"
                                            HeightRequest="300"
                                            WidthRequest="250"
                                            HorizontalOptions="Center"/>
@@ -142,11 +142,11 @@
                              StrokeShape="RoundRectangle 20" Stroke="White" IsVisible="{Binding SelectedCard.IsFoilVisibility}">
                                 <HorizontalStackLayout Padding="15">
                                     <Switch IsToggled="{Binding SelectedCard.IsFoil}"
-                                   OnColor="#007AFF"  />
+                                   OnColor="#007AFF"/>
                                     <Label Text="Foil"
                                     TextColor="white"
                                     VerticalOptions="Center"
-                                    Margin="10,0,0,0"  />
+                                    Margin="10,0,0,0"/>
                                 </HorizontalStackLayout>
                             </Border>
 
@@ -204,8 +204,7 @@
                             </VerticalStackLayout>
                         </Border>
 
-                        <Border 
-                                        Grid.ColumnSpan="2"
+                                <Border Grid.ColumnSpan="2"
                                         StrokeThickness="1"
                                         BackgroundColor="#1B3B48"
                                         StrokeShape="RoundRectangle 10"
@@ -220,7 +219,6 @@
                                        LineBreakMode="WordWrap" />
                             </VerticalStackLayout>
                         </Border>
-
 
                     </Grid>
 

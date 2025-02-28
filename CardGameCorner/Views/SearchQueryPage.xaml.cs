@@ -112,7 +112,7 @@ public partial class SearchQueryPage : ContentPage
                 Title = selectedCard.Model,
                 Set = selectedCard.SetCode,
                 Game = selectedCard.Game,
-                Lang = "en",
+                Lang = "",
                 Foil = 0,
                 FirstEdition = 0
             };

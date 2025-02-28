@@ -137,7 +137,7 @@
                     BorderColor="#2C5F73"
                     BorderWidth="1"/>
 
-            <Button x:Name="MyOrdersButton"
+            <!--<Button x:Name="MyOrdersButton"
                     Text="My Orders"
                     Clicked="MyOrdersButton_Clicked"
                     BackgroundColor="#4A8BA8"
@@ -147,7 +147,7 @@
                     Padding="16,12"
                     HorizontalOptions="Fill"
                     Margin="0,20,0,0"
-                    IsVisible="False"/>
+                    IsVisible="False"/>-->
 
             <Button x:Name="LogoutButton" 
                     Text="{Binding Logout}" 

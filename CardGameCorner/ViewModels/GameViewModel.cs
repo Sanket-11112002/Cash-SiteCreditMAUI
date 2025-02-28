@@ -32,7 +32,6 @@ namespace CardGameCorner.ViewModels
             // Subscribe to language change events
             GlobalSettings.PropertyChanged += OnGlobalSettingsPropertyChanged;
 
-
             OpenProductUrlCommand = new Command<string>(async (url) =>
             {
                 if (!string.IsNullOrWhiteSpace(url))
@@ -101,8 +100,6 @@ namespace CardGameCorner.ViewModels
             }
         }
 
-
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -139,7 +136,7 @@ namespace CardGameCorner.ViewModels
                     {
                         Image = ImageSource.FromUri(new Uri($"https://www.cardgamecorner.com{product.Image}")),
                         Note = uiCode == "it" ? product.Model : product.ModelEn,
-                        MaxPrice = product.MaxPrice, // No need to parse as it's already decimal
+                        MaxPrice = product.MaxPrice,
                         MinPrice = product.MinPrice
                     }).ToList();
 
