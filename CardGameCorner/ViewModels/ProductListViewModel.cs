@@ -1,4 +1,5 @@
 ﻿using CardGameCorner.Models;
+using CardGameCorner.ViewModels;
 using Newtonsoft.Json;
 
 public class ProductListViewModel
@@ -29,6 +30,9 @@ public class ProductListViewModel
     public List<string>? Conditions { get; set; }
     public bool? Evalution { get; set; }
 
+    public List<ProductVariant1> varinats;
+
+
     // Map back to ProductList
     public ProductList MapToProductList()
     {
@@ -54,6 +58,7 @@ public class ProductListViewModel
             IsReverse = this.IsReverse,
             ProductId = this.ProductId,
             Evalution = this.Evalution,
+            VariantsJson = JsonConvert.SerializeObject(this.varinats) // Added to include variants
         };
     }
 }

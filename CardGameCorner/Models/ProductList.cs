@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CardGameCorner.ViewModels;
 using Newtonsoft.Json;  // You will need to install the Newtonsoft.Json NuGet package
 using SQLite;
 namespace CardGameCorner.Models
@@ -31,6 +32,14 @@ namespace CardGameCorner.Models
         public bool? IsReverse { get; set; }
         public bool? IsFoil { get; set; }
         public bool? Evalution { get; set; }
+        public string? VariantsJson { get; set; }
+
+        [JsonIgnore]
+        public List<ProductVariant1> Variants
+        {
+            get => string.IsNullOrEmpty(VariantsJson) ? new List<ProductVariant1>() : JsonConvert.DeserializeObject<List<ProductVariant1>>(VariantsJson);
+            set => VariantsJson = JsonConvert.SerializeObject(value);
+        }
 
         //// Deserialize the JSON string to List<string> when accessing
         //[JsonIgnore]

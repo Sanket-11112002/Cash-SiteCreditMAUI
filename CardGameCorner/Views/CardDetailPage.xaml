@@ -123,7 +123,7 @@
                                 </HorizontalStackLayout>
                             </Border>
 
-                            <Border Grid.Column="1"
+                            <Border Grid.Column="0"
                             StrokeThickness="1"
                            BackgroundColor="#1B3B48"
                             StrokeShape="RoundRectangle 20" Stroke="White" IsVisible="{Binding SelectedCard.IsReverseVisibility}">

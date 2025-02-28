@@ -223,7 +223,8 @@ namespace CardGameCorner.ViewModels
                         SelectedLanguage = selectedCard.Language,
                         selectedCondition = selectedCard.Condition,
                         Quantity = selectedCard.Quantity ?? 0,
-                        IsEditMode = true
+                        IsEditMode = true,
+                        varinats=selectedCard.varinats
                     }
                 };
                 });

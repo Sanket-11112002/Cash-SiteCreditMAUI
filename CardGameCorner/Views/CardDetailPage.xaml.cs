@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using CardGameCorner.Models;
 using CardGameCorner.Services;
 using CardGameCorner.ViewModels;
+using Microsoft.VisualStudio.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ISecureStorage = CardGameCorner.Services.ISecureStorage;
@@ -122,7 +123,8 @@ public partial class CardDetailPage : ContentPage
                         IsFirstEdition = selectedCard.IsFirstEdition,
                         IsReverse = selectedCard.IsReverse,
                         IsFoil = selectedCard.IsFoil,
-                        Evalution = selectedCard.Evalution
+                        Evalution = selectedCard.Evalution,
+                        Variants = selectedCard.varinats
 
                     };
 

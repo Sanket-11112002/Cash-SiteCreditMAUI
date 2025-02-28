@@ -19,7 +19,6 @@ public class SQLiteService
 
         if (tableInfo.Count == 0)
         {
-
             // If the table doesn't exist, create it
             await _database.CreateTableAsync<ProductList>();
         }
@@ -27,25 +26,24 @@ public class SQLiteService
         {
             MigrateDatabaseAsync();
         }
-
-
     }
 
     // Perform the database migration
     private async Task MigrateDatabaseAsync()
     {
-        //  Create a new temporary table with the new schema(including the new column)
-        await _database.ExecuteAsync("CREATE TABLE IF NOT EXISTS ProductList_temp AS SELECT * FROM ProductList;");
+        //// Create a new temporary table with the new schema (including the new columns)
+        //await _database.ExecuteAsync("CREATE TABLE IF NOT EXISTS ProductList_temp AS SELECT * FROM ProductList;");
 
+        //// Add new columns if they don't exist
+        //await _database.ExecuteAsync("ALTER TABLE ProductList ADD COLUMN Evalution TEXT;");
+       
+        await _database.ExecuteAsync("ALTER TABLE ProductList ADD COLUMN Variants TEXT;");
 
+        //// Copy data from the temp table back to the original table
+        //await _database.ExecuteAsync("INSERT INTO ProductList SELECT * FROM ProductList_temp;");
 
-        await _database.ExecuteAsync("ALTER TABLE ProductList ADD COLUMN Evalution TEXT;");
-
-        //  Copy data from the temp table back to the original table
-        await _database.ExecuteAsync("INSERT INTO ProductList SELECT * FROM ProductList_temp;");
-
-        //   Drop the temporary table
-        await _database.ExecuteAsync("DROP TABLE ProductList_temp;");
+        //// Drop the temporary table
+        //await _database.ExecuteAsync("DROP TABLE ProductList_temp;");
 
         Console.WriteLine("Database migration completed!");
     }
@@ -72,17 +70,8 @@ public class SQLiteService
 
         return await _database.Table<ProductList>().ToListAsync();
     }
-    //public async Task<List<ProductList>> GetAllItemsAsync(string username)
-    //{
-    //    await Init();
 
-    //    // Return only items where the Username matches the provided username
-    //    return await _database.Table<ProductList>()
-    //                          .Where(item => item.Username == username)
-    //                          .ToListAsync();
-    //}
     // Delete an item
-
     public async Task<int> DeleteItemAsync(ProductList item)
     {
         await Init();
